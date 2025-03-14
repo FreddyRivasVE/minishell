@@ -1,0 +1,70 @@
+1. rl_clear_history().
+Es una función de la biblioteca GNU Readline que limpia el historial de comandos almacenado en memoria durante la sesión actual.
+El historial en este contexto es un registro de las líneas que el usuario ha ingresado, útil para acceder y reutilizar
+comandos previos. Esta función se utiliza para reiniciar o eliminar completamente este historial en memoria, dejando el sistema
+sin rastros de los comandos ingresados hasta ese momento.
+
+La función se encuentra definida en el módulo de manejo del historial proporcionado por Readline.
+Este módulo permite:
+.- Almacenar líneas ingresadas por el usuario.
+.- Administrar el historial de entrada (con capacidades como agregar, eliminar, navegar o guardar en un archivo).
+
+2. Detalles técnicos.
+Cuando llamas a rl_clear_history(), lo que ocurre es:
+.- Liberación de memoria interna: Se libera la memoria asociada con las entradas de historial almacenadas en RAM.
+.- Eliminación de referencias: El array o estructura interna que contiene las entradas del historial se vacía.
+No afecta archivos persistentes: Si hay un historial persistente en disco (como ~/.bash_history en Bash), este no se
+modifica por rl_clear_history(); sigue intacto.
+
+3. El prototipo de la función es:
+
+void rl_clear_history(void);
+
+Es una función que no toma parámetros ni devuelve valores.
+
+4. ¿Cómo se utiliza en programación?
+rl_clear_history() es especialmente útil en programas interactivos escritos en C que utilizan la biblioteca Readline
+para manejar entradas del usuario. Aquí hay un ejemplo más técnico:
+
+Ejemplo: Limpiar el historial en un programa interactivo
+
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdio.h>
+
+int main() {
+char *input;
+
+// Loop para recibir comandos del usuario
+while ((input = readline(">>> ")) != NULL)
+{
+    if (*input)
+        add_history(input); // Agregar entrada al historial
+    // Comando especial para limpiar el historial
+    if (strcmp(input, "limpiar_historial") == 0)
+    {
+        rl_clear_history(); // Limpia el historial
+        printf("El historial ha sido borrado.\n");
+    }
+    free(input); // Liberar memoria
+    }
+    return 0;
+}
+En este programa:
+.- Se lee la entrada del usuario con readline().
+.- El comando especial limpiar_historial ejecuta rl_clear_history() para borrar la memoria asociada al historial actual.
+
+El historial en disco (si existe) no se ve afectado.
+
+5. Diferencia con otras funciones relacionadas.
+Para tener un mejor contexto, aquí hay algunas funciones de la biblioteca Readline relacionadas con el historial:
+add_history(const char *line): Agrega una línea nueva al historial.
+write_history(const char *filename): Guarda el historial en un archivo.
+clear_history(): Similar a rl_clear_history(), pero no siempre es intercambiable dependiendo del entorno en el que se use.
+
+6. Aplicaciones prácticas.
+.- Privacidad: En programas interactivos, limpiar el historial puede ser útil para eliminar información sensible
+ingresada por el usuario durante la sesión.
+.- Reiniciar entornos: Si deseas que un entorno vuelva a su estado inicial sin rastros de comandos previos.
+.- Depuración: Al desarrollar herramientas basadas en Readline, limpiar el historial puede facilitar pruebas
+repetitivas sin confusión con datos almacenados previamente.
