@@ -1,0 +1,86 @@
+1. rl_on_new_line.
+Es una función dentro de la biblioteca GNU Readline que se utiliza para manejar correctamente la
+redibujación de la línea de entrada cuando se producen cambios en ella. Este comportamiento es
+particularmente importante en aplicaciones interactivas donde se desea actualizar dinámicamente
+la entrada del usuario en la terminal. Vamos a explorarlo a fondo:
+
+2. Definición y Propósito.
+rl_on_new_line asegura que el estado interno de la biblioteca Readline sea consistente con la entrada
+actual en la terminal. En términos simples, informa a Readline que el cursor se ha movido a una
+nueva línea o que la línea actual debe ser redibujada debido a cambios.
+
+3. Prototipo de la función.
+
+void rl_on_new_line(void);
+
+Esta función no recibe argumentos y tampoco devuelve valores.
+
+Esta función ajusta el cursor y otros estados internos de Readline para prepararse para operaciones
+como redibujar la línea o manipular la entrada del usuario.
+
+4. ¿Cuándo usar rl_on_new_line?
+rl_on_new_line se utiliza normalmente en aplicaciones interactivas donde:
+
+.- Se muestra salida en la terminal antes de la línea de entrada: Si la aplicación imprime texto
+(como mensajes de registro) mientras el usuario está escribiendo, rl_on_new_line se usa para 
+gestionar correctamente la redibujación de la línea de entrada tras ese texto.
+.- Se realizan cambios manuales a la línea de entrada desde el programa: Si el programa modifica
+el contenido de la línea de entrada (por ejemplo, autocompletando un comando), esta función se
+asegura de que la biblioteca Readline se actualice adecuadamente.
+
+5. Ejemplo Práctico.
+Supongamos que estás desarrollando un programa en C usando Readline, y quieres procesar entradas
+del usuario mientras muestras mensajes intermedios:
+
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdio.h>
+
+void display_log_message(const char *message) // Muestra un mensaje intermedio sin interrumpir la línea de entrada del usuario
+{
+	printf("\n%s\n", message); // Imprime un mensaje en una nueva línea
+	rl_on_new_line(); // Informa a Readline que la línea actual ha cambiado
+	rl_redisplay(); // Redibuja la línea de entrada
+}
+
+int main()
+{
+	char *input;
+	
+	while ((input = readline(">>> ")) != NULL)
+	{
+		if (*input)
+			add_history(input);   // Agrega la entrada al historial
+		if (strcmp(input, "log") == 0)
+			display_log_message("Esto es un mensaje de registro."); // Muestra un mensaje
+		free(input); // Libera la memoria asignada para la entrada
+	}
+	return 0;
+}
+
+Explicación:
+.- rintf("\n%s\n", message);: Escribe un mensaje en la terminal 
+(por ejemplo, "Esto es un mensaje de registro").
+.- rl_on_new_line();: Avisa a Readline que se ha creado una nueva línea y debe actualizar su
+estado.
+.- rl_redisplay();: Redibuja la línea de entrada del usuario para restaurarla tras mostrar el
+mensaje.
+
+6. Relación con otras funciones de Readline.
+rl_on_new_line se utiliza comúnmente junto con otras funciones de Readline para manejar la
+entrada interactiva:
+
+.- rl_redisplay: Redibuja la línea actual en la terminal.
+.- add_history: Agrega la entrada al historial.
+.- readline: Captura la entrada del usuario.
+
+7. Casos de Uso Reales.
+Desarrollo de interpretes interactivos: En lenguajes como Python o en herramientas personalizadas,
+se utiliza para gestionar la entrada cuando la aplicación imprime mensajes dinámicos.
+
+Manejo de interrupciones (como señales): Si tu programa debe responder a interrupciones
+(por ejemplo, SIGINT o CTRL+C), rl_on_new_line ayuda a redibujar correctamente la entrada
+después de gestionar la señal.
+
+Consolas personalizadas: Para crear interfaces similares a shells, donde los usuarios interactúan
+continuamente con el programa.

@@ -1,0 +1,87 @@
+1. rl_replace_line.
+Es una función en la biblioteca GNU Readline diseñada para reemplazar el contenido de la línea
+de entrada interactiva con una nueva cadena de texto. Es útil en aplicaciones interactivas donde
+el programa necesita actualizar dinámicamente la entrada del usuario sin requerir que este la
+edite manualmente.
+
+2. Definición y Propósito.
+La función rl_replace_line permite que un programa sobrescriba completamente la línea de entrada
+actual con un nuevo contenido, facilitando interacciones dinámicas.
+Su prototipo en C es:
+
+void	rl_replace_line(const char *text, int clear_undo);
+
+Parámetros:
+.- const char *text: La nueva cadena que reemplazará la línea actual de entrada.
+.- int clear_undo: Un valor entero que especifica si se debe borrar la información de deshacer.
+Si se establece en 1, las operaciones anteriores de edición (como cortar o pegar) no estarán
+disponibles. Si es 0, mantiene la capacidad de deshacer las modificaciones realizadas.
+
+3. Funcionamiento.
+.- Sobrescribe la línea actual de entrada con el contenido especificado por text.
+.- Actualiza el estado interno de la biblioteca Readline para reflejar esta nueva línea.
+.- Opcionalmente, limpia el historial de deshacer dependiendo del valor de clear_undo.
+
+4. Uso Típico en Programas.
+rl_replace_line se utiliza comúnmente en aplicaciones que necesitan:
+
+Actualizar dinámicamente la entrada del usuario: Por ejemplo, al ofrecer una sugerencia automática
+o modificar un comando según las necesidades del programa.
+
+Implementar características interactivas avanzadas: Como autocompletar o edición personalizada de
+la línea.
+
+5. Ejemplo: Reemplazar la entrada del usuario.
+Aquí hay un ejemplo práctico de cómo usar rl_replace_line en una aplicación C que utiliza la
+biblioteca Readline:
+
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdio.h>
+#include <string.h>
+
+int	main()
+{
+	char *input;
+	while ((input = readline(">>> ")) != NULL)
+	{
+		if (strcmp(input, "reemplazar") == 0)
+		{
+			rl_replace_line("Nueva línea sugerida por el programa", 1); // Reemplaza la línea
+			rl_redisplay(); // Redibuja la línea de entrada
+		}
+		free(input); // Libera la memoria asignada
+	}
+	return 0;
+}
+Explicación:
+.- Al escribir el comando reemplazar, el programa actualiza la línea con "Nueva línea sugerida por
+el programa".
+.- rl_redisplay() se llama después para redibujar la nueva línea y hacerla visible al usuario.
+
+6. Consideraciones Técnicas.
+.- Redibujado explícito: Aunque rl_replace_line modifica el contenido interno, no redibuja
+automáticamente la línea en la terminal. Esto debe hacerse manualmente con rl_redisplay().
+.- Deshacer (clear_undo): Si clear_undo es 1, las acciones de edición anteriores a la llamada a
+rl_replace_line ya no podrán ser deshechas por el usuario.
+.- No modifica el historial: El historial de comandos (almacenado en memoria o en disco) no se ve
+afectado por esta función. Si necesitas añadir el cambio al historial, usa add_history().
+
+7. Casos de Uso Reales.
+.- Corrección automática de comandos: Una aplicación puede detectar errores en el texto ingresado
+y corregirlos automáticamente.
+.- Autocompletado avanzado: Para insertar automáticamente sugerencias completas basadas en la
+entrada parcial del usuario.
+.- Interacción dinámica: En interfaces donde los comandos cambian dinámicamente en función de
+eventos externos, esta función ofrece una forma de actualizar la entrada de manera no intrusiva.
+
+8. Relación con Otras Funciones de Readline.
+.- rl_redisplay: Se utiliza después de rl_replace_line para reflejar los cambios visualmente.
+.- rl_on_new_line: Puede combinarse con esta función para preparar el redibujado cuando se usa
+en combinación con impresión de mensajes adicionales.
+.- readline: Captura la entrada del usuario.
+
+9. Conclusión.
+rl_replace_line es una herramienta poderosa cuando se necesita modificar y redibujar dinámicamente
+la línea de entrada en programas que utilizan Readline. Ofrece un alto nivel de control sobre la
+experiencia del usuario en terminales interactivas.

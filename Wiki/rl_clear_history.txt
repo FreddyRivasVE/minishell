@@ -1,13 +1,17 @@
 1. rl_clear_history().
-Es una función de la biblioteca GNU Readline que limpia el historial de comandos almacenado en memoria durante la sesión actual.
-El historial en este contexto es un registro de las líneas que el usuario ha ingresado, útil para acceder y reutilizar
-comandos previos. Esta función se utiliza para reiniciar o eliminar completamente este historial en memoria, dejando el sistema
+Es una función de la biblioteca GNU Readline que limpia el historial de comandos almacenado en
+memoria durante la sesión actual.
+El historial en este contexto es un registro de las líneas que el usuario ha ingresado, útil
+para acceder y reutilizar.
+comandos previos. Esta función se utiliza para reiniciar o eliminar completamente este historial
+en memoria, dejando el sistema
 sin rastros de los comandos ingresados hasta ese momento.
 
 La función se encuentra definida en el módulo de manejo del historial proporcionado por Readline.
 Este módulo permite:
 .- Almacenar líneas ingresadas por el usuario.
-.- Administrar el historial de entrada (con capacidades como agregar, eliminar, navegar o guardar en un archivo).
+.- Administrar el historial de entrada (con capacidades como agregar, eliminar, navegar o guardar
+en un archivo).
 
 2. Detalles técnicos.
 Cuando llamas a rl_clear_history(), lo que ocurre es:
