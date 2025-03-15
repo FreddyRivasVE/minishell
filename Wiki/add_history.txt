@@ -1,0 +1,112 @@
+1. add_history.
+Es una función proporcionada por la biblioteca GNU Readline, utilizada para agregar líneas de texto
+al historial de comandos de manera programática. En un contexto interactivo como intérpretes de
+comandos (por ejemplo, Bash o Python en modo interactivo), esta función permite registrar líneas en
+el historial, facilitando la reutilización, búsqueda y navegación por comandos previos.
+
+El historial de comandos es una lista global en memoria, y las entradas agregadas a través de
+add_history permanecen accesibles durante la sesión actual. Además, si se combina con funciones
+como write_history, estas entradas pueden persistir en un archivo de historial, como .bash_history.
+
+2. Declaración de add_history.
+
+int add_history(const char *line);
+
+.- Argumento (line): Una cadena (const char*) que representa la línea que se quiere agregar al
+historial.
+Si line es una cadena vacía o NULL, no se realiza ninguna acción.
+.- Valor de retorno:
+	Devuelve 1 si la línea fue agregada correctamente al historial.
+	Devuelve 0 si la línea era NULL o estaba vacía.
+
+3. Funcionamiento interno.
+Cuando add_history se llama, realiza las siguientes operaciones:
+
+.- Validación: Comprueba si la línea proporcionada no está vacía ni es NULL.
+.- Almacenamiento: Inserta la línea en la estructura interna que representa el historial,
+gestionada por GNU Readline. Esta estructura es accesible mediante otras funciones, como
+history_get o history_list.
+.- Integración: Se asegura de que la línea se convierta en una entrada recuperable durante la
+navegación por el historial (usando teclas ↑ y ↓).
+
+GNU Readline proporciona funciones adicionales para trabajar con el historial, como limitar la
+cantidad de entradas (con stifle_history) o limpiar el historial (clear_history).
+
+4. Ejemplo detallado en código C.
+Aquí tienes un ejemplo que muestra cómo usar add_history en un programa interactivo:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+int main()
+{
+	char *input;
+	printf("Programa interactivo: escribe 'salir' para terminar.\n");
+	while ((input = readline("Comando> ")) != NULL)
+	{
+		if (*input) // Solo agregamos líneas no vacías
+		{
+			add_history(input);  // Agregar al historial
+		}
+		if (strcmp(input, "salir") == 0)
+		{
+			free(input);  // Liberar memoria antes de salir
+			break ;
+		}
+		printf("Procesaste el comando: %s\n", input);
+		free(input);  // Liberar la memoria asignada dinámicamente por readline
+	}
+	// Guardar el historial en un archivo antes de salir (opcional)
+	write_history("historial.txt");
+	printf("¡Adiós!\n");
+	return (0);
+}
+Explicación:
+.- Entrada interactiva: readline solicita una línea de comando.
+.- Validación: Solo se agregan al historial las líneas que no están vacías.
+.- Registro en archivo: Al terminar, las entradas se guardan en un archivo (historial.txt)
+mediante write_history.
+
+5. Integración con otras funciones del historial.
+GNU Readline ofrece una API rica para trabajar con el historial. Aquí tienes algunas funciones
+complementarias de add_history:
+
+Función Descripción.
+.- read_history Carga un historial desde un archivo.
+.- write_history Guarda el historial actual en un archivo.
+.- clear_history Elimina todas las entradas del historial.
+.- history_get Obtiene una entrada específica del historial, dada su posición.
+.- stifle_history Limita el número máximo de entradas en el historial (descarta las más antiguas).
+.- unstifle_history Elimina cualquier límite previamente establecido para el historial.
+
+6. Casos prácticos de uso.
+.- En herramientas interactivas personalizadas: Si estás desarrollando un intérprete de comandos
+(por ejemplo, en C o Python), puedes usar add_history para registrar comandos introducidos por el
+usuario y permitir que se naveguen o reutilicen.
+.- En aplicaciones asíncronas: Programas interactivos que procesan comandos automáticamente pueden
+agregar estos comandos al historial, incluso si no provienen directamente del usuario.
+.- Persistencia del historial: Combinando add_history con write_history, puedes
+guardar automáticamente cada comando introducido en la sesión, de manera que esté disponible en
+futuras ejecuciones.
+
+7. Aspectos avanzados.
+.- Gestión de memoria: add_history no realiza copias internas de las cadenas, sino que registra
+punteros a las cadenas proporcionadas. Por tanto, es responsabilidad del programador asegurar que
+esas cadenas sean válidas durante la sesión.
+.- Si la cadena fue asignada dinámicamente (por ejemplo, por malloc o readline), debe liberarse
+después de ser utilizada.
+
+.- Compatibilidad con límites del historial.
+Si el número de entradas del historial alcanza el límite configurado (por ejemplo, con 
+stifle_history), las entradas más antiguas se descartan automáticamente.
+.- Puedes usar history_list para recorrer todas las entradas actuales del historial.
+
+8. Bash y add_history.
+En Bash, add_history no es directamente visible para los usuarios. Sin embargo, todos los comandos
+que introduces en una sesión se registran automáticamente en el historial gracias a esta función.
+Al combinarlo con el archivo .bash_history, Bash utiliza funciones como write_history y 
+read_history para persistir y cargar el historial.
+Además, en Bash puedes manipular el historial usando variables como HISTFILE, HISTSIZE y
+HISTIGNORE.
