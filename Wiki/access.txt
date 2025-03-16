@@ -1,0 +1,81 @@
+1. access.
+Es una función que se utiliza para verificar los permisos de un archivo o directorio. Permite
+determinar si el proceso tiene los permisos necesarios para leer, escribir o ejecutar un archivo,
+o si el archivo o directorio existe. Esta función está definida en <unistd.h> y es comúnmente
+utilizada en sistemas operativos Unix y Linux.
+
+2. Sintaxis.
+
+int	access(const char *pathname, int mode);
+
+.- pathname: Es un puntero a una cadena de caracteres que contiene la ruta del archivo o
+directorio cuyo acceso se desea verificar.
+.- mode: Especifica el tipo de permiso que se quiere comprobar. Es una combinación de constantes
+predefinidas.
+
+3. Modos de acceso (mode).
+Los modos más comunes son:
+
+.- F_OK (0): Comprueba si el archivo existe.
+.- R_OK: Verifica si el archivo tiene permisos de lectura.
+.- W_OK: Verifica si el archivo tiene permisos de escritura.
+.- X_OK: Verifica si el archivo tiene permisos de ejecución.
+
+Estos modos se pueden combinar utilizando el operador lógico OR (|).
+
+4. Valor de retorno.
+.- Si la operación tiene éxito, devuelve 0.
+.- Si ocurre un error (por ejemplo, el archivo no existe o no se tienen los permisos adecuados),
+devuelve -1 y configura errno para indicar el motivo del error.
+
+5. Ejemplo.
+
+#include <unistd.h>
+#include <stdio.h>
+
+int main()
+{
+	const char *archivo = "ejemplo.txt";
+	// Verificar si el archivo existe
+	if (access(archivo, F_OK) == 0)
+	{
+		printf("El archivo existe.\n");
+		// Verificar si el archivo es legible
+		if (access(archivo, R_OK) == 0)
+		{
+			printf("El archivo tiene permisos de lectura.\n");
+		}
+		else
+		{
+			printf("No se puede leer el archivo.\n");
+		}
+		// Verificar si el archivo es escribible
+		if (access(archivo, W_OK) == 0)
+		{
+			printf("El archivo tiene permisos de escritura.\n");
+		}
+		else
+		{
+			printf("No se puede escribir en el archivo.\n");
+		}
+	}
+	else
+	{
+		perror("Error al acceder al archivo");
+	}
+	return 0;
+}
+
+6. Casos de uso comunes.
+.- Validar la existencia de un archivo antes de abrirlo o manipularlo.
+.- Comprobar permisos antes de realizar una operación crítica.
+.- Prevenir errores al acceder a recursos protegidos o restringidos.
+
+7. Consideraciones importantes.
+.- No garantiza seguridad: El estado del archivo puede cambiar inmediatamente después de la
+verificación. Por ejemplo, un archivo podría eliminarse o bloquearse justo después de que access
+confirme su existencia. Por esta razón, se considera una buena práctica utilizarlo solo para
+verificaciones preliminares y manejar adecuadamente los errores al realizar operaciones reales.
+.- Uso limitado en sistemas modernos: Algunas configuraciones, como permisos basados en ACL
+(Access Control Lists) o capacidades de seguridad adicionales, podrían no ser completamente
+manejadas por access.
