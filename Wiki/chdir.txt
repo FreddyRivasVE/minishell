@@ -1,0 +1,98 @@
+1. chdir.
+Es una función que permite cambiar el directorio de trabajo actual de un proceso. El directorio de
+trabajo actual es el directorio en el que el programa realiza sus operaciones de entrada/salida
+relativas al sistema de archivos. Al invocar chdir, se puede modificar este contexto para que las
+operaciones futuras (como abrir archivos o listar contenidos) se realicen en otro directorio. Esta
+función está definida en <unistd.h>.
+
+2. Sintaxis.
+
+int chdir(const char *path);
+
+.- Parámetros.
+	.- path: Especifica la ruta del nuevo directorio de trabajo. Puede ser una ruta absoluta
+	(por ejemplo, /home/user) o relativa (por ejemplo, ../directorio).
+
+3. Valor de Retorno.
+.- 0: Indica que el directorio de trabajo fue cambiado correctamente.
+.- -1: Indica que ocurrió un error. En este caso, se establece la variable global errno para
+describir la causa del error.
+
+4. Errores Comunes.
+.- ENOENT: El directorio especificado no existe.
+.- ENOTDIR: Parte del camino especificado en la ruta no es un directorio.
+.- EACCES: No se tienen permisos para acceder al directorio especificado.
+.- ENOMEM: No hay suficiente memoria disponible para completar la operación.
+.- EROFS: El sistema de archivos es de solo lectura.
+
+5. Ejemplo Básico.
+El siguiente ejemplo muestra cómo cambiar el directorio de trabajo y verificar el resultado usando
+chdir y getcwd:
+
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
+
+int main()
+{
+	char buf[1024];
+	// Obtener y mostrar el directorio actual
+	if (getcwd(buf, sizeof(buf)) != NULL)
+	{
+		printf("Directorio actual: %s\n", buf);
+	}
+	else
+	{
+		perror("Error al obtener el directorio actual");
+	}
+	// Cambiar al directorio "/tmp"
+	if (chdir("/tmp") == 0)
+	{
+		printf("Directorio cambiado a /tmp\n");
+	}
+	else
+	{
+		perror("Error al cambiar el directorio");
+		return 1;
+	}
+	// Mostrar el nuevo directorio actual
+	if (getcwd(buf, sizeof(buf)) != NULL)
+	{
+		printf("Nuevo directorio actual: %s\n", buf);
+	}
+	else
+	{
+		perror("Error al obtener el nuevo directorio actual");
+	}
+	return 0;
+}
+
+6. Casos de Uso Comunes.
+.- Modificar el Contexto de Operaciones Relativas: Si un programa opera en múltiples directorios,
+chdir permite ajustar el contexto antes de realizar acciones como abrir archivos o listar
+contenidos.
+.- Automatización de Tareas: En scripts o programas que procesan directorios específicos, chdir
+simplifica las operaciones al trabajar en el contexto del directorio deseado.
+.- Navegación en Sistemas de Archivos: Usar chdir junto con funciones como readdir para explorar
+directorios.
+
+7. Consideraciones Importantes.
+.- Permisos de Acceso: Asegúrate de que el proceso tiene permisos de lectura y ejecución para el
+directorio objetivo; de lo contrario, chdir fallará con un error EACCES.
+.- Directorios Relativos vs Absolutos: Usar rutas absolutas es más confiable, ya que las rutas
+relativas dependen del directorio de trabajo actual.
+.- Impacto Global: Cambiar el directorio de trabajo con chdir afecta a todo el proceso, incluidas
+las librerías y funciones que dependan del directorio actual.
+.- Compatibilidad: chdir es una función estándar en sistemas Unix-like, pero su uso puede no estar
+disponible en sistemas no compatibles con POSIX.
+
+8. Manejo de Errores.
+El manejo adecuado de errores es crucial al usar chdir para garantizar que el programa pueda
+recuperarse o notificar al usuario si el cambio de directorio falla.
+Ejemplo de manejo de errores:
+
+if (chdir("/ruta/no/existe") == -1)
+{
+	perror("Error al cambiar el directorio");
+	// O realizar alguna acción alternativa
+}

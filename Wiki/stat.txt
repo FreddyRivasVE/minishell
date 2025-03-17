@@ -1,0 +1,118 @@
+1. stat.
+Es una función de bajo nivel que se utiliza para obtener información detallada sobre un archivo o
+directorio, como sus permisos, tamaño, marcas de tiempo, entre otros. Es parte de las llamadas al
+sistema disponibles en sistemas Unix y Unix-like, y está definida en <sys/stat.h>. Esta función es
+fundamental para interactuar y gestionar archivos en el sistema operativo.
+
+2. Sintaxis.
+
+int stat(const char *pathname, struct stat *statbuf);
+
+.- Parámetros.
+	.- pathname: Especifica la ruta del archivo o directorio cuyo estado se desea consultar.
+	Puede ser una ruta absoluta o relativa.
+	.- statbuf: Es un puntero a una estructura struct stat que se rellena con información
+	sobre el archivo o directorio especificado.
+
+.- Estructura struct stat.
+La estructura struct stat se define en <sys/stat.h> y contiene los siguientes campos importantes:
+
+struct stat
+{
+    dev_t     st_dev;     // ID del dispositivo donde reside el archivo
+    ino_t     st_ino;     // Número de inodo
+    mode_t    st_mode;    // Tipo de archivo y permisos
+    nlink_t   st_nlink;   // Número de enlaces duros
+    uid_t     st_uid;     // ID del propietario
+    gid_t     st_gid;     // ID del grupo
+    dev_t     st_rdev;    // ID del dispositivo (para archivos especiales)
+    off_t     st_size;    // Tamaño del archivo en bytes
+    blksize_t st_blksize; // Tamaño de bloque preferido para operaciones de E/S
+    blkcnt_t  st_blocks;  // Número de bloques asignados
+    time_t    st_atime;   // Última vez que se accedió al archivo
+    time_t    st_mtime;   // Última vez que se modificó el archivo
+    time_t    st_ctime;   // Última vez que se cambió el estado del archivo
+};
+
+3. Valor de Retorno.
+.- 0: Indica que la llamada se ejecutó correctamente y la información se almacenó en statbuf.
+.- -1: Indica que ocurrió un error, y se establece la variable global errno para detallar el
+motivo del error.
+
+4. Errores Comunes.
+.- ENOENT: El archivo especificado no existe.
+.- EACCES: No se tienen permisos para acceder al archivo o directorio.
+.- ELOOP: Demasiados enlaces simbólicos en la resolución del camino.
+.- ENAMETOOLONG: La ruta especificada es demasiado larga.
+.- ENOMEM: No hay suficiente memoria disponible para completar la operación.
+
+5. Ejemplo Básico.
+El siguiente ejemplo muestra cómo utilizar stat para obtener información sobre un archivo:
+
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+int main()
+{
+	struct stat st;
+	// Consultar información del archivo
+	if (stat("archivo.txt", &st) == 0)
+	{
+		printf("Tamaño del archivo: %lld bytes\n", (long long) st.st_size);
+		printf("Última modificación: %ld\n", st.st_mtime);
+		printf("Número de enlaces duros: %ld\n", (long) st.st_nlink);
+		printf("Propietario (UID): %d\n", st.st_uid);
+		printf("Permisos: %o\n", st.st_mode & 0777);
+	}
+	else
+	{
+		perror("Error al consultar información del archivo");
+	}
+	return 0;
+}
+
+6. Campo st_mode y Tipo de Archivo.
+El campo st_mode contiene tanto los permisos del archivo como su tipo. Puedes utilizar macros
+definidas en <sys/stat.h> para analizar el tipo de archivo:
+.- S_ISREG(st_mode): Verifica si es un archivo regular.
+.- S_ISDIR(st_mode): Verifica si es un directorio.
+.- S_ISCHR(st_mode): Verifica si es un dispositivo de caracteres.
+.- S_ISBLK(st_mode): Verifica si es un dispositivo de bloques.
+.- S_ISFIFO(st_mode): Verifica si es un archivo FIFO (cola).
+.- S_ISLNK(st_mode): Verifica si es un enlace simbólico.
+.- S_ISSOCK(st_mode): Verifica si es un socket.
+
+Ejemplo:
+
+if (S_ISREG(st.st_mode))
+{
+	printf("Es un archivo regular\n");
+}
+else if (S_ISDIR(st.st_mode))
+{
+	printf("Es un directorio\n");
+}
+
+7. Casos de Uso Comunes.
+.- verificar Existencia de Archivos: Antes de abrir o modificar un archivo, se puede usar stat
+para confirmar que existe y obtener información sobre su estado.
+.- Comprobar Tipos de Archivos: Útil para distinguir entre directorios, archivos regulares o
+enlaces simbólicos en programas que navegan por el sistema de archivos.
+.- Obtener Fechas y Tamaños: stat es ideal para analizar cuándo un archivo fue modificado por
+última vez o determinar su tamaño.
+.- Estadísticas Avanzadas: Recopilar información detallada para auditorías o scripts avanzados de
+sistemas de archivos.
+
+8. Otras Funciones Relacionadas.
+.- lstat: Similar a stat, pero si el archivo es un enlace simbólico, devuelve información sobre el
+enlace en lugar del archivo al que apunta.
+.- fstat: Similar a stat, pero opera en descriptores de archivo abiertos en lugar de rutas.
+
+9. Consideraciones Importantes.
+.- Permisos: Asegúrate de que el proceso tenga permisos adecuados para consultar la información del
+archivo o directorio objetivo.
+.- Compatibilidad: stat es ampliamente compatible en sistemas Unix-like, pero su comportamiento
+puede variar ligeramente dependiendo del sistema de archivos.
+.- Tamaños Grandes: En sistemas modernos, usa tipos como off_t y macros como lld para manejar
+archivos grandes de manera segura.
