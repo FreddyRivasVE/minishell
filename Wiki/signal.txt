@@ -1,0 +1,100 @@
+1. signal.
+Es una función de la biblioteca estándar que permite establecer un manejador de señales para
+capturar y responder a ciertas señales que el sistema operativo envía a los procesos. Las señales
+son interrupciones asíncronas que se utilizan para notificar a un proceso sobre eventos
+específicos, como errores, interrupciones del usuario (Ctrl+C) o el final de un temporizador.La
+función está definida en <signal.h> y es fundamental para gestionar señales en sistemas Unix y
+Unix-like.
+
+2. Sintaxis.
+
+void (*signal(int signum, void (*handler)(int)))(int);
+
+.- Parámetros.
+	.- signum: Especifica el número de la señal que se va a manejar. Las señales están
+	predefinidas en <signal.h> y tienen nombres como:
+		.- SIGINT: Señal de interrupción del teclado (Ctrl+C).
+		.- SIGTERM: Solicitud para terminar el proceso.
+		.- SIGKILL: Termina el proceso de forma forzada (no se puede capturar o ignorar).
+		.- SIGSEGV: Error de segmentación (violación de acceso a memoria).
+		.- SIGALRM: Señal enviada cuando un temporizador expira.
+		.- SIGCHLD: Se envía al padre cuando un proceso hijo termina.
+	.- handler: Puntero a una función de manejo de señales que ejecutará el código necesario
+	cuando la señal sea recibida. Puede tomar los siguientes valores:
+		.- Una función definida por el usuario, que debe tener la firma void handler(int)
+		para manejar la señal.
+		.- SIG_IGN: Ignorar la señal.
+		.- SIG_DFL: Restaurar el comportamiento por defecto de la señal.
+
+3. Retorno.
+Devuelve el manejador anterior asociado con la señal especificada en signum, o SIG_ERR si ocurre un
+error.
+
+4. Ejemplo Básico.
+
+#include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
+
+void manejador(int signo)
+{
+	printf("Señal recibida: %d\n", signo);
+}
+
+int main()
+{
+	// Establecer un manejador para SIGINT
+	signal(SIGINT, manejador);
+	printf("Presiona Ctrl+C para enviar SIGINT...\n");
+	while (1)
+	{
+		printf("Trabajando...\n");
+		sleep(2); // Simular trabajo
+	}
+	return 0;
+}
+.- En este ejemplo: Se establece un manejador personalizado manejador para capturar la señal
+SIGINT.
+.- Al presionar Ctrl+C, se invoca el manejador y se imprime un mensaje en la consola.
+
+5. Casos de Uso Comunes.
+.- Manejo de Interrupciones del Usuario:
+	.- Por ejemplo, capturar SIGINT para limpiar recursos antes de terminar.
+.- Gestión de Eventos Asíncronos: Responder a temporizadores (SIGALRM) o terminar hijos (SIGCHLD).
+.- Implementación de Sistemas Resilientes: Ignorar señales no críticas o restaurar el 
+comportamiento predeterminado.
+
+6. Manejo de Señales Críticas.
+.- Ignorar una Señal:
+	signal(SIGTERM, SIG_IGN); // Ignorar SIGTERM
+.- Restaurar Comportamiento Predeterminado:
+	signal(SIGTERM, SIG_DFL); // Restaurar comportamiento para SIGTERM
+.- Uso de Señales para Temporizadores:
+	#include <signal.h>
+	#include <unistd.h>
+	void alarma(int signo)
+	{
+		printf("¡El temporizador expiró!\n");
+	}
+	int main()
+	{
+		signal(SIGALRM, alarma);
+		alarm(5); // Establecer temporizador para 5 segundos
+		printf("Esperando señal SIGALRM...\n");
+		pause(); // Espera a que llegue una señal
+		return 0;
+	}
+
+7. Advertencias y Consideraciones.
+.- Reentrancia del Manejador: Las funciones usadas en un manejador deben ser seguras para ser
+reentrantes, ya que las señales pueden interrumpir el flujo normal del programa.
+Evitar funciones no seguras como printf dentro de un manejador de señales.
+.- Compatibilidad: signal tiene limitaciones en sistemas modernos; se recomienda usar alternativas
+como sigaction para una gestión más robusta y flexible de señales.
+.- Señales Incontrolables: Algunas señales, como SIGKILL o SIGSTOP, no pueden ser capturadas,
+bloqueadas o ignoradas.
+
+8. Limitaciones de signal.
+Si bien signal es fácil de usar, tiene desventajas en sistemas modernos debido a comportamientos
+inconsistentes. Por ello, se prefieren funciones como sigaction, que ofrece más control sobre la
+gestión de señales.

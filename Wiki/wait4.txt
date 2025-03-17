@@ -1,0 +1,115 @@
+1. wait4.
+Es una función del sistema que combina las funcionalidades de waitpid y wait3, pero con mayor
+flexibilidad. Se utiliza para esperar el cambio de estado de un proceso hijo específico y, al
+mismo tiempo, recopilar estadísticas detalladas sobre el uso de recursos del proceso hijo que
+finalizó. Al igual que wait3, está disponible principalmente en sistemas Unix y Unix-like (como
+Linux) y está definida en <sys/wait.h>.
+
+2. Sintaxis.
+
+pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
+
+.- Parámetros.
+	.- pid: Determina el proceso hijo al que se espera:
+		.- > 0: Espera al proceso hijo cuyo PID coincide con este valor.
+		.- -1: Equivalente a wait, espera a cualquier proceso hijo.
+		.- 0: Espera a cualquier hijo que pertenezca al mismo grupo de procesos que el
+		proceso llamante.
+		.- < -1: Espera a cualquier hijo que pertenezca al grupo de procesos especificado
+		(valor absoluto del PID).
+	.- status: Un puntero a un entero donde se almacenará información sobre cómo terminó el
+	proceso hijo. Este parámetro puede ser analizado mediante macros como WIFEXITED y
+	WEXITSTATUS. Si no se necesita, puede ser NULL.
+	.- options: Modifica el comportamiento de la función. Los valores comunes incluyen:
+		.- 0: Comportamiento por defecto, espera a que el proceso hijo termine.
+		.- WNOHANG: Retorna inmediatamente si no hay ningún hijo que haya cambiado de
+		estado.
+		.- WUNTRACED: Retorna si un hijo ha sido detenido por una señal.
+		.- rusage: Un puntero a una estructura struct rusage, que será rellenada con
+		estadísticas sobre el uso de recursos del proceso hijo. Si no se necesita, puede
+		ser NULL.
+	.- Estructura struct rusage.
+	La estructura struct rusage, definida en <sys/resource.h>, contiene información detallada
+	sobre los recursos consumidos por el proceso hijo. Incluye datos como:
+		.- ru_utime: Tiempo de CPU usado en modo usuario.
+		.- ru_stime: Tiempo de CPU usado en modo sistema.
+		.- ru_maxrss: Máximo uso de memoria residente.
+		.- ru_minflt: Número de fallos menores de página.
+		.- ru_majflt: Número de fallos mayores de página.
+		.- Otros campos relacionados con entradas/salidas de disco y consumo de recursos.
+
+3. Valor de Retorno.
+.- > 0: Devuelve el PID del proceso hijo que terminó o cambió de estado.
+.- 0: Si se usa la opción WNOHANG, indica que no hay procesos hijos que hayan cambiado de estado.
+.- -1: Indica un error y establece la variable global errno.
+
+4. Ejemplo de Uso Básico.
+
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/resource.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	pid_t pid = fork();
+	
+	if (pid == -1)
+	{
+		perror("Error al crear el proceso hijo");
+		return 1;
+	}
+	else if (pid == 0)
+	{
+		// Código del hijo
+		printf("Soy el proceso hijo con PID: %d\n", getpid());
+		sleep(2); // Simula trabajo
+		exit(42); // Finaliza con un código de salida
+	}
+	else
+	{
+		// Código del padre
+		int status;
+		struct rusage usage;
+		pid_t hijo_terminado = wait4(pid, &status, 0, &usage);
+		if (hijo_terminado == -1)
+		{
+			perror("Error en wait4");
+			return 1;
+		}
+		printf("El proceso hijo con PID %d ha terminado.\n", hijo_terminado);
+		if (WIFEXITED(status))
+		{
+			printf("Terminó normalmente con código de salida: %d\n",
+			WEXITSTATUS(status));
+		}
+		// Mostrar estadísticas del uso de recursos
+		printf("Tiempo de CPU en modo usuario: %ld.%06ld segundos\n",
+		usage.ru_utime.tv_sec, usage.ru_utime.tv_usec);
+		printf("Tiempo de CPU en modo sistema: %ld.%06ld segundos\n",
+		usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
+	}
+	return 0;
+}
+
+5. Casos de Uso Comunes.
+.- Monitorización de Recursos: wait4 es particularmente útil en aplicaciones que requieren conocer
+el consumo de recursos de sus procesos hijos.
+.- Gestión de Procesos Hijos: Es una herramienta poderosa para sincronizar la ejecución de procesos
+en aplicaciones multiproceso.
+.- Evitar Procesos Zombie: Como wait y waitpid, wait4 ayuda a evitar procesos hijos que queden en
+estado zombie.
+
+6. Errores Comunes.
+.- ECHILD: No hay procesos hijos vivos para esperar.
+.- EINTR: La llamada a wait4 fue interrumpida por una señal antes de que un proceso hijo cambiara
+de estado.
+.- EINVAL: Parámetros inválidos, como valores incorrectos para options.
+
+7. Consideraciones Importantes.
+.- Portabilidad: Aunque wait4 es poderosa, no está incluida en el estándar POSIX, lo que significa
+que podría no estar disponible en todos los sistemas.
+.- Uso Eficiente de Recursos: Proporciona un mecanismo compacto para esperar y monitorear procesos
+hijos, evitando la necesidad de combinar múltiples llamadas al sistema (waitpid + getrusage).

@@ -1,0 +1,140 @@
+1. wait.
+Es una llamada al sistema utilizada para que un proceso padre espere a que uno o más de sus
+procesos hijos terminen su ejecución. Es parte de las herramientas básicas para gestionar la
+sincronización de procesos en sistemas Unix y Unix-like (como Linux). La función está definida en
+<sys/types.h> y <sys/wait.h>.
+
+2. Sintaxis.
+
+pid_t wait(int *status);
+
+.- Parámetros.
+	.- status: Un puntero a un entero donde se almacenará información sobre cómo terminó el
+proceso hijo (por ejemplo, si finalizó correctamente o debido a una señal). Puede ser NULL si no
+se necesita esta información.
+
+3. Valor de Retorno.
+.- Devuelve el PID (identificador del proceso) del proceso hijo que terminó.
+.- Si no hay procesos hijos que esperen, devuelve -1 y establece la variable global errno para
+indicar el tipo de error.
+
+4. Funcionamiento.
+.- El proceso padre se "bloquea" (queda en espera) hasta que uno de sus procesos hijos termina.
+.- Cuando un hijo finaliza, el padre recibe información sobre la terminación del hijo, almacenada
+en el entero apuntado por status.
+.- La información de terminación puede ser analizada con macros específicas como WIFEXITED y
+WEXITSTATUS.
+
+5. Ejemplo Básico.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+int main()
+{
+	pid_t pid = fork();
+	if (pid == -1)
+	{
+		perror("Error al crear el proceso hijo");
+		return 1;
+	}
+	else if (pid == 0)
+	{
+		// Código del proceso hijo
+		printf("Soy el proceso hijo con PID: %d\n", getpid());
+		sleep(2); // Simular trabajo del proceso hijo
+		exit(42); // Terminar con un código de salida
+	}
+	else
+	{
+		// Código del proceso padre
+		int status;
+		pid_t hijo_terminado = wait(&status);
+		if (hijo_terminado == -1)
+		{
+			perror("Error en wait");
+			return 1;
+		}
+		printf("El proceso hijo con PID %d ha terminado.\n", hijo_terminado);
+		if (WIFEXITED(status))
+		{
+			printf("El proceso hijo terminó normalmente con código de salida: %d\n",
+			WEXITSTATUS(status));
+		}
+		else if (WIFSIGNALED(status))
+		{
+			printf("El proceso hijo fue terminado por una señal: %d\n", WTERMSIG(status));
+		}
+	}
+	return 0;
+}
+
+6. Macros para Analizar el Estado.
+Las macros definidas en <sys/wait.h> permiten interpretar el contenido de status:
+.- WIFEXITED(status): Verifica si el hijo terminó normalmente (por exit o finalización del
+programa).
+.- WEXITSTATUS(status): Obtiene el código de salida del hijo (solo si WIFEXITED es verdadero).
+.- WIFSIGNALED(status): Verifica si el hijo fue terminado por una señal.
+.- WTERMSIG(status): Obtiene el número de la señal que terminó el proceso hijo.
+.- WIFSTOPPED(status): Verifica si el hijo fue detenido por una señal.
+.- WSTOPSIG(status): Obtiene la señal que detuvo al hijo.
+
+7. Ejemplo Avanzado: Múltiples Hijos.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+int main()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		pid_t pid = fork();
+		
+		if (pid == -1)
+		{
+			perror("Error al crear proceso hijo");
+			return 1;
+		}
+		else if (pid == 0)
+		{
+			// Código del hijo
+			printf("Soy el hijo %d con PID: %d\n", i, getpid());
+			sleep(2 + i); // Simular trabajo
+			exit(10 + i); // Código de salida diferente para cada hijo
+		}
+	}
+	// Código del padre
+	for (int i = 0; i < 3; i++)
+	{
+		int status;
+		
+		pid_t hijo_terminado = wait(&status);
+		if (hijo_terminado != -1)
+		{
+			if (WIFEXITED(status))
+			{
+				printf("Hijo con PID %d terminó con código de salida %d\n",
+				hijo_terminado, WEXITSTATUS(status));
+			}
+		}
+	}
+	return 0;
+}
+
+8. Errores Comunes.
+.- ECHILD: El proceso no tiene hijos vivos para esperar.
+.- EINTR: La llamada a wait fue interrumpida por una señal.
+
+9. Consideraciones Importantes.
+.- Zombies: Si un proceso hijo termina y el padre no llama a wait, el hijo entra en un estado
+zombie. Esto puede agotar los recursos del sistema si no se maneja correctamente.
+.- Sincronización: Usar wait es crucial para coordinar procesos padre e hijo, especialmente en
+programas multiproceso.
+.- Combinación con fork y exec: wait es comúnmente utilizado junto con fork y exec para gestionar
+procesos secundarios que ejecutan otros programas.

@@ -1,0 +1,109 @@
+1. wait3
+Es una función proporcionada por sistemas operativos Unix y Unix-like (como Linux) que combina las
+funcionalidades de wait y waitpid, pero con mayor flexibilidad. Además de esperar a que un proceso
+hijo termine, también permite recolectar información adicional sobre el uso de recursos del proceso
+hijo que terminó. Esta función está definida en <sys/wait.h>.
+
+2. Sintaxis.
+
+pid_t wait3(int *status, int options, struct rusage *rusage);
+
+.- Parámetros.
+	.- status: Un puntero a un entero donde se almacenará información sobre cómo terminó el
+	proceso hijo. Si no se necesita esta información, se puede pasar como NULL.
+	.- options: Especifica cómo debe comportarse la función. Al igual que en waitpid, puede
+	tomar valores como:
+		.- 0: Comportamiento por defecto, espera hasta que un proceso hijo finalice.
+		.- WNOHANG: No bloquea al proceso padre; si ningún hijo ha terminado, retorna
+		inmediatamente.
+		.- WUNTRACED: También retorna si un hijo ha sido detenido.
+		.- rusage: Un puntero a una estructura struct rusage que será rellenada con
+		estadísticas sobre el uso de recursos del proceso hijo que terminó. Si no se
+		necesita, puede ser NULL.
+
+3. Estructura struct rusage.
+La estructura struct rusage contiene información sobre el uso de recursos por parte del proceso
+hijo. Está definida en <sys/resource.h> y puede incluir datos como:
+.- ru_utime: Tiempo de CPU usado en modo usuario.
+.- ru_stime: Tiempo de CPU usado en modo sistema.
+.- ru_maxrss: Uso máximo de memoria residente.
+Otros campos sobre estadísticas de uso de recursos, como fallos de página, entradas/salidas de
+disco, etc.
+
+4. Valor de Retorno.
+.- Retorna el PID del proceso hijo que terminó o cambió de estado.
+.- Si no hay procesos hijos que esperar:
+	.- Con la opción WNOHANG, retorna 0.
+	.- Sin la opción WNOHANG, retorna -1 y establece la variable errno.
+
+5. Ejemplo de Uso Básico.
+
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/resource.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	pid_t pid = fork();
+	
+	if (pid == -1)
+	{
+		perror("Error al crear el proceso hijo");
+		return 1;
+	}
+	else if (pid == 0)
+	{
+		// Código del proceso hijo
+		printf("Soy el proceso hijo con PID %d\n", getpid());
+		sleep(2); // Simular trabajo
+		exit(0);  // Finaliza exitosamente
+	}
+	else
+	{
+		// Código del proceso padre
+		int status;
+		struct rusage usage;
+		pid_t hijo_terminado = wait3(&status, 0, &usage);
+		if (hijo_terminado == -1)
+		{
+			perror("Error en wait3");
+			return 1;
+		}
+		printf("El proceso hijo con PID %d ha terminado.\n", hijo_terminado);
+		if (WIFEXITED(status))
+		{
+			printf("Terminó con código de salida: %d\n", WEXITSTATUS(status));
+		}
+		// Mostrar estadísticas del hijo
+		printf("Tiempo de CPU en modo usuario: %ld.%06ld segundos\n",
+		usage.ru_utime.tv_sec, usage.ru_utime.tv_usec);
+		printf("Tiempo de CPU en modo sistema: %ld.%06ld segundos\n",
+		usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
+	}
+	return 0;
+}
+
+6. Casos de Uso Comunes.
+.- Recolección de Recursos: wait3 permite obtener estadísticas detalladas sobre cómo un proceso
+hijo utilizó los recursos del sistema.
+.- Evitar Procesos Zombie: Similar a wait y waitpid, se utiliza para limpiar procesos hijos
+terminados.
+.- Aplicaciones Críticas de Rendimiento: Útil en programas que requieren un monitoreo detallado
+del uso de recursos por parte de procesos secundarios.
+
+7. Errores Comunes.
+.- ECHILD: No hay procesos hijos vivos para esperar.
+.- EINTR: La llamada a wait3 fue interrumpida por una señal.
+.- Parámetros Nulos: Pasar valores incorrectos o NULL en los parámetros necesarios.
+
+8. Consideraciones Importantes.
+.- Flexibilidad: Al combinar la funcionalidad de waitpid con el monitoreo de recursos, wait3 es
+especialmente útil en sistemas donde el rendimiento es una prioridad.
+.- Portabilidad: wait3 no es estándar POSIX, por lo que puede no estar disponible en todos los
+sistemas. En su lugar, se puede utilizar waitpid junto con otras herramientas para medir el uso de
+recursos (como getrusage).
+.- Sincronización de Procesos: Al igual que otras funciones de espera, es importante manejar
+adecuadamente las condiciones de carrera y la sincronización entre procesos.

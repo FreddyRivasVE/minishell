@@ -1,0 +1,142 @@
+1. sigaction.
+Es una función avanzada y flexible para gestionar señales. Es una mejora sobre la función básica
+signal, ya que permite un mayor control sobre el comportamiento de los manejadores de señales y
+ofrece opciones para configurar cómo se manejan las señales en un proceso. Está definida en
+<signal.h> y es parte del estándar POSIX, lo que la hace más adecuada y confiable para aplicaciones
+modernas.
+
+2. Sintaxis.
+
+int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
+
+.- Parámetros.
+	.- signum: Especifica la señal que se desea manejar o configurar. Las señales comunes
+	incluyen:
+		.- SIGINT: Interrupción del teclado (Ctrl+C).
+		.- SIGTERM: Señal para terminar el proceso.
+		.- SIGCHLD: Señal enviada al padre cuando un hijo termina.
+		.- SIGALRM: Señal enviada por un temporizador.
+	.- act: Es un puntero a una estructura struct sigaction que define cómo manejar la señal
+	especificada en signum.
+	.- oldact: Es un puntero a una estructura struct sigaction donde se almacenará la acción
+	previamente asociada a la señal. Si no se necesita recuperar esta información, se puede
+	pasar NULL.
+
+.- Estructura struct sigaction.
+La estructura struct sigaction, definida en <signal.h>, contiene los campos para especificar el
+comportamiento deseado para la señal:
+	struct sigaction
+	{
+		void (*sa_handler)(int);    // Manejador de la señal (similar a signal)
+		void (*sa_sigaction)(int, siginfo_t *, void *); // Manejador avanzado
+		sigset_t sa_mask;           // Máscara de señales a bloquear durante el manejo
+		int sa_flags;               // Flags que modifican el comportamiento
+		void (*sa_restorer)(void);  // Función para restaurar el contexto (obsoleto)
+	};
+.- Campos Importantes.
+	.- sa_handler y sa_sigaction: sa_handler: Define una función manejadora básica para la
+	señal.
+	.- sa_sigaction: Define un manejador más avanzado que puede recibir información adicional
+	sobre la señal.
+Solo uno de estos campos debe ser configurado, dependiendo de si se quiere un manejo básico o avanzado.
+
+	.- sa_mask: Especifica un conjunto de señales que se deben bloquear mientras el manejador
+	está ejecutándose.
+	.- sa_flags: Modifica el comportamiento del manejador. Algunos valores comunes son:
+		.- SA_RESTART: Reintenta automáticamente ciertas llamadas al sistema si son
+		interrumpidas por la señal.
+		.- SA_SIGINFO: Utiliza el manejador avanzado definido en sa_sigaction.
+		.- SA_NOCLDWAIT: Impide que los procesos hijos generen estados zombie.
+
+3. Valor de Retorno.
+.- Devuelve 0 si se configura exitosamente la señal.
+.- Devuelve -1 si ocurre un error y establece la variable global errno.
+
+4. Ejemplo Básico.
+A continuación, un ejemplo básico que captura la señal SIGINT (Ctrl+C) e imprime un mensaje 
+personalizado:
+
+#include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
+
+void manejador(int signo)
+{
+	printf("Señal capturada: %d (SIGINT)\n", signo);
+}
+
+int main()
+{
+	struct sigaction sa;
+	sa.sa_handler = manejador;           // Asignar el manejador de señales
+	sa.sa_flags = 0;                     // No utilizar opciones avanzadas
+	sigemptyset(&sa.sa_mask);            // No bloquear señales adicionales
+	// Configurar SIGINT para usar este manejador
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+	{
+		perror("Error al configurar sigaction");
+		return 1;
+	}
+	printf("Presiona Ctrl+C para capturar la señal...\n");
+	while (1)
+	{
+		printf("Trabajando...\n");
+		sleep(2); // Simular trabajo
+	}
+	return 0;
+}
+
+5. Ejemplo Avanzado con SA_SIGINFO.
+Este ejemplo utiliza sa_sigaction para capturar información detallada de la señal recibida:
+
+#include <stdio.h>
+#include <signal.h>
+#include <string.h>
+#include <unistd.h>
+
+void manejador_avanzado(int signo, siginfo_t *info, void *contexto)
+{
+	printf("Señal capturada: %d\n", signo);
+	printf("Enviada por el proceso con PID: %d\n", info->si_pid);
+}
+
+int main()
+{
+	struct sigaction sa;
+	sa.sa_flags = SA_SIGINFO;            // Habilitar manejador avanzado
+	sa.sa_sigaction = manejador_avanzado;
+	sigemptyset(&sa.sa_mask);            // No bloquear señales adicionales
+	// Configurar SIGUSR1 para usar este manejador
+	if (sigaction(SIGUSR1, &sa, NULL) == -1)
+	{
+		perror("Error al configurar sigaction");
+		return 1;
+	}
+	printf("Envíame la señal SIGUSR1 usando `kill -SIGUSR1 %d`\n", getpid());
+	while (1)
+	{
+		sleep(1); // Esperar señales
+	}
+	return 0;
+}
+
+6. Casos de Uso Comunes.
+.- Manejo Detallado de Señales: Responder de manera específica a eventos del sistema, como
+interrupciones del usuario, temporizadores o finalización de hijos.
+.- Evitar Problemas de Reentrancia: Usar la máscara de señales (sa_mask) para bloquear señales
+conflictivas mientras se ejecuta un manejador.
+.- Configuración de Señales Personalizadas: Usar SA_SIGINFO para obtener información adicional,
+como el PID del proceso que envió la señal.
+
+7. Errores Comunes.
+.- EINVAL: La señal especificada en signum es inválida.
+.- ENOMEM: No hay suficiente memoria para completar la operación.
+.- Configuración Incorrecta: Definir tanto sa_handler como sa_sigaction, lo cual es un error.
+
+8. Limitaciones y Consideraciones.
+.- Compatibilidad: sigaction es parte del estándar POSIX, por lo que es más confiable y preferible
+frente a signal en sistemas modernos.
+.- No Todas las Señales Son Maneables: Señales como SIGKILL y SIGSTOP no pueden ser capturadas,
+bloqueadas ni ignoradas.
+.- Funciones Reentrantes: Los manejadores no deben usar funciones no seguras para señales, como
+printf, porque pueden causar resultados no definidos si son interrumpidas.
