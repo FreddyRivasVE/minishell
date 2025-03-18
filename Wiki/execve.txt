@@ -1,0 +1,124 @@
+1. execve.
+Es una llamada al sistema que se utiliza para reemplazar el programa en ejecución de un proceso con
+un nuevo programa. Es una de las funciones del conjunto exec (como execl, execv, etc.), pero es la
+más generalizada y versátil. Está definida en <unistd.h> y es estándar en sistemas Unix y
+Unix-like.
+Cuando se invoca execve, el programa actual es reemplazado completamente por un nuevo programa, y
+el proceso continúa ejecutándose como si hubiera iniciado el nuevo programa desde el principio. El
+proceso no regresa al programa original después de ejecutar execve.
+
+2. Sintaxis.
+
+int execve(const char *pathname, char *const argv[], char *const envp[]);
+
+.- Parámetros.
+	.- pathname: Es la ruta al archivo ejecutable que se desea ejecutar. Puede ser una ruta
+	absoluta (por ejemplo, /bin/ls) o relativa (por ejemplo, ./programa).
+	.- argv: Es un arreglo de cadenas que contiene los argumentos que se pasarán al programa
+	nuevo.
+		.- El primer elemento (argv[0]) generalmente es el nombre del programa (aunque no
+		es obligatorio que coincida con el nombre real).
+		.- Este arreglo debe terminar con un puntero NULL para indicar el fin de los
+		argumentos.
+	.- envp: Es un arreglo de cadenas que contiene las variables de entorno que se pasarán al
+	nuevo programa. Este arreglo también debe terminar con un puntero NULL.
+
+3. Valor de Retorno.
+.- No debería regresar:
+	.- Si execve se ejecuta con éxito, el programa en ejecución es reemplazado y nunca retorna.
+.- En caso de error:
+	.- Retorna -1 y establece la variable global errno con el código del error.
+
+4. Errores Comunes.
+.- EACCES: No se tienen permisos adecuados para ejecutar el archivo.
+.- EFAULT: Uno de los punteros proporcionados (pathname, argv o envp) apunta fuera del espacio de
+direcciones accesible.
+.- ENOENT: El archivo especificado no existe o la ruta no es válida.
+.- EINVAL: Algún argumento es inválido.
+.- ENOMEM: No hay suficiente memoria disponible para cargar el nuevo programa.
+
+5. Ejemplo Básico.
+El siguiente ejemplo muestra cómo usar execve para reemplazar el programa actual con el comando ls:
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main()
+{
+	// Ruta al ejecutable
+	const char *pathname = "/bin/ls";
+	// Argumentos (argv) para el programa nuevo
+	char *const argv[] = {"ls", "-l", "/home", NULL};
+	// Variables de entorno (envp)
+	char *const envp[] = {NULL};
+	// Llamada a execve
+	if (execve(pathname, argv, envp) == -1)
+	{
+		perror("Error al ejecutar execve");
+		return 1;
+	}
+	// Este código nunca se ejecutará si execve es exitoso
+	return 0;
+}
+.- Salida esperada:
+Este programa ejecutará el comando ls -l /home, listando el contenido del directorio /home en
+formato largo. Si execve es exitoso, el programa nunca regresa al código después de la llamada a
+execve.
+
+6. Casos de Uso Comunes.
+.- Ejecución de Comandos del Sistema: execve es útil en programas como intérpretes de comandos
+(shells), que necesitan ejecutar múltiples comandos del sistema.
+.- Gestión de Procesos Hijos: Combinado con fork, permite que el proceso hijo ejecute un programa
+diferente del proceso padre.
+.- Reemplazo Seguro: En aplicaciones multiproceso, execve asegura que el proceso actual termine
+completamente y sea reemplazado por el nuevo programa.
+
+
+7. Combinación con fork.
+Es común usar execve junto con fork para que el nuevo programa se ejecute en un proceso hijo,
+dejando intacto el programa padre:
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main()
+{
+	pid_t pid = fork();
+	if (pid == -1)
+	{
+		perror("Error al crear el proceso hijo");
+		return 1;
+	}
+	else if (pid == 0)
+	{
+		// Código del hijo: ejecutar un nuevo programa
+		char *const argv[] = {"ls", "-l", NULL};
+		char *const envp[] = {NULL};
+		execve("/bin/ls", argv, envp);
+		perror("Error al ejecutar execve");
+		return 1;
+	}
+	else
+	{
+		// Código del padre: esperar al hijo
+		wait(NULL);
+		printf("El proceso hijo ha terminado.\n");
+	}
+	return 0;
+}
+
+8. Diferencias entre la familia exec.
+.- execl y execlp: Permiten pasar los argumentos como una lista variable en lugar de un arreglo.
+.- execv y execvp: No permiten especificar variables de entorno (usan las del proceso actual).
+.- execve: Es la más flexible, ya que permite especificar tanto argumentos como variables de
+entorno.
+
+9. Consideraciones Importantes.
+.- Seguridad: Verifica cuidadosamente los parámetros (pathname, argv y envp) para evitar errores o
+problemas de seguridad.
+.- Archivos Ejecutables: Asegúrate de que el archivo especificado sea un binario ejecutable válido
+o un script con una línea #! indicando el intérprete.
+.- Reemplazo Completo: El programa actual se reemplaza completamente, por lo que todo el estado
+del proceso original se pierde.

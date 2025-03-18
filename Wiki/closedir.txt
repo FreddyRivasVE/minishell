@@ -1,0 +1,81 @@
+1. closedir.
+Es una función utilizada para cerrar un flujo de directorio abierto previamente con opendir. Es
+una llamada fundamental para liberar los recursos del sistema asociados con la exploración de un
+directorio. Está definida en la biblioteca <dirent.h> y es estándar en sistemas Unix y Unix-like.
+
+2. Sintaxis.
+
+int closedir(DIR *dirp);
+
+.- Parámetros.
+	.- dirp: Es un puntero a un flujo de directorio previamente abierto con opendir.
+
+3. Valor de Retorno.
+.- 0: Indica que el flujo de directorio fue cerrado correctamente.
+.- -1: Indica que ocurrió un error, y la variable global errno se configura para describir el
+motivo.
+
+4. Errores Comunes.
+.- EBADF: El puntero proporcionado (dirp) no corresponde a un flujo de directorio válido o ya fue
+cerrado.
+.- EFAULT: El puntero a dirp apunta fuera del espacio de direcciones accesible del proceso.
+
+5. Funcionamiento.
+.- closedir se utiliza para liberar los recursos asociados con un flujo de directorio una vez que
+no es necesario seguir explorándolo.
+.- Es fundamental cerrar los flujos de directorio para evitar fugas de recursos, especialmente en
+programas que abren múltiples directorios en bucles o recorren jerarquías de archivos.
+
+6. Ejemplo Básico.
+El siguiente ejemplo muestra cómo abrir, leer y luego cerrar un directorio utilizando opendir,
+readdir y closedir:
+
+#include <stdio.h>
+#include <dirent.h>
+
+int main()
+{
+	DIR *dir;
+	struct dirent *entrada;
+	// Abrir el directorio actual
+	dir = opendir(".");
+	if (dir == NULL)
+	{
+		perror("Error al abrir el directorio");
+		return 1;
+	}
+	printf("Contenido del directorio:\n");
+	while ((entrada = readdir(dir)) != NULL)
+	{
+		printf("%s\n", entrada->d_name); // Imprimir nombre de la entrada
+	}
+	// Cerrar el directorio
+	if (closedir(dir) == -1)
+	{
+		perror("Error al cerrar el directorio");
+		return 1;
+	}
+	printf("Directorio cerrado correctamente.\n");
+	return 0;
+}
+
+7. Casos de Uso Comunes.
+.- Liberar Recursos: Al cerrar directorios abiertos después de explorar su contenido, closedir
+garantiza que no se consuman recursos innecesarios del sistema.
+.- Cierre de Flujos en Jerarquías de Directorios: En programas recursivos que navegan por
+estructuras complejas de directorios, se necesita cerrar cada directorio abierto al finalizar su
+exploración.
+
+8. Consideraciones Importantes.
+.- Validez del Puntero: Asegúrate de que el puntero dirp proporcionado a closedir sea válido y
+haya sido retornado previamente por opendir.
+.- Fugas de Recursos: Si no cierras los flujos de directorio con closedir, podrías agotar el
+límite de descriptores de archivo del proceso, especialmente en programas que abren múltiples
+directorios en bucles.
+.- Errores Silenciosos: Es importante verificar el valor de retorno de closedir, ya que fallos
+como descriptores no válidos podrían pasar desapercibidos.
+
+9. Funciones Relacionadas.
+.- opendir: Abre un directorio para su exploración.
+.- readdir: Lee las entradas de un directorio abierto.
+.- rewinddir: Reinicia la posición de lectura dentro del flujo de directorio abierto.

@@ -1,0 +1,112 @@
+1. pipe.
+Se utiliza para crear un mecanismo de comunicación entre procesos, conocido como tubería (pipe).
+Este mecanismo permite que un proceso transmita datos a otro, ya sea en la misma dirección
+(unidireccional) o mediante un flujo controlado. Las tuberías son particularmente útiles en
+sistemas Unix y Unix-like para que los procesos compartan datos de forma eficiente, y están
+definidas en <unistd.h>.
+
+2. Sintaxis.
+
+int pipe(int pipefd[2]);
+
+.- Parámetros.
+	.- pipefd: Es un arreglo de dos enteros.
+		.- pipefd[0] representa el extremo de lectura de la tubería.
+		.- pipefd[1] representa el extremo de escritura de la tubería.
+
+3. Valor de Retorno.
+.- 0: Indica éxito en la creación de la tubería. Ahora los descriptores pipefd[0] y pipefd[1]
+están disponibles para leer y escribir respectivamente.
+.- -1: Indica que ocurrió un error, y la variable global errno se configura con el código
+correspondiente.
+
+4. Errores Comunes.
+.- EMFILE: El proceso ha alcanzado el número máximo de descriptores de archivo abiertos.
+.- ENFILE: El sistema ha alcanzado el número máximo permitido de archivos abiertos.
+.- EFAULT: La dirección del arreglo pipefd no es accesible desde el espacio de direcciones del
+proceso.
+
+5. Funcionamiento.
+.- Una tubería conecta dos descriptores de archivo, pipefd[0] (lectura) y pipefd[1] (escritura).
+.- Los datos escritos en el extremo de escritura (pipefd[1]) pueden ser leídos del extremo de
+lectura (pipefd[0]).
+.- Las tuberías son unidireccionales, lo que significa que los datos fluyen en una única dirección:
+de escritura a lectura.
+
+6. Ejemplo Básico.
+En este ejemplo, se crea una tubería que permite que un proceso hijo escriba datos y que el
+proceso padre los lea:
+
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+
+int main()
+{
+	int pipefd[2];
+	pid_t pid;
+	char buffer[128];
+	// Crear la tubería
+	if (pipe(pipefd) == -1)
+	{
+		perror("Error al crear la tubería");
+		return 1;
+	}
+	// Crear un proceso hijo
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Error al crear el proceso hijo");
+		return 1;
+	}
+	else if (pid == 0)
+	{
+		// Código del hijo: escribir en la tubería
+		close(pipefd[0]); // Cerrar extremo de lectura
+		char mensaje[] = "Hola desde el proceso hijo!";
+		write(pipefd[1], mensaje, strlen(mensaje));
+		close(pipefd[1]); // Cerrar extremo de escritura
+	}
+	else
+	{
+		// Código del padre: leer de la tubería
+		close(pipefd[1]); // Cerrar extremo de escritura
+		read(pipefd[0], buffer, sizeof(buffer));
+		printf("Mensaje recibido: %s\n", buffer);
+		close(pipefd[0]); // Cerrar extremo de lectura
+	}
+	return 0;
+}
+.- Explicación del Ejemplo
+	.- Se crea una tubería con pipe(pipefd), que devuelve dos descriptores: uno para lectura y
+	otro para escritura.
+	.- Usando fork, se crea un proceso hijo que escribe un mensaje en la tubería mediante el
+	descriptor pipefd[1].
+	.- El proceso padre lee el mensaje desde la tubería utilizando el descriptor pipefd[0].
+
+7. Consideraciones Importantes.
+.- Sincronización: Si el proceso de lectura intenta leer más datos de los que hay disponibles en
+la tubería, se bloqueará hasta que se escriban más datos o la tubería se cierre.
+.- Similarmente, el proceso de escritura se bloquea si el búfer de la tubería está lleno.
+.- Cierre de Extremos No Utilizados: Es crucial cerrar los extremos de la tubería que no se
+utilicen en cada proceso (por ejemplo, cerrar pipefd[0] en el proceso hijo si solo escribe datos).
+De lo contrario, pueden ocurrir bloqueos o fugas de recursos.
+.- Tamaño del Búfer: El tamaño de la tubería está limitado por el sistema operativo. Si se intenta
+escribir más datos de los permitidos, el proceso se bloqueará hasta que se libere espacio.
+.- Unidireccionalidad: Las tuberías estándar son unidireccionales. Si se necesita comunicación
+bidireccional, se pueden crear dos tuberías (una para cada dirección) o utilizar una herramienta
+más avanzada como sockets.
+
+8. Casos de Uso Comunes.
+.- Comunicación entre Procesos: Las tuberías son ampliamente utilizadas para que dos procesos,
+como un padre y un hijo, intercambien datos.
+.- Implementación de Shells: En las terminales y shells, las tuberías (|) conectan la salida de un
+comando con la entrada de otro.
+.- Procesamiento en Cadena: Permitir que múltiples procesos trabajen en diferentes etapas de un
+flujo de datos.
+
+9. Limitaciones.
+.- Uso Exclusivo entre Procesos Relacionados: Una tubería solo puede ser utilizada por procesos
+que tienen un ancestro común (como un padre e hijo).
+.- No Soporta Comunicación Entre Máquinas: Para comunicación entre máquinas, se necesitan
+herramientas como sockets.

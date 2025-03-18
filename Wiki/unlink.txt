@@ -1,0 +1,148 @@
+1. unlink.
+Es una función de bajo nivel que se utiliza para eliminar un archivo o reducir el número de enlaces
+duros (hard links) a un archivo en el sistema de archivos. Si el archivo en cuestión es el único 
+enlace, la función también elimina el archivo físicamente del sistema cuando todos los descriptores
+de archivo asociados se han cerrado. Está definida en <unistd.h> y es estándar en sistemas Unix y
+Unix-like.
+
+2. Sintaxis.
+
+int unlink(const char *pathname);
+
+.- Parámetros.
+	.- pathname: Especifica la ruta del archivo que se desea eliminar. Puede ser una ruta
+absoluta (por ejemplo, /home/user/archivo.txt) o relativa (por ejemplo, ../archivo.txt).
+
+3. Valor de Retorno.
+.- 0: Indica éxito. El archivo ha sido eliminado del directorio o su enlace ha sido removido.
+.- -1: Indica un error. La variable global errno se configura con el código correspondiente que
+describe el problema.
+
+4. Errores Comunes.
+.- ENOENT: El archivo especificado no existe.
+.- EACCES: No se tienen permisos suficientes para eliminar el archivo o escribir en el directorio
+donde reside el archivo.
+.- EPERM: El archivo es inmutable o está protegido contra eliminación, o es un socket activo.
+.- EISDIR: El archivo especificado es un directorio (se debe usar rmdir para eliminar directorios).
+.- EBUSY: El archivo está en uso por algún proceso o está montado.
+.- EROFS: El sistema de archivos es de solo lectura.
+.- ENOTDIR: Una parte del camino especificado en la ruta no es un directorio.
+
+5. Funcionamiento.
+.- Eliminar un enlace: unlink no elimina directamente el contenido de un archivo. En su lugar,
+elimina el enlace desde el sistema de archivos, decrementando el conteo de enlaces (link count)
+del archivo.
+.- Liberar espacio: Si el conteo de enlaces llega a cero y no hay procesos que tengan el archivo
+abierto, el espacio del archivo se libera en el disco.
+.- Descriptores abiertos: Si el archivo sigue abierto por algún proceso, unlink elimina el enlace
+del sistema de archivos, pero el archivo se sigue considerando "existente" hasta que se cierre el
+descriptor.
+
+6. Ejemplo Básico.
+A continuación, un ejemplo de cómo eliminar un archivo utilizando unlink:
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main()
+{
+	const char *archivo = "archivo.txt";
+	// Intentar eliminar el archivo
+	if (unlink(archivo) == 0)
+	{
+		printf("Archivo '%s' eliminado correctamente.\n", archivo);
+	}
+	else
+	{
+		perror("Error al eliminar el archivo");
+	}
+	return 0;
+}
+En este ejemplo:
+.- Si el archivo archivo.txt existe y se tienen permisos adecuados, se elimina del sistema.
+.- Si ocurre un error (por ejemplo, el archivo no existe), se muestra un mensaje de error con
+perror.
+
+7. Caso Avanzado: Combinación con open.
+Este ejemplo muestra cómo manejar el caso en el que el archivo sigue abierto mientras se utiliza
+unlink:
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main()
+{
+	const char *archivo = "archivo_abierto.txt";
+	// Abrir el archivo
+	int fd = open(archivo, O_CREAT | O_WRONLY, 0644);
+	if (fd == -1)
+	{
+		perror("Error al abrir el archivo");
+		return 1;
+	}
+	printf("Archivo abierto: '%s'. Descriptor: %d\n", archivo, fd);
+	// Eliminar el archivo
+	if (unlink(archivo) == 0)
+	{
+		printf("Archivo eliminado del sistema de archivos.\n");
+	}
+	else
+	{
+		perror("Error al eliminar el archivo");
+	}
+	// Esperar para observar el comportamiento antes de cerrar
+	printf("Presiona Enter para cerrar el archivo...\n");
+	getchar();
+	// Cerrar el archivo
+	if (close(fd) == 0)
+	{
+		printf("Descriptor de archivo cerrado.\n");
+	}
+	else
+	{
+		perror("Error al cerrar el archivo");
+	}
+	return 0;
+}
+En este ejemplo:
+.- El archivo se elimina del sistema de archivos con unlink, pero no se libera completamente hasta
+que se cierra el descriptor asociado.
+.- Esto demuestra que el archivo puede seguir existiendo de forma "transitoria" mientras los
+descriptores abiertos lo mantienen.
+
+8. Diferencia entre unlink y remove.
+.- unlink: Es más bajo nivel y funciona exclusivamente con archivos. No puede eliminar directorios.
+.- remove: Es una función de la biblioteca estándar (<stdio.h>) que envuelve unlink para archivos
+y utiliza rmdir para directorios.
+.- Ejemplo con remove:
+
+#include <stdio.h>
+
+int main()
+{
+	if (remove("archivo.txt") == 0)
+	{
+		printf("Archivo eliminado.\n");
+	}
+	else
+	{
+		perror("Error al eliminar el archivo");
+	}
+	return 0;
+}
+
+9. Casos de Uso Comunes.
+.- Eliminar Archivos Temporales: unlink se utiliza frecuentemente para eliminar archivos generados
+temporalmente en aplicaciones.
+.- Manejo Avanzado de Sistemas de Archivos: Usado en herramientas que manipulan directamente
+sistemas de archivos (como administradores de espacio o utilidades de limpieza).
+.- Garantizar la Seguridad: unlink asegura que los archivos eliminados no sean accesibles desde el
+sistema de archivos mientras se mantienen abiertos por procesos específicos.
+
+10. Consideraciones Importantes.
+.- No para Directorios: unlink no puede eliminar directorios; para eso, utiliza rmdir.
+.- Permisos Adecuados: Asegúrate de tener permisos de escritura en el directorio contenedor y, en
+algunos casos, de acceso al archivo.
+.- Archivos en Uso: Si el archivo está en uso, unlink puede eliminar su entrada en el sistema de
+archivos, pero el contenido no será liberado hasta que todos los descriptores estén cerrados.

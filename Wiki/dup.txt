@@ -1,0 +1,113 @@
+1. dup.
+Es una llamada al sistema que se utiliza para duplicar un descriptor de archivo existente. Esto
+significa que se crea un nuevo descriptor de archivo que apunta al mismo archivo o recurso que el
+descriptor original, compartiendo el mismo puntero de archivo y las mismas configuraciones (modo
+de acceso, posición de lectura/escritura, etc.). Está definida en <unistd.h> y es fundamental en
+sistemas Unix y Unix-like para operaciones avanzadas con descriptores de archivo.
+
+2. Sintaxis.
+
+int dup(int oldfd);
+
+.- Parámetros.
+	.- oldfd: El descriptor de archivo que se desea duplicar. Debe ser un descriptor válido,
+	como uno abierto previamente mediante open, pipe, etc.
+
+3. Valor de Retorno.
+.- Nuevo descriptor de archivo (newfd):
+	.- Si la operación es exitosa, dup devuelve el nuevo descriptor de archivo, que es el
+	menor número de descriptor disponible.
+	.- -1: Indica que ocurrió un error. La variable global errno se configura para describir
+	el error.
+
+4. Errores Comunes.
+.- EBADF: El descriptor de archivo especificado (oldfd) no es válido.
+.- EMFILE: El límite máximo de descriptores de archivo abiertos para el proceso ha sido alcanzado.
+
+5. Comportamiento.
+.- El nuevo descriptor de archivo creado por dup se comporta de la misma manera que el descriptor
+original. Ambos comparten:
+	.- La misma posición de lectura/escritura.
+	.- Las configuraciones del archivo.
+	.- Los bloqueos del archivo.
+.- Si uno de los descriptores se cierra, el otro sigue siendo válido, ya que el archivo subyacente
+solo se cierra cuando todos los descriptores asociados han sido cerrados.
+
+6. Ejemplo Básico.
+El siguiente ejemplo muestra cómo duplicar un descriptor de archivo utilizando dup y redirigir la
+salida estándar (stdout) a un archivo:
+
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+int main()
+{
+	// Abrir un archivo en modo escritura
+	int fd = open("salida.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("Error al abrir el archivo");
+		return 1;
+	}
+	// Duplicar el descriptor de archivo para usarlo en lugar de stdout
+	int newfd = dup(1); // Duplicar stdout
+	if (newfd == -1)
+	{
+		perror("Error al duplicar stdout");
+		close(fd);
+		return 1;
+	}
+	// Redirigir stdout al archivo
+	if (dup2(fd, 1) == -1)
+	{
+		perror("Error al redirigir stdout al archivo");
+		close(fd);
+		return 1;
+	}
+	// Escribir a stdout (redirigido al archivo)
+	printf("Este mensaje se escribe en el archivo 'salida.txt'.\n");
+	// Restaurar stdout
+	if (dup2(newfd, 1) == -1)
+	{
+		perror("Error al restaurar stdout");
+		close(newfd);
+		return 1;
+	}
+	close(fd);
+	close(newfd); // Cerrar el descriptor duplicado
+	printf("Este mensaje se imprime en la terminal.\n");
+	return 0;
+}
+En este ejemplo:
+.- Se redirige temporalmente la salida estándar (stdout) al archivo salida.txt.
+.- Luego se restaura la salida estándar para que vuelva a la consola.
+
+7. Relación con dup2.
+dup2 es una variante de dup que permite especificar explícitamente el número del nuevo descriptor
+de archivo. Su sintaxis es la siguiente:
+
+int dup2(int oldfd, int newfd);
+
+.- Si newfd ya está abierto, se cierra antes de ser reutilizado.
+.- Si newfd y oldfd son iguales, no se realiza ninguna operación.
+
+.- Ejemplo con dup2:
+
+dup2(fd, 1); // Redirige stdout al archivo asociado con fd
+
+8. Casos de Uso Comunes.
+.- Redirección de Entrada/Salida: dup y dup2 son fundamentales para redirigir flujos de 
+entrada/salida en programas, especialmente en shells y tuberías.
+.- Gestión de Recursos: Permite reutilizar descriptores de archivo sin necesidad de abrir un
+archivo varias veces.
+.- Duplicación para Procesos Hijos: Combinado con fork, asegura que los procesos hijos puedan
+heredar descriptores duplicados.
+
+9. Consideraciones Importantes.
+.- Fugas de Recursos: Asegúrate de cerrar todos los descriptores cuando ya no sean necesarios para
+evitar fugas de recursos.
+.- Control de Errores: Siempre verifica el valor de retorno de dup para manejar errores,
+especialmente en sistemas con límites estrictos de descriptores.
+.- Interacción con close: Cerrar el descriptor duplicado o el original no afecta al otro
+descriptor mientras uno de ellos siga abierto.
