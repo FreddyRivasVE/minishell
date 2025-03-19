@@ -6,26 +6,26 @@
 #    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/19 11:13:16 by brivera          ###   ########.fr        #
+#    Updated: 2025/03/19 17:28:52 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 LIBFT_DIR = libs/libft
 LIBFTA = $(LIBFT_DIR)/libft.a
 
-LIBS := -lreadline -Llib/libft
+LIBS = -lreadline -Llib/libft
 
-INCLUDE := -I include
+INCLUDE = -I include
 
-UNAME := $(shell uname)
+UNAME = $(shell uname)
 ifeq ($(UNAME), linux)
-	LIBS := -Llib/libft -lft -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	INCLUDE := -I/Users/$(USER)/.brew/opt/readline/include -I include
+	LIBS = -Llib/libft -lft -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
+	INCLUDE = -I/Users/$(USER)/.brew/opt/readline/include -I include
 endif
 
 SRC_DIR = src
