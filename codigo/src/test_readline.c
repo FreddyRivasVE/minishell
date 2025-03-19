@@ -6,14 +6,11 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:26:58 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/17 17:35:51 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/19 10:54:48 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "minishell.h"
 
 int	main(void)
 {
