@@ -1,0 +1,150 @@
+1. fstat.
+Es una función de bajo nivel que se utiliza para obtener información detallada sobre un archivo
+asociado a un descriptor de archivo abierto. Es similar a la función stat, pero en lugar de
+trabajar con una ruta de archivo, fstat opera directamente sobre un descriptor de archivo, que
+representa un archivo ya abierto. Está definida en la biblioteca <sys/stat.h> y es ampliamente
+utilizada en sistemas Unix y Unix-like.
+
+2. Sintaxis.
+
+int fstat(int fd, struct stat *statbuf);
+
+.- Parámetros.
+	.- fd: Es un descriptor de archivo válido, que generalmente es retornado por funciones
+	como open, dup o fileno.
+	.- Algunos descriptores de archivo comunes son:
+		.- 0 para la entrada estándar (stdin).
+		.- 1 para la salida estándar (stdout).
+		.- 2 para la salida de error estándar (stderr).
+	.- statbuf: Es un puntero a una estructura struct stat donde se almacenará la información
+	sobre el archivo asociado al descriptor fd.
+.- Estructura struct stat.
+La función fstat rellena la estructura struct stat con información sobre el archivo. Algunos de
+los campos más importantes incluyen:
+
+struct stat
+{
+    dev_t     st_dev;     // ID del dispositivo donde reside el archivo
+    ino_t     st_ino;     // Número de inodo
+    mode_t    st_mode;    // Tipo de archivo y permisos
+    nlink_t   st_nlink;   // Número de enlaces duros
+    uid_t     st_uid;     // ID del propietario
+    gid_t     st_gid;     // ID del grupo
+    dev_t     st_rdev;    // ID del dispositivo (para archivos especiales)
+    off_t     st_size;    // Tamaño del archivo en bytes
+    blksize_t st_blksize; // Tamaño preferido de bloque para operaciones de E/S
+    blkcnt_t  st_blocks;  // Número de bloques asignados
+    time_t    st_atime;   // Última vez que se accedió al archivo
+    time_t    st_mtime;   // Última vez que se modificó el archivo
+    time_t    st_ctime;   // Última vez que se cambió el estado del archivo
+};
+
+3. Valor de Retorno.
+.- 0: Indica éxito. La información sobre el archivo se almacena en statbuf.
+.- -1: Indica que ocurrió un error. La variable global errno se configura para describir el motivo
+del error.
+
+4. Errores Comunes.
+.- EBADF: El descriptor de archivo proporcionado no es válido.
+.- EFAULT: La dirección de statbuf no es accesible.
+.- EIO: Ocurrió un error de entrada/salida al leer la información del archivo.
+.- EINVAL: El descriptor de archivo está asociado a un recurso que no admite la operación.
+
+5. Ejemplo Básico.
+El siguiente ejemplo utiliza fstat para obtener información sobre un archivo previamente abierto:
+
+#include <stdio.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main()
+{
+	int fd = open("archivo.txt", O_RDONLY); // Abrir el archivo en modo solo lectura
+	if (fd == -1)
+	{
+		perror("Error al abrir el archivo");
+		return 1;
+	}
+	struct stat st;
+	if (fstat(fd, &st) == 0)
+	{
+		printf("Tamaño del archivo: %lld bytes\n", (long long) st.st_size);
+		printf("Última modificación: %ld\n", st.st_mtime);
+		printf("Número de enlaces duros: %ld\n", (long) st.st_nlink);
+		printf("Permisos: %o\n", st.st_mode & 0777);
+	}
+	else
+	{
+		perror("Error al obtener información del archivo");
+	}
+	close(fd); // Cerrar el archivo
+	return 0;
+}
+
+6. Diferencias entre stat y fstat.
+
+Característica		stat					fstat
+Operación		Trabaja con una ruta de archivo.	Opera sobre un descriptor de
+								archivo ya abierto.
+Eficiencia		Puede ser menos eficiente si el 	Más eficiente si el archivo
+			archivo no está abierto.		ya está abierto.
+Enlaces simbólicos	Proporciona información sobre		No trabaja directamente con 
+			el archivo al que apunta el enlace.	enlaces simbólicos.
+
+7. Casos de Uso Comunes.
+.- Consultar Información de Archivos Abiertos: Útil para recopilar información sobre archivos ya
+abiertos sin necesidad de conocer su ruta original.
+.- Trabajar con Entradas Estándar o Descriptores Especiales: Por ejemplo, fstat puede ser
+utilizado para verificar el tipo de archivo asociado a stdin, stdout o stderr.
+.- Auditorías del Sistema de Archivos: Permite inspeccionar atributos de archivos abiertos en
+operaciones avanzadas de sistemas de archivos.
+
+8. Ejemplo Avanzado: Verificar Tipo de Archivo.
+Este ejemplo usa fstat para determinar si un descriptor abierto corresponde a un archivo regular,
+un directorio o un dispositivo.
+
+#include <stdio.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main()
+{
+	int fd = open("archivo.txt", O_RDONLY); // Abrir el archivo
+	if (fd == -1)
+	{
+		perror("Error al abrir el archivo");
+		return 1;
+	}
+	struct stat st;
+	if (fstat(fd, &st) == 0)
+	{
+		if (S_ISREG(st.st_mode))
+		{
+			printf("Es un archivo regular\n");
+		}
+		else if (S_ISDIR(st.st_mode))
+		{
+			printf("Es un directorio\n");
+		}
+		else if (S_ISCHR(st.st_mode))
+		{
+			printf("Es un dispositivo de caracteres\n");
+		}
+	}
+	else
+	{
+		perror("Error al consultar información del archivo");
+	}
+	close(fd); // Cerrar el descriptor
+	return 0;
+}
+
+9. Consideraciones Importantes.
+.- Cierre del Descriptor: Siempre asegúrate de cerrar el descriptor de archivo con close después
+de usar fstat para evitar fugas de recursos.
+.- Permisos y Acceso: Si no tienes permisos adecuados para el archivo, fstat fallará al intentar
+acceder a su información.
+Combinación con Otras Funciones: fstat se combina frecuentemente con otras operaciones de 
+entrada/salida para gestionar eficientemente archivos abiertos.

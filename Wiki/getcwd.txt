@@ -1,0 +1,93 @@
+1. getcwd.
+Es una función que se utiliza para obtener el directorio de trabajo actual de un proceso. Esto
+significa que devuelve la ruta absoluta del directorio en el que se encuentra el programa en el
+momento en que se llama a la función. Está definida en <unistd.h> y es una herramienta común para
+trabajar con rutas y sistemas de archivos en sistemas Unix y Unix-like.
+
+2. Sintaxis.
+
+char *getcwd(char *buf, size_t size);
+
+.- Parámetros.
+	.- buf: Es un puntero a un bloque de memoria donde se almacenará la ruta del directorio de
+	trabajo actual. Si se pasa como NULL, la función asigna dinámicamente memoria suficiente
+	para almacenar la ruta, que debe ser liberada posteriormente con free.
+	.- size: Especifica el tamaño en bytes del búfer proporcionado por buf. Si se pasa un
+	valor muy pequeño para size, la función fallará.
+
+3. Valor de Retorno.
+.- En caso de éxito: Devuelve un puntero al búfer buf que contiene la ruta del directorio actual.
+Si buf se pasó como NULL, devuelve un puntero al bloque de memoria asignado dinámicamente.
+.- En caso de error: Devuelve NULL y establece la variable global errno para indicar el tipo de
+error.
+
+4. Errores Comunes.
+.- EINVAL: El valor de size es 0.
+.- ERANGE: El tamaño del búfer especificado en size es insuficiente para almacenar la ruta
+completa.
+.- EACCES: No se tienen permisos de lectura para algún componente del directorio.
+.- ENOMEM: No hay suficiente memoria disponible cuando buf es NULL.
+
+5. Ejemplo Básico.
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main()
+{
+	char buf[1024]; // Definir un búfer con tamaño suficiente
+	if (getcwd(buf, sizeof(buf)) != NULL)
+	{
+		printf("El directorio actual es: %s\n", buf);
+	}
+	else
+	{
+		perror("Error al obtener el directorio actual");
+	}
+	return 0;
+}
+
+6. Ejemplo con Asignación Dinámica.
+Si no se conoce de antemano el tamaño necesario para almacenar la ruta, se puede pasar NULL como
+parámetro buf:
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int main()
+{
+	char *buf = getcwd(NULL, 0); // Solicita memoria dinámica
+	if (buf != NULL)
+	{
+		printf("El directorio actual es: %s\n", buf);
+		free(buf); // Liberar la memoria asignada dinámicamente
+	}
+	else
+	{
+		perror("Error al obtener el directorio actual");
+	}
+	return 0;
+}
+
+7. Casos de Uso Comunes.
+.- Validar Ubicación Actual: Permite verificar el directorio de trabajo antes de realizar
+operaciones específicas como leer o escribir archivos.
+.- Construcción de Rutas Absolutas: getcwd puede usarse para construir rutas absolutas combinando
+la salida con subdirectorios o archivos.
+.- Depuración y Diagnóstico: Útil para verificar en tiempo de ejecución el contexto de ejecución
+de un proceso.
+
+8. Consideraciones Importantes.
+.- Tamaño del Búfer: Es importante especificar un tamaño suficiente para el búfer (buf) que pueda
+contener la ruta completa. En la mayoría de los sistemas, un tamaño de 1024 bytes suele ser
+suficiente, pero se pueden usar valores definidos como PATH_MAX para mayor seguridad.
+.- Manejo de Memoria: Si se utiliza asignación dinámica (buf como NULL), es obligatorio liberar la
+memoria con free para evitar fugas de memoria.
+.- Portabilidad: Aunque getcwd es estándar en sistemas Unix-like, no está disponible en algunos
+sistemas que no siguen este estándar.
+
+9. Alternativas.
+Si trabajas en entornos no compatibles con getcwd, es posible usar comandos del sistema operativo
+como pwd (a través de llamadas a system), aunque esto no es ideal en términos de seguridad y
+portabilidad.

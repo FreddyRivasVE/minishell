@@ -1,0 +1,149 @@
+1. readdir.
+Se utiliza para leer las entradas de un directorio que ha sido abierto previamente con opendir.
+Cada vez que se llama a readdir, devuelve información sobre una entrada del directorio, como el
+nombre de un archivo o subdirectorio. Está definida en la biblioteca <dirent.h> y es fundamental
+para explorar y procesar el contenido de directorios en sistemas Unix y Unix-like.
+
+2. Sintaxis.
+
+struct dirent *readdir(DIR *dirp);
+
+.- Parámetros.
+	.- dirp: Es un puntero a un flujo de directorio que fue retornado por opendir.
+
+3. Valor de Retorno.
+.- struct dirent *: Un puntero a una estructura dirent que representa la siguiente entrada del
+directorio.
+.- NULL: Si no hay más entradas en el directorio o si ocurre un error. En este caso, es necesario
+verificar la variable global errno para determinar si fue un error o simplemente se alcanzó el
+final del directorio.
+
+4. Estructura struct dirent.
+La estructura struct dirent contiene información sobre una entrada del directorio. Algunos campos
+importantes incluyen:
+
+struct dirent
+{
+	ino_t          d_ino;       // Número de inodo de la entrada
+	char           d_name[];    // Nombre de la entrada (archivo o subdirectorio)
+	unsigned char  d_type;      // Tipo de archivo (opcional, no en todos los sistemas)
+};
+Campos principales:
+.- d_name: El nombre de la entrada (como el nombre de un archivo o subdirectorio). Es una cadena
+terminada en \0.
+.- d_ino: El número de inodo asociado a la entrada del archivo.
+.- d_type (puede no estar disponible en todos los sistemas):
+	.- Representa el tipo de archivo, con valores como:
+		.- DT_REG: Archivo regular.
+		.- DT_DIR: Directorio.
+		.- DT_LNK: Enlace simbólico.
+		.- Otros valores específicos del sistema.
+
+5. Funcionamiento.
+.- readdir devuelve una entrada del directorio cada vez que se llama, comenzando desde el
+principio del directorio hasta que no hay más entradas.
+.- Es importante que opendir haya sido llamado previamente para abrir el directorio, y que se
+cierre con closedir cuando se haya terminado.
+.- Si la función retorna NULL, podría significar que se alcanzó el final del directorio (sin error)
+o que ocurrió un error.
+
+6. Ejemplo Básico.
+El siguiente ejemplo muestra cómo usar readdir para listar los nombres de las entradas en un
+directorio:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+
+int main()
+{
+	DIR *dir;
+	struct dirent *entrada;
+	// Abrir el directorio actual
+	dir = opendir(".");
+	if (dir == NULL)
+	{
+		perror("Error al abrir el directorio");
+		return 1;
+	}
+	printf("Contenido del directorio actual:\n");
+	// Leer las entradas del directorio
+	while ((entrada = readdir(dir)) != NULL)
+	{
+		printf("%s\n", entrada->d_name); // Imprimir el nombre de la entrada
+	}
+	// Cerrar el directorio
+	closedir(dir);
+	return 0;
+}
+Salida esperada:
+.- El programa mostrará los nombres de todas las entradas en el directorio actual, incluyendo
+archivos, subdirectorios y las entradas especiales . (directorio actual) y .. (directorio padre).
+
+7. Casos de Uso Comunes.
+.- Listar Contenido de un Directorio: Mostrar archivos y subdirectorios dentro de un directorio.
+.- Filtrar Archivos: Usar lógica adicional para procesar solo ciertas entradas (por ejemplo,
+archivos con una extensión específica).
+.- Explorar Jerarquías: En combinación con opendir y recursión, puedes navegar por directorios y
+subdirectorios.
+
+8. Ejemplo Avanzado: Filtrar Archivos Regulares.
+Este ejemplo filtra las entradas para mostrar únicamente archivos regulares:
+
+#include <stdio.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <string.h>
+
+int main()
+{
+	DIR *dir;
+	struct dirent *entrada;
+	struct stat statbuf;
+	dir = opendir(".");
+	if (dir == NULL)
+	{
+		perror("Error al abrir el directorio");
+		return 1;
+	}
+	printf("Archivos regulares en el directorio actual:\n");
+	while ((entrada = readdir(dir)) != NULL)
+	{
+		// Ignorar las entradas especiales "." y ".."
+		if (strcmp(entrada->d_name, ".") == 0 || strcmp(entrada->d_name, "..") == 0)
+		{
+			continue;
+		}
+		// Obtener información del archivo para verificar si es regular
+		if (stat(entrada->d_name, &statbuf) == 0 && S_ISREG(statbuf.st_mode))
+		{
+			printf("%s\n", entrada->d_name);
+		}
+	}
+	closedir(dir);
+	return 0;
+}
+
+9. Consideraciones Importantes.
+.- Permisos: El proceso debe tener permisos adecuados para leer el directorio objetivo; de lo
+contrario, opendir fallará.
+.- Finalización de readdir: Es importante comprobar si readdir retorna NULL para detectar el final
+del directorio.
+.- Cierre del Directorio: Siempre cierra el flujo del directorio con closedir para liberar
+recursos.
+.- Compatibilidad: En algunos sistemas, el campo d_type de struct dirent puede no estar
+disponible. En estos casos, puedes usar stat para obtener información adicional sobre el tipo de
+archivo.
+
+10. Limitaciones. 
+.- Entradas Especiales: Las entradas . y .. siempre aparecerán en los resultados de readdir, por
+lo que deben ser manejadas explícitamente si no son necesarias.
+.- No Soporta Escritura: readdir y las funciones relacionadas solo permiten leer el contenido de
+un directorio; no puedes modificarlo directamente.
+
+11. Funciones Relacionadas.
+.- opendir: Abre un directorio para su exploración.
+.- closedir: Cierra un flujo de directorio abierto con opendir.
+.- rewinddir: Reinicia la posición de lectura en un flujo de directorio.
+.- scandir: Proporciona un enfoque más flexible para listar directorios, con opciones para filtrar
+y ordenar las entradas.

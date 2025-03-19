@@ -1,0 +1,103 @@
+1. lstat.
+Es una función similar a stat, pero con una diferencia clave: si el archivo especificado en la
+ruta es un enlace simbólico, lstat proporciona información sobre el enlace simbólico en sí, no
+sobre el archivo al que apunta. Esto la hace muy útil cuando trabajamos con enlaces simbólicos y
+queremos inspeccionarlos directamente. Está definida en <sys/stat.h> y es estándar en sistemas
+Unix y Unix-like.
+
+2. Sintaxis.
+
+int lstat(const char *pathname, struct stat *statbuf);
+
+.- Parámetros.
+	.- pathname: Especifica la ruta del archivo o enlace simbólico que se desea inspeccionar.
+	Puede ser absoluta o relativa.
+	.- statbuf: Es un puntero a una estructura struct stat que se llenará con información
+	sobre el archivo o enlace simbólico.
+.- Estructura struct stat.
+La estructura struct stat es la misma que utiliza la función stat y contiene los siguientes
+campos importantes:
+
+struct stat
+{
+    dev_t     st_dev;     // ID del dispositivo donde reside el archivo
+    ino_t     st_ino;     // Número de inodo
+    mode_t    st_mode;    // Tipo de archivo y permisos
+    nlink_t   st_nlink;   // Número de enlaces duros
+    uid_t     st_uid;     // ID del propietario
+    gid_t     st_gid;     // ID del grupo
+    dev_t     st_rdev;    // ID del dispositivo (para archivos especiales)
+    off_t     st_size;    // Tamaño en bytes
+    blksize_t st_blksize; // Tamaño preferido del bloque de E/S
+    blkcnt_t  st_blocks;  // Número de bloques asignados
+    time_t    st_atime;   // Última vez que se accedió al archivo
+    time_t    st_mtime;   // Última vez que se modificó el archivo
+    time_t    st_ctime;   // Última vez que se cambió el estado del archivo
+};
+
+3. Valor de Retorno.
+.- 0: Indica que la llamada fue exitosa y la información del archivo o enlace simbólico se
+almacenó en statbuf.
+.- -1: Indica que ocurrió un error. Se establece la variable global errno para describir el
+problema.
+
+4. Errores Comunes.
+.- NOENT: El archivo o enlace simbólico no existe.
+.- ENOTDIR: Una parte de la ruta no es un directorio.
+.- EACCES: No se tienen permisos suficientes para acceder al archivo o enlace.
+.- ELOOP: Hay demasiados enlaces simbólicos en la resolución de la ruta.
+.- ENOMEM: No hay suficiente memoria disponible.
+.- ENAMETOOLONG: La ruta del archivo es demasiado larga.
+
+5. Ejemplo Básico.
+En este ejemplo, se utiliza lstat para mostrar información sobre un enlace simbólico y
+diferenciarlo de otros tipos de archivo:
+
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+int main()
+{
+	struct stat st;
+	// Consultar información del archivo o enlace simbólico
+	if (lstat("enlace_simbolico", &st) == 0)
+	{
+		printf("Tamaño del archivo: %lld bytes\n", (long long) st.st_size);
+		if (S_ISLNK(st.st_mode))
+		{
+			printf("Es un enlace simbólico\n");
+		}
+		else if (S_ISREG(st.st_mode))
+		{
+			printf("Es un archivo regular\n");
+		}
+		else if (S_ISDIR(st.st_mode))
+		{
+			printf("Es un directorio\n");
+		}
+	}
+	else
+	{
+		perror("Error al consultar información del archivo");
+	}
+	return 0;
+}
+
+6. Diferencia entre stat y lstat.
+.- stat: Si el archivo especificado es un enlace simbólico, devuelve información sobre el archivo
+al que apunta el enlace.
+.- lstat: Proporciona información sobre el enlace simbólico en sí, no sobre el archivo que
+referencia.
+
+7. Casos de Uso Comunes.
+.- Inspeccionar Enlaces Simbólicos: lstat es útil cuando se necesita determinar si un archivo es
+un enlace simbólico y obtener detalles sobre él.
+.- Auditoría de Sistemas de Archivos: Usado en herramientas que inspeccionan directorios,
+especialmente para resolver estructuras complejas con enlaces simbólicos.
+.- Validar Enlaces: Verificar si un enlace simbólico apunta a un archivo o está roto.
+
+8. Consideraciones Importantes.
+.- Permisos: Asegúrate de tener los permisos adecuados para el archivo o directorio objetivo.
+.- Llamadas a stat después de lstat: Si es necesario obtener información tanto del enlace simbólico
+como del archivo al que apunta, combina el uso de lstat y stat.

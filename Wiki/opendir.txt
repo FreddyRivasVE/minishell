@@ -1,0 +1,101 @@
+1. opendir.
+Es una función que se utiliza para abrir un directorio y obtener un puntero que permite acceder a
+su contenido. Es especialmente útil en sistemas Unix y Unix-like para leer y manipular archivos y
+subdirectorios dentro de un directorio. Está definida en la biblioteca <dirent.h>.
+
+2. Sintaxis.
+
+DIR *opendir(const char *name);
+
+.- Parámetros.
+	.- name: Es una cadena de caracteres que especifica la ruta al directorio que se desea
+abrir. Puede ser una ruta absoluta o relativa.
+
+3. Valor de Retorno.
+.- DIR *: Retorna un puntero de tipo DIR que representa un flujo de directorio. Este puntero se
+utiliza con otras funciones relacionadas con directorios, como readdir o closedir.
+.- NULL: Retorna NULL si ocurre un error al intentar abrir el directorio. La variable global errno
+se configura para indicar el motivo del error.
+
+4. Errores Comunes.
+.- ENOENT: El directorio especificado no existe.
+.- ENOTDIR: Parte de la ruta especificada no es un directorio.
+.- EACCES: No se tienen permisos de lectura o ejecución para acceder al directorio.
+.- ENOMEM: No hay suficiente memoria disponible para completar la operación.
+
+5. Funcionamiento.
+.- opendir abre el directorio especificado por name y devuelve un puntero a un flujo de directorio.
+Este flujo contiene información que puede ser utilizada para leer las entradas del directorio con
+funciones como readdir.
+.- El directorio se cierra utilizando la función closedir cuando ya no se necesita el flujo.
+
+6. Ejemplo Básico.
+El siguiente ejemplo muestra cómo abrir un directorio, leer sus entradas y mostrar los nombres de
+los archivos y subdirectorios que contiene:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+
+int main()
+{
+	DIR *dir;
+	struct dirent *entrada;
+	// Abrir el directorio actual
+	dir = opendir(".");
+	if (dir == NULL)
+	{
+		perror("Error al abrir el directorio");
+		return 1;
+	}
+	printf("Contenido del directorio actual:\n");
+	while ((entrada = readdir(dir)) != NULL)
+	{
+		printf("%s\n", entrada->d_name); // Mostrar el nombre de cada entrada
+	}
+	// Cerrar el directorio
+	closedir(dir);
+	return 0;
+}
+En este ejemplo:
+.- opendir(".") abre el directorio actual (. representa el directorio actual).
+.- readdir se utiliza en un bucle para leer cada entrada del directorio.
+.- Los nombres de las entradas se imprimen con d_name, que es un miembro de la estructura struct
+dirent.
+
+7. Estructura struct dirent.
+Cuando lees entradas de un directorio con readdir, se obtiene un puntero a una estructura de tipo
+struct dirent. Algunos de sus campos importantes son:
+.- d_name: Contiene el nombre de la entrada (archivo o subdirectorio).
+.- d_ino: Número de inodo asociado a la entrada.
+.- Otros campos, como d_type (tipo de archivo), pueden estar disponibles dependiendo del sistema.
+
+8. Casos de Uso Comunes.
+.- Listar Archivos en un Directorio: Mostrar todos los archivos y subdirectorios contenidos en un
+directorio especificado.
+.- Filtros y Operaciones: Aplicar filtros a las entradas del directorio (como extensiones de
+archivo específicas) o realizar operaciones en ellas.
+.- Navegación de Estructuras de Archivos: Inspeccionar y recorrer jerarquías completas de
+directorios y subdirectorios.
+
+9. Consideraciones Importantes.
+.- Permisos: Es necesario tener permisos de lectura y ejecución en el directorio para abrirlo y
+leer su contenido.
+.- Cerrar el Directorio: Asegúrate de llamar a closedir para liberar los recursos asociados con el
+flujo del directorio.
+.- Compatibilidad: opendir es específico de sistemas Unix y Unix-like y puede no estar disponible
+en sistemas no compatibles con POSIX.
+.- Entradas Especiales: Las entradas . y .. representan el directorio actual y el directorio padre,
+respectivamente, y siempre están presentes.
+
+10 Limitaciones.
+.- Sin Escritura: opendir y las funciones relacionadas solo permiten leer información sobre el
+contenido del directorio; no se pueden realizar operaciones como renombrar o eliminar directamente.
+.- Jerarquía Compleja: Para recorrer jerarquías de directorios, es necesario implementar recursión
+manualmente utilizando opendir y readdir.
+
+11. Funciones Relacionadas.
+.- eaddir: Lee las entradas del directorio abierto.
+.- closedir: Cierra un flujo de directorio abierto con opendir.
+.- rewinddir: Reinicia la posición de lectura del flujo de directorio.
+.- scandir: Más flexible que readdir; permite filtrar y ordenar las entradas del directorio.
