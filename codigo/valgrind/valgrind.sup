@@ -1,0 +1,52 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    valgrind.sup                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/03/21 17:11:36 by brivera           #+#    #+#              #
+#    Updated: 2025/03/21 17:11:45 by brivera          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+{
+	readline_all_1
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.2
+}
+
+{
+	readline_all_2
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	fun:readline
+}
+
+{
+	readline_history
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	fun:add_history
+}
+
+{
+	readline_internal_alloc
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	fun:xmalloc
+	obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.2
+}
+
+{
+	readline_history_entry
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	fun:alloc_history_entry
+}

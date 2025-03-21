@@ -6,7 +6,7 @@
 #    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/19 17:28:52 by brivera          ###   ########.fr        #
+#    Updated: 2025/03/21 19:52:32 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,12 +39,25 @@ INCLUDE = include/minishell.h
 RED = \033[91;1m
 GREEN = \033[92;1m
 CLEAR_COLOR = \033[0m
-CYAN = \033[96;1m
-
+CYAN = \033[96;1mc
 RM = rm -f
 
-all: $(NAME)
+PROYECTO = minishell
 
+valgrind:
+	valgrind -s \
+		--tool=memcheck \
+		--leak-check=full \
+		--show-leak-kinds=all \
+		--track-origins=yes \
+		--trace-children=yes \
+		--track-fds=yes \
+		--suppressions=valgrind/valgrind.sup \
+		--log-file=valgrind/informe \
+		./$(PROYECTO)
+
+
+all: $(NAME)
 
 $(NAME): $(LIBFTA) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFTA) $(LIBS) -o $(NAME)
@@ -72,4 +85,6 @@ re: fclean all
 	@echo "$(CYAN)🔄 Proyecto reconstruido.$(CLEAR_COLOR)"
 
 norminette:
-	@norminette $(SRCS) $(INCLUDE) 
+	@norminette $(SRCS) $(INCLUDE)
+
+.PHONY: valgrind clean fclean re norminette
