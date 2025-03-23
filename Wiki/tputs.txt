@@ -1,0 +1,149 @@
+1. tputs.
+Es parte de la biblioteca terminfo (o, en algunos sistemas, termcap) y se utiliza para enviar secuencias
+de control al terminal, las cuales fueron obtenidas previamente mediante funciones como tgetstr. tputs
+se encarga de imprimir estas secuencias con soporte para retrasos opcionales, lo que resulta útil en
+terminales que tienen restricciones de velocidad.
+Es una herramienta clave en programas que necesitan enviar comandos específicos al terminal para
+realizar acciones como mover el cursor, borrar la pantalla, cambiar colores o modificar el texto.
+
+2. Sintaxis.
+
+int tputs(const char *str, int affcnt, int (*putc)(int));
+
+.- Parámetros.
+	.- str: Es un puntero a la secuencia de control (cadena de caracteres) que se desea enviar al
+	terminal.
+	Por ejemplo, una cadena obtenida mediante tgetstr, como la secuencia para borrar la pantalla
+	("cl").
+	.- affcnt: Un número entero que especifica el número de líneas afectadas por la operación. Es
+	utilizado por algunos terminales para calcular el retraso necesario.
+	Por ejemplo, si el comando afecta a 10 líneas, el valor de affcnt sería 10. Si no aplica, se
+	puede usar 0.
+	.- putc: Es un puntero a una función que maneja la salida de caracteres. Esta función define
+	cómo se envían los caracteres al terminal.
+	Un ejemplo común es pasar la función estándar putchar o una función personalizada.
+
+3. Valor de Retorno.
+.- 0: Indica que la secuencia se ha enviado correctamente.
+.- -1: Indica que ocurrió un error al intentar enviar la secuencia.
+
+4. Funcionamiento General.
+.- Recuperar la Secuencia: Primero se utiliza tgetstr para obtener la cadena de control del terminal.
+.- Enviar la Secuencia: tputs envía esta cadena al terminal, carácter por carácter, utilizando la
+función proporcionada en putc.
+.- Administrar Retrasos: Si el terminal requiere un retraso entre caracteres, tputs lo administra
+automáticamente. Esto depende de las capacidades del terminal y del valor de affcnt.
+
+5. Ejemplo Básico.
+El siguiente ejemplo muestra cómo enviar la secuencia para borrar la pantalla (cl) al terminal
+utilizando tputs:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
+
+int main()
+{
+	char *term = getenv("TERM"); // Obtener el tipo de terminal desde la variable de entorno
+	if (term == NULL)
+	{
+		fprintf(stderr, "La variable de entorno TERM no está definida.\n");
+		return 1;
+	}
+	// Inicializar la información del terminal
+	if (tgetent(NULL, term) != 1)
+	{
+		fprintf(stderr, "Error al inicializar terminfo para el terminal: %s\n", term);
+		return 1;
+	}
+	char *area = (char *)malloc(2048); // Reservar espacio para cadenas dinámicas
+	char *clear_screen = tgetstr("cl", &area); // Obtener la secuencia para borrar la pantalla
+	if (clear_screen == NULL)
+	{
+		fprintf(stderr, "El terminal no admite borrar la pantalla (cl).\n");
+		free(area);
+		return 1;
+	}
+	// Usar tputs para enviar la secuencia al terminal
+	tputs(clear_screen, 0, putchar);
+	printf("La pantalla ha sido borrada.\n");
+	free(area);
+	return 0;
+}
+Salida esperada:
+.- La pantalla del terminal se borra, y luego se imprime el mensaje "La pantalla ha sido borrada." en
+la terminal.
+
+6. Casos de Uso Comunes.
+.- Programas Interactivos: Usar tputs para realizar operaciones frecuentes en el terminal, como mover el
+cursor, borrar la pantalla o cambiar colores.
+.- Administración de Retrasos: En terminales antiguos o lentos, tputs calcula y aplica los retrasos
+necesarios para evitar problemas de interpretación.
+.- Envío de Secuencias Complejas: Permite enviar secuencias complejas de control sin necesidad de
+manejar manualmente cada carácter.
+
+7. Ejemplo Avanzado: Mover el Cursor y Destacar Texto.
+Este programa usa tputs para mover el cursor y resaltar texto en una posición específica:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
+
+int main()
+{
+	char *term = getenv("TERM");
+	if (term == NULL)
+	{
+		fprintf(stderr, "La variable de entorno TERM no está definida.\n");
+		return 1;
+	}
+	if (tgetent(NULL, term) != 1)
+	{
+		fprintf(stderr, "Error al inicializar terminfo para el terminal: %s\n", term);
+		return 1;
+	}
+	char *area = (char *)malloc(2048);
+	char *move_cursor = tgetstr("cm", &area); // Secuencia para mover el cursor
+	char *standout_mode = tgetstr("so", &area); // Activar modo destacado
+	char *exit_standout = tgetstr("se", &area); // Salir de modo destacado
+	if (move_cursor == NULL || standout_mode == NULL || exit_standout == NULL)
+	{
+		fprintf(stderr, "Error al obtener secuencias necesarias.\n");
+		free(area);
+		return 1;
+	}
+	// Mover el cursor a (5, 10) y destacar texto
+	char *cursor_pos = tgoto(move_cursor, 10, 5); // Generar secuencia de posición
+	tputs(cursor_pos, 1, putchar); // Mover el cursor
+	tputs(standout_mode, 1, putchar); // Activar modo destacado
+	printf("Texto destacado en (5, 10)");
+	tputs(exit_standout, 1, putchar); // Salir de modo destacado
+	free(area);
+	return 0;
+}
+Salida esperada:
+.- El cursor se mueve a la posición (5, 10), el texto "Texto destacado en (5, 10)" aparece en modo
+resaltado, y luego el modo destacado se desactiva.
+
+8. Relación con otras funciones.
+.- tgetstr: Recupera la secuencia base que tputs puede enviar al terminal.
+.- tgoto: Genera cadenas dinámicas, como secuencias para mover el cursor, que luego son enviadas
+mediante tputs.
+.- tgetent: Carga la descripción del terminal antes de usar tputs.
+
+9. Ventajas y Limitaciones.
+.- Ventajas:
+	.- Flexibilidad: tputs maneja la salida de secuencias de control y administra los retrasos
+	necesarios para terminales antiguos.
+	.- Simplicidad: Facilita el envío de comandos al terminal sin necesidad de manejar manualmente
+	cada carácter.
+.- Limitaciones:
+	.- Inicialización Obligatoria: Requiere que el terminal haya sido inicializado con tgetent.
+	.- Dependencia de la Base de Datos: Si la base de datos terminfo está incompleta o
+	desactualizada, es posible que no funcione correctamente en ciertos terminales.
+
+10. Consideraciones Importantes.
+.- Variable de Entorno TERM: La funcionalidad de tputs depende de que el valor de TERM esté configurado
+correctamente para identificar el terminal actual.
+.- Uso de Funciones Personalizadas: El parámetro putc permite enviar los caracteres usando funciones
+personalizadas, ofreciendo flexibilidad en programas avanzados.

@@ -1,0 +1,166 @@
+1. tgetnum.
+Es parte de la biblioteca terminfo (o, en algunos sistemas, termcap) y se utiliza para recuperar el
+valor numérico de una capacidad específica de un terminal que previamente fue inicializado usando la
+función tgetent. Este valor numérico puede representar aspectos como el número de columnas, el número
+de líneas en la pantalla o el tamaño del búfer de entrada del terminal.
+
+2. Propósito de tgetnum.
+tgetnum permite obtener valores numéricos asociados con capacidades específicas del terminal, que son
+útiles para personalizar la salida y el comportamiento de programas interactivos según las
+características del terminal.
+
+3. Sintaxis.
+
+int tgetnum(const char *id);
+
+.- Parámetros.
+	.- id: Es una cadena de dos caracteres que identifica la capacidad numérica que se desea
+	recuperar.
+	.- Estos identificadores están definidos en la base de datos terminfo o termcap.
+
+
+4. Valor de Retorno.
+.- Un número entero: Si la capacidad especificada está definida para el terminal, devuelve su valor
+numérico (mayor o igual a 0).
+.- -1: Si la capacidad no está definida o no es aplicable al terminal actual.
+
+5. Funcionamiento General.
+.- La función tgetent debe ser llamada antes de tgetnum para cargar la descripción del terminal desde
+la base de datos.
+.- tgetnum busca en esta descripción la capacidad especificada por el identificador id y devuelve su
+valor numérico.
+.- Este valor puede ser usado por el programa para adaptarse a las características del terminal (por
+ejemplo, el número de columnas o líneas).
+
+6. Ejemplo Básico.
+El siguiente ejemplo muestra cómo usar tgetnum para recuperar el número de columnas y líneas del
+terminal:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
+
+int main()
+{
+	char *term = getenv("TERM"); // Obtener el tipo de terminal desde la variable de entorno
+	if (term == NULL)
+	{
+		fprintf(stderr, "La variable de entorno TERM no está definida.\n");
+		return 1;
+	}
+	// Inicializar la información del terminal
+	if (tgetent(NULL, term) != 1)
+	{
+		fprintf(stderr, "Error al inicializar terminfo para el terminal: %s\n", term);
+		return 1;
+	}
+	// Obtener el número de columnas
+	int cols = tgetnum("co"); // "co" para columnas (columns)
+	if (cols != -1)
+	{
+		printf("El terminal tiene %d columnas.\n", cols);
+	}
+	else
+	{
+		printf("La cantidad de columnas no está definida para este terminal.\n");
+	}
+	// Obtener el número de líneas
+	int rows = tgetnum("li"); // "li" para líneas (lines)
+	if (rows != -1)
+	{
+		printf("El terminal tiene %d líneas.\n", rows);
+	}
+	else
+	{
+		printf("La cantidad de líneas no está definida para este terminal.\n");
+	}
+	return 0;
+}
+
+7. Salida Esperada.
+.- Si el terminal tiene configuradas las capacidades de columnas y líneas:
+	.- El terminal tiene 80 columnas.
+	.- El terminal tiene 24 líneas.
+.- Si alguna capacidad no está definida:
+	.- La cantidad de columnas no está definida para este terminal.
+
+8. Identificadores Comunes para tgetnum.
+Aquí hay algunos identificadores de capacidades numéricas comunes que pueden ser recuperados mediante
+tgetnum:
+
+Identificador	Descripción
+co		Número de columnas en la pantalla (ancho).
+li		Número de líneas en la pantalla (alto).
+it		Tamaño predeterminado de tabulación.
+sg		Número de espacios perdidos por modo standout.
+ug		Número de espacios perdidos por subrayado.
+km		Si el teclado soporta teclas especiales/movimiento.
+
+9. Casos de Uso Comunes.
+.- Programas de Formateo de Texto: Determinar el ancho de la pantalla (co) y ajustar el texto para que
+se ajuste correctamente sin desbordamiento.
+.- Interfaces Interactivas: Usar el alto de la pantalla (li) para decidir cuántas líneas mostrar al
+usuario (como en un paginador tipo less).
+.- Compatibilidad con Diferentes Terminales: Adaptar dinámicamente la salida a las características
+físicas del terminal.
+
+10. Ejemplo Avanzado: Adaptar la Salida al Tamaño del Terminal.
+Este ejemplo ajusta dinámicamente el número de líneas de texto que se imprimen según el tamaño del
+terminal:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
+
+int main()
+{
+	char *term = getenv("TERM");
+	if (term == NULL)
+	{
+		fprintf(stderr, "La variable de entorno TERM no está definida.\n");
+		return 1;
+	}
+	if (tgetent(NULL, term) != 1)
+	{
+		fprintf(stderr, "Error al inicializar terminfo para el terminal: %s\n", term);
+		return 1;
+	}
+	// Obtener número de líneas
+	int rows = tgetnum("li");
+	if (rows == -1)
+	{
+		fprintf(stderr, "No se pudo determinar el número de líneas.\n");
+		return 1;
+	}
+	printf("Mostrando contenido para %d líneas del terminal:\n", rows);
+	// Simular salida de contenido ajustada a las líneas disponibles
+	for (int i = 1; i <= rows; i++)
+	{
+		printf("Línea %d\n", i);
+	}
+	return 0;
+}
+
+11. Ventajas y Limitaciones
+.- Ventajas:
+	.- Adaptabilidad: Permite a los programas personalizarse según las capacidades específicas del
+	terminal.
+	.- Eficiencia: Proporciona un acceso directo a las características numéricas definidas en la
+	base de datos terminfo.
+.- Limitaciones:
+	.- Requiere Inicialización: tgetent debe ser llamado antes de usar tgetnum, lo que puede
+	aumentar ligeramente la complejidad.
+	.- Dependencia del Sistema: Solo funciona si la base de datos terminfo está disponible y
+	configurada correctamente.
+.- Relación con Otras Funciones.
+	.- tgetent: Debe usarse primero para cargar la descripción del terminal antes de llamar a
+	tgetnum.
+	.- tgetstr: Se utiliza para recuperar capacidades que son cadenas de texto (por ejemplo,
+	secuencias de escape).
+	.- tgetflag: Recupera capacidades booleanas (presente/no presente).
+
+12. Consideraciones Importantes.
+.- Variable de Entorno TERM: La función depende del valor de TERM para identificar el terminal actual y
+cargar la configuración correspondiente.
+.- Dependencia de la Base de Datos terminfo: Si la base de datos está incompleta o desactualizada, es
+posible que algunas capacidades no estén disponibles.

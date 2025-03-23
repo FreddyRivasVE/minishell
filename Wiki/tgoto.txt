@@ -1,0 +1,157 @@
+1. tgoto.
+Es parte de la biblioteca terminfo (o, en algunos sistemas, termcap) y se utiliza para generar una
+secuencia de control dinámica que mueve el cursor a una posición específica en la pantalla del terminal.
+Esta función toma como base una cadena de plantilla obtenida previamente mediante tgetstr (como la
+capacidad "cm", que representa el movimiento del cursor) y reemplaza los marcadores en la plantilla con
+coordenadas específicas (como filas y columnas).
+Propósito de tgoto
+tgoto es crucial en programas que interactúan con terminales de manera dinámica, como editores de texto
+y aplicaciones gráficas simples. Permite adaptar comandos de control del terminal según las necesidades
+del programa, por ejemplo, mover el cursor a una ubicación determinada en la pantalla.
+
+2. Sintaxis.
+
+char *tgoto(const char *cap, int col, int row);
+
+.- Parámetros.
+	.- cap: Es una cadena de plantilla, que normalmente se obtiene mediante tgetstr. Esta cadena
+	describe cómo mover el cursor y contiene marcadores que tgoto reemplaza con valores específicos.
+	Ejemplo: "cm" para mover el cursor.
+	.- col: Número de la columna (posición horizontal) a la que se desea mover el cursor.
+	.- row: Número de la fila (posición vertical) a la que se desea mover el cursor.
+
+3. Valor de Retorno.
+.- Puntero a una cadena de texto: Devuelve una cadena generada con la secuencia de control que mueve el
+cursor a la posición especificada. Esta cadena puede ser enviada directamente al terminal.
+.- NULL: Devuelve NULL si la cadena de control no se pudo generar correctamente.
+
+4. Funcionamiento General.
+.- La función tgetstr recupera la cadena base que describe el movimiento del cursor (como "cm").
+.- tgoto toma esa cadena base y reemplaza los marcadores con las coordenadas específicas (columna y
+fila).
+.- Devuelve una cadena lista para ser enviada al terminal mediante printf o funciones específicas como
+tputs.
+
+5. Ejemplo Básico.
+.- Este programa mueve el cursor del terminal a la posición (5, 10) utilizando tgoto y tgetstr:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
+
+int main()
+{
+	char *term = getenv("TERM"); // Obtener el tipo de terminal desde la variable de entorno
+	if (term == NULL)
+	{
+		fprintf(stderr, "La variable de entorno TERM no está definida.\n");
+		return 1;
+	}
+	// Inicializar la información del terminal
+	if (tgetent(NULL, term) != 1)
+	{
+		fprintf(stderr, "Error al inicializar terminfo para el terminal: %s\n", term);
+		return 1;
+	}
+	char *area = (char *)malloc(2048); // Reservar espacio para cadenas dinámicas
+	char *move_cursor = tgetstr("cm", &area); // Obtener plantilla para mover el cursor
+	if (move_cursor == NULL)
+	{
+		fprintf(stderr, "El terminal no admite mover el cursor (cm).\n");
+		free(area);
+		return 1;
+	}
+	// Generar la secuencia para mover el cursor a la posición (5, 10)
+	char *cursor_pos = tgoto(move_cursor, 10, 5);
+	if (cursor_pos == NULL)
+	{
+		fprintf(stderr, "Error al generar secuencia para mover el cursor.\n");
+		free(area);
+		return 1;
+	}
+	printf("%s", cursor_pos); // Enviar secuencia al terminal
+	printf("Hola, estoy en la posición (5, 10).\n");
+	free(area);
+	return 0;
+}
+Salida esperada:
+.- El cursor se mueve a la fila 5, columna 10 en el terminal, y el texto "Hola, estoy en la posición
+(5, 10)." se imprime en esa ubicación.
+
+6. Casos de Uso Comunes.
+.- Edición Interactiva: Herramientas como vim utilizan tgoto para mover el cursor durante la edición de
+texto.
+.- Interfaces Gráficas en Terminal: Aplicaciones interactivas que dibujan interfaces gráficas en la
+terminal pueden usar tgoto para posicionar texto, cuadros y otros elementos.
+.- Juegos en Terminal: Juegos basados en texto pueden usar tgoto para actualizar la posición de
+personajes o elementos en la pantalla.
+
+7. Relación con otras funciones.
+.- tgetent: Carga la descripción del terminal antes de usar tgoto.
+.- tgetstr: Recupera la cadena base que tgoto utiliza para generar secuencias dinámicas.
+.- tputs: Envía la secuencia generada por tgoto al terminal con control adicional sobre la velocidad de
+impresión.
+
+8. Identificadores Comunes para tgoto.
+.- El identificador más común que utiliza tgoto es "cm":
+	.- cm: Secuencia para mover el cursor del terminal a una posición específica (columnas y filas).
+
+9. Ejemplo Avanzado: Dibujar una Tabla.
+Este programa dibuja una pequeña tabla en posiciones específicas utilizando tgoto para mover el cursor:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
+
+void draw_at_position(char *move_cursor, int row, int col, const char *text)
+{
+	char *cursor_pos = tgoto(move_cursor, col, row); // Generar secuencia
+	printf("%s%s", cursor_pos, text); // Enviar secuencia y texto al terminal
+}
+
+int main()
+{
+	char *term = getenv("TERM");
+	if (term == NULL)
+	{
+		fprintf(stderr, "La variable de entorno TERM no está definida.\n");
+		return 1;
+	}
+	if (tgetent(NULL, term) != 1)
+	{
+		fprintf(stderr, "Error al inicializar terminfo para el terminal: %s\n", term);
+		return 1;
+	}
+	char *area = (char *)malloc(2048);
+	char *move_cursor = tgetstr("cm", &area); // Obtener plantilla para mover el cursor
+	if (move_cursor == NULL)
+	{
+		fprintf(stderr, "El terminal no admite mover el cursor (cm).\n");
+		free(area);
+		return 1;
+	}
+	// Dibujar una tabla con texto en posiciones específicas
+	draw_at_position(move_cursor, 2, 5, "Fila 1, Columna 1");
+	draw_at_position(move_cursor, 4, 10, "Fila 2, Columna 2");
+	draw_at_position(move_cursor, 6, 15, "Fila 3, Columna 3");
+	free(area);
+	return 0;
+}
+
+10. Ventajas y Limitaciones.
+.- Ventajas:
+	.- Adaptabilidad: Permite generar secuencias dinámicas que funcionan en una amplia variedad de
+	terminales.
+	.- Integración: Funciona perfectamente con otras funciones de la biblioteca terminfo, como
+	tgetstr y tputs.
+.- Limitaciones:
+	.- Inicialización Obligatoria: Requiere que el terminal haya sido correctamente inicializado
+	con tgetent.
+	.- Dependencia de la Base de Datos: Si la base de datos terminfo está incompleta o
+	desactualizada, puede que ciertas capacidades no estén disponibles.
+
+11. Consideraciones Importantes.
+.- Variable de Entorno TERM: La funcionalidad de tgoto depende de que el valor de TERM esté configurado
+correctamente para identificar el terminal actual.
+.- Portabilidad: Aunque tgoto es ampliamente utilizado, algunas aplicaciones modernas prefieren
+bibliotecas como ncurses que ofrecen una interfaz más robusta y flexible.

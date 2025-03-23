@@ -1,0 +1,153 @@
+1. tgetstr.
+Es parte de la biblioteca terminfo (o, en algunos sistemas, termcap) y se utiliza para recuperar el
+valor asociado a una capacidad específica del terminal que se representa como una cadena de texto.
+Estas cadenas suelen ser secuencias de control o escape utilizadas para controlar el comportamiento del
+terminal, como mover el cursor, borrar la pantalla o cambiar el color del texto.
+Es una de las herramientas fundamentales en programas que necesitan interactuar directamente con
+terminales, como editores de texto y aplicaciones interactivas.
+
+2. Sintaxis.
+
+char *tgetstr(const char *id, char **area);
+
+.- Parámetros.
+	.- id: Es una cadena que contiene un identificador de dos caracteres que representa la capacidad
+	específica del terminal que se desea recuperar. Estos identificadores están predefinidos en la
+	base de datos terminfo.
+	.- Ejemplo de identificadores comunes:
+		.- "cl": Secuencia para borrar la pantalla.
+		.- "cm": Secuencia para mover el cursor.
+		.- "so": Secuencia para iniciar modo de resaltado (standout).
+	.- area: Un puntero a un puntero donde se almacenará la cadena recuperada (secuencia de
+	control). El programador es responsable de proporcionar este bloque de memoria.
+	Si se pasa como NULL, la función usará un búfer interno administrado por el sistema.
+
+3. Valor de Retorno.
+.- Puntero a la cadena de texto: Devuelve un puntero a la secuencia de control solicitada si la
+capacidad está definida.
+.- NULL: Devuelve NULL si el terminal no admite la capacidad solicitada o si no se encuentra en la base
+de datos.
+
+4. Funcionamiento General,
+.- Antes de llamar a tgetstr, se debe usar tgetent para inicializar la base de datos terminfo del
+terminal y cargar su descripción.
+.- tgetstr consulta esa base de datos y devuelve una secuencia de control (o escape) asociada con el
+identificador especificado en id. Estas secuencias se pueden usar junto con funciones como tputs o
+printf para enviar comandos al terminal.
+
+5. Ejemplo Básico.
+El siguiente ejemplo muestra cómo usar tgetstr para recuperar y utilizar la secuencia que borra la
+pantalla (cl):
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
+
+int main()
+{
+	char *term = getenv("TERM"); // Obtener el tipo de terminal desde la variable de entorno
+	if (term == NULL)
+	{
+		fprintf(stderr, "La variable de entorno TERM no está definida.\n");
+		return 1;
+	}
+	// Inicializar la información del terminal
+	if (tgetent(NULL, term) != 1)
+	{
+		fprintf(stderr, "Error al inicializar terminfo para el terminal: %s\n", term);
+		return 1;
+	}
+	char *area = (char *)malloc(2048); // Reservar espacio para cadenas de control
+	char *clear_screen = tgetstr("cl", &area); // Obtener secuencia para borrar pantalla
+	if (clear_screen == NULL)
+	{
+		fprintf(stderr, "El terminal no admite borrar la pantalla (cl).\n");
+	}
+	else
+	{
+		printf("%s", clear_screen); // Enviar la secuencia al terminal
+	}
+	free(area); // Liberar memoria asignada
+	return 0;
+}
+Salida esperada:
+.- Si el terminal admite la capacidad de borrar la pantalla, el programa envía la secuencia de control
+correspondiente y limpia la terminal.
+.- Identificadores Comunes para tgetstr.
+Identificador	Descripción
+cl		Borra la pantalla completa.
+cm		Mueve el cursor a una posición específica.
+so		Activa el modo de resaltado (standout).
+se		Desactiva el modo de resaltado.
+us		Activa el subrayado.
+ue		Desactiva el subrayado.
+md		Activa el modo negrita.
+me		Restablece todos los atributos de texto.
+ce		Borra desde la posición actual del cursor hasta el final de la línea.
+
+6. Ejemplo Avanzado: Mover el Cursor.
+En este ejemplo, usamos tgetstr para recuperar la secuencia que mueve el cursor (cm) y colocarlo en una
+posición específica:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <curses.h>
+#include <termcap.h>
+
+int main()
+{
+	char *term = getenv("TERM");
+	if (term == NULL)
+	{
+		fprintf(stderr, "La variable de entorno TERM no está definida.\n");
+		return 1;
+	}
+	if (tgetent(NULL, term) != 1)
+	{
+		fprintf(stderr, "Error al inicializar terminfo para el terminal: %s\n", term);
+		return 1;
+	}
+	char *area = (char *)malloc(2048);
+	char *move_cursor = tgetstr("cm", &area); // Obtener secuencia para mover el cursor
+	if (move_cursor == NULL)
+	{
+		fprintf(stderr, "El terminal no admite movimiento del cursor (cm).\n");
+	}
+	else
+	{
+		int row = 5, col = 10; // Posición deseada (fila 5, columna 10)
+		char *cursor_pos = tgoto(move_cursor, col, row); // Generar secuencia para la posición
+		printf("%s", cursor_pos); // Enviar la secuencia al terminal
+		printf("Hola, estoy en la posición (%d, %d).\n", row, col);
+	}
+	free(area);
+	return 0;
+}
+Salida esperada:
+.- El cursor se moverá a la posición (5, 10) en la terminal, y se imprimirá el mensaje en esa posición.
+
+7. Relación con otras funciones.
+.- tgetent: Debe ser llamada antes de usar tgetstr para cargar la descripción del terminal desde la
+base de datos terminfo.
+.- tputs: Se utiliza para enviar de manera segura las cadenas recuperadas con tgetstr al terminal.
+.- tgoto: Genera una secuencia para mover el cursor a una posición específica, utilizando la secuencia
+base recuperada por tgetstr.
+
+8. Casos de Uso Comunes.
+.- Programas Interactivos: Usar tgetstr para recuperar secuencias de control y personalizar la
+interacción del terminal, como limpiar la pantalla o mover el cursor.
+.- Compatibilidad: Recuperar capacidades específicas para adaptar la salida a diferentes terminales,
+asegurando que los comandos funcionen correctamente.
+.- Aplicaciones como Juegos y Editores: Herramientas como vim o aplicaciones gráficas simples pueden
+usar secuencias para destacar texto, modificar colores, o interactuar con el cursor.
+
+9. Ventajas y Limitaciones.
+.- Ventajas:
+	.- Flexibilidad: Permite ajustar dinámicamente el comportamiento de la salida según las
+	capacidades del terminal.
+	.- Compatibilidad: Soporta una amplia gama de terminales gracias a la base de datos terminfo.
+.- Limitaciones:
+	.- Complejidad: La inicialización y uso de tgetstr puede ser complicada debido a la necesidad
+de administrar memoria para las cadenas y dependencias en otras funciones.
+	.- Obsolescencia Relativa: En algunos sistemas modernos, bibliotecas como ncurses ofrecen
+alternativas más robustas.
