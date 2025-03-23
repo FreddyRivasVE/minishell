@@ -1,0 +1,142 @@
+1. ioctl (abreviatura de input/output control)
+Es una llamada al sistema versátil que se utiliza para realizar operaciones específicas en
+dispositivos de entrada/salida que no están disponibles a través de las funciones estándar, como
+read y write. Es comúnmente empleada en sistemas Unix y Unix-like para interactuar directamente
+con dispositivos de hardware o ajustar configuraciones del sistema, como propiedades de terminales,
+configuraciones de red o control de hardware especializado. Está definida en <sys/ioctl.h>.
+
+2. Sintaxis.
+
+int ioctl(int fd, unsigned long request, ...);
+
+.- Parámetros.
+	.- fd: Es el descriptor de archivo del dispositivo o recurso al que se aplica la operación.
+	Generalmente, este descriptor se obtiene previamente mediante funciones como open.
+	.- request: Es un código numérico que define la operación a realizar. Estos códigos varían
+ según el dispositivo y están definidos en archivos de cabecera específicos del sistema (como
+termios.h o controladores de red).
+	.- Argumentos variables (...): Dependiendo del valor de request, puede aceptarse un tercer
+	parámetro opcional. Este puede ser un puntero a una estructura, un entero, o incluso no
+	requerir ningún argumento adicional.
+
+3. Valor de Retorno.
+.- 0 o Valor positivo: Indica que la operación se realizó correctamente.
+.- -1: Indica un error. La variable global errno se configura para especificar el motivo del error.
+
+4. Errores Comunes.
+.- EBADF: El descriptor de archivo fd no es válido.
+.- ENOTTY: El descriptor de archivo no está asociado con un dispositivo que soporte operaciones de
+control.
+.- EINVAL: El valor de request no es válido para el dispositivo especificado.
+.- EFAULT: Se pasó un puntero inválido como argumento.
+
+5. Uso Típico.
+ioctl es utilizada en dispositivos de hardware, interfaces de red, terminales, sistemas de archivos y
+más. Cada aplicación depende del tipo de dispositivo o recurso asociado con el descriptor de archivo.
+
+Algunos usos comunes incluyen:
+.- Configuración de terminales (usando termios).
+.- Control de dispositivos (como discos, cintas, o periféricos).
+.- Configuración de interfaces de red (por ejemplo, ajustar una dirección IP o parámetros de red).
+.- Interacción con controladores personalizados (como ajustes para un hardware específico).
+
+6. Ejemplo Básico: Configurar un Terminal.
+Este ejemplo muestra cómo usar ioctl para poner un terminal en modo sin buffer (modo "raw"):
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <termios.h>
+
+int main()
+{
+	struct termios tty;
+	// Obtener configuraciones actuales del terminal
+	if (tcgetattr(STDIN_FILENO, &tty) == -1)
+	{
+		perror("Error al obtener configuraciones del terminal");
+		return 1;
+	}
+	// Configurar terminal en modo sin buffer
+	tty.c_lflag &= ~(ICANON | ECHO); // Desactivar modo canon y eco
+	// Aplicar configuraciones
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &tty) == -1)
+	{
+		perror("Error al configurar el terminal");
+		return 1;
+	}
+	printf("El terminal está en modo sin buffer (raw mode). Presiona Ctrl+C para salir.\n");
+	// Leer caracteres sin eco en bucle
+	char c;
+	while (read(STDIN_FILENO, &c, 1) > 0)
+	{
+		printf("Tecla presionada: %c\n", c);
+	}
+	return 0;
+}
+Aunque este ejemplo usa tcsetattr directamente, en algunos casos puede ser reemplazado por ioctl
+dependiendo de los códigos específicos del sistema.
+
+7. Ejemplo Avanzado: Configurar Parámetros de una Interfaz de Red.
+Este ejemplo configura la dirección IP de una interfaz de red (como eth0) utilizando ioctl:
+
+#include <stdio.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <net/if.h>
+#include <arpa/inet.h>
+
+int main()
+{
+	int sock;
+	struct ifreq ifr;
+	// Crear un socket para la configuración
+	sock = socket(AF_INET, SOCK_DGRAM, 0);
+	if (sock == -1)
+	{
+		perror("Error al crear el socket");
+		return 1;
+	}
+	// Especificar la interfaz (por ejemplo, eth0)
+	strncpy(ifr.ifr_name, "eth0", IFNAMSIZ);
+	// Configurar la dirección IP
+	struct sockaddr_in *addr = (struct sockaddr_in *)&ifr.ifr_addr;
+	addr->sin_family = AF_INET;
+	inet_pton(AF_INET, "192.168.1.100", &addr->sin_addr);
+	// Enviar comando IOCTL para configurar la dirección
+	if (ioctl(sock, SIOCSIFADDR, &ifr) == -1)
+	{
+		perror("Error al configurar la dirección IP");
+		close(sock);
+		return 1;
+	}
+	printf("La dirección IP de eth0 fue configurada exitosamente.\n");
+	close(sock);
+	return 0;
+}
+.- En este caso:
+	.- SIOCSIFADDR es una solicitud estándar definida para configurar la dirección IP de una
+	interfaz de red.
+	.- ioctl envía esta solicitud al sistema operativo para aplicarla a la interfaz especificada.
+
+8. Ventajas y Limitaciones de ioctl.
+.- Ventajas:
+	.- Versatilidad: Soporta una amplia gama de operaciones específicas de dispositivos.
+	.- Interacción Directa: Permite acceso detallado al hardware y configuraciones avanzadas del
+	sistema.
+.- Limitaciones:
+	.- Complejidad: Depende de códigos específicos (request) y estructuras personalizadas.
+	.- No Portabilidad: Los códigos y comportamientos de ioctl pueden variar entre diferentes
+	sistemas operativos y controladores.
+	.- Difícil de Documentar: Las operaciones específicas a menudo no están documentadas en detalle
+	y requieren examinar controladores o fuentes del kernel.
+
+9. Alternativas.
+En sistemas modernos, algunas operaciones tradicionales de ioctl han sido reemplazadas por interfaces
+más específicas como:
+.- fcntl: Para operaciones genéricas de control de archivos.
+	.- Netlink Sockets: Para configuraciones avanzadas de redes en lugar de las funciones basadas
+	en ioctl.
+	.- termios: Para configuraciones de terminales.

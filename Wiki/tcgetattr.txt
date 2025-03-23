@@ -1,0 +1,149 @@
+1. tcgetattr.
+Se utiliza para obtener los atributos actuales de un terminal asociado con un descriptor de archivo. Es
+parte de la biblioteca <termios.h> y es una función estándar en sistemas Unix y Unix-like. La
+configuración del terminal incluye parámetros relacionados con la entrada, salida, control de flujo y
+procesamiento de caracteres, y es fundamental para aplicaciones interactivas o que necesiten ajustar el
+comportamiento del terminal.
+
+2. Sintaxis.
+
+int tcgetattr(int fd, struct termios *termios_p);
+
+.- Parámetros.
+.- fd: Es el descriptor de archivo que representa el terminal.
+	.- Generalmente, este valor es:
+		.- STDIN_FILENO (entrada estándar).
+		.- STDOUT_FILENO (salida estándar).
+		.- STDERR_FILENO (salida de error estándar).
+.- termios_p: Es un puntero a una estructura termios donde se almacenarán los atributos actuales del
+terminal tras la llamada exitosa.
+
+3. Valor de Retorno.
+.- 0: Si la función se ejecuta correctamente, retorna 0.
+.- -1: Indica que ocurrió un error. En este caso, la variable global errno se configura para describir
+el motivo.
+.- Errores Comunes. 
+	.- EBADF: El descriptor de archivo fd no es válido.
+	.- ENOTTY: El descriptor de archivo fd no está asociado con un terminal.
+.- Estructura struct termios.
+La función tcgetattr llena una estructura de tipo termios con los atributos del terminal. Esta
+estructura contiene múltiples campos que controlan el comportamiento del terminal.
+
+struct termios
+{
+	tcflag_t c_iflag;  // Flags de modo de entrada
+	tcflag_t c_oflag;  // Flags de modo de salida
+	tcflag_t c_cflag;  // Flags de modo de control
+	tcflag_t c_lflag;  // Flags de modo local
+	cc_t c_cc[NCCS];   // Caracteres de control
+};
+.- Campos Principales:
+	.- c_iflag (modo de entrada): Controla cómo se procesan los datos de entrada.
+	Ejemplo: ICRNL (convierte \r a \n), IGNBRK (ignorar señales de "break").
+	.- c_oflag (modo de salida): Controla cómo se procesan los datos de salida.
+	Ejemplo: OPOST (habilita el procesamiento de salida).
+	.- c_cflag (modo de control): Configura parámetros de control del hardware, como velocidad de
+	transmisión o bits de datos.
+	Ejemplo: CS8 (8 bits por carácter), B9600 (9600 baudios).
+	.- c_lflag (modo local):Configura el comportamiento del terminal, como el modo de entrada
+	canónica y el eco de caracteres.
+	Ejemplo: ICANON (modo canónico), ECHO (habilitar eco).
+	.- c_cc (caracteres de control): Almacena caracteres especiales que controlan acciones
+	específicas, como:
+		.- VEOF: Final de archivo.
+		.- VINTR: Interrupción.
+		.- VERASE: Borrar.
+
+4. Funcionamiento General.
+.- tcgetattr se utiliza para recuperar la configuración actual del terminal antes de modificarla con
+funciones como tcsetattr. Esto asegura que se pueda restablecer el estado original después de realizar
+cambios temporales.
+
+5. Ejemplo Básico.
+El siguiente ejemplo obtiene la configuración actual del terminal y muestra si el eco de caracteres
+está habilitado:
+
+#include <stdio.h>
+#include <unistd.h>
+#include <termios.h>
+
+int main()
+{
+	struct termios tty;
+	// Obtener la configuración actual del terminal
+	if (tcgetattr(STDIN_FILENO, &tty) == -1)
+	{
+		perror("Error al obtener la configuración del terminal");
+		return 1;
+	}
+	// Verificar si el eco está habilitado
+	if (tty.c_lflag & ECHO)
+	{
+		printf("El eco está habilitado.\n");
+	}
+	else
+	{
+		printf("El eco está deshabilitado.\n");
+	}
+	return 0;
+}
+
+6. Casos de Uso Comunes.
+.- Preparar el Terminal para Modificaciones: tcgetattr permite obtener los atributos actuales del
+terminal antes de modificarlos temporalmente con tcsetattr. Esto es útil para implementar modos sin
+buffer o sin eco.
+.- Diagnóstico: Identificar configuraciones actuales del terminal para ajustar el comportamiento de
+aplicaciones interactivas.
+.- Aplicaciones Interactivas: Configurar comportamientos específicos para juegos, intérpretes de
+comandos, editores de texto, etc.
+
+7. Ejemplo Avanzado: Modificar y Restaurar la Configuración.
+En este ejemplo, se desactiva temporalmente el modo de eco del terminal, se leen algunos caracteres y
+luego se restaura la configuración original:
+
+#include <stdio.h>
+#include <unistd.h>
+#include <termios.h>
+
+int main()
+{
+	struct termios tty, original;
+	// Obtener configuración actual
+	if (tcgetattr(STDIN_FILENO, &tty) == -1)
+	{
+		perror("Error al obtener la configuración del terminal");
+		return 1;
+	}
+	// Guardar la configuración original para restaurarla después
+	original = tty;
+	// Desactivar el eco
+	tty.c_lflag &= ~ECHO;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &tty) == -1)
+	{
+		perror("Error al aplicar la configuración del terminal");
+		return 1;
+	}
+	printf("El eco está deshabilitado. Ingresa texto (presiona 'Enter' para finalizar):\n");
+	char buffer[100];
+	fgets(buffer, sizeof(buffer), stdin);
+	printf("Texto ingresado: %s\n", buffer);
+	// Restaurar la configuración original del terminal
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &original) == -1)
+	{
+		perror("Error al restaurar la configuración del terminal");
+		return 1;
+	}
+	printf("El eco ha sido restaurado.\n");
+	return 0;
+}
+
+8. Ventajas y Limitaciones.
+.- Ventajas:
+	.- Acceso Detallado: Permite inspeccionar todas las configuraciones relevantes de un terminal.
+	.- Versatilidad: Se puede combinar con otras funciones, como tcsetattr, para personalizar y
+	restaurar configuraciones.
+.- Limitaciones:
+	.- Complejidad: Configurar y entender todas las opciones puede ser desafiante debido al número
+	de flags disponibles.
+	Dependencia del Sistema: Solo funciona con dispositivos terminales y sistemas compatibles con
+	POSIX.

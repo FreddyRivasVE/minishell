@@ -1,0 +1,119 @@
+1. tcsetattr.
+Se utiliza para configurar los atributos de un terminal asociado con un descriptor de archivo, como
+stdin. Es parte de la biblioteca <termios.h> y se utiliza ampliamente en sistemas Unix y Unix-like para
+manipular las propiedades de entrada/salida del terminal, como el modo de entrada, el modo de eco y la
+configuración de control de flujo.
+Esta función se usa principalmente para interactuar directamente con terminales (como consolas) y
+personalizar su comportamiento.
+
+2. Sintaxis.
+
+int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
+
+.- Parámetros.
+	.- fd: Descriptor de archivo que representa el terminal. Generalmente, es STDIN_FILENO (entrada
+	estándar), STDOUT_FILENO (salida estándar) o STDERR_FILENO (salida de error estándar).
+.- optional_actions: Especifica cuándo aplicar los cambios a la configuración del terminal. Los valores
+permitidos son:
+	.- TCSANOW: Cambios inmediatos.
+	.- TCSADRAIN: Cambios realizados después de que se vacíe la cola de salida (es decir, cuando se
+	procesen todas las operaciones pendientes).
+	.- TCSAFLUSH: Cambios realizados después de vaciar tanto la cola de entrada como la de salida.
+	.- termios_p: Un puntero a una estructura termios que contiene los nuevos atributos que se
+	deben configurar para el terminal.
+.- Estructura struct termios. La estructura struct termios es el núcleo de las operaciones con
+terminales. Contiene múltiples campos que permiten controlar el comportamiento del terminal:
+
+	struct termios
+		{
+			tcflag_t c_iflag;  // Flags de modo de entrada
+			tcflag_t c_oflag;  // Flags de modo de salida
+			tcflag_t c_cflag;  // Flags de modo de control
+			tcflag_t c_lflag;  // Flags de modo local
+			cc_t c_cc[NCCS];   // Caracteres de control
+		};
+.- Campos Importantes:
+	.- c_iflag (modo de entrada): Configura cómo se procesan los datos de entrada.
+	Ejemplo: IGNBRK (ignorar interrupciones por "break"), ICRNL (convertir \r en \n).
+	.- c_oflag (modo de salida): Configura cómo se procesan los datos de salida.
+	Ejemplo: OPOST (realizar procesamiento de salida).
+	.- c_cflag (modo de control): Configura el control del hardware, como la velocidad de
+	transmisión.
+	Ejemplo: CS8 (datos de 8 bits), B9600 (velocidad de 9600 baudios).
+	.- c_lflag (modo local): Controla características como el eco y el modo canónico.
+	Ejemplo: ICANON (habilitar entrada canónica), ECHO (habilitar eco de entrada).
+	.- c_cc (caracteres de control): Contiene caracteres especiales para acciones específicas, como
+	interrumpir (VINTR), final de archivo (VEOF) o borrar (VERASE).
+
+3. Valor de Retorno.
+.- 0: La función retorna 0 si los cambios se realizan correctamente.
+.- -1: Indica un error y establece la variable global errno con el código de error correspondiente.
+
+4. Errores Comunes.
+.- EBADF: El descriptor de archivo fd no es válido.
+.- EINVAL: El valor de optional_actions no es válido.
+.- ENOTTY: El descriptor de archivo fd no corresponde a un terminal.
+
+5. Ejemplo Básico
+El siguiente ejemplo desactiva el modo canónico y el eco del terminal, lo que permite leer caracteres
+de entrada sin necesidad de presionar Enter y sin que se muestren en pantalla:
+
+#include <stdio.h>
+#include <unistd.h>
+#include <termios.h>
+
+int main()
+{
+	struct termios tty;
+	// Obtener la configuración actual del terminal
+	if (tcgetattr(STDIN_FILENO, &tty) == -1)
+	{
+		perror("Error al obtener configuraciones del terminal");
+		return 1;
+	}
+	// Modificar la configuración: desactivar modo canónico y eco
+	tty.c_lflag &= ~(ICANON | ECHO);
+	// Aplicar los nuevos ajustes de inmediato
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &tty) == -1)
+	{
+		perror("Error al configurar el terminal");
+		return 1;
+	}
+	printf("El terminal está en modo sin buffer (raw). Presiona 'q' para salir.\n");
+	char c;
+	while (read(STDIN_FILENO, &c, 1) > 0)
+	{
+		if (c == 'q') break;
+		printf("Tecla presionada: %c\n", c);
+	}
+	// Restaurar la configuración original del terminal
+	tty.c_lflag |= (ICANON | ECHO);
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &tty) == -1)
+	{
+		perror("Error al restaurar configuraciones del terminal");
+		return 1;
+	}
+	return 0;
+}
+Explicación del Ejemplo:
+.- Se obtiene la configuración actual del terminal con tcgetattr.
+.- Se modifican los flags del modo local (c_lflag) para desactivar el modo canónico (ICANON) y el eco
+(ECHO).
+.- Los cambios se aplican inmediatamente con tcsetattr.
+.- Después de leer las teclas presionadas, se restauran las configuraciones originales.
+
+6. Casos de Uso Comunes.
+.- Programas Interactivos: Configuración de terminales en aplicaciones como juegos, shells y editores
+de texto interactivos (por ejemplo, vim).
+.- Modos de Entrada/Salida Personalizados: Activar el "modo crudo" (raw mode) para capturar entradas
+sin procesamiento, como teclas de función o combinaciones de teclas.
+.- Control de Hardware: Ajustar configuraciones de dispositivos conectados a puertos serie.
+
+7. Ventajas y Limitaciones.
+.- Ventajas:
+	.- Control Preciso: Proporciona un control detallado sobre las configuraciones del terminal.
+	.- Versatilidad: Permite ajustar tanto el comportamiento de entrada como de salida.
+.- Limitaciones:
+	.- Complejidad: La configuración puede ser difícil de entender debido al número de opciones y
+	flags disponibles.
+	.- Dependencia del Sistema: Es específica de sistemas compatibles con POSIX.

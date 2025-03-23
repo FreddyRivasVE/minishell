@@ -1,0 +1,128 @@
+1. isatty.
+Se utiliza para determinar si un descriptor de archivo está asociado con un terminal (como una
+consola o una ventana de terminal). Esto es útil para programas que necesitan comportarse de manera
+diferente cuando se ejecutan en un entorno interactivo versus cuando su entrada o salida se
+redirige (por ejemplo, hacia o desde un archivo). Está definida en <unistd.h> y es estándar en
+sistemas Unix y Unix-like.
+
+2. Sintaxis.
+
+int isatty(int fd);
+
+.- Parámetros.
+	.- fd: Es el descriptor de archivo que se desea verificar. Algunos descriptores de archivo
+	comunes incluyen:
+		.- 0: Entrada estándar (stdin).
+		.- 1: Salida estándar (stdout).
+		.- 2: Salida de error estándar (stderr).
+
+3. Valor de Retorno.
+.- 1: Indica que el descriptor de archivo está asociado con un terminal.
+.- 0: Indica que el descriptor no está asociado con un terminal.
+.- -1: Indica que ocurrió un error, y la variable global errno se configura para describir el
+motivo del error.
+
+4. Errores Comunes.
+.- EBADF: El descriptor de archivo proporcionado (fd) no es válido.
+.- EFAULT: isatty intenta acceder a una dirección de memoria fuera del espacio accesible del
+proceso.
+
+5. Funcionamiento.
+.- isatty verifica si el descriptor de archivo está conectado a un dispositivo de tipo terminal
+(como una consola interactiva o un pseudo-terminal).
+.- Puede ser utilizado en aplicaciones para ajustar su comportamiento según el entorno de
+ejecución:
+	.- Si la entrada o salida está conectada a un terminal, el programa puede mostrar
+	información interactiva.
+	.- Si está redirigida a un archivo o canal, el programa puede omitir elementos
+	interactivos.
+
+6. Ejemplo Básico.
+Este ejemplo muestra cómo usar isatty para verificar si la entrada estándar (stdin) está conectada
+a un terminal:
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main()
+{
+	if (isatty(0))
+	{ // Verificar si stdin está asociado con un terminal
+		printf("La entrada estándar está conectada a un terminal.\n");
+	}
+	else
+	{
+		printf("La entrada estándar NO está conectada a un terminal.\n");
+	}
+	return 0;
+}
+.- Salida esperada:
+	.- Si se ejecuta el programa en un terminal interactivo:
+		.- La entrada estándar está conectada a un terminal.
+	.- Si se ejecuta redirigiendo la entrada desde un archivo:
+		.- La entrada estándar NO está conectada a un terminal.
+
+7. Casos de Uso Comunes.
+.- Comportamiento Diferenciado: Usar isatty para que un programa cambie dinámicamente su
+comportamiento según el tipo de entrada o salida.
+	.- Por ejemplo, mostrar un progreso en pantalla si está conectado a un terminal, pero
+	omitirlo si la salida está siendo redirigida a un archivo.
+.- Interactividad: Determinar si se debe habilitar el modo interactivo en aplicaciones como
+intérpretes de comandos (shells).
+.- Redirección: Detectar si la entrada o salida está conectada a un archivo, canal o terminal para
+ajustar la lógica del programa.
+
+8. Consideraciones Importantes.
+.- Limitaciones: isatty no puede distinguir entre tipos específicos de terminales o dispositivos;
+solo verifica si el descriptor está asociado con algún tipo de terminal.
+.- Portabilidad: La función isatty es estándar en sistemas Unix y Unix-like, pero no está
+disponible en algunos sistemas operativos que no siguen POSIX.
+
+9. Ejemplo Avanzado: Verificar Salida Estándar
+Este ejemplo muestra cómo un programa puede decidir mostrar mensajes de progreso solo si la salida
+estándar está conectada a un terminal:
+
+#include <stdio.h>
+#include <unistd.h>
+
+void mostrarProgreso()
+{
+	for (int i = 0; i <= 100; i += 10)
+	{
+		printf("\rProgreso: %d%%", i); // Mostrar progreso en la misma línea
+		fflush(stdout); // Asegurarse de que se imprima inmediatamente
+		sleep(1);
+	}
+	printf("\n");
+}
+
+int main()
+{
+	if (isatty(1))
+	{ // Verificar si stdout está asociado con un terminal
+		mostrarProgreso();
+	}
+	else
+	{
+		printf("Progreso completado.\n"); // Salida sencilla para redirección
+	}
+	return 0;
+}
+
+10. Diferencia entre isatty y otras funciones similares.
+
+Característica	isatty				tcgetattr (de <termios.h>)
+
+Propósito	Verifica si un descriptor	Obtiene atributos específicos de
+		está conectado a un terminal.	terminal como velocidad de línea
+						o modo de operación.
+Complejidad	Muy sencilla; solo retorna	Más avanzada; requiere analizar una
+		verdadero o falso.		estructura termios.
+Uso Común	Comprobaciones rápidas en 	Configuración y manipulación avanzada
+		aplicaciones interactivas.	de terminales.
+
+11. Limitaciones.
+.- Inflexibilidad: isatty solo verifica si hay un terminal asociado, pero no brinda información
+detallada sobre el terminal ni sobre el tipo de dispositivo.
+.- Errores Silenciosos: Los errores, como proporcionar un descriptor inválido, solo se reflejan en
+errno, lo cual puede pasar inadvertido si no se verifica explícitamente.

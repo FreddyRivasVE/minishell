@@ -1,0 +1,120 @@
+1. ttyname se utiliza para determinar el nombre del dispositivo asociado con un descriptor de
+archivo que representa un terminal. Es particularmente útil en sistemas Unix y Unix-like para
+identificar qué terminal está asociado con un proceso. Está definida en <unistd.h>.
+
+2. Sintaxis.
+
+char *ttyname(int fd);
+
+.- Parámetros.
+	.- fd: Es un descriptor de archivo que se desea consultar. Este descriptor debe estar
+	asociado con un terminal. Algunos descriptores comunes incluyen:
+		.- 0: Entrada estándar (stdin).
+		.- 1: Salida estándar (stdout).
+		.- 2: Salida de error estándar (stderr).
+
+3. Valor de Retorno.
+.- Cadena de caracteres: Si el descriptor de archivo está asociado a un terminal, devuelve un
+puntero a una cadena que contiene el nombre del archivo del dispositivo (por ejemplo, /dev/tty1).
+.- NULL: Si el descriptor de archivo no está asociado con un terminal o si ocurre un error.
+En este caso, la variable global errno se configura con el código correspondiente.
+
+4. Errores Comunes.
+.- EBADF: El descriptor de archivo fd no es válido.
+.- ENOTTY: El descriptor de archivo fd no está asociado con un terminal.
+.- ENOMEM: No hay suficiente memoria disponible para realizar la operación.
+
+5. Funcionamiento.
+La función ttyname verifica si el descriptor de archivo especificado corresponde a un terminal.
+Si lo es, devuelve el nombre del dispositivo del terminal como una cadena legible para el usuario.
+Esto puede incluir terminales físicos (por ejemplo, /dev/tty1) o pseudoterminales en sistemas
+modernos.
+
+6. Ejemplo Básico.
+El siguiente ejemplo muestra cómo usar ttyname para determinar el terminal asociado con la entrada
+estándar (stdin):
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main()
+{
+	char *terminal;
+	// Obtener el nombre del terminal asociado a stdin
+	terminal = ttyname(0);
+	if (terminal == NULL)
+	{
+		perror("Error al obtener el nombre del terminal");
+	}
+	else
+	{
+		printf("El terminal asociado a stdin es: %s\n", terminal);
+	}
+	return 0;
+}
+.- Salida esperada:
+.- Si se ejecuta en un terminal interactivo:
+	.- El terminal asociado a stdin es: /dev/tty1
+.- Si se ejecuta redirigiendo la entrada desde un archivo o canal:
+	.- Error al obtener el nombre del terminal: Inappropriate ioctl for device
+
+7. Casos de Uso Comunes.
+.- Identificación de Terminales: Determinar con qué terminal físico o pseudoterminal está
+interactuando un programa.
+.- Depuración: Diagnosticar y verificar las conexiones a dispositivos de terminal en sistemas
+complejos.
+.- Aplicaciones Interactivas: Programas como intérpretes de comandos pueden usar ttyname para
+mostrar información sobre el terminal conectado.
+
+8. Limitaciones.
+.- Asociación con Terminales: Solo funciona con descriptores asociados a terminales. Si el
+descriptor no corresponde a un terminal (por ejemplo, un archivo o canal), ttyname retorna NULL.
+.- Cadena Estática: La cadena devuelta por ttyname es administrada internamente, por lo que no
+debe ser modificada ni liberada.
+
+9. Ejemplo Avanzado: Verificar Varias Entradas.
+Este ejemplo verifica si los descriptores de entrada, salida y error estándar están asociados con
+terminales y muestra los nombres de los terminales correspondientes:
+
+#include <stdio.h>
+#include <unistd.h>
+
+void verificarTerminal(int fd, const char *descripcion)
+{
+	char *terminal = ttyname(fd);
+	if (terminal == NULL)
+	{
+		printf("%s no está asociado a un terminal.\n", descripcion);
+	}
+	else
+	{
+		printf("%s está asociado al terminal: %s\n", descripcion, terminal);
+	}
+}
+
+int main()
+{
+	verificarTerminal(0, "Entrada estándar (stdin)");
+	verificarTerminal(1, "Salida estándar (stdout)");
+	verificarTerminal(2, "Salida de error (stderr)");
+	return 0;
+}
+
+10. Salida esperada: Dependiendo del entorno de ejecución, la salida puede ser:
+.- Si todo está conectado a un terminal:
+	.- Entrada estándar (stdin) está asociado al terminal: /dev/tty1
+	.- Salida estándar (stdout) está asociado al terminal: /dev/tty1
+	.- Salida de error (stderr) está asociado al terminal: /dev/tty1
+
+.- Si alguna entrada o salida está redirigida:
+	.- Entrada estándar (stdin) no está asociado a un terminal.
+	.- Salida estándar (stdout) no está asociado a un terminal.
+	.- Salida de error (stderr) no está asociado a un terminal.
+
+11. Consideraciones Importantes.
+.- Relevancia para Terminales Modernos:
+	.- En sistemas que utilizan pseudoterminales, como xterm o terminales SSH, ttyname puede
+	devolver nombres de dispositivos como /dev/pts/0 en lugar de terminales físicos
+	tradicionales como /dev/tty1.
+.- Uso con isatty: Combinar ttyname con isatty puede ser útil para verificar primero si un
+descriptor está asociado a un terminal antes de intentar obtener su nombre.

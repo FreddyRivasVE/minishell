@@ -1,0 +1,109 @@
+1. getenv.
+Se utiliza para obtener el valor de una variable de entorno. Las variables de entorno son valores
+globales que afectan el comportamiento de los programas ejecutados en un sistema operativo. Por ejemplo,
+variables como PATH, HOME y USER son comunes en entornos Unix y Unix-like, así como en otros sistemas
+operativos como Windows.
+
+2. Sintaxis.
+
+char *getenv(const char *name);
+
+.- Parámetros.
+	.- name: Es una cadena de caracteres que especifica el nombre de la variable de entorno cuyo
+	valor se desea recuperar.
+La búsqueda es sensible a mayúsculas y minúsculas, por lo que PATH y Path se tratan como nombres
+diferentes.
+
+3. Valor de Retorno.
+.- Puntero a una cadena de caracteres: Si la variable de entorno existe, getenv devuelve un puntero a
+la cadena que contiene su valor.
+.- Este puntero apunta a una memoria interna gestionada por el sistema, por lo que no debe modificarse
+ni liberarse por el programador.
+.- NULL: Si la variable de entorno especificada no existe, la función devuelve NULL.
+
+4. Uso Típico.
+.- La función getenv es ampliamente utilizada para configurar el comportamiento de programas según valor
+es de entorno del sistema. Por ejemplo, se usa para:
+	.- Leer configuraciones globales del sistema o usuario, como HOME (directorio personal) o TEMP
+	(directorio de archivos temporales).
+	.- Ajustar rutas para búsqueda de ejecutables (PATH).
+	.- Identificar el usuario en el sistema (USER o USERNAME).
+
+5. Ejemplo Básico.
+El siguiente ejemplo muestra cómo usar getenv para recuperar y mostrar el valor de la variable de
+entorno PATH:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	char *path = getenv("PATH"); // Obtener el valor de la variable PATH
+	if (path != NULL)
+	{
+		printf("La variable PATH es: %s\n", path);
+	}
+	else
+	{
+		printf("La variable PATH no está definida.\n");
+	}
+	return 0;
+}
+.- Salida esperada:
+	.- Si la variable PATH está definida, se imprimirá su valor, que suele ser una lista de
+	directorios separados por : (en sistemas Unix).
+	.- Si la variable no está definida, se mostrará el mensaje correspondiente.
+
+6. Consideraciones Importantes.
+.- Seguridad del Puntero: La cadena devuelta por getenv está gestionada internamente por el sistema, por
+lo que no debe ser liberada ni modificada.
+.- Sensibilidad a Mayúsculas/Minúsculas: En sistemas Unix y Unix-like, los nombres de variables de
+entorno son sensibles a mayúsculas y minúsculas. Sin embargo, en Windows, no lo son.
+.- Interacción con setenv y putenv: getenv se usa frecuentemente en combinación con funciones como
+setenv (para establecer variables) y putenv (para modificar variables).
+.- Portabilidad: getenv es parte del estándar C, pero su uso puede variar ligeramente en diferentes
+sistemas operativos.
+
+7. Uso Avanzado.
+Este ejemplo muestra cómo usar getenv para identificar y utilizar el directorio personal del usuario
+(HOME):
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+	char *home = getenv("HOME");
+	if (home != NULL)
+	{
+		char path[256];
+		snprintf(path, sizeof(path), "%s/mis_archivos", home); // Construir una ruta usando HOME
+		printf("Directorio de trabajo: %s\n", path);
+	}
+	else
+	{
+		printf("La variable HOME no está definida.\n");
+	}
+	return 0;
+}
+En este caso:
+.- Si la variable HOME está definida, se utiliza para construir una ruta completa dentro del directorio
+personal del usuario (~/mis_archivos).
+
+8. Ventajas y Limitaciones.
+.- Ventajas:
+	.- Simplicidad: getenv es fácil de usar para acceder a variables de entorno en cualquier
+	programa.
+	.- Flexibilidad: Permite a los programas adaptarse dinámicamente según las configuraciones del
+	sistema y del usuario.
+.- Limitaciones:
+	.- Manipulación de Memoria: No se debe liberar ni modificar la cadena devuelta por getenv.
+	.- Dependencia del Sistema: Si una variable de entorno no existe, el programa debe manejar el
+	caso de manera adecuada para evitar problemas inesperados.
+
+9. Relación con Otras Funciones.
+.- setenv: Establece una nueva variable de entorno o modifica una existente.
+.- putenv: Modifica directamente las variables de entorno.
+.- unsetenv: Elimina una variable de entorno existente.
+Estas funciones se pueden combinar con getenv para un manejo completo de las variables de entorno.
