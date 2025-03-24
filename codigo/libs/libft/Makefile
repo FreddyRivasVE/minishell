@@ -19,6 +19,7 @@ SRC_DIR = src/ft
 OBJ_DIR = obj
 BONUS_SRC_DIR = src/bonus
 OBJ_BONUS_DIR = src/bonus
+
 # Archivos fuente y objetos
 SRC = $(SRC_DIR)/ft_isalpha.c $(SRC_DIR)/ft_isdigit.c $(SRC_DIR)/ft_isalnum.c \
       $(SRC_DIR)/ft_isascii.c $(SRC_DIR)/ft_isprint.c $(SRC_DIR)/ft_strlen.c \
@@ -83,7 +84,7 @@ $(OBJ_DIR)/bonus/%.o: $(BONUS_SRC_DIR)/%.c $(INCLUDE)
 #	@echo "Compilando archivo bonus:\r $<"
 
 clean:
-	@rm -rf $(OBJ_DIR) 
+	@rm -rf $(OBJ_DIR)
 #@echo "Archivos objeto eliminados."
 
 fclean: clean

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/24 14:22:21 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/24 16:07:12 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 # include <unistd.h>
 # include "../include/ms_structure.h"
 
-void    ms_sigbren_handler(int signo);
-
-
+void    ms_sigctrlc_handler(int signo);
+void	ms_init_struct(t_mshell *data, char **env);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
+#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/24 11:49:26 by frivas           ###   ########.fr        #
+#    Updated: 2025/03/24 16:23:33 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ ifeq ($(UNAME), linux)
 endif
 
 SRC_DIR = src
-SRCS = 	$(SRC_DIR)/main.c
+SRCS = 	$(SRC_DIR)/main.c $(SRC_DIR)/ms_init_struct.c $(SRC_DIR)/signals.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -48,6 +48,7 @@ $(NAME): $(LIBFTA) $(OBJS)
 
 $(LIBFTA):
 	@make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) bonus
 	@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)

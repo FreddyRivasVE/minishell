@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:41:09 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/24 14:35:48 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:36:35 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv, char **env)
 {
-    t_mshell    data;
+    t_mshell    		data;
     struct sigaction    sa_ctrlc;
     struct sigaction    sa_quit;
     (void) argv;
@@ -24,7 +24,7 @@ int main(int argc, char **argv, char **env)
         ft_putendl_fd("Too many arguments!", 2);
         exit(EXIT_FAILURE);
     }
-    sa_ctrlc.sa_handler = ms_sigbren_handler;
+    sa_ctrlc.sa_handler = ms_sigctrlc_handler;
 	sa_ctrlc.sa_flags = 0;
 	sigaction(SIGINT, &sa_ctrlc, NULL);
 	sa_quit.sa_handler = SIG_IGN;
