@@ -6,22 +6,16 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:41:09 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/24 13:10:58 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/24 14:35:48 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    ms_sigbren_handler(int signo)
-{
-    printf("Señal capturada: %d (SIGINT)\n", signo);
-    printf("\n");
-    exit(0);
-}
-
 int main(int argc, char **argv, char **env)
 {
-    struct sigaction    sa_bren;
+    t_mshell    data;
+    struct sigaction    sa_ctrlc;
     struct sigaction    sa_quit;
     (void) argv;
 
@@ -30,12 +24,12 @@ int main(int argc, char **argv, char **env)
         ft_putendl_fd("Too many arguments!", 2);
         exit(EXIT_FAILURE);
     }
-    sa_bren.sa_handler = ms_sigbren_handler;
-	sa_bren.sa_flags = 0;
-	sigaction(SIGINT, &sa_bren, NULL);
+    sa_ctrlc.sa_handler = ms_sigbren_handler;
+	sa_ctrlc.sa_flags = 0;
+	sigaction(SIGINT, &sa_ctrlc, NULL);
 	sa_quit.sa_handler = SIG_IGN;
 	sa_quit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_quit, NULL);
-	ms_init_struct(env);
+	ms_init_struct(&data, env);
 	return (0);
 }

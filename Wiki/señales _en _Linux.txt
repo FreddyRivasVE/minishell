@@ -1,0 +1,56 @@
+
+Señal	Descripción
+HUP	Hangup: enviada cuando la terminal de control se desconecta.
+INT	Interrupt: generada por Ctrl+C para interrumpir un programa en ejecución.
+QUIT	Quit: generada por Ctrl+\, termina el proceso y genera un core dump.
+ILL	Illegal Instruction: instrucción ilegal ejecutada por el programa.
+TRAP	Trap: trampa de hardware o de depuración.
+IOT	Igual que SIGABRT, relacionada con diagnósticos internos.
+BUS	Bus Error: error de acceso a memoria no alineada.
+FPE	Floating Point Exception: error de punto flotante, como división por cero.
+KILL	Kill: señal para finalizar un proceso de inmediato (no manejable).
+USR1	Usuario 1: señal definida por el usuario para uso personalizado.
+SEGV	Segmentation Violation: acceso no válido a memoria.
+USR2	Usuario 2: otra señal personalizada por el usuario.
+PIPE	Broken Pipe: escritura en un pipe sin lectores.
+ALRM	Alarm: señal enviada cuando expira un temporizador con alarm().
+TERM	Terminate: solicitud de terminación de proceso (manejable).
+STKFLT	Stack Fault: error en la pila (raro en sistemas modernos).
+CHLD	Child: notifica que un proceso hijo ha cambiado de estado.
+CONT	Continue: reanuda un proceso detenido.
+STOP	Stop: detiene un proceso (no manejable).
+TSTP	Terminal Stop: suspensión por el usuario, como con Ctrl+Z.
+TTIN	Intento de leer desde una terminal por parte de un proceso en segundo plano.
+TTOU	Intento de escribir en una terminal por parte de un proceso en segundo plano.
+URG	Urgent: señal de datos urgentes en un socket.
+XCPU	CPU Time Limit Exceeded: excedió el límite de tiempo de CPU.
+XFSZ	File Size Limit Exceeded: excedió el límite de tamaño de archivo.
+VTALRM	Virtual Timer Expired: expiración de un temporizador virtual.
+PROF	Profiling Timer Expired: expiración de un temporizador de perfil.
+WINCH	Window Change: cambio de tamaño en la ventana de terminal.
+POLL	Pollable Event: evento en un descriptor de archivo.
+PWR	Power Failure: fallo de energía (usada en sistemas avanzados).
+SYS	Bad System Call: llamada al sistema inválida.
+
+
+
+Señal	Código	Descripción
+SIGHUP	1	Hangup detected on controlling terminal or death of controlling process.
+SIGINT	2	Interrupción, típicamente generada por Ctrl+C.
+SIGQUIT	3	Termina un proceso y produce un core dump (generalmente con Ctrl+\).
+SIGILL	4	Instrucción ilegal (uso de instrucciones inválidas por el programa).
+SIGABRT	6	Abort signal (normalmente generado por la función abort).
+SIGFPE	8	Error de punto flotante (por ejemplo, división por cero).
+SIGKILL	9	Termina el proceso inmediatamente (no puede ser capturada o ignorada).
+SIGSEGV	11	Segment violation (por ejemplo, acceso no permitido a memoria).
+SIGPIPE	13	Escritura en un pipe sin lectores.
+SIGALRM	14	Señal enviada por un temporizador (alarm()).
+SIGTERM	15	Señal para pedir la terminación del proceso (puede ser manejada o ignorada).
+SIGUSR1	10	Señal definida por el usuario 1.
+SIGUSR2	12	Señal definida por el usuario 2.
+SIGCHLD	17	Notificación de que un proceso hijo ha cambiado de estado.
+SIGCONT	18	Continua un proceso suspendido (como después de SIGTSTP).
+SIGSTOP	19	Suspende el proceso (no puede ser capturada o ignorada).
+SIGTSTP	20	Suspendido por el usuario, típicamente con Ctrl+Z.
+SIGTTIN	21	El proceso intenta leer de una terminal en segundo plano.
+SIGTTOU	22	El proceso intenta escribir en una terminal en segundo plano.

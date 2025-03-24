@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ms_structure.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/24 14:22:21 by frivas           ###   ########.fr       */
+/*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
+/*   Updated: 2025/03/24 14:48:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef MS_STRUCT_H
+# define MS_STRUCT_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libs/libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <unistd.h>
-# include "../include/ms_structure.h"
-
-void    ms_sigbren_handler(int signo);
-
-
+typedef struct s_mshell
+{
+    t_list  *env;
+    t_pipe  *pipes;
+    t_redir *redirs;
+    t_coman *commands;
+    t_exit  *exits;
+    t_input *inputs;
+}   t_mshell;
 
 #endif
