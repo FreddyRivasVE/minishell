@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/24 11:13:51 by brivera          ###   ########.fr        #
+#    Updated: 2025/03/24 11:49:26 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ ifeq ($(UNAME), linux)
 endif
 
 SRC_DIR = src
-SRCS = 	$(SRC_DIR)/test_readline.c \
+SRCS = 	$(SRC_DIR)/main.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
