@@ -6,7 +6,7 @@
 #    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/21 19:52:32 by brivera          ###   ########.fr        #
+#    Updated: 2025/03/24 11:13:51 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,6 @@ LIBFT_DIR = libs/libft
 LIBFTA = $(LIBFT_DIR)/libft.a
 
 LIBS = -lreadline -Llib/libft
-
-INCLUDE = -I include
 
 UNAME = $(shell uname)
 ifeq ($(UNAME), linux)
@@ -41,21 +39,6 @@ GREEN = \033[92;1m
 CLEAR_COLOR = \033[0m
 CYAN = \033[96;1mc
 RM = rm -f
-
-PROYECTO = minishell
-
-valgrind:
-	valgrind -s \
-		--tool=memcheck \
-		--leak-check=full \
-		--show-leak-kinds=all \
-		--track-origins=yes \
-		--trace-children=yes \
-		--track-fds=yes \
-		--suppressions=valgrind/valgrind.sup \
-		--log-file=valgrind/informe \
-		./$(PROYECTO)
-
 
 all: $(NAME)
 
@@ -82,7 +65,19 @@ fclean: clean
 	@echo "$(RED)⛔ Limpieza total (ejecutables y librerías).$(CLEAR_COLOR)"
 
 re: fclean all
-	@echo "$(CYAN)🔄 Proyecto reconstruido.$(CLEAR_COLOR)"
+	@echo "$(CYAN)🔃 Proyecto reconstruido.$(CLEAR_COLOR)"
+
+valgrind:
+	valgrind -s \
+		--tool=memcheck \
+		--leak-check=full \
+		--show-leak-kinds=all \
+		--track-origins=yes \
+		--trace-children=yes \
+		--track-fds=yes \
+		--suppressions=valgrind/valgrind.sup \
+		--log-file=valgrind/informe \
+		./$(NAME)
 
 norminette:
 	@norminette $(SRCS) $(INCLUDE)
