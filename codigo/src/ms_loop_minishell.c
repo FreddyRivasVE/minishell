@@ -1,47 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_structure.h                                     :+:      :+:    :+:   */
+/*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/25 14:38:31 by frivas           ###   ########.fr       */
+/*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
+/*   Updated: 2025/03/25 14:37:52 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_STRUCT_H
-# define MS_STRUCT_H
+#include "minishell.h"
 
-typedef struct s_pipe
-{
-}	t_pipe;
 
-typedef struct s_redir
-{
-}	t_redir;
 
-typedef struct s_comman
-{
-}	t_comman;
-
-typedef struct s_exit
-{
-}	t_exit;
-
-typedef struct s_input
-{
-}	t_input;
-
-typedef struct s_mshell
-{
-	t_list  *env;
-	t_pipe  *pipes;
-	t_redir *redirs;
-	t_comman *commands;
-	t_exit  *exits;
-	t_input *inputs;
-	char	*pront;
-}	t_mshell;
-
-#endif

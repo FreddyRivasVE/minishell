@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/25 12:34:43 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/25 15:09:29 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 void    ms_sigctrlc_handler(int signo);
 void	ms_init_struct(t_mshell *data, char **env);
 void    print_list_content_char(t_list **lst);
+void    ms_get_pront(t_mshell **data);
 
 #endif
