@@ -6,7 +6,7 @@
 #    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/24 16:23:33 by brivera          ###   ########.fr        #
+#    Updated: 2025/03/25 10:51:35 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ ifeq ($(UNAME), linux)
 endif
 
 SRC_DIR = src
-SRCS = 	$(SRC_DIR)/main.c $(SRC_DIR)/ms_init_struct.c $(SRC_DIR)/signals.c
+SRCS = 	$(wildcard $(SRC_DIR)/*.c)
 
 OBJ_DIR = obj
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -37,7 +37,7 @@ INCLUDE = include/minishell.h
 RED = \033[91;1m
 GREEN = \033[92;1m
 CLEAR_COLOR = \033[0m
-CYAN = \033[96;1mc
+CYAN = \033[96;1m
 RM = rm -f
 
 all: $(NAME)
@@ -48,7 +48,6 @@ $(NAME): $(LIBFTA) $(OBJS)
 
 $(LIBFTA):
 	@make -C $(LIBFT_DIR)
-	@make -C $(LIBFT_DIR) bonus
 	@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)

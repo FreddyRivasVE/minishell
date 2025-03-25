@@ -6,13 +6,13 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/24 16:16:39 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/25 11:09:01 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_list(t_list **lst)
+void	print_list_content_char(t_list **lst)
 {
 	t_list *current = *lst;
 	
@@ -23,11 +23,12 @@ void	print_list(t_list **lst)
 	}
 }
 
-char *get_env_line(char	*env)
+char	*ms_get_env_line(char	*env)
 {
 	char	*env_line;
-	
+
 	env_line = ft_strdup(env);
+	//hay que sumar + 1 al SHLVL;
 	return (env_line);
 }
 
@@ -41,7 +42,7 @@ t_list	*ms_get_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		content = get_env_line(env[i]);
+		content = ms_get_env_line(env[i]);
 		new_node = ft_lstnew(content);
 		if (!new_node)
 		{
@@ -62,5 +63,5 @@ void	ms_init_struct(t_mshell *data, char **env)
 	data->exits = 0;
 	data->inputs = 0;
 	data->env = ms_get_env(env);
-	print_list(&data->env);  // Para probar si copia correctamente
+	print_list_content_char(&data->env);  // Para probar si copia correctamente
 }
