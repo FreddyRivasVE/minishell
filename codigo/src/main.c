@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:41:09 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/24 15:36:35 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/25 12:15:48 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ int main(int argc, char **argv, char **env)
     }
     sa_ctrlc.sa_handler = ms_sigctrlc_handler;
 	sa_ctrlc.sa_flags = 0;
+    sigemptyset(&sa_ctrlc.sa_mask);
 	sigaction(SIGINT, &sa_ctrlc, NULL);
 	sa_quit.sa_handler = SIG_IGN;
 	sa_quit.sa_flags = 0;
+    sigemptyset(&sa_quit.sa_mask);
 	sigaction(SIGQUIT, &sa_quit, NULL);
 	ms_init_struct(&data, env);
 	return (0);

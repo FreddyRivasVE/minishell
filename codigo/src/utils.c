@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 15:26:45 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/25 12:05:32 by frivas           ###   ########.fr       */
+/*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
+/*   Updated: 2025/03/25 12:34:21 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *news)
+void	print_list_content_char(t_list **lst)
 {
-	t_list	*aux;
-
-	if (!lst || !news)
-		return ;
-	if (!*lst)
+	t_list *current = *lst;
+	
+	while (current != NULL)
 	{
-		*lst = news;
-		return ;
+		if (current->content != NULL)
+		{
+			printf("%s\n", (char *)current->content);
+			current = current->next;
+		}
 	}
-	aux = ft_lstlast(*lst);
-	if (aux != NULL)
-		aux->next = news;
-	else
-		return ;
 }
