@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/26 17:09:19 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/26 22:56:25 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ typedef struct s_input
 
 typedef struct s_mshell
 {
-	t_list  *env;
-	t_pipe  *pipes;
-	t_redir *redirs;
-	t_command *commands;
-	t_exit  *exits;
-	t_input *inputs;
-	char	*prompt;
+	t_list		*env;
+	t_pipe		*pipes;
+	t_redir		*redirs;
+	t_command	*commands;
+	t_exit		*exits;
+	t_input		*inputs;
+	char		*prompt;
 }	t_mshell;
 
 #endif
