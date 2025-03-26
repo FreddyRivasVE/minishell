@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/26 22:48:00 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/26 23:29:55 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ char	*ms_get_host(void)
 		res = ft_strjoin("", "hostname");
 	else
 	{
-		res = (char *)malloc(sizeof(char) * 1024);
+		res = ft_calloc(1024, sizeof(char));
 		//bytes_read = read(fd, res, 1024);
 		read(fd, res, 1024);
-		end = ft_strcspn(res, ".-");
+		end = ft_strcspn(res, ".-\n");
 		res = ft_substr(res, 0, end);
 	}
 	close(fd);
