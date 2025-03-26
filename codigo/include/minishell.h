@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/25 15:09:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/26 11:40:29 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include "../include/ms_structure.h"
+# include <fcntl.h>
 
 void    ms_sigctrlc_handler(int signo);
 void	ms_init_struct(t_mshell *data, char **env);

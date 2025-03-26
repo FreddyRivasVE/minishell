@@ -3,66 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_pront.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/25 16:26:36 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/26 12:32:12 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    *ms_get_host(char *str)
+size_t	ft_strcspn(const char *s, const char *reject)
 {
-	char    *res;
-	int     i;
-	int     end;
-	int     start;
-	int     len;
-
-	res = NULL;
+	int		i;
+	int		k;
+	
 	i = 0;
-	end = 0;
-	start = 0;
-	while (str[i])
+	k = 0;
+	while (s[i] != '\0')
 	{
-		if (str[i] == '.')
+		while (reject[k] != '\0')
 		{
-			end = i;
-			break;
+			if (s[i] == reject[k])
+				return (i);
+			k++;
 		}
+		k = 0;
 		i++;
 	}
-	while(str[i] && i > 0)
-	{
-		if (str[i] == '/')
-		{
-			start = i + 1;
-			break;
-		}
-		i--;
-	}
-	len = end - start;
-	res = ft_substr(str, start, len);
-	return (res);
+	return (i);
 }
 
-char	*ms_get_dir(char *str)
+char    *ms_get_host(void)
 {
+	char    *res;
+	int		fd;
+	char	*temp;
+	int		bytes_read;
+	int		end;
+	
+	temp = (char *)malloc(sizeof(char) * 1024);
+	fd = open("/etc/hostname", O_RDONLY);
+	if (fd == -1)
+		res = "hostname";
+	else
+		bytes_read = read(fd, temp, 1024);
+	end = ft_strcspn(temp, ".-");
+	res = ft_substr(temp, 0, end);
+	free(temp);
+	return (res);		
 }
+
+/*char	*ms_get_dir(char *str)
+{
+}*/
 
 
 void    ms_get_pront(t_mshell **data)
 {
-	char    *temp;
 	char    *hostn;
 	char    *pwdir;
+	(void)	data;
 
-
-	temp = getenv("SESSION_MANAGER");
-	hostn = ms_get_host(temp);
-	free(temp);
+	hostn = ms_get_host();
 	pwdir = getenv("PWD");
-	temp = ms_get_dir(temp);
+	//temp = ms_get_dir(temp);
 	printf("%s\n", hostn);    
 }
