@@ -1,78 +1,20 @@
-==1715697== Memcheck, a memory error detector
-==1715697== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1715697== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1715697== Command: ./minishell
-==1715697== Parent PID: 1715695
-==1715697== 
-==1715697== Conditional jump or move depends on uninitialised value(s)
-==1715697==    at 0x4017DF: ft_strlen (in /home/frivas/entregas/viajera/minishell/codigo/minishell)
-==1715697==    by 0x4019A3: ft_substr (in /home/frivas/entregas/viajera/minishell/codigo/minishell)
-==1715697==    by 0x401451: ms_get_host (ms_get_pront.c:64)
-==1715697==    by 0x401570: ms_get_pront (ms_get_pront.c:103)
-==1715697==    by 0x40170D: ms_init_struct (ms_init_struct.c:59)
-==1715697==    by 0x401299: main (main.c:35)
-==1715697==  Uninitialised value was created by a heap allocation
-==1715697==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1715697==    by 0x4013E1: ms_get_host (ms_get_pront.c:57)
-==1715697==    by 0x401570: ms_get_pront (ms_get_pront.c:103)
-==1715697==    by 0x40170D: ms_init_struct (ms_init_struct.c:59)
-==1715697==    by 0x401299: main (main.c:35)
-==1715697== 
-==1715697== 
-==1715697== FILE DESCRIPTORS: 5 open (3 std) at exit.
-==1715697== Open file descriptor 4: /etc/hostname
-==1715697==    at 0x49DC53B: open (open64.c:41)
-==1715697==    by 0x4013F8: ms_get_host (ms_get_pront.c:58)
-==1715697==    by 0x401570: ms_get_pront (ms_get_pront.c:103)
-==1715697==    by 0x40170D: ms_init_struct (ms_init_struct.c:59)
-==1715697==    by 0x401299: main (main.c:35)
-==1715697== 
-==1715697== Open file descriptor 3: /home/frivas/entregas/viajera/minishell/codigo/valgrind/informe
-==1715697==    <inherited from parent>
-==1715697== 
-==1715697== 
-==1715697== HEAP SUMMARY:
-==1715697==     in use at exit: 44 bytes in 2 blocks
-==1715697==   total heap usage: 127 allocs, 125 frees, 6,802 bytes allocated
-==1715697== 
-==1715697== 8 bytes in 1 blocks are definitely lost in loss record 1 of 2
-==1715697==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1715697==    by 0x4019F6: ft_substr (in /home/frivas/entregas/viajera/minishell/codigo/minishell)
-==1715697==    by 0x401451: ms_get_host (ms_get_pront.c:64)
-==1715697==    by 0x401570: ms_get_pront (ms_get_pront.c:103)
-==1715697==    by 0x40170D: ms_init_struct (ms_init_struct.c:59)
-==1715697==    by 0x401299: main (main.c:35)
-==1715697== 
-==1715697== 36 bytes in 1 blocks are definitely lost in loss record 2 of 2
-==1715697==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1715697==    by 0x401AD3: ft_strjoin (in /home/frivas/entregas/viajera/minishell/codigo/minishell)
-==1715697==    by 0x401538: ms_get_dir (ms_get_pront.c:90)
-==1715697==    by 0x401579: ms_get_pront (ms_get_pront.c:104)
-==1715697==    by 0x40170D: ms_init_struct (ms_init_struct.c:59)
-==1715697==    by 0x401299: main (main.c:35)
-==1715697== 
-==1715697== LEAK SUMMARY:
-==1715697==    definitely lost: 44 bytes in 2 blocks
-==1715697==    indirectly lost: 0 bytes in 0 blocks
-==1715697==      possibly lost: 0 bytes in 0 blocks
-==1715697==    still reachable: 0 bytes in 0 blocks
-==1715697==         suppressed: 0 bytes in 0 blocks
-==1715697== 
-==1715697== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
-==1715697== 
-==1715697== 1 errors in context 1 of 3:
-==1715697== Conditional jump or move depends on uninitialised value(s)
-==1715697==    at 0x4017DF: ft_strlen (in /home/frivas/entregas/viajera/minishell/codigo/minishell)
-==1715697==    by 0x4019A3: ft_substr (in /home/frivas/entregas/viajera/minishell/codigo/minishell)
-==1715697==    by 0x401451: ms_get_host (ms_get_pront.c:64)
-==1715697==    by 0x401570: ms_get_pront (ms_get_pront.c:103)
-==1715697==    by 0x40170D: ms_init_struct (ms_init_struct.c:59)
-==1715697==    by 0x401299: main (main.c:35)
-==1715697==  Uninitialised value was created by a heap allocation
-==1715697==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1715697==    by 0x4013E1: ms_get_host (ms_get_pront.c:57)
-==1715697==    by 0x401570: ms_get_pront (ms_get_pront.c:103)
-==1715697==    by 0x40170D: ms_init_struct (ms_init_struct.c:59)
-==1715697==    by 0x401299: main (main.c:35)
-==1715697== 
-==1715697== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==2267529== Memcheck, a memory error detector
+==2267529== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2267529== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2267529== Command: ./minishell
+==2267529== Parent PID: 2267527
+==2267529== 
+==2267529== Conditional jump or move depends on uninitialised value(s)
+==2267529==    at 0x4018DF: ft_strlen (in /home/brivera/Documents/42Cursus/minishell/repo_git/minishell/codigo/minishell)
+==2267529==    by 0x401AA3: ft_substr (in /home/brivera/Documents/42Cursus/minishell/repo_git/minishell/codigo/minishell)
+==2267529==    by 0x4014D0: ms_get_host (ms_get_pront.c:64)
+==2267529==    by 0x4015E0: ms_get_pront (ms_get_pront.c:103)
+==2267529==    by 0x40180D: ms_init_struct (ms_init_struct.c:59)
+==2267529==    by 0x401309: main (main.c:45)
+==2267529==  Uninitialised value was created by a heap allocation
+==2267529==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2267529==    by 0x401493: ms_get_host (ms_get_pront.c:61)
+==2267529==    by 0x4015E0: ms_get_pront (ms_get_pront.c:103)
+==2267529==    by 0x40180D: ms_init_struct (ms_init_struct.c:59)
+==2267529==    by 0x401309: main (main.c:45)
+==2267529== 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/26 15:24:43 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/26 16:46:44 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@
 void    ms_sigctrlc_handler(int signo);
 void	ms_init_struct(t_mshell *data, char **env);
 void    print_list_content_char(t_list **lst);
-void    ms_get_pront(t_mshell *data);
+void    ms_get_prompt(t_mshell *data);
 
 #endif

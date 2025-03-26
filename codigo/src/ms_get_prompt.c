@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_get_pront.c                                     :+:      :+:    :+:   */
+/*   ms_get_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/26 15:49:31 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/26 16:36:13 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char    *ms_get_host(void)
 		end = ft_strcspn(res, ".-");
 		res = ft_substr(res, 0, end);
 	}
+	close(fd);
 	return (res);		
 }
 
@@ -83,7 +84,9 @@ char	*ms_get_dir()
 	{
 		res = getenv("PWD");
 		lenhom = ft_strlen(temp);
-		start = ft_strspn(res, temp) - 1;
+		printf("%ilenhom\n", lenhom);
+		start = ft_strspn(temp, res);
+		printf("%i\n", start);
 		if (start >= lenhom)
 		{
 			temp = ft_substr(res, start, (ft_strlen(res) - start));
@@ -94,7 +97,7 @@ char	*ms_get_dir()
 	return (res);	
 }
 
-void    ms_get_pront(t_mshell *data)
+void    ms_get_prompt(t_mshell *data)
 {
 	char    *hostn;
 	char    *pwdir;
@@ -105,8 +108,8 @@ void    ms_get_pront(t_mshell *data)
 	temp = ft_strjoin("minishell@", hostn);
 	temp = ft_strjoin(temp, ":");
 	temp = ft_strjoin(temp, pwdir);	
-	data->pront = ft_strjoin(temp, "$");
-	printf("%s", data->pront);
+	data->prompt = ft_strjoin(temp, "$ ");
+	//printf("%s", data->prompt);
 	free(temp);
 	if (ft_strlen(getenv("PWD")) > ft_strlen(getenv("HOME")))
 		free(pwdir);

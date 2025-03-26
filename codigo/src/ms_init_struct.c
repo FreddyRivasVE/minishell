@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/26 15:25:28 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/26 16:46:44 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	ms_init_struct(t_mshell *data, char **env)
 	data->inputs = 0;
 	data->env = 0;
 	data->env = ms_get_env(env);
-	ms_get_pront(data);
+	ms_get_prompt(data);
 	ft_lstclear(&data->env, free);
 }
