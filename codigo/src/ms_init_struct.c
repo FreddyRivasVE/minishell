@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/25 15:08:19 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/26 15:25:28 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	ms_init_struct(t_mshell *data, char **env)
 	data->inputs = 0;
 	data->env = 0;
 	data->env = ms_get_env(env);
-	ms_get_pront(&data);
+	ms_get_pront(data);
 	ft_lstclear(&data->env, free);
 }
