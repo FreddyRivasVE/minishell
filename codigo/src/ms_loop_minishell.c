@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 15:50:10 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/27 16:57:41 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ms_loop_minishell(t_mshell *data)
 {
-	char	*read_line;
+	char	*read_line
 
 	while (1)
 	{
@@ -28,7 +28,6 @@ void	ms_loop_minishell(t_mshell *data)
 		}
 		if (*read_line)
 			add_history(read_line);
-		printf("Entrada: %s\n", read_line);
 		free(read_line);
 	}
 }

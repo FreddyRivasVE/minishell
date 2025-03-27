@@ -1,28 +1,74 @@
-==261837== Memcheck, a memory error detector
-==261837== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==261837== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==261837== Command: ./minishell
-==261837== Parent PID: 261835
-==261837== 
-==261837== 
-==261837== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==261837== Open file descriptor 3: /home/frivas/entregas/viajera/minishell/codigo/valgrind/informe
-==261837==    <inherited from parent>
-==261837== 
-==261837== 
-==261837== HEAP SUMMARY:
-==261837==     in use at exit: 204,269 bytes in 221 blocks
-==261837==   total heap usage: 559 allocs, 338 frees, 230,655 bytes allocated
-==261837== 
-==261837== LEAK SUMMARY:
-==261837==    definitely lost: 0 bytes in 0 blocks
-==261837==    indirectly lost: 0 bytes in 0 blocks
-==261837==      possibly lost: 0 bytes in 0 blocks
-==261837==    still reachable: 0 bytes in 0 blocks
-==261837==         sssed:uppre 204,269 bytes in 221 blocks
-==261837== 
-==261837== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---261837-- 
---261837-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,269 bytes in 221 blocks
-==261837== 
-==261837== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==274280== Memcheck, a memory error detector
+==274280== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==274280== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==274280== Command: ./minishell
+==274280== Parent PID: 274278
+==274280== 
+==274280== Invalid read of size 8
+==274280==    at 0x40197C: ms_loop_minishell (ms_loop_minishell.c:32)
+==274280==    by 0x4012D2: main (main.c:36)
+==274280==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==274280== 
+==274280== 
+==274280== Process terminating with default action of signal 11 (SIGSEGV)
+==274280==  Access not within mapped region at address 0x0
+==274280==    at 0x40197C: ms_loop_minishell (ms_loop_minishell.c:32)
+==274280==    by 0x4012D2: main (main.c:36)
+==274280==  If you believe this happened as a result of a stack
+==274280==  overflow in your program's main thread (unlikely but
+==274280==  possible), you can try to increase the size of the
+==274280==  main thread stack using the --main-stacksize= flag.
+==274280==  The main thread stack size used in this run was 8388608.
+==274280== 
+==274280== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==274280== Open file descriptor 3: /home/brivera/Documents/42Cursus/minishell/repo_git/minishell/codigo/valgrind/informe
+==274280==    <inherited from parent>
+==274280== 
+==274280== 
+==274280== HEAP SUMMARY:
+==274280==     in use at exit: 219,174 bytes in 372 blocks
+==274280==   total heap usage: 563 allocs, 191 frees, 234,807 bytes allocated
+==274280== 
+==274280== 88 bytes in 1 blocks are still reachable in loss record 26 of 84
+==274280==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==274280==    by 0x401E03: ft_strjoin (in /home/brivera/Documents/42Cursus/minishell/repo_git/minishell/codigo/minishell)
+==274280==    by 0x4016B1: ms_get_prompt (ms_get_prompt.c:124)
+==274280==    by 0x4018F0: ms_init_struct (ms_init_struct.c:68)
+==274280==    by 0x4012C9: main (main.c:35)
+==274280== 
+==274280== 960 bytes in 60 blocks are still reachable in loss record 44 of 84
+==274280==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==274280==    by 0x401F75: ft_lstnew (in /home/brivera/Documents/42Cursus/minishell/repo_git/minishell/codigo/minishell)
+==274280==    by 0x4017EB: ms_get_env (ms_init_struct.c:40)
+==274280==    by 0x4018BA: ms_init_struct (ms_init_struct.c:64)
+==274280==    by 0x4012C9: main (main.c:35)
+==274280== 
+==274280== 3,668 bytes in 60 blocks are still reachable in loss record 58 of 84
+==274280==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==274280==    by 0x401C15: ft_strdup (in /home/brivera/Documents/42Cursus/minishell/repo_git/minishell/codigo/minishell)
+==274280==    by 0x401754: ms_get_env_line (ms_init_struct.c:19)
+==274280==    by 0x4017CE: ms_get_env (ms_init_struct.c:37)
+==274280==    by 0x4018BA: ms_init_struct (ms_init_struct.c:64)
+==274280==    by 0x4012C9: main (main.c:35)
+==274280== 
+==274280== LEAK SUMMARY:
+==274280==    definitely lost: 0 bytes in 0 blocks
+==274280==    indirectly lost: 0 bytes in 0 blocks
+==274280==      possibly lost: 0 bytes in 0 blocks
+==274280==    still reachable: 4,716 bytes in 121 blocks
+==274280==         suppressed: 214,458 bytes in 251 blocks
+==274280== 
+==274280== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==274280== 
+==274280== 1 errors in context 1 of 1:
+==274280== Invalid read of size 8
+==274280==    at 0x40197C: ms_loop_minishell (ms_loop_minishell.c:32)
+==274280==    by 0x4012D2: main (main.c:36)
+==274280==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==274280== 
+--274280-- 
+--274280-- used_suppression:     77 readline_all_2 valgrind/valgrind.sup:22 suppressed: 210,404 bytes in 247 blocks
+--274280-- used_suppression:      3 readline_history valgrind/valgrind.sup:30 suppressed: 4,052 bytes in 3 blocks
+--274280-- used_suppression:      1 readline_history_entry valgrind/valgrind.sup:47 suppressed: 2 bytes in 1 blocks
+==274280== 
+==274280== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
