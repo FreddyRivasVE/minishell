@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 11:38:25 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/27 12:59:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,14 @@ void	ms_get_prompt(t_mshell *data)
 	pwdir = ms_get_dir();
 	temp = ft_strjoin(GREEN, "minishell@");
 	temp = ft_strjoin(temp, hostn);
-	temp = ft_strjoin(temp, CLEAR_COLOR);
 	temp = ft_strjoin(temp, ":");
 	temp = ft_strjoin(temp, pwdir);
-	data->prompt = ft_strjoin(temp, "$");
+	temp = ft_strjoin(temp, "$");
+	temp = ft_strjoin(temp, CLEAR_COLOR);
+	data->prompt = temp;
 	printf("%s\n", data->prompt);
 	free(temp);
-	if (ft_strlen(getenv("PWD")) > ft_strlen(getenv("HOME")))
+	if (getenv("HOME") && (ft_strlen(getenv("PWD")) > ft_strlen(getenv("HOME"))))
 		free(pwdir);
 	free(hostn);
 }
