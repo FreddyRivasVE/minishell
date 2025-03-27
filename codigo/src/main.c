@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:41:09 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 11:01:14 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/27 15:38:06 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	main(int argc, char **argv, char **env)
 	sigemptyset(&sa_quit.sa_mask);
 	sigaction(SIGQUIT, &sa_quit, NULL);
 	ms_init_struct(&data, env);
-	//ms_loop_minishell(&data);
+	ms_loop_minishell(&data);
 	return (0);
 }

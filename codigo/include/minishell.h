@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/27 12:41:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/27 14:23:50 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@
 # include "../include/ms_struct.h"
 # include <fcntl.h>
 
-#define GREEN		"\033[92;1m"
-
-#define CLEAR_COLOR	"\033[0m"
-#define CYAN		"\033[96;1m"
+# define GREEN       "\033[92;1m"
+# define CLEAR_COLOR "\033[0m"
+# define CYAN        "\033[96;1m"
 
 void	ms_sigctrlc_handler(int signo);
 void	ms_init_struct(t_mshell *data, char **env);

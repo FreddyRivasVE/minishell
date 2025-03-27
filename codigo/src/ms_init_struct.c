@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 12:28:22 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/27 15:36:16 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ms_get_env_line(char	*env)
 
 	env_line = ft_strdup(env);
 	if (!env_line)
-		return(NULL);
+		return (NULL);
 	//hay que sumar + 1 al SHLVL;
 	return (env_line);
 }
@@ -62,9 +62,8 @@ void	ms_init_struct(t_mshell *data, char **env)
 	data->inputs = 0;
 	data->env = 0;
 	mini_env = ms_get_env(env);
-	if(!mini_env)
+	if (!mini_env)
 		ft_lstclear(&mini_env, free);
 	data->env = mini_env;
 	ms_get_prompt(data);
-	ft_lstclear(&data->env, free); //limpiar solo al salir o cuando actulizan en entorno;
 }

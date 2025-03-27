@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 12:59:08 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/27 15:37:49 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,20 @@ char	*ms_get_host(void)
 	char	*res;
 	int		fd;
 	int		end;
-	//int		bytes_read; No es requerida debido a que usaremos read directamente en la linea 63.
+	int		bytes_read;
+
 	fd = open("/etc/hostname", O_RDONLY);
 	if (fd == -1)
 		res = ft_strjoin("", "hostname");
 	else
 	{
 		res = ft_calloc(1024, sizeof(char));
-		//bytes_read = read(fd, res, 1024);
-		read(fd, res, 1024);
+		bytes_read = read(fd, res, 1024);
+		if (bytes_read == -1)
+		{
+			res = ft_strjoin("", "hostname");
+			return (res);
+		}
 		end = ft_strcspn(res, ".-\n");
 		res = ft_substr(res, 0, end);
 	}
@@ -85,9 +90,7 @@ char	*ms_get_dir(void)
 	{
 		res = getenv("PWD");
 		lenhom = ft_strlen(temp);
-		//printf("%ilenhom\n", lenhom);
 		start = ft_strspn(temp, res);
-		//printf("%i\n", start);
 		if (start >= lenhom)
 		{
 			temp = ft_substr(res, start, (ft_strlen(res) - start));
@@ -102,20 +105,27 @@ void	ms_get_prompt(t_mshell *data)
 {
 	char	*hostn;
 	char	*pwdir;
-	char	*temp;
+	char	*temp1;
+	char	*temp2;
+	char	*temp3;
 
 	hostn = ms_get_host();
 	pwdir = ms_get_dir();
-	temp = ft_strjoin(GREEN, "minishell@");
-	temp = ft_strjoin(temp, hostn);
-	temp = ft_strjoin(temp, ":");
-	temp = ft_strjoin(temp, pwdir);
-	temp = ft_strjoin(temp, "$");
-	temp = ft_strjoin(temp, CLEAR_COLOR);
-	data->prompt = temp;
-	printf("%s\n", data->prompt);
-	free(temp);
-	if (getenv("HOME") && (ft_strlen(getenv("PWD")) > ft_strlen(getenv("HOME"))))
+	temp1 = ft_strjoin(GREEN, "minishell@");
+	temp2 = ft_strjoin(temp1, hostn);
+	free(temp1);
+	temp1 = ft_strjoin(temp2, ":");
+	free(temp2);
+	temp2 = ft_strjoin(temp1, pwdir);
+	free(temp1);
+	temp1 = ft_strjoin(temp2, "$");
+	free(temp2);
+	temp3 = ft_strjoin(temp1, CLEAR_COLOR);
+	free(temp1);
+	data->prompt = temp3;
+	free(temp3);
+	if (getenv("HOME")
+		&& (ft_strlen(getenv("PWD")) > ft_strlen(getenv("HOME"))))
 		free(pwdir);
 	free(hostn);
 }
