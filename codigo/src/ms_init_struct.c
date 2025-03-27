@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/26 16:46:44 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/27 12:28:22 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ms_get_env_line(char	*env)
 	char	*env_line;
 
 	env_line = ft_strdup(env);
+	if (!env_line)
+		return(NULL);
 	//hay que sumar + 1 al SHLVL;
 	return (env_line);
 }
@@ -33,6 +35,8 @@ t_list	*ms_get_env(char **env)
 	while (env[i])
 	{
 		envread = ms_get_env_line(env[i]);
+		if (!envread)
+			break ;
 		new_node = ft_lstnew(envread);
 		if (!new_node)
 		{
@@ -48,6 +52,8 @@ t_list	*ms_get_env(char **env)
 
 void	ms_init_struct(t_mshell *data, char **env)
 {
+	t_list	*mini_env;
+
 	rl_catch_signals = 0;
 	data->pipes = 0;
 	data->redirs = 0;
@@ -55,7 +61,10 @@ void	ms_init_struct(t_mshell *data, char **env)
 	data->exits = 0;
 	data->inputs = 0;
 	data->env = 0;
-	data->env = ms_get_env(env);
+	mini_env = ms_get_env(env);
+	if(!mini_env)
+		ft_lstclear(&mini_env, free);
+	data->env = mini_env;
 	ms_get_prompt(data);
-	ft_lstclear(&data->env, free);
+	ft_lstclear(&data->env, free); //limpiar solo al salir o cuando actulizan en entorno;
 }

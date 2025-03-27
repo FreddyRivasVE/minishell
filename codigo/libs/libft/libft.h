@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 18:33:31 by brivera           #+#    #+#             */
-/*   Updated: 2025/02/27 19:23:23 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/03/27 11:00:41 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,6 @@ t_list		*ft_lstnew(void *content);
 int			ft_lstsize(t_list *lst);
 //ADD
 char		*get_next_line(int fd);
+char		**free_array(char **array);
+
 #endif

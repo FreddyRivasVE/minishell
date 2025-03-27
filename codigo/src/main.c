@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:41:09 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/26 22:45:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/27 11:01:14 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ms_loop_minishell(t_mshell *data)
-{
-	char	*read_line;
-
-	while (1)
-	{
-		read_line = readline(data->prompt);
-		if (!read_line)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (*read_line)
-			add_history(read_line);
-		printf("Entrada: %s\n", read_line);
-		free(read_line);
-	}
-}
 
 int	main(int argc, char **argv, char **env)
 {

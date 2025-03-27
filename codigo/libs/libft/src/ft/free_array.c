@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_loop_minishell.c                                :+:      :+:    :+:   */
+/*   free_array.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 10:54:12 by brivera          ###   ########.fr       */
+/*   Created: 2025/03/27 10:59:13 by brivera           #+#    #+#             */
+/*   Updated: 2025/03/27 10:59:40 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ms_loop_minishell(t_mshell *data)
+char	**free_array(char **array)
 {
-	char	*read_line;
+	size_t	i;
 
-	while (1)
+	i = 0;
+	while (array[i] != NULL)
 	{
-		read_line = readline(data->prompt);
-		if (!read_line)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (*read_line)
-			add_history(read_line);
-		printf("Entrada: %s\n", read_line);
-		free(read_line);
+		free(array[i]);
+		i++;
 	}
+	free(array);
+	return (NULL);
 }
