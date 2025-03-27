@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 10:54:12 by brivera          ###   ########.fr       */
+/*   Updated: 2025/03/27 15:50:10 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	ms_loop_minishell(t_mshell *data)
 		if (!read_line)
 		{
 			printf("exit\n");
+			ft_lstclear(&data->env, free);
+			free(data->prompt);
 			break ;
 		}
 		if (*read_line)

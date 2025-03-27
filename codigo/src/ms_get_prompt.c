@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 15:37:49 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/27 15:59:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,23 @@ char	*ms_get_host(void)
 	int		fd;
 	int		end;
 	int		bytes_read;
+	char	*temp;
 
 	fd = open("/etc/hostname", O_RDONLY);
 	if (fd == -1)
 		res = ft_strjoin("", "hostname");
 	else
 	{
-		res = ft_calloc(1024, sizeof(char));
-		bytes_read = read(fd, res, 1024);
+		temp = ft_calloc(1024, sizeof(char));
+		bytes_read = read(fd, temp, 1024);
 		if (bytes_read == -1)
 		{
 			res = ft_strjoin("", "hostname");
 			return (res);
 		}
-		end = ft_strcspn(res, ".-\n");
-		res = ft_substr(res, 0, end);
+		end = ft_strcspn(temp, ".-\n");
+		res = ft_substr(temp, 0, end);
+		free(temp);
 	}
 	close(fd);
 	return (res);
@@ -107,7 +109,6 @@ void	ms_get_prompt(t_mshell *data)
 	char	*pwdir;
 	char	*temp1;
 	char	*temp2;
-	char	*temp3;
 
 	hostn = ms_get_host();
 	pwdir = ms_get_dir();
@@ -118,12 +119,10 @@ void	ms_get_prompt(t_mshell *data)
 	free(temp2);
 	temp2 = ft_strjoin(temp1, pwdir);
 	free(temp1);
-	temp1 = ft_strjoin(temp2, "$");
+	temp1 = ft_strjoin(temp2, "$ ");
 	free(temp2);
-	temp3 = ft_strjoin(temp1, CLEAR_COLOR);
+	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
 	free(temp1);
-	data->prompt = temp3;
-	free(temp3);
 	if (getenv("HOME")
 		&& (ft_strlen(getenv("PWD")) > ft_strlen(getenv("HOME"))))
 		free(pwdir);
