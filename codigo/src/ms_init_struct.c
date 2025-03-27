@@ -3,23 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 15:36:16 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/28 00:21:23 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*ft_getnstr(char *str, char *c)
+{
+	char	*nstr;
+	int		len;
+
+	len = ft_strlen(str);
+	nstr = ft_substr(str, ft_strcspn(str, c) + 1, len);
+	if (!nstr)
+		return (NULL);
+	return (nstr);
+}
+
 char	*ms_get_env_line(char	*env)
 {
 	char	*env_line;
+	char	*level;
+	char	*temp;
 
-	env_line = ft_strdup(env);
+	if (!ft_strncmp("SHLVL=", env, 6))
+	{
+		temp = ft_getnstr(env, "=");
+		if (!temp)
+			return (NULL);
+		level = ft_itoa(ft_atoi(temp) + 1);
+		free(temp);
+		if (!level)
+			return (NULL);
+		env_line = ft_strjoin("SHLVL=", level);
+		free(level);
+	}
+	else
+		env_line = ft_strdup(env);
 	if (!env_line)
 		return (NULL);
-	//hay que sumar + 1 al SHLVL;
 	return (env_line);
 }
 
