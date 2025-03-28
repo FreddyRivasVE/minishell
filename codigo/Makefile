@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/25 10:51:35 by brivera          ###   ########.fr        #
+#    Updated: 2025/03/28 09:24:38 by brivera@stu      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,18 @@ CFLAGS = -Wall -Wextra -Werror -g3
 LIBFT_DIR = libs/libft
 LIBFTA = $(LIBFT_DIR)/libft.a
 
-LIBS = -lreadline -Llib/libft
+LIBS = -lreadline -L$(LIBFT_DIR)
 
 UNAME = $(shell uname)
+
 ifeq ($(UNAME), linux)
-	LIBS = -Llib/libft -lft -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
+	LIBS = -Llibs/libft -lft -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 	INCLUDE = -I/Users/$(USER)/.brew/opt/readline/include -I include
+endif
+
+ifeq ($(UNAME), Darwin)
+	LIBS := -Llibs/libft -lft -L/usr/local/opt/readline/lib -lreadline -lncurses
+	INCLUDE := -I/usr/local/opt/readline/include -I include
 endif
 
 SRC_DIR = src
