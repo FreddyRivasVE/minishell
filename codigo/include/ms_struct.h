@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_structure.h                                     :+:      :+:    :+:   */
+/*   ms_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/26 22:56:25 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/28 11:52:32 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_STRUCT_H
 # define MS_STRUCT_H
 
-typedef struct s_pipe
-{
-}	t_pipe;
+typedef struct termios t_term;
+
 
 typedef struct s_redir
 {
 }	t_redir;
+
+typedef struct s_pipe
+{
+}	t_pipe;
 
 typedef struct s_command
 {
@@ -37,6 +40,7 @@ typedef struct s_input
 typedef struct s_mshell
 {
 	t_list		*env;
+	t_term		conftty;
 	t_pipe		*pipes;
 	t_redir		*redirs;
 	t_command	*commands;
@@ -44,5 +48,4 @@ typedef struct s_mshell
 	t_input		*inputs;
 	char		*prompt;
 }	t_mshell;
-
 #endif

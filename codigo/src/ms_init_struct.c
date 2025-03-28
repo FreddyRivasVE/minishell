@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/28 09:34:07 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/03/28 12:25:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ms_get_ttyinfo(t_mshell *data)
+{
+	if (isatty(STDIN_FILENO))
+		tcgetattr(STDIN_FILENO, &data->conftty);
+}
 
 char	*ft_getnstr(char *str, char *c)
 {
@@ -92,4 +98,5 @@ void	ms_init_struct(t_mshell *data, char **env)
 		ft_lstclear(&mini_env, free);
 	data->env = mini_env;
 	ms_get_prompt(data);
+	ms_get_ttyinfo(data);
 }

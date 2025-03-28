@@ -54,6 +54,9 @@ struct termios
 		.- VINTR: Interrupción.
 		.- VERASE: Borrar.
 
+Para leer los valores en la estructura termios se usa printf("%u") con eso se optiene un numero entero
+que debe convertirse a binarios para identificar que opciones estan activas
+
 4. Funcionamiento General.
 .- tcgetattr se utiliza para recuperar la configuración actual del terminal antes de modificarla con
 funciones como tcsetattr. Esto asegura que se pueda restablecer el estado original después de realizar

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/28 00:23:17 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/28 12:25:30 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libs/libft/libft.h"
+# include <fcntl.h>
 # include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <termios.h>
+# include "../libs/libft/libft.h"
 # include "../include/ms_struct.h"
-# include <fcntl.h>
 
 # define GREEN       "\033[92;1m"
 # define CLEAR_COLOR "\033[0m"
