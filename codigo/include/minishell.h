@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/28 12:25:30 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/28 23:53:15 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 # define GREEN       "\033[92;1m"
 # define CLEAR_COLOR "\033[0m"
 # define CYAN        "\033[96;1m"
+
+/*Es la forma que encontre de poder usar esa variable en mac
+la tengo que extraer explicitamente, seguro norminete te salta
+solo es para que yo pueda compilar en casa*/
+# ifdef __APPLE__
+
+extern int	rl_catch_signals;
+# endif
 
 void	ms_sigctrlc_handler(int signo);
 void	ms_init_struct(t_mshell *data, char **env);

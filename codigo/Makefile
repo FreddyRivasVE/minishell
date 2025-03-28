@@ -6,25 +6,25 @@
 #    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/28 09:24:38 by brivera@stu      ###   ########.fr        #
+#    Updated: 2025/03/28 23:33:28 by brivera@stu      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME := minishell
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -g3
 
-LIBFT_DIR = libs/libft
-LIBFTA = $(LIBFT_DIR)/libft.a
+LIBFT_DIR := libs/libft
+LIBFTA := $(LIBFT_DIR)/libft.a
 
-LIBS = -lreadline -L$(LIBFT_DIR)
+LIBS := -lreadline -L$(LIBFT_DIR)
 
-UNAME = $(shell uname)
+UNAME := $(shell uname)
 
 ifeq ($(UNAME), linux)
-	LIBS = -Llibs/libft -lft -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	INCLUDE = -I/Users/$(USER)/.brew/opt/readline/include -I include
+	LIBS := -Llibs/libft -lft -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
+	INCLUDE := -I/Users/$(USER)/.brew/opt/readline/include -I include
 endif
 
 ifeq ($(UNAME), Darwin)
@@ -32,19 +32,19 @@ ifeq ($(UNAME), Darwin)
 	INCLUDE := -I/usr/local/opt/readline/include -I include
 endif
 
-SRC_DIR = src
-SRCS = 	$(wildcard $(SRC_DIR)/*.c)
+SRC_DIR := src
+SRCS := 	$(wildcard $(SRC_DIR)/*.c)
 
-OBJ_DIR = obj
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR := obj
+OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-INCLUDE = include/minishell.h
+INCLUDE := include/minishell.h
 
-RED = \033[91;1m
-GREEN = \033[92;1m
-CLEAR_COLOR = \033[0m
-CYAN = \033[96;1m
-RM = rm -f
+RED := \033[91;1m
+GREEN := \033[92;1m
+CLEAR_COLOR := \033[0m
+CYAN := \033[96;1m
+RM := rm -f
 
 all: $(NAME)
 
