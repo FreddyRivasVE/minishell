@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/28 11:52:32 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/28 13:02:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_mshell
 {
 	t_list		*env;
 	t_term		conftty;
+	char		*inputrow;
 	t_pipe		*pipes;
 	t_redir		*redirs;
 	t_command	*commands;
