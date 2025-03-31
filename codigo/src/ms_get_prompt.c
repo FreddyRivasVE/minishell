@@ -6,46 +6,11 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/27 15:59:04 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/31 13:23:05 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-size_t	ft_strspn(const char *s, const char *accept)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (ft_strchr(accept, s[i]) == 0)
-			break ;
-		++i;
-	}
-	return (i);
-}
-
-size_t	ft_strcspn(const char *s, const char *reject)
-{
-	int	i;
-	int	k;
-
-	i = 0;
-	k = 0;
-	while (s[i] != '\0')
-	{
-		while (reject[k] != '\0')
-		{
-			if (s[i] == reject[k])
-				return (i);
-			k++;
-		}
-		k = 0;
-		i++;
-	}
-	return (i);
-}
 
 char	*ms_get_host(void)
 {
@@ -75,32 +40,55 @@ char	*ms_get_host(void)
 	return (res);
 }
 
-char	*ms_get_dir(void)
+char	*ms_get_pwd(void)
 {
-	char	*res;
+	char	*rpwd;
+
+	rpwd = getcwd(NULL, 0);
+	if (!rpwd)
+	{
+		perror("Error looking for PWD");
+		return (NULL);
+	}
+	return (rpwd);
+}
+
+char	*ms_get_home(void)
+{
 	char	*temp;
-	int		start;
-	int		lenhom;
 
 	temp = getenv("HOME");
 	if (!temp)
+		return (NULL);
+	return (temp);
+}
+
+char	*ms_get_dir(void)
+{
+	char	*dir;
+	char	*home;
+	int		start;
+	int		lenhom;
+
+	home = ms_get_home();
+	if (!home)
 	{
-		res = getenv("PWD");
-		return (res);
+		home = ms_get_pwd();
+		return (home);
 	}
-	else
+	dir = ms_get_pwd();
+	if (!dir)
+		return (NULL);
+	lenhom = ft_strlen(home);
+	start = ft_strspn(home, dir);
+	if (start >= lenhom)
 	{
-		res = getenv("PWD");
-		lenhom = ft_strlen(temp);
-		start = ft_strspn(temp, res);
-		if (start >= lenhom)
-		{
-			temp = ft_substr(res, start, (ft_strlen(res) - start));
-			res = ft_strjoin("~", temp);
-			free(temp);
-		}
+		home = ft_substr(dir, start, (ft_strlen(dir) - start));
+		free(dir);
+		dir = ft_strjoin("~", home);
+		free(home);
 	}
-	return (res);
+	return (dir);
 }
 
 void	ms_get_prompt(t_mshell *data)
@@ -112,6 +100,8 @@ void	ms_get_prompt(t_mshell *data)
 
 	hostn = ms_get_host();
 	pwdir = ms_get_dir();
+	if (!pwdir)
+		pwdir = ft_strjoin("", "");
 	temp1 = ft_strjoin(GREEN, "minishell@");
 	temp2 = ft_strjoin(temp1, hostn);
 	free(temp1);
@@ -123,8 +113,6 @@ void	ms_get_prompt(t_mshell *data)
 	free(temp2);
 	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
 	free(temp1);
-	if (getenv("HOME")
-		&& (ft_strlen(getenv("PWD")) > ft_strlen(getenv("HOME"))))
-		free(pwdir);
+	free(pwdir);
 	free(hostn);
 }
