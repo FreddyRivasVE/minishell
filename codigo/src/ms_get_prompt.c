@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/31 13:23:05 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/31 14:41:59 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,6 @@ char	*ms_get_host(void)
 	}
 	close(fd);
 	return (res);
-}
-
-char	*ms_get_pwd(void)
-{
-	char	*rpwd;
-
-	rpwd = getcwd(NULL, 0);
-	if (!rpwd)
-	{
-		perror("Error looking for PWD");
-		return (NULL);
-	}
-	return (rpwd);
 }
 
 char	*ms_get_home(void)
