@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/03/31 14:41:07 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/31 14:59:25 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
 # define CLEAR_COLOR "\033[0m"
 # define CYAN        "\033[96;1m"
 
-/*Es la forma que encontre de poder usar esa variable en mac
+/*Es la forma que encontre de poder usar la variable en mac
 la tengo que extraer explicitamente, seguro norminete te salta
-solo es para que yo pueda compilar en casa*/
+al final se retira.*/
 # ifdef __APPLE__
 
 extern int	rl_catch_signals;
@@ -46,6 +46,6 @@ void	ms_get_prompt(t_mshell *data);
 void	ms_loop_minishell(t_mshell *data);
 size_t	ft_strcspn(const char *s, const char *reject);
 size_t	ft_strspn(const char *s, const char *accept);
-char    *ms_get_pwd(void);
+char	*ms_get_pwd(void);
 
 #endif
