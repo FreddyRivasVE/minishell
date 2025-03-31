@@ -3,23 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/31 14:51:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/03/31 17:27:03 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ms_get_pwd(void)
+/*
+como saca la shell el error
+getcwd: cannot access parent directories: No such file or directory
+*/
+
+char	*ms_get_cwd(void)
 {
 	char	*rpwd;
 
 	rpwd = getcwd(NULL, 0);
 	if (!rpwd)
 	{
-		perror("Error looking for PWD");
+		perror("getcwd");
 		return (NULL);
 	}
 	return (rpwd);
