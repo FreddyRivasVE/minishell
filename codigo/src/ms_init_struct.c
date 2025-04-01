@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/28 12:25:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/01 12:10:50 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,16 @@ char	*ms_get_env_line(char	*env)
 		free(temp);
 		if (!level)
 			return (NULL);
+		if (level[0] == '-')
+		{
+			free(level);
+			level = ft_strjoin("0", "");
+		}
 		env_line = ft_strjoin("SHLVL=", level);
 		free(level);
 	}
 	else
 		env_line = ft_strdup(env);
-	if (!env_line)
-		return (NULL);
 	return (env_line);
 }
 

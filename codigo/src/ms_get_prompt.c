@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/31 14:41:59 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/01 11:40:02 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ char	*ms_get_dir(void)
 	home = ms_get_home();
 	if (!home)
 	{
-		home = ms_get_pwd();
+		home = ms_get_cwd();
 		return (home);
 	}
-	dir = ms_get_pwd();
+	dir = ms_get_cwd();
 	if (!dir)
 		return (NULL);
 	lenhom = ft_strlen(home);
