@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/01 11:40:02 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/01 12:33:47 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void	ms_get_prompt(t_mshell *data)
 	temp1 = ft_strjoin(temp2, "$ ");
 	free(temp2);
 	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
+	if (!data->prompt)
+		data->prompt = ft_strjoin("\033[92;1mminishell:$ \033[0m", "");
 	free(temp1);
 	free(pwdir);
 	free(hostn);
