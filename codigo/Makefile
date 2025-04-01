@@ -3,73 +3,98 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
+#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/03/28 23:33:28 by brivera@stu      ###   ########.fr        #
+#    Updated: 2025/04/01 15:52:12 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
 
-CC := cc
-CFLAGS := -Wall -Wextra -Werror -g3
+OBJ_DIR := obj/
 
-LIBFT_DIR := libs/libft
-LIBFTA := $(LIBFT_DIR)/libft.a
+INCLUDE_DIR = include/
 
-LIBS := -lreadline -L$(LIBFT_DIR)
+LIBFT_DIR = ./libs/libft/
+
+SOURCES_DIR = src/
+BUILT_INS_DIR = src/built_ins/
+EXECUTION_DIR = src/execution/
+INITIAL_DIR = src/initial/
+PARCE_DIR = src/parce/
+UTILS_DIR = src/utils/
+
+SOURCES = $(SOURCES_DIR)main.c
+
+BUILT = $(BUILT_INS_DIR)cd.c
+
+EXECUTION = 
+
+INITIAL = $(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c $(INITIAL_DIR)ms_loop_minishell.c \
+				$(INITIAL_DIR)signals.c
+
+PARCE =
+
+UTILS = $(UTILS_DIR)utils.c
+
+SRC := $(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
+
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 UNAME := $(shell uname)
 
-ifeq ($(UNAME), linux)
-	LIBS := -Llibs/libft -lft -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
-	INCLUDE := -I/Users/$(USER)/.brew/opt/readline/include -I include
+ifeq ($(UNAME), Linux)
+	LIBRARY := -L$(LIBFT_DIR) -lft -L/usr/lib -lreadline
+	INCLUDE := -I/usr/include -I$(LIBFT_DIR) -I$(INCLUDE_DIR)
 endif
 
 ifeq ($(UNAME), Darwin)
-	LIBS := -Llibs/libft -lft -L/usr/local/opt/readline/lib -lreadline -lncurses
-	INCLUDE := -I/usr/local/opt/readline/include -I include
+	LIBRARY := -L$(LIBFT_DIR) -lft -L/usr/local/opt/readline/lib -lreadline
+	INCLUDE := -I/usr/local/opt/readline/include -I$(LIBFT_DIR) -I$(NCLUDE_DIR)
 endif
 
-SRC_DIR := src
-SRCS := 	$(wildcard $(SRC_DIR)/*.c)
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -g3
+RM = rm -f
 
-OBJ_DIR := obj
-OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJ_SUBDIRS = $(OBJ_DIR)$(SOURCES) $(OBJ_DIR)$(BUILT) $(OBJ_DIR)$(EXECUTION) $(OBJ_DIR)$(INITIAL) \
+	$(OBJ_DIR)$(PARCE) $(OBJ_DIR)$(UTILS)
 
-INCLUDE := include/minishell.h
+
+.DEFAULT_GOAL := all
+
+all: libft $(NAME)
+
+libft:
+	@make -C $(LIBFT_DIR)
+	@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
+
+$(OBJ_SUBDIRS):
+	@mkdir -p $@
+
+$(OBJ_DIR)/%.o: %.c | $(OBJ_SUBDIRS)
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+$(NAME): $(OBJ) $(LIBFT_DIR)/libft.a
+	@$(CC) $(OBJ) $(LIBRARY) $(INCLUDE) -o $(NAME)
+	@echo "$(GREEN)✅ Compilada la Minishell\n$(CLEAR_COLOR)"
 
 RED := \033[91;1m
 GREEN := \033[92;1m
 CLEAR_COLOR := \033[0m
 CYAN := \033[96;1m
-RM := rm -f
-
-all: $(NAME)
-
-$(NAME): $(LIBFTA) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFTA) $(LIBS) -o $(NAME)
-	@echo "$(GREEN)✅ Compilada la Minishell\n$(CLEAR_COLOR)"
-
-$(LIBFTA):
-	@make -C $(LIBFT_DIR)
-	@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -Iinclude -c $< -o $@
 
 clean:
-	@$(RM) -r $(OBJ_DIR)
 	@make clean -C $(LIBFT_DIR)
+	@rm -rf $(OBJ_DIR)
 	@echo "$(RED)⛔ Limpieza de archivos objeto.$(CLEAR_COLOR)"
-
+	
 fclean: clean
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 	@make fclean -C $(LIBFT_DIR)
 	@echo "$(RED)⛔ Limpieza total (ejecutables y librerías).$(CLEAR_COLOR)"
-
+		
 re: fclean all
 	@echo "$(CYAN)🔃 Proyecto reconstruido.$(CLEAR_COLOR)"
 
@@ -86,6 +111,6 @@ valgrind:
 		./$(NAME)
 
 norminette:
-	@norminette $(SRCS) $(INCLUDE)
+	@norminette $(SRC) $(INCLUDE)
 
 .PHONY: valgrind clean fclean re norminette
