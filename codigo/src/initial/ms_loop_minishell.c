@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/28 13:13:51 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/01 23:52:59 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	ms_loop_minishell(t_mshell *data)
 			if (data->inputrow)
 				free(data->inputrow);
 			data->inputrow = ft_substr(read_line, 0, ft_strlen(read_line));
+			ms_input_row_validation(data);
 		}
 		free(read_line);
-		printf("%s\n", data->inputrow);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/01 21:10:49 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/02 00:13:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	ms_export(char **command, t_list **lst)
 {
 	if (command[1][0] == '-')
 		return ;
-	
 }
 
 void	ms_exec_builtin_or_other(char **command, t_mshell *data)

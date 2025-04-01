@@ -6,15 +6,14 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/28 13:02:04 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/02 00:10:28 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_STRUCT_H
 # define MS_STRUCT_H
 
-typedef struct termios t_term;
-
+typedef struct termios	t_term;
 
 typedef struct s_redir
 {

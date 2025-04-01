@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/01 17:28:02 by brivera          ###   ########.fr        #
+#    Updated: 2025/04/01 23:15:14 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ BUILT		:=	$(BUILT_INS_DIR)cd.c
 EXECUTION	:= 
 INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
 				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c 
-PARCE 		:=
+
+PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c $(PARCE_DIR)ms_check_quotation_marks.c
+
 UTILS		:=	$(UTILS_DIR)utils.c
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 

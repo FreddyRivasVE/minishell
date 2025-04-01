@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/01 18:10:31 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/02 00:12:49 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	ms_get_prompt(t_mshell *data)
 	free(temp2);
 	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
 	if (!data->prompt)
-		data->prompt = ft_strjoin("\033[92;1mminishell:","$ \033[0m");
+		data->prompt = ft_strjoin("\033[92;1mminishell:", "$ \033[0m");
 	free(temp1);
 	free(pwdir);
 	free(hostn);
