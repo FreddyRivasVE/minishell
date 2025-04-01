@@ -3,25 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/01 19:02:33 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/01 21:10:49 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//env sin opciones o argumentos
 void	ms_env(char **command, t_list **lst)
 {
 	if (command[1])
+	{
+		ft_putendl_fd("env: subject doesn't allow arguments or options", 2);
 		return ;
+	}
 	print_list_content_char(lst);
 }
 
+//export sin opciones
 void	ms_export(char **command, t_list **lst)
 {
-	if (command[1])
+	if (command[1][0] == '-')
 		return ;
 	
 }
