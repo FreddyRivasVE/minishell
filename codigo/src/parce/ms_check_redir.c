@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_input_row_validation.c                          :+:      :+:    :+:   */
+/*   ms_check_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 22:55:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/02 15:39:02 by frivas           ###   ########.fr       */
+/*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
+/*   Updated: 2025/04/02 15:53:55 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_input_row_validation(t_mshell *data)
+bool    ms_check_redir(char *str)
 {
-	if (!ms_check_quotation_marks(data->inputrow))
-		ft_putendl_fd("minishell: syntax error", 2);
-	if (!ms_check_pipes(data->inputrow))
-		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
-	if (!ms_check_redir(data->inputrow))
-		ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
-		
+    int i;
+
+    i = 0;
+    while (str[i] && str[i] == ' ')
+        i++;
+    if (str[i] == '<')
+    {
+        i++;
+        while (str[i])
+        {
+            if (str[i] == ' ')
+                i++;
+        }
+        
+    }
+    
 }
