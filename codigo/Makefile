@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+         #
+#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/01 23:15:14 by frivas           ###   ########.fr        #
+#    Updated: 2025/04/02 12:41:19 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME := minishell
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -g3
 
-LIBFT_DIR 	:= libs/libft/
+LIBFT_DIR := libs/libft/
+LIBFT := $(LIBFT_DIR)/libft.a
 
 INCLUDE_DIR	:= include/
 SOURCES_DIR := src/
@@ -56,9 +57,9 @@ GREEN := \033[92;1m
 CLEAR_COLOR := \033[0m
 CYAN := \033[96;1m
 
-all: libft $(NAME)
+all: $(NAME)
 
-libft:
+$(LIBFT):
 	@make -C $(LIBFT_DIR)
 	@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
 
@@ -68,9 +69,10 @@ $(OBJ_SUBDIRS):
 $(OBJ_DIR)%.o: %.c | $(OBJ_SUBDIRS)
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-$(NAME): $(OBJ) $(LIBFT_DIR)libft.a
+$(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(OBJ) $(LIBRARY) $(INCLUDE) -o $(NAME)
 	@echo "$(GREEN)✅ Compilada la Minishell\n$(CLEAR_COLOR)"
+
 
 clean:
 	@make clean -C $(LIBFT_DIR)
@@ -98,7 +100,8 @@ valgrind:
 		./$(NAME)
 
 norminette:
-	@norminette $(SRC) $(INCLUDE)
+	@norminette $(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS) $(INCLUDE_DIR)
 
 .PHONY: valgrind clean fclean re norminette
+
 .DEFAULT_GOAL := all

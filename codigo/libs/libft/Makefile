@@ -6,7 +6,7 @@
 #    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/25 10:33:30 by brivera           #+#    #+#              #
-#    Updated: 2025/03/25 10:34:31 by brivera          ###   ########.fr        #
+#    Updated: 2025/04/02 12:30:31 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-#@echo "\nLibrería $(NAME) compilada."
+#@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)
 	@mkdir -p $(OBJ_DIR)
