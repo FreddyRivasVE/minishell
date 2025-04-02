@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/02 16:22:31 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/02 21:16:21 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ void	print_list_content_char(t_list **lst)
 	current = *lst;
 	while (current != NULL)
 	{
-		if (current->content != NULL)
-		{
+		if (current->content != NULL && ft_strchr((char *)current->content, '='))
 			printf("%s\n", (char *)current->content);
-			current = current->next;
-		}
+		current = current->next;
 	}
 }
 
