@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/03/31 12:16:27 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/02 16:22:31 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	print_list_content_char(t_list **lst)
 	}
 }
 
+/*
+Su propósito es contar el número de caracteres
+consecutivos al principio de la cadena s 
+que están presentes en la cadena
+*/
 size_t	ft_strspn(const char *s, const char *accept)
 {
 	size_t	i;
@@ -41,6 +46,10 @@ size_t	ft_strspn(const char *s, const char *accept)
 	return (i);
 }
 
+/*
+La función recorre la cadena s buscando
+el primer carácter que esté presente en reject.
+*/
 size_t	ft_strcspn(const char *s, const char *reject)
 {
 	int	i;

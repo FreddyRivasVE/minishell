@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/02 15:08:50 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/02 16:15:35 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ char	*ms_get_cwd(void);
 bool	ms_check_quotation_marks(char *str);
 void    ms_input_row_validation(t_mshell *data);
 bool    ms_check_pipes(char *str);
+bool	ms_check_redir(char *str);
 
 #endif
