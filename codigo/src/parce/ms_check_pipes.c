@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ms_check_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:49:24 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/02 15:25:07 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/02 16:44:38 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool    ms_check_pipes(char *str)
+bool	ms_check_pipes(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i] && str[i] == ' ')
-        i++;
-    if (str[i] == '|')
-        return (false);
-    while (str[i])
-    {
-        if (str[i] == '|')
-            if (str[i + 1] == '|')
-                return (false);
-        i++;
-    }
-    while (!str[i] || str[i] == ' ')
-        i--;
-    if (str[i] == '|')
-        return (false);
-    return (true);       
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] == '|')
+		return (false);
+	while (str[i])
+	{
+		if (str[i] == '|')
+			if (str[i + 1] == '|')
+				return (false);
+		i++;
+	}
+	while (!str[i] || str[i] == ' ')
+		i--;
+	if (str[i] == '|')
+		return (false);
+	return (true);
 }

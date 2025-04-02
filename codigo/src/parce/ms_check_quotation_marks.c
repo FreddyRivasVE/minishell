@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:37:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/02 13:26:52 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/02 17:45:29 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ bool	ms_check_quotation_marks(char *str)
 	{
 		if (str[i] == '\'')
 		{
-			if(check_doubles == true)
+			if (check_doubles == true)
 			{
-				if(check_simples == true)
+				if (check_simples == true)
 					check_simples ^= false;
 			}
 			else
@@ -35,9 +35,9 @@ bool	ms_check_quotation_marks(char *str)
 		}
 		else if (str[i] == '\"')
 		{
-			if(check_simples == true)
-			{	
-				if(check_doubles == true)
+			if (check_simples == true)
+			{
+				if (check_doubles == true)
 					check_doubles ^= false;
 			}
 			else
