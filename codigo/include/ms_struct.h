@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/02 20:44:33 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/03 15:32:53 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ typedef struct s_command
 {
 }	t_command;
 
-typedef struct s_exit
-{
-	int	code;
-}	t_exit;
+// typedef struct s_exit
+// {
+// 	char	*code;
+// }	t_exit;
 
 typedef struct s_input
 {
@@ -45,7 +45,7 @@ typedef struct s_mshell
 	t_pipe		*pipes;
 	t_redir		*redirs;
 	t_command	*commands;
-	t_exit		*exits;
+	int			exits;
 	t_input		*inputs;
 	char		*prompt;
 }	t_mshell;

@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/03 14:39:33 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/03 16:16:22 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ size_t	ft_strcspn(const char *s, const char *reject);
 size_t	ft_strspn(const char *s, const char *accept);
 char	*ms_get_cwd(void);
 bool	ms_check_quotation_marks(char *str);
-void	ms_input_row_validation(t_mshell *data);
+int		ms_input_row_validation(t_mshell *data);
 bool	ms_check_pipes(char *str);
 bool	ms_check_redir(char *str);
 

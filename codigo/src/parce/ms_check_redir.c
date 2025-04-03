@@ -6,35 +6,44 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/02 18:10:56 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/03 17:50:07 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// revisar si esta todo ok, encontre que habia cosas que aun no controlaba 
+// creo que ahora si, pero bueno la dividimos cuando este todo ok 
+// o si vemos que se puede hacer mas simple mejor 
 
 #include "minishell.h"
 
 bool	ms_check_redir(char *str)
 {
-	int		i;
+	size_t	i;
 	bool	check_redir;
+	size_t	flag;
 
 	check_redir = true;
 	i = ft_strcspn(str, "<>");
-	while (str[i] && str[i] == ' ')
-		i++;
-	if (str[i] == '<' || str[i] == '>')
+	if (i < ft_strlen(str))
 	{
 		check_redir = false;
+		flag = 1;
 		i++;
-		if (str[i] == '<' || str[i] == '>')
-			i++;
-		while (str[i])
+	}
+	while (str[i])
+	{
+		if ((str[i] == '<' || str[i] == '>') || (str[i] == '|'))
 		{
-			if (ft_isascii(str[i]))
-				check_redir = true;
-			if (str[i] == '<' || str[i] == '>')
-				check_redir = false;
-			i++;
+			flag++;
+			check_redir = false;
 		}
+		if (ft_isascii(str[i]) && (str[i] != '<' && str[i] != '>')
+			&& (flag < 3) && (str[i] != '|'))
+		{
+			check_redir = true;
+			flag = 0;
+		}
+		i++;
 	}
 	return (check_redir);
 }
