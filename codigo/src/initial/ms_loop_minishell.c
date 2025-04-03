@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/02 16:35:36 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/03 15:10:38 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ms_loop_minishell(t_mshell *data)
 	char	*read_line;
 
 	data->inputrow = NULL;
+	rl_set_prompt(data->prompt);
 	while (1)
 	{
 		read_line = readline(data->prompt);
@@ -26,6 +27,7 @@ void	ms_loop_minishell(t_mshell *data)
 			ft_lstclear(&data->env, free);
 			free(data->prompt);
 			free(data->inputrow);
+			rl_clear_history();
 			break ;
 		}
 		if (*read_line)

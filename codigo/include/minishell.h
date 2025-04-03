@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/02 16:45:12 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/03 14:39:33 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 # include "../libs/libft/libft.h"
 # include "../include/ms_struct.h"
 
-# define GREEN       "\033[92;1m"
-# define CLEAR_COLOR "\033[0m"
-# define CYAN        "\033[96;1m"
+# define GREEN			"\001\033[92;1m\002"
+# define CLEAR_COLOR	"\001\033[0m\002"
+# define CYAN			"\033[96;1m"
 
 /*Es la forma que encontre de poder usar la variable en mac
 la tengo que extraer explicitamente, seguro norminete te salta
