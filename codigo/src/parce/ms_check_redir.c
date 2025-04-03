@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/03 17:50:07 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/03 18:07:47 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@ bool	ms_check_redir(char *str)
 	}
 	while (str[i])
 	{
-		if ((str[i] == '<' || str[i] == '>') || (str[i] == '|'))
+		if ((str[i] == '<' || str[i] == '>'))
 		{
 			flag++;
 			check_redir = false;
 		}
-		if (ft_isascii(str[i]) && (str[i] != '<' && str[i] != '>')
-			&& (flag < 3) && (str[i] != '|'))
+		if (ft_isascii(str[i]) && (str[i] != '<' && str[i] != '>') && (flag < 3))
 		{
 			check_redir = true;
 			flag = 0;

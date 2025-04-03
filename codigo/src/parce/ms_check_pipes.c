@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:49:24 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/02 16:44:38 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/03 18:05:38 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	ms_check_pipes(char *str)
 	while (str[i])
 	{
 		if (str[i] == '|')
-			if (str[i + 1] == '|')
+			if (str[i + 1] == '|' || (str[i + 1] == '<' || str[i + 1] == '>'))
 				return (false);
 		i++;
 	}
