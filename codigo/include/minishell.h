@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/03 16:16:22 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/04 01:09:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ bool	ms_check_quotation_marks(char *str);
 int		ms_input_row_validation(t_mshell *data);
 bool	ms_check_pipes(char *str);
 bool	ms_check_redir(char *str);
+int     ft_isspace(int c);
+char    **ms_split_input(char *str);
 
 #endif

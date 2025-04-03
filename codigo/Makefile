@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/02 16:10:13 by brivera          ###   ########.fr        #
+#    Updated: 2025/04/04 01:11:23 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,9 @@ INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
 				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c 
 
 PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c $(PARCE_DIR)ms_check_quotation_marks.c \
-				$(PARCE_DIR)ms_check_pipes.c $(PARCE_DIR)ms_check_redir.c
+				$(PARCE_DIR)ms_check_pipes.c $(PARCE_DIR)ms_check_redir.c $(PARCE_DIR)ms_split_input.c
 
-UTILS		:=	$(UTILS_DIR)utils.c
+UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 
 OBJ_DIR 	:=	obj/
