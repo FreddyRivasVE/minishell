@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_check_quotation_marks.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:37:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/03 01:16:26 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/03 11:53:43 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	ms_check_quotation_marks(char *str)
 	while (str[i])
 	{
 		check_simples = toggle_simples(str[i], check_simples, check_doubles);
-		check_doubles = toggle_doubles(str[i], check_doubles, check_simples);
+		check_doubles = toggle_doubles(str[i], check_simples, check_doubles);
 		i++;
 	}
 	if (check_simples || check_doubles)
