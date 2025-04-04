@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/02 21:33:22 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/04 12:03:01 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ms_env(char **command, t_list **lst)
 	if (command[1])
 	{
 		ft_putendl_fd("env: subject doesn't allow arguments or options", 2);
-		return (1);
+		return (2);
 	}
 	print_list_content_char(lst);
 	return (0);
@@ -35,7 +35,7 @@ int	ms_export(char **command, t_mshell *data)
 		if (command[1][0] == '-')
 		{
 			ft_putendl_fd("export: subject doesn't options", 2);
-			return (1);
+			return (2);
 		}
 		if (ft_isdigit(command[1][0]))
 		{
