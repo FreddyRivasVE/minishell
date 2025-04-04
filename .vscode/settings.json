@@ -6,6 +6,7 @@
 		"termios.h": "c",
 		"limits.h": "c",
 		"stdlib.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"__locale": "c"
 	}
 }

@@ -3,64 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/04 12:03:01 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/04 21:44:04 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//env sin opciones o argumentos
-int	ms_env(char **command, t_list **lst)
-{
-	if (command[1])
-	{
-		ft_putendl_fd("env: subject doesn't allow arguments or options", 2);
-		return (2);
-	}
-	print_list_content_char(lst);
-	return (0);
-}
-
-//export sin opciones
-int	ms_export(char **command, t_mshell *data)
-{
-	t_list	*new_node;
-	char	*content;
-
-	if (command[1])
-	{
-		if (command[1][0] == '-')
-		{
-			ft_putendl_fd("export: subject doesn't options", 2);
-			return (2);
-		}
-		if (ft_isdigit(command[1][0]))
-		{
-			ft_putendl_fd("export: not an identifier", 2);
-			return (1);
-		}
-		content = ft_strdup(command[1]);
-		if (!content)
-		{
-			perror("malloc");
-			return (1);
-		}
-		new_node = ft_lstnew(content);
-		if (!new_node)
-		{
-			perror("malloc");
-			free(content);
-			return (1);
-		}
-		ft_lstadd_back(&env_list, new_node);
-	}
-	else
-		//solo escribieron el comando export
-}
-
 
 void	ms_exec_builtin_or_other(char **command, t_mshell *data)
 {
