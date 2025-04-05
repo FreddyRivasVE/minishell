@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 23:09:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/04 01:12:03 by frivas           ###   ########.fr       */
+/*   Created: 2025/04/05 19:54:01 by brivera@stu       #+#    #+#             */
+/*   Updated: 2025/04/05 19:54:17 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
-
-int ft_isspace(int c)
+int	ft_isspace(int c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
