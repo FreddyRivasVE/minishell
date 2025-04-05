@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/03 15:32:53 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/05 18:38:30 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_mshell
 {
 	t_list		*env;
 	t_term		conftty;
-	char		*inputrow;
+	char		*input_row;
 	t_pipe		*pipes;
 	t_redir		*redirs;
 	t_command	*commands;

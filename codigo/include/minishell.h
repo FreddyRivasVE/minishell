@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/04 01:09:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/05 19:56:15 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdbool.h>
 # include <limits.h>
-# include <linux/limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -42,17 +41,34 @@ extern int	rl_catch_signals;
 
 void	ms_sigctrlc_handler(int signo);
 void	ms_init_struct(t_mshell *data, char **env);
-void	print_list_content_char(t_list **lst);
-void	ms_get_prompt(t_mshell *data);
 void	ms_loop_minishell(t_mshell *data);
-size_t	ft_strcspn(const char *s, const char *reject);
-size_t	ft_strspn(const char *s, const char *accept);
-char	*ms_get_cwd(void);
+void	ms_get_prompt(t_mshell *data);
 bool	ms_check_quotation_marks(char *str);
-int		ms_input_row_validation(t_mshell *data);
 bool	ms_check_pipes(char *str);
 bool	ms_check_redir(char *str);
-int     ft_isspace(int c);
-char    **ms_split_input(char *str);
+int		ms_input_row_validation(t_mshell *data);
+int		ms_exec_builtin_or_other(char **command, t_mshell *data);
+//char	**ms_split_input(char *str);
 
+/*****************************************************************************/
+/*                                utils	                            		 */
+/*****************************************************************************/
+
+int		ft_isspace(int c);
+size_t	ft_strcspn(const char *s, const char *reject);
+size_t	ft_strspn(const char *s, const char *accept);
+int		ft_strcmp(const char *s1, const char *s2);
+void	*ms_free_ptr(void *ptr);
+
+/*****************************************************************************/
+/*                              BUILT-INS                           		 */
+/*****************************************************************************/
+
+char	*ms_get_cwd(void);
+int		ms_export(char **command, t_mshell *data);
+t_list	*ms_copy_export_env(t_list **env);
+void	print_list_sorted(t_list **lst);
+int		ms_env(char **command, t_list **lst);
+int		ms_exit(void);
+int		ms_unset(void);
 #endif
