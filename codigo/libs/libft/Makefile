@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/25 10:33:30 by brivera           #+#    #+#              #
-#    Updated: 2025/04/02 12:30:31 by brivera          ###   ########.fr        #
+#    Updated: 2025/04/05 18:48:00 by brivera@stu      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = $(SRC_DIR)/ft_isalpha.c $(SRC_DIR)/ft_isdigit.c $(SRC_DIR)/ft_isalnum.c \
       $(SRC_DIR)/ft_putchar_fd.c $(SRC_DIR)/ft_putstr_fd.c $(SRC_DIR)/ft_putendl_fd.c \
 	  $(SRC_DIR)/ft_putnbr_fd.c \
 	  $(SRC_DIR)/get_next_line.c \
+	  $(SRC_DIR)/free_array.c \
 	  $(SRC_DIR)/ft_lstnew_bonus.c $(SRC_DIR)/ft_lstadd_front_bonus.c \
 	  $(SRC_DIR)/ft_lstsize_bonus.c $(SRC_DIR)/ft_lstlast_bonus.c \
 	  $(SRC_DIR)/ft_lstadd_back_bonus.c $(SRC_DIR)/ft_lstdelone_bonus.c \
