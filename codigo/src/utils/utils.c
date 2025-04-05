@@ -6,24 +6,41 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/04 21:28:59 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/05 19:53:27 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_list_content_char(t_list **lst)
-{
-	t_list	*current;
+/*
+para que liberemos de forma segura y evitar los doble free
+*/
 
-	current = *lst;
-	while (current != NULL)
+void	*ms_free_ptr(void *ptr)
+{
+	if (ptr)
 	{
-		if (current->content != NULL
-			&& ft_strchr((char *)current->content, '='))
-			printf("%s\n", (char *)current->content);
-		current = current->next;
+		free(ptr);
+		ptr = NULL;
 	}
+	return (NULL);
+}
+
+/*
+Compara dos strings
+0  si `s1` y `s2` son iguales.
+<0 si `s1` es menor que `s2` (en orden ASCII).
+>0 si `s1` es mayor que `s2`. 
+Nota:`unsigned char` para manejar valores >127 correctamente.
+ */
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 /*
