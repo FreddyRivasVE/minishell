@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+         #
+#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/04 01:11:23 by frivas           ###   ########.fr        #
+#    Updated: 2025/04/05 19:50:25 by brivera@stu      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,10 @@ PARCE_DIR := src/parce/
 UTILS_DIR := src/utils/
 
 SOURCES		:=	$(SOURCES_DIR)main.c
-BUILT		:=	$(BUILT_INS_DIR)cd.c
-EXECUTION	:= 
+BUILT		:=	$(BUILT_INS_DIR)cd.c $(BUILT_INS_DIR)env.c \
+				$(BUILT_INS_DIR)export_00.c $(BUILT_INS_DIR)export_01.c \
+				$(BUILT_INS_DIR)unset.c $(BUILT_INS_DIR)exit.c 
+EXECUTION	:=	$(EXECUTION_DIR)ms_execution.c
 INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
 				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c 
 
