@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_split_input.c                                   :+:      :+:    :+:   */
+/*   ft_print_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/06 18:17:36 by frivas           ###   ########.fr       */
+/*   Created: 2025/04/06 16:50:19 by frivas            #+#    #+#             */
+/*   Updated: 2025/04/06 18:19:57 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_split_input(t_mshell *data)
+void	ft_print_array(char **array)
 {
-	data->inputs = malloc(sizeof(t_input));
-	if (!data->inputs)
-		return (0);
-	data->inputs->splitpipes = ft_split(data->input_row, '|');
-	ft_print_array(data->inputs->splitpipes); // Borrar mas adelante.
-	free_array(data->inputs->splitpipes);
-	free(data->inputs);
-	return (1);
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		printf("%s\n", array[i]);
+		i++;
+	}
 }
