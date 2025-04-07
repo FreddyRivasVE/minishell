@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/06 16:32:31 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/07 23:00:43 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_command
 typedef struct s_input
 {
 	char	**splitpipes;
+	char	***splitaftpipes;
 }	t_input;
 
 typedef struct s_mshell

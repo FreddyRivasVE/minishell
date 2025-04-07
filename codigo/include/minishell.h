@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/06 18:22:38 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/07 23:17:13 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ bool	ms_check_quotation_marks(char *str);
 bool	ms_check_pipes(char *str);
 bool	ms_check_redir(char *str);
 int		ms_input_row_validation(t_mshell *data);
-int		ms_exec_builtin_or_other(char **command, t_mshell *data);
+int		ms_exec_builtin_or_other(char ***command, t_mshell *data);
 int		ms_split_input(t_mshell *data);
+int     ms_exec(t_mshell *data);
 
 /*****************************************************************************/
 /*                                utils	                            		 */
@@ -60,6 +61,7 @@ size_t	ft_strspn(const char *s, const char *accept);
 int		ft_strcmp(const char *s1, const char *s2);
 void	*ms_free_ptr(void *ptr);
 void	ft_print_array(char **array);
+void    free_triple_array(char ***arr);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */

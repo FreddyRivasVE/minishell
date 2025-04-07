@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/05 19:53:27 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/07 23:06:28 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,19 @@ size_t	ft_strcspn(const char *s, const char *reject)
 		i++;
 	}
 	return (i);
+}
+
+void	free_triple_array(char ***arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return;
+	while (arr[i])
+	{
+		free_array(arr[i]); // Esta función libera un char **
+		i++;
+	}
+	free(arr);
 }
