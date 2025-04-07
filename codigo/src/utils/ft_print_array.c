@@ -23,3 +23,4 @@ void	ft_print_array(char **array)
 		i++;
 	}
 }
+
