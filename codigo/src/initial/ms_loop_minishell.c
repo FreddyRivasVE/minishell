@@ -18,7 +18,7 @@ int	ms_exec(t_mshell *data)
 
 	if (!ms_split_input(data))
 		return (ft_putendl_fd("minishell: malloc", 2), 2);
-	exit = ms_exec_builtin_or_other(data->inputs->splitaftpipes, data);
+	exit = ms_exec_builtin_or_other(data->inputs->splitaftpipes, data, 0);
 	free_triple_array(data->inputs->splitaftpipes);
 	free(data->inputs);
 	return (exit);

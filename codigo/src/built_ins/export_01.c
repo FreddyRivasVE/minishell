@@ -38,10 +38,11 @@ t_list	*ms_copy_export_env(t_list **env)
 	{
 		envread = ft_strdup(current->content);
 		if (!envread)
-			return (perror("malloc"), ft_lstclear(&env_list, free), env_list);
+			return (perror("minishell: malloc"), ft_lstclear(&env_list, free),
+				env_list);
 		new_node = ft_lstnew(envread);
 		if (!new_node)
-			return (perror("molloc nodo"), ms_free_ptr((void *)envread),
+			return (perror("minishell: molloc"), ms_free_ptr((void *)envread),
 				ft_lstclear(&env_list, free), env_list);
 		ft_lstadd_back(&env_list, new_node);
 		current = current->next;

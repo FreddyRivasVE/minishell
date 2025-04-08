@@ -31,6 +31,12 @@
 # define CLEAR_COLOR	"\001\033[0m\002"
 # define CYAN			"\033[96;1m"
 
+# define MINI_PRONT          "\001\033[92;1m\002minishell:$ \001\033[0m\002"
+
+/*Este error indica: no hay
+suficiente memoria disponible.*/
+# define ENOMEM 12
+
 /*Es la forma que encontre de poder usar la variable en mac
 la tengo que extraer explicitamente, seguro norminete te salta
 al final se retira.*/
@@ -47,7 +53,7 @@ bool	ms_check_quotation_marks(char *str);
 bool	ms_check_pipes(char *str);
 bool	ms_check_redir(char *str);
 int		ms_input_row_validation(t_mshell *data);
-int		ms_exec_builtin_or_other(char ***command, t_mshell *data);
+int     ms_exec_builtin_or_other(char ***command, t_mshell *data, int i);
 int		ms_split_input(t_mshell *data);
 int     ms_exec(t_mshell *data);
 
@@ -72,6 +78,8 @@ int		ms_export(char **command, t_mshell *data);
 t_list	*ms_copy_export_env(t_list **env);
 void	print_list_sorted(t_list **lst);
 int		ms_env(char **command, t_list **lst);
-int		ms_exit(void);
+int     ms_exit(t_mshell  *data);
 int		ms_unset(void);
+int     ms_pwd(char **command);
+
 #endif

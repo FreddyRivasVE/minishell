@@ -73,7 +73,7 @@ int	ms_export_print_list(t_list **env)
 
 	copy_env = ms_copy_export_env(env);
 	if (!copy_env)
-		return (1);
+		return (ENOMEM);
 	ms_merge_sort(&copy_env);
 	print_list_sorted(&copy_env);
 	ft_lstclear(&copy_env, free);

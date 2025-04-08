@@ -12,8 +12,11 @@
 
 #include "minishell.h"
 
-int	ms_exit(void)
+
+//sin opciones pero con argumentos
+int	ms_exit(t_mshell *data)
 {
+	(void)*data;
 	printf("exit\n");
 	return (0);
 }

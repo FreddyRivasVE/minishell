@@ -88,20 +88,20 @@ void	ms_get_prompt(t_mshell *data)
 	hostn = ms_get_host();
 	pwdir = ms_get_dir();
 	if (!pwdir)
-		pwdir = ft_strjoin("", "");
+		pwdir = ft_strdup("");
 	temp1 = ft_strjoin(GREEN, "minishell@");
 	temp2 = ft_strjoin(temp1, hostn);
-	free(temp1);
+	ms_free_ptr(temp1);
 	temp1 = ft_strjoin(temp2, ":");
-	free(temp2);
+	ms_free_ptr((void *)temp2);
 	temp2 = ft_strjoin(temp1, pwdir);
-	free(temp1);
+	ms_free_ptr((void *)temp1);
 	temp1 = ft_strjoin(temp2, "$ ");
-	free(temp2);
+	ms_free_ptr((void *)temp2);
 	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
 	if (!data->prompt)
-		data->prompt = ft_strjoin("\033[92;1minishell:", "$ \033[0m");
-	free(temp1);
-	free(pwdir);
-	free(hostn);
+		data->prompt = MINI_PRONT;
+	ms_free_ptr((void *)temp1);
+	ms_free_ptr((void *)pwdir);
+	ms_free_ptr((void *)hostn);
 }
