@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/07 23:06:28 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/08 21:37:01 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	free_triple_array(char ***arr)
 
 	i = 0;
 	if (!arr)
-		return;
+		return ;
 	while (arr[i])
 	{
 		free_array(arr[i]); // Esta función libera un char **

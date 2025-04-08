@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/07 23:28:50 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/08 21:35:25 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,15 @@ char	***ms_split_postpipe(t_mshell *data)
 	commands = malloc(sizeof(char **) * (i + 1));
 	if (!commands)
 		return (NULL);
-	i = 0;	
+	i = 0;
 	while (temp[i])
 	{
 		commands[i] = ft_split(temp[i], ' ');
 		i++;
 	}
 	commands[i] = NULL;
-	return (commands);	
+	return (commands);
 }
-
 
 int	ms_split_input(t_mshell *data)
 {
@@ -47,5 +46,3 @@ int	ms_split_input(t_mshell *data)
 	free_array(data->inputs->splitpipes);
 	return (1);
 }
-
-
