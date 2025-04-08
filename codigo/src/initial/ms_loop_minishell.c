@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/07 23:11:27 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/08 12:28:50 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 int	ms_exec(t_mshell *data)
 {
 	int		exit;
+
+	if (!ms_split_input(data))
+		return (ft_putendl_fd("minishell: malloc", 2), 2);
 	exit = ms_exec_builtin_or_other(data->inputs->splitaftpipes, data);
 	free_triple_array(data->inputs->splitaftpipes);
 	free(data->inputs);
@@ -45,7 +48,8 @@ void	ms_loop_minishell(t_mshell *data)
 				ms_free_ptr((void *)data->input_row);
 			data->input_row = ft_substr(read_line, 0, ft_strlen(read_line));
 			data->exits = ms_input_row_validation(data);
-			data->exits = ms_exec(data);
+			if (data->exits != 2)
+				data->exits = ms_exec(data);
 		}
 		free(read_line);
 	}
