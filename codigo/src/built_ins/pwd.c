@@ -14,7 +14,7 @@
 
 int	ms_pwd(char **command)
 {
-	char	*pwd;
+	char		*pwd;
 
 	if (command[1])
 	{

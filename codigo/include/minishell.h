@@ -24,6 +24,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <termios.h>
+# include <sys/stat.h>
 # include "../libs/libft/libft.h"
 # include "../include/ms_struct.h"
 

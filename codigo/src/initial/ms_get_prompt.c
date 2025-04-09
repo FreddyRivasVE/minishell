@@ -62,12 +62,9 @@ char	*ms_get_dir(void)
 		return (ms_get_cwd());
 	dir = ft_strdup(getenv("PWD"));
 	if (!dir)
-	{
 		dir = ms_get_cwd();
-		printf("entraste"); // borrar cuando terminemos pruebas!!!
-	}
 	if (!dir)
-		return (NULL);
+		return (ft_putendl_fd("minishell-init: error retrieving current directory", 2), NULL);
 	lenhom = ft_strlen(home);
 	start = ft_strspn(home, dir);
 	if (start >= lenhom)
