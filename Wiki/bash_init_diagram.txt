@@ -1,0 +1,17 @@
+Inicio de Bash
+    └── ¿Login Shell?
+          ├── Sí → /etc/profile
+          │        └── ¿~/.bash_profile?
+          │              ├── Sí → Ejecuta ~/.bash_profile
+          │              │          └── ¿Invoca ~/.bashrc? → Ejecuta ~/.bashrc
+          │              └── No → ¿~/.bash_login?
+          │                        ├── Sí → Ejecuta ~/.bash_login
+          │                        └── No → ¿~/.profile?
+          │                                  └── Sí → Ejecuta ~/.profile
+          └── No → ¿Shell interactivo?
+                       ├── Sí → Ejecuta ~/.bashrc
+                       └── No → ¿BASH_ENV definida?
+                                  ├── Sí → Ejecuta archivo de BASH_ENV
+                                  └── No → No se carga configuración
+
+→ Bash listo
