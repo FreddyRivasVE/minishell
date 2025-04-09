@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/08 21:48:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/09 15:28:35 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	*ms_free_ptr(void *ptr);
 void	ft_print_array(char **array);
 void	free_triple_array(char ***arr);
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
@@ -79,7 +80,7 @@ t_list	*ms_copy_export_env(t_list **env);
 void	print_list_sorted(t_list **lst);
 int		ms_env(char **command, t_list **lst);
 int		ms_exit(t_mshell *data);
-int		ms_unset(void);
+int		ms_unset(t_mshell *data, char **data_ref);
 int		ms_pwd(char **command);
 
 #endif

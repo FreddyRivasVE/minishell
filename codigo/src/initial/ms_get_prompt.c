@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/03 14:35:10 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:26:14 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ char	*ms_get_dir(void)
 
 	home = ms_get_home();
 	if (!home)
+		return (ms_get_cwd());
+	dir = ft_strdup(getenv("PWD"));
+	if (!dir)
 	{
-		home = ms_get_cwd();
-		return (home);
+		dir = ms_get_cwd();
+		printf("entraste"); // borrar cuando terminemos pruebas!!!
 	}
-	dir = ms_get_cwd();
 	if (!dir)
 		return (NULL);
 	lenhom = ft_strlen(home);
@@ -71,7 +73,7 @@ char	*ms_get_dir(void)
 	if (start >= lenhom)
 	{
 		home = ft_substr(dir, start, (ft_strlen(dir) - start));
-		free(dir);
+		ms_free_ptr(dir);
 		dir = ft_strjoin("~", home);
 		free(home);
 	}
