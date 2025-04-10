@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_split_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/08 21:35:25 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:23:02 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	***ms_split_postpipe(t_mshell *data)
 	i = 0;
 	while (temp[i])
 	{
-		commands[i] = ft_split(temp[i], ' ');
+		commands[i] = ft_split_quotes(temp[i], ' ');
 		i++;
 	}
 	commands[i] = NULL;
@@ -43,6 +43,7 @@ int	ms_split_input(t_mshell *data)
 	data->inputs->splitpipes = ft_split(data->input_row, '|');
 	//ft_print_array(data->inputs->splitpipes); // Borrar mas adelante.
 	data->inputs->splitaftpipes = ms_split_postpipe(data);
+	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.
 	free_array(data->inputs->splitpipes);
 	return (1);
 }

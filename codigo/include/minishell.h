@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/09 15:28:35 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/10 14:49:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ void	*ms_free_ptr(void *ptr);
 void	ft_print_array(char **array);
 void	free_triple_array(char ***arr);
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
+void	ft_print_array_triple(char ***array);
+bool	toggle_simples(char c, bool check_simples, bool check_doubles);
+bool	toggle_doubles(char c, bool check_simples, bool check_doubles);
+char	**ft_split_quotes(char const *s, char c);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */

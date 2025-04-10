@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42.fr>            #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-08 14:35:24 by brivera           #+#    #+#             */
-/*   Updated: 2025-04-08 14:35:24 by brivera          ###   ########.fr       */
+/*   Created: 2025/04/08 14:35:24 by brivera           #+#    #+#             */
+/*   Updated: 2025/04/10 12:02:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	ms_pwd(char **command)
 		ft_putendl_fd("env: subject doesn't allow arguments or options", 2);
 		return (2);
 	}
-	pwd = ms_get_cwd();
+	pwd = ft_strdup(getenv("PWD"));
+	if (!pwd)
+		pwd = ms_get_cwd();
 	if (!pwd)
 	{
 		ft_putendl_fd("pwd: error retrieving current directory", 2);

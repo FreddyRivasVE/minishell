@@ -1,33 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/30 17:46:49 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/10 12:57:40 by frivas           ###   ########.fr       */
+/*   Created: 2025/04/10 12:58:54 by frivas            #+#    #+#             */
+/*   Updated: 2025/04/10 15:56:07 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-static size_t	ft_countnewword(char const *s, char c)
+static size_t	skip_word(const char *s, char c, size_t i)
+{
+	int	flagsingle;
+	int	flagdouble;
+
+	flagsingle = 0;
+	flagdouble = 0;
+	while (s[i])
+	{
+		flagsingle = toggle_simples(s[i], flagsingle, flagdouble);
+		flagdouble = toggle_doubles(s[i], flagsingle, flagdouble);
+		if (!flagsingle && !flagdouble && s[i] == c)
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+static size_t	ft_countnewword(const char *s, char c)
 {
 	size_t	count;
 	size_t	i;
 
 	i = 0;
 	count = 0;
-	while (s[i] != '\0')
+	while (s[i])
 	{
-		while (s[i] == c && s[i] != '\0')
+		while (s[i] == c && s[i])
 			i++;
-		if (s[i] != '\0')
-			count++;
-		while (s[i] != c && s[i] != '\0')
-			i++;
+		if (!s[i])
+			break ;
+		count++;
+		i = skip_word(s, c, i);
 	}
+	printf("%zu\n", count);
 	return (count);
 }
 
@@ -61,7 +80,7 @@ static char	**ft_fillstrs(char const *s, char c, char **strs)
 			if (strs[j] == NULL)
 				return (strs = ft_freestrs(strs, j));
 			j++;
-			i = i + lenword;
+			i = skip_word(s, c, i) + i;
 		}
 		else
 			i++;
@@ -70,7 +89,7 @@ static char	**ft_fillstrs(char const *s, char c, char **strs)
 	return (strs);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_quotes(char const *s, char c)
 {
 	size_t	newword;
 	char	**strs;
