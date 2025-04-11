@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/11 15:34:51 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/11 20:10:40 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ms_split_input(t_mshell *data)
 	data->inputs = malloc(sizeof(t_input));
 	if (!data->inputs)
 		return (0); 
-	data->inputs->splitpipes = ft_split(data->input_row, '|');
+	data->inputs->splitpipes = ft_split_pipes(data->input_row);
 	if (!data->inputs->splitpipes)
 		return (0);
 	//ft_print_array(data->inputs->splitpipes); // Borrar mas adelante.

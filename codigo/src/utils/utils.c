@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/08 21:37:01 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/11 19:33:16 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+funcion para limpiar espacios en los extremos
+*/
+
+char	*ft_strtrim_spaces(char const *s)
+{
+	size_t	start;
+	size_t	end;
+
+	if (!s)
+		return (NULL);
+	start = 0;
+	end = ft_strlen(s);
+	while (s[start] && ft_isspace(s[start]))
+		start++;
+	while (end > start && ft_isspace(s[end - 1]))
+		end--;
+	return (ft_substr(s, start, end - start));
+}
 
 /*
 para que liberemos de forma segura y evitar los doble free

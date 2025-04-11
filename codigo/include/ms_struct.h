@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/11 17:08:26 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/11 19:23:52 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ typedef struct termios	t_term;
 
 typedef struct s_redir
 {
-	char	*namefile;
-	int		fd;
+	//char	*namefile;
+	//int		fd;
 }	t_redir;
 
 typedef struct s_pipe
@@ -27,8 +27,8 @@ typedef struct s_pipe
 
 typedef struct s_command
 {
-	t_redir		redir;
-	char		**command
+	//t_redir		redir;
+	//char		**command;
 }	t_command;
 
 // typedef struct s_exit

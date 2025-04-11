@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/03 15:29:07 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/11 19:24:23 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	ms_init_struct(t_mshell *data, char **env)
 
 	rl_catch_signals = 0;
 	data->pipes = 0;
-	data->redirs = 0;
 	data->commands = 0;
 	data->exits = 0;
 	data->inputs = 0;

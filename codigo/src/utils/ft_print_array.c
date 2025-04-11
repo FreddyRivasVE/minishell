@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:50:19 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/10 12:35:44 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/11 19:50:00 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_print_array_triple(char ***array)
 		j = 0;
 		while (array[i][j])
 		{
-			printf("%s\n", array[i][j]);
+			printf("ARRAY [%d][%d]: %s\n", i, j, array[i][j]);
 			j++;
 		}
 		i++;
