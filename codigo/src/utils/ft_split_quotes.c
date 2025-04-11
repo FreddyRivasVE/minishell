@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:07:42 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/11 12:11:00 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/11 15:26:49 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static size_t	skip_word(const char *s, size_t i)
 {
-	int	flag_single;
-	int	flag_double;
+	bool	flag_single;
+	bool	flag_double;
 
-	flag_single = 0;
-	flag_double = 0;
+	flag_single = false;
+	flag_double = false;
 	while (s[i])
 	{
 		flag_single = toggle_simples(s[i], flag_single, flag_double);
@@ -49,17 +49,6 @@ static size_t	ft_count_words(const char *s)
 	return (count);
 }
 
-static char	**ft_free_strs(char **strs, size_t j)
-{
-	while (j > 0)
-	{
-		free(strs[j - 1]);
-		j--;
-	}
-	free(strs);
-	return (NULL);
-}
-
 static char	**ft_fill_strs(char const *s, char **strs)
 {
 	size_t	i;
@@ -79,7 +68,7 @@ static char	**ft_fill_strs(char const *s, char **strs)
 		end = skip_word(s, i);
 		strs[j] = ft_substr(s, start, end - start);
 		if (!strs[j])
-			return (ft_free_strs(strs, j));
+			return (free_array(strs));
 		j++;
 		i = end;
 	}
