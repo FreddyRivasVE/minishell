@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_split_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/10 15:23:02 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/11 12:09:18 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	***ms_split_postpipe(t_mshell *data)
 	i = 0;
 	while (temp[i])
 	{
-		commands[i] = ft_split_quotes(temp[i], ' ');
+		commands[i] = ft_split_quotes(temp[i]);
 		i++;
 	}
 	commands[i] = NULL;

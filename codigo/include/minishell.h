@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/10 14:49:08 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/11 12:09:11 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 void	ft_print_array_triple(char ***array);
 bool	toggle_simples(char c, bool check_simples, bool check_doubles);
 bool	toggle_doubles(char c, bool check_simples, bool check_doubles);
-char	**ft_split_quotes(char const *s, char c);
+char	**ft_split_quotes(char const *s);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
