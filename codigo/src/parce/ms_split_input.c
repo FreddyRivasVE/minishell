@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_split_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/11 20:10:40 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/12 18:31:22 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	***ms_split_postpipe(t_mshell *data)
 
 int	ms_split_input(t_mshell *data)
 {
+	int	exit;
+
 	data->inputs = malloc(sizeof(t_input));
 	if (!data->inputs)
 		return (0); 
@@ -48,6 +50,8 @@ int	ms_split_input(t_mshell *data)
 	//ft_print_array(data->inputs->splitpipes); // Borrar mas adelante.
 	data->inputs->splitaftpipes = ms_split_postpipe(data);
 	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.
+	exit = ms_expand_variable(data);
+	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.	
 	free_array(data->inputs->splitpipes);
 	return (1);
 }

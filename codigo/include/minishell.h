@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/11 19:34:32 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/12 18:46:39 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		ms_input_row_validation(t_mshell *data);
 int		ms_exec_builtin_or_other(char ***command, t_mshell *data, int i);
 int		ms_split_input(t_mshell *data);
 int		ms_exec(t_mshell *data);
+int		ms_expand_variable(t_mshell *data);
 
 /*****************************************************************************/
 /*                                utils	                            		 */
@@ -75,7 +76,7 @@ bool	toggle_simples(char c, bool check_simples, bool check_doubles);
 bool	toggle_doubles(char c, bool check_simples, bool check_doubles);
 char	**ft_split_quotes(char const *s);
 char	**ft_split_pipes(char const *s);
-char	*ft_strtrim_spaces(char const *s);
+char	*ft_strtrim_spaces(char *s);
 
 
 /*****************************************************************************/
@@ -90,5 +91,6 @@ int		ms_env(char **command, t_list **lst);
 int		ms_exit(t_mshell *data);
 int		ms_unset(t_mshell *data, char **data_ref);
 int		ms_pwd(char **command);
+int		var_cmp(void *data, void *ref);
 
 #endif

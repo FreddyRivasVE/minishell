@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/11 19:33:16 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/12 18:45:35 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 funcion para limpiar espacios en los extremos
 */
 
-char	*ft_strtrim_spaces(char const *s)
+char	*ft_strtrim_spaces(char *s)
 {
 	size_t	start;
 	size_t	end;
+	char	*res;
 
 	if (!s)
 		return (NULL);
@@ -29,7 +30,9 @@ char	*ft_strtrim_spaces(char const *s)
 		start++;
 	while (end > start && ft_isspace(s[end - 1]))
 		end--;
-	return (ft_substr(s, start, end - start));
+	res = ft_substr(s, start, end - start);
+	ms_free_ptr(s);
+	return (res);
 }
 
 /*
