@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)())
 {
 	t_list	*cur;
@@ -20,17 +19,19 @@ char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)())
 	size_t	start;
 	size_t	end;
 	char	*res;
+	int		i;
 
 	if (!begin_list || !*begin_list)
 		return (NULL);
+	i = ft_strcspn(data_ref, "\"");
+	if (data_ref[])
 	temp = ft_substr(data_ref, 1, ft_strlen(data_ref));
 	cur = *begin_list;
 	if (cmp(cur->content, temp) == 0)
 	{
-		printf("%s\n", (char *)cur->content);
 		end = ft_strlen((char *)cur->content);
 		start = ft_strcspn((char *)cur->content, "=") + 1;
-		free(temp);
+		ms_free_ptr(temp);
 		res = ft_substr((char *)cur->content, start, end);
 		return (res);
 	}

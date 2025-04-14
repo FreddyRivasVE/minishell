@@ -66,11 +66,13 @@ GREEN := \033[92;1m
 CLEAR_COLOR := \033[0m
 CYAN := \033[96;1m
 
+RM := rm -rf
+
 all: $(NAME)
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR)
-	@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
+	@make --no-print-directory -C $(LIBFT_DIR)
+	@echo "\n$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
 
 $(OBJ_SUBDIRS):
 	@mkdir -p $@
@@ -82,19 +84,18 @@ $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(OBJ) $(LIBRARY) $(INCLUDE) -o $(NAME)
 	@echo "$(GREEN)✅ Compilada la Minishell\n$(CLEAR_COLOR)"
 
-
 clean:
-	@make clean -C $(LIBFT_DIR)
-	@rm -rf $(OBJ_DIR)
-	@echo "$(RED)⛔ Limpieza de archivos objeto.$(CLEAR_COLOR)"
+	@make clean --no-print-directory -C $(LIBFT_DIR)
+	@$(RM) $(OBJ_DIR)
+	@echo "$(RED)⛔ Limpieza de archivos objeto\n$(CLEAR_COLOR)"
 	
 fclean: clean
-	$(RM) $(NAME)
-	@make fclean -C $(LIBFT_DIR)
-	@echo "$(RED)⛔ Limpieza total (ejecutables y librerías).$(CLEAR_COLOR)"
+	@$(RM) $(NAME)
+	@make fclean clean --no-print-directory -C $(LIBFT_DIR)
+	@echo "$(RED)⛔ Limpieza total (ejecutables y librerías)\n$(CLEAR_COLOR)"
 		
 re: fclean all
-	@echo "$(CYAN)🔃 Proyecto reconstruido$(CLEAR_COLOR)"
+	@echo "$(CYAN)🔃 Proyecto reconstruido\n$(CLEAR_COLOR)"
 
 valgrind:
 	valgrind -s \
