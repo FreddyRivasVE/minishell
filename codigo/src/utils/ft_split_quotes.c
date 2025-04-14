@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:07:42 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/11 19:50:19 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/14 19:05:20 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	skip_word(const char *s, size_t i)
+static size_t	skip_word(const char *s, size_t i, bool check)
 {
 	bool	flag_single;
 	bool	flag_double;
@@ -23,14 +23,25 @@ static size_t	skip_word(const char *s, size_t i)
 	{
 		flag_single = toggle_simples(s[i], flag_single, flag_double);
 		flag_double = toggle_doubles(s[i], flag_single, flag_double);
-		if (!flag_single && !flag_double && ft_isspace(s[i]))
-			break ;
+		if (check == true)
+		{
+			if (!flag_single && !flag_double)
+			{
+				if (s[i] == '"' || s[i] == '\'')
+					break ;
+			}
+		}
+		else
+		{
+			if (!flag_single && !flag_double && ft_isspace(s[i]))
+				break ;
+		}
 		i++;
 	}
 	return (i);
 }
 
-static size_t	ft_count_words(const char *s)
+static size_t	ft_count_words(const char *s, bool check)
 {
 	size_t	count;
 	size_t	i;
@@ -44,12 +55,12 @@ static size_t	ft_count_words(const char *s)
 		if (!s[i])
 			break ;
 		count++;
-		i = skip_word(s, i);
+		i = skip_word(s, i, check);
 	}
 	return (count);
 }
 
-static char	**ft_fill_strs(char const *s, char **strs)
+static char	**ft_fill_strs(char const *s, char **strs, bool check)
 {
 	size_t	i;
 	size_t	j;
@@ -65,7 +76,9 @@ static char	**ft_fill_strs(char const *s, char **strs)
 		if (!s[i])
 			break ;
 		start = i;
-		end = skip_word(s, i);
+		end = skip_word(s, i, check);
+		if (check == true)
+			end++;
 		strs[j] = ft_strtrim_spaces(ft_substr(s, start, end - start));
 		if (!strs[j])
 			return (free_array(strs));
@@ -76,14 +89,14 @@ static char	**ft_fill_strs(char const *s, char **strs)
 	return (strs);
 }
 
-char	**ft_split_quotes(char const *s)
+char	**ft_split_quotes(char const *s, bool check)
 {
 	size_t	word_count;
 	char	**strs;
 
 	if (!s)
 		return (NULL);
-	word_count = ft_count_words(s);
+	word_count = ft_count_words(s, check);
 	strs = (char **)ft_calloc((word_count + 1), sizeof(char *));
 	if (!strs)
 		return (NULL);
@@ -92,6 +105,6 @@ char	**ft_split_quotes(char const *s)
 		strs[0] = NULL;
 		return (strs);
 	}
-	strs = ft_fill_strs(s, strs);
+	strs = ft_fill_strs(s, strs, check);
 	return (strs);
 }

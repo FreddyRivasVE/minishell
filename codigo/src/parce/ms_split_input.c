@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/12 18:31:22 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:09:17 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	***ms_split_postpipe(t_mshell *data)
 	i = 0;
 	while (temp[i])
 	{
-		commands[i] = ft_split_quotes(temp[i]);
+		commands[i] = ft_split_quotes(temp[i], false);
 		if (!commands[i])
 			return (free_triple_array(commands), NULL);
 		i++;
