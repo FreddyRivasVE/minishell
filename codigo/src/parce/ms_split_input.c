@@ -51,7 +51,7 @@ int	ms_split_input(t_mshell *data)
 	data->inputs->splitaftpipes = ms_split_postpipe(data);
 	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.
 	exit = ms_expand_variable(data);
-	printf("\narray luego de expandir:\n");
+	printf("\n-----> array luego de expandir:\n");
 	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.	
 	free_array(data->inputs->splitpipes);
 	return (1);

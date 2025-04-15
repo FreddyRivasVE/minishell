@@ -32,6 +32,11 @@ int	ms_exec_other(void)
 
 int	ms_exec_builtin_or_other(char ***command, t_mshell *data, int i)
 {
+	if (!command || !command[i][0])
+	{
+		printf("-----> comando a ejecutar: %s\n", command[i][0]);
+		return (-1); // provisorio borrar 
+	}
 	if (!ft_strncmp(command[i][0], "echo", 5))
 		ms_echo();
 	else if (!ft_strncmp(command[i][0], "cd", 3))

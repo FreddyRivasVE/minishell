@@ -19,8 +19,6 @@ char	*ms_found_word(char *toexpand)
 	char	*result;
 	int		i;
 
-	start = 0;
-	end = 0;
 	start = ft_strcspn(toexpand, "$") + 1;
 	i = start;
 	while (toexpand[i] && toexpand[i] != '\"')
@@ -64,8 +62,10 @@ char	*ms_expand_child(char *str, t_list **env)
 	char	*temp;
 	char	*result;
 
+	
 	expandsplit = ft_split_quotes(str, true);
-	ft_print_array(expandsplit);
+	printf("----->split por comillas argumento\n"); //borrar
+	ft_print_array(expandsplit); //borrar 
 	result = ft_calloc(1, sizeof(char));
 	i = 0;
 	while (expandsplit[i])
