@@ -6,52 +6,85 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/14 20:18:08 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/15 20:19:46 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ms_found_word(char *toexpand)
+char	*ms_found_word_aux(char *toexpand, int i, char *result, char *expand)
+{
+	char	*strtemp;
+	char	*word;
+	int		start;
+	int		end;
+
+	strtemp = NULL;
+	if (expand)
+	{
+		strtemp = ft_strjoin(result, expand);
+		free(result);
+		result = ft_strdup(strtemp);
+		free(strtemp);
+	}
+	if (toexpand[i] && toexpand[i] != '\"' && toexpand[i] != '$')
+	{
+		start = i;
+		while (toexpand[i] != '\"' && toexpand[i] != '$' && toexpand[i])
+			i++;
+		end = i;
+		word = ft_substr(toexpand, start, end - start);
+		strtemp = ft_strjoin(result, word);
+		free(result);
+		return (free(word), strtemp);
+	}
+	return (result);
+}
+
+char	*ms_found_word(char *toexpand, t_list **env, int i, char *result)
+{
+	int		start;
+	int		end;
+	char	*word;
+	char	*expand;
+
+	i++;
+	start = i;
+	while (toexpand[i] != '$' && toexpand [i] != '\"'
+		&& !(ft_isspace(toexpand[i])) && toexpand[i] && toexpand[i] != '\'')
+		i++;
+	end = i;
+	word = ft_substr(toexpand, start, end - start);
+	expand = ft_list_extract_if(env, word, var_cmp);
+	result = ms_found_word_aux(toexpand, i, result, expand);
+	return (free(word), ms_free_ptr(expand), result);
+}
+
+
+char	*ms_expand_str(char *toexpand, t_list **env)
 {
 	int		start;
 	int		end;
 	char	*result;
 	int		i;
 
-	start = ft_strcspn(toexpand, "$") + 1;
-	i = start;
-	while (toexpand[i] && toexpand[i] != '\"')
+	i = 0;
+	if (toexpand[i] == '\'')
+		return (toexpand);
+	if (toexpand[i] == '\"')
 		i++;
-	if (toexpand[i] == '"')
-		end = i - 2;
-	else
-		end = i - 1;
-	result = ft_substr(toexpand, start, end);
-	return (result);
-}
-
-
-char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)())
-{
-	t_list	*cur;
-	size_t	start;
-	size_t	end;
-	char	*res;
-
-	if (!begin_list || !*begin_list)
-		return (NULL);
-	cur = *begin_list;
-	if (cmp(cur->content, data_ref) == 0)
+	start = i;
+	while (toexpand[i] != '$')
+		i++;
+	end = i;
+	result = ft_substr(toexpand, start, end - start);
+	while (toexpand[i])
 	{
-		end = ft_strlen((char *)cur->content);
-		start = ft_strcspn((char *)cur->content, "=") + 1;
-		res = ft_substr((char *)cur->content, start, end);
-		return (res);
+		if (toexpand[i] == '$')
+			result = ms_found_word(toexpand, env, i, result);
+		i++;
 	}
-	if (cur->next)
-		return (ft_list_extract_if(&(cur->next), data_ref, cmp));
-	return (NULL);
+	return (result);
 }
 
 char	*ms_expand_child(char *str, t_list **env)
@@ -62,29 +95,22 @@ char	*ms_expand_child(char *str, t_list **env)
 	char	*temp;
 	char	*result;
 
-	
 	expandsplit = ft_split_quotes(str, true);
-	printf("----->split por comillas argumento\n"); //borrar
-	ft_print_array(expandsplit); //borrar 
 	result = ft_calloc(1, sizeof(char));
 	i = 0;
 	while (expandsplit[i])
 	{
 		if (ft_strchr(expandsplit[i], '$'))
 		{
-			found_word = ms_found_word(expandsplit[i]);
-			temp = ft_list_extract_if(env, found_word, var_cmp);
-			ms_free_ptr(found_word);
+			found_word = ms_expand_str(expandsplit[i], env);
 			ms_free_ptr(expandsplit[i]);
-			expandsplit[i] = temp;
+			expandsplit[i] = found_word;
 		}
 		temp = result;
 		result = ft_strjoin(temp, expandsplit[i]);
 		ms_free_ptr(temp);
-		printf("RESULT %s\n", result); //Borrar
 		i++;
 	}
-	ft_print_array(expandsplit);
 	free_array(expandsplit);
 	return (result);
 }

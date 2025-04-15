@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/14 17:10:37 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/15 19:23:06 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ bool	toggle_doubles(char c, bool check_simples, bool check_doubles);
 char	**ft_split_quotes(char const *s, bool check);
 char	**ft_split_pipes(char const *s);
 char	*ft_strtrim_spaces(char *s);
+char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)());
 
 
 /*****************************************************************************/
