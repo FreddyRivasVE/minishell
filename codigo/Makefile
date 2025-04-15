@@ -72,7 +72,7 @@ all: $(NAME)
 
 $(LIBFT):
 	@make --no-print-directory -C $(LIBFT_DIR)
-	@echo "\n$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
+	@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
 
 $(OBJ_SUBDIRS):
 	@mkdir -p $@

@@ -52,9 +52,7 @@ char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)())
 		return (res);
 	}
 	if (cur->next)
-	{
 		return (ft_list_extract_if(&(cur->next), data_ref, cmp));
-	}
 	return (NULL);
 }
 
@@ -67,6 +65,7 @@ char	*ms_expand_child(char *str, t_list **env)
 	char	*result;
 
 	expandsplit = ft_split_quotes(str, true);
+	ft_print_array(expandsplit);
 	result = ft_calloc(1, sizeof(char));
 	i = 0;
 	while (expandsplit[i])
@@ -75,14 +74,17 @@ char	*ms_expand_child(char *str, t_list **env)
 		{
 			found_word = ms_found_word(expandsplit[i]);
 			temp = ft_list_extract_if(env, found_word, var_cmp);
-			free(expandsplit[i]);
-			expandsplit[i] = ft_strdup(temp);
-			free(temp);
+			ms_free_ptr(found_word);
+			ms_free_ptr(expandsplit[i]);
+			expandsplit[i] = temp;
 		}
-		result = ft_strjoin(result, expandsplit[i]);
+		temp = result;
+		result = ft_strjoin(temp, expandsplit[i]);
+		ms_free_ptr(temp);
 		printf("RESULT %s\n", result); //Borrar
 		i++;
 	}
+	ft_print_array(expandsplit);
 	free_array(expandsplit);
 	return (result);
 }
@@ -92,6 +94,7 @@ int	ms_expand_variable(t_mshell *data)
 	int		i;
 	int		j;
 	char	***toexpand;
+	char	*temp;
 
 	i = 0;
 	toexpand = data->inputs->splitaftpipes;
@@ -101,11 +104,14 @@ int	ms_expand_variable(t_mshell *data)
 		while (toexpand[i][j])
 		{
 			if (ft_strchr(toexpand[i][j], '$'))
-				toexpand[i][j] = ms_expand_child(toexpand[i][j], &data->env);
+			{
+				temp = ms_expand_child(toexpand[i][j], &data->env);
+				ms_free_ptr(toexpand[i][j]);
+				toexpand[i][j] = temp;
+			}
 			j++;
 		}
 		i++;
 	}
-	ft_print_array_triple(toexpand);
 	return (0);
 }

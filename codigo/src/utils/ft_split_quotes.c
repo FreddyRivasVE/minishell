@@ -77,7 +77,7 @@ static char	**ft_fill_strs(char const *s, char **strs, bool check)
 			break ;
 		start = i;
 		end = skip_word(s, i, check);
-		if (check == true)
+		if (check == true && s[end])
 			end++;
 		strs[j] = ft_strtrim_spaces(ft_substr(s, start, end - start));
 		if (!strs[j])
