@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 18:24:49 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 18:41:19 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@
 # define ERRORCREATENODO  "Error al crear nodo\n"
 # define SUBJECTOPTIONERROR "unset: subject doesn't allow opts."
 # define SUBJECTECHOOPTERROR "echo: subject only allow -n option"
+# define SUBJECTEXPORTERROR "export: subject doesn't options"
+# define EXPORTNUMBERERROR "export: not an identifier"
 
 #endif

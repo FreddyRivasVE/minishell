@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_01.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:36:51 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/05 19:51:48 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/16 19:57:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,25 @@ t_list	*ms_copy_export_env(t_list **env)
 	return (env_list);
 }
 
-// void	ft_list_replace(t_list **begin_list, void *data_ref, int (*cmp)())
-// {
-// 	t_list	*cur;
+int	ft_list_replace_cont(t_list **begin_list, void *ref, int (*cmp)())
+{
+	t_list	*cur;
+	int		end;
+	char	*cutref;
 
-// 	if (!begin_list || !*begin_list)
-// 		return ;
-// 	cur = *begin_list;
-// 	if (cmp(cur->content, data_ref) == 0)
-// 	{
-// 		*begin_list = cur->next;
-// 		ft_lstdelone(cur, free);
-// 		ft_list_remove_if(begin_list, data_ref, cmp);
-// 	}
-// 	else
-// 		ft_list_remove_if(&cur->next, data_ref, cmp);
-// }
+	if (!begin_list || !*begin_list)
+		return (0);
+	end = ft_strcspn(ref, "=");
+	cutref = ft_substr(ref, 0, end);
+	cur = *begin_list;
+	if (cmp(cur->content, cutref) == 0)
+	{
+		free(cur->content);
+		cur->content = ref;
+		free(cutref);
+		return (1);
+	}
+	else
+		return (free(cutref), ft_list_replace_cont(&cur->next, ref, cmp));
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/16 17:49:33 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 19:20:05 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int		ms_unset(t_mshell *data, char **data_ref);
 int		ms_pwd(char **command);
 int		var_cmp(void *data, void *ref);
 int		ms_echo(char **command);
+int		ft_list_replace_cont(t_list **begin_list, void *ref, int (*cmp)());
 
 #endif

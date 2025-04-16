@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_00.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:41:48 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/05 19:52:20 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/16 19:58:58 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,23 +84,26 @@ int	ms_export_print_list(t_list **env)
 int	ms_export(char **command, t_mshell *data)
 {
 	t_list	*new_node;
-	char	*argument;
+	char	*argt;
 	int		exit;
 
 	exit = 0;
 	if (command[1])
 	{
 		if (command[1][0] == '-')
-			return (ft_putendl_fd("export: subject doesn't options", 2), 2);
+			return (ft_putendl_fd(SUBJECTEXPORTERROR, 2), 2);
 		if (ft_isdigit(command[1][0]))
-			return (ft_putendl_fd("export: not an identifier", 2), 2);
-		argument = ft_strdup(command[1]);
-		if (!argument)
+			return (ft_putendl_fd(EXPORTNUMBERERROR, 2), 2);
+		argt = ft_strdup(command[1]);
+		if (!argt)
 			return (perror("malloc"), ENOMEM);
-		new_node = ft_lstnew(argument);
-		if (!new_node)
-			return (perror("malloc"), ft_free_ptr((void *)argument), 1);
-		ft_lstadd_back(&data->env, new_node);
+		if ((ft_list_replace_cont(&data->env, argt, var_cmp)) == 0)
+		{
+			new_node = ft_lstnew(argt);
+			if (!new_node)
+				return (perror("malloc"), ft_free_ptr(argt), 1);
+			ft_lstadd_back(&data->env, new_node);
+		}
 	}
 	else
 		exit = ms_export_print_list(&data->env);
