@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 16:47:50 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 17:21:53 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ms_expand_str(char *toexpand, t_list **env)
 
 	i = 0;
 	if (toexpand[i] == '\'')
-		return (toexpand);
+		return (ft_substr(toexpand, 1, (ft_strlen(toexpand) - 2)));
 	if (toexpand[i] == '\"')
 		i++;
 	start = i;

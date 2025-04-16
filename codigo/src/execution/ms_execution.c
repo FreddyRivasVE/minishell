@@ -6,17 +6,11 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/09 15:27:00 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 17:51:32 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ms_echo(void)
-{
-	printf("echo\n");
-	return (0);
-}
 
 int	ms_cd(void)
 {
@@ -38,7 +32,7 @@ int	ms_exec_builtin_or_other(char ***command, t_mshell *data, int i)
 		return (-1); // provisorio borrar 
 	}
 	if (!ft_strncmp(command[i][0], "echo", 5))
-		ms_echo();
+		return (ms_echo(command[i]));
 	else if (!ft_strncmp(command[i][0], "cd", 3))
 		ms_cd();
 	else if (!ft_strncmp(command[i][0], "pwd", 4))

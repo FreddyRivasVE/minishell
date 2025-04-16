@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/16 16:49:58 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 17:49:33 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ int		ms_exit(t_mshell *data);
 int		ms_unset(t_mshell *data, char **data_ref);
 int		ms_pwd(char **command);
 int		var_cmp(void *data, void *ref);
+int		ms_echo(char **command);
 
 #endif
