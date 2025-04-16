@@ -31,23 +31,10 @@ char	*ft_strtrim_spaces(char *s)
 	while (end > start && ft_isspace(s[end - 1]))
 		end--;
 	res = ft_substr(s, start, end - start);
-	ms_free_ptr(s);
+	ft_free_ptr(s);
 	return (res);
 }
 
-/*
-para que liberemos de forma segura y evitar los doble free
-*/
-
-void	*ms_free_ptr(void *ptr)
-{
-	if (ptr)
-	{
-		free(ptr);
-		ptr = NULL;
-	}
-	return (NULL);
-}
 
 /*
 Compara dos strings
@@ -110,17 +97,3 @@ size_t	ft_strcspn(const char *s, const char *reject)
 	return (i);
 }
 
-void	free_triple_array(char ***arr)
-{
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-	{
-		free_array(arr[i]); // Esta función libera un char **
-		i++;
-	}
-	free(arr);
-}

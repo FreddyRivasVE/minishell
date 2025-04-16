@@ -42,10 +42,27 @@ t_list	*ms_copy_export_env(t_list **env)
 				env_list);
 		new_node = ft_lstnew(envread);
 		if (!new_node)
-			return (perror("minishell: molloc"), ms_free_ptr((void *)envread),
+			return (perror("minishell: molloc"), ft_free_ptr((void *)envread),
 				ft_lstclear(&env_list, free), env_list);
 		ft_lstadd_back(&env_list, new_node);
 		current = current->next;
 	}
 	return (env_list);
 }
+
+// void	ft_list_replace(t_list **begin_list, void *data_ref, int (*cmp)())
+// {
+// 	t_list	*cur;
+
+// 	if (!begin_list || !*begin_list)
+// 		return ;
+// 	cur = *begin_list;
+// 	if (cmp(cur->content, data_ref) == 0)
+// 	{
+// 		*begin_list = cur->next;
+// 		ft_lstdelone(cur, free);
+// 		ft_list_remove_if(begin_list, data_ref, cmp);
+// 	}
+// 	else
+// 		ft_list_remove_if(&cur->next, data_ref, cmp);
+// }

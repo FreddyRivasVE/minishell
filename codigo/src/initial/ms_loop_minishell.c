@@ -36,8 +36,8 @@ void	ms_loop_minishell(t_mshell *data)
 		{
 			printf("exit\n");
 			ft_lstclear(&data->env, free);
-			ms_free_ptr((void *)data->prompt);
-			ms_free_ptr((void *)data->input_row);
+			ft_free_ptr((void *)data->prompt);
+			ft_free_ptr((void *)data->input_row);
 			rl_clear_history();
 			break ;
 		}
@@ -45,7 +45,7 @@ void	ms_loop_minishell(t_mshell *data)
 		{
 			add_history(read_line);
 			if (data->input_row)
-				ms_free_ptr((void *)data->input_row);
+				ft_free_ptr((void *)data->input_row);
 			data->input_row = ft_substr(read_line, 0, ft_strlen(read_line));
 			data->exits = ms_input_row_validation(data);
 			if (data->exits != 2)

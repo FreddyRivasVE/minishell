@@ -70,7 +70,7 @@ char	*ms_get_dir(void)
 	if (start >= lenhom)
 	{
 		home = ft_substr(dir, start, (ft_strlen(dir) - start));
-		ms_free_ptr(dir);
+		ft_free_ptr(dir);
 		dir = ft_strjoin("~", home);
 		free(home);
 	}
@@ -90,17 +90,17 @@ void	ms_get_prompt(t_mshell *data)
 		pwdir = ft_strdup("");
 	temp1 = ft_strjoin(GREEN, "minishell@");
 	temp2 = ft_strjoin(temp1, hostn);
-	ms_free_ptr(temp1);
+	ft_free_ptr(temp1);
 	temp1 = ft_strjoin(temp2, ":");
-	ms_free_ptr((void *)temp2);
+	ft_free_ptr((void *)temp2);
 	temp2 = ft_strjoin(temp1, pwdir);
-	ms_free_ptr((void *)temp1);
+	ft_free_ptr((void *)temp1);
 	temp1 = ft_strjoin(temp2, "$ ");
-	ms_free_ptr((void *)temp2);
+	ft_free_ptr((void *)temp2);
 	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
 	if (!data->prompt)
 		data->prompt = MINI_PRONT;
-	ms_free_ptr((void *)temp1);
-	ms_free_ptr((void *)pwdir);
-	ms_free_ptr((void *)hostn);
+	ft_free_ptr((void *)temp1);
+	ft_free_ptr((void *)pwdir);
+	ft_free_ptr((void *)hostn);
 }

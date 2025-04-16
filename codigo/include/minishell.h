@@ -67,7 +67,7 @@ int		ft_isspace(int c);
 size_t	ft_strcspn(const char *s, const char *reject);
 size_t	ft_strspn(const char *s, const char *accept);
 int		ft_strcmp(const char *s1, const char *s2);
-void	*ms_free_ptr(void *ptr);
+void	*ft_free_ptr(void *ptr);
 void	ft_print_array(char **array);
 void	free_triple_array(char ***arr);
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());

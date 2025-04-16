@@ -96,10 +96,10 @@ int	ms_export(char **command, t_mshell *data)
 			return (ft_putendl_fd("export: not an identifier", 2), 2);
 		argument = ft_strdup(command[1]);
 		if (!argument)
-			return (perror("malloc"), 1);
+			return (perror("malloc"), ENOMEM);
 		new_node = ft_lstnew(argument);
 		if (!new_node)
-			return (perror("malloc"), ms_free_ptr((void *)argument), 1);
+			return (perror("malloc"), ft_free_ptr((void *)argument), 1);
 		ft_lstadd_back(&data->env, new_node);
 	}
 	else

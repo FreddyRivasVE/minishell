@@ -42,7 +42,8 @@ PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c \
 
 UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_array.c \
 				$(UTILS_DIR)ft_list_remove_if.c $(UTILS_DIR)ft_split_quotes.c \
-				$(UTILS_DIR)ft_split_pipes.c $(UTILS_DIR)ft_list_extract_if.c
+				$(UTILS_DIR)ft_split_pipes.c $(UTILS_DIR)ft_list_extract_if.c \
+				$(UTILS_DIR)ft_free_memory.c
 
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 

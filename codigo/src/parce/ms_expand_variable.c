@@ -57,7 +57,7 @@ char	*ms_found_word(char *toexpand, t_list **env, int i, char *result)
 	word = ft_substr(toexpand, start, end - start);
 	expand = ft_list_extract_if(env, word, var_cmp);
 	result = ms_found_word_aux(toexpand, i, result, expand);
-	return (free(word), ms_free_ptr(expand), result);
+	return (free(word), ft_free_ptr(expand), result);
 }
 
 
@@ -103,12 +103,12 @@ char	*ms_expand_child(char *str, t_list **env)
 		if (ft_strchr(expandsplit[i], '$'))
 		{
 			found_word = ms_expand_str(expandsplit[i], env);
-			ms_free_ptr(expandsplit[i]);
+			ft_free_ptr(expandsplit[i]);
 			expandsplit[i] = found_word;
 		}
 		temp = result;
 		result = ft_strjoin(temp, expandsplit[i]);
-		ms_free_ptr(temp);
+		ft_free_ptr(temp);
 		i++;
 	}
 	free_array(expandsplit);
@@ -132,7 +132,7 @@ int	ms_expand_variable(t_mshell *data)
 			if (ft_strchr(toexpand[i][j], '$'))
 			{
 				temp = ms_expand_child(toexpand[i][j], &data->env);
-				ms_free_ptr(toexpand[i][j]);
+				ft_free_ptr(toexpand[i][j]);
 				toexpand[i][j] = temp;
 			}
 			j++;
