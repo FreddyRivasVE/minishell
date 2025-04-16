@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_memory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42.fr>            #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-16 12:24:52 by brivera           #+#    #+#             */
-/*   Updated: 2025-04-16 12:24:52 by brivera          ###   ########.fr       */
+/*   Created: 2025/04/16 12:24:52 by brivera           #+#    #+#             */
+/*   Updated: 2025/04/16 16:49:19 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-para que liberemos de forma segura y evitar los doble free
-*/
 
 void	*ft_free_ptr(void *ptr)
 {
@@ -35,7 +31,7 @@ void	free_triple_array(char ***arr)
 		return ;
 	while (arr[i])
 	{
-		free_array(arr[i]); // Esta función libera un char **
+		free_array(arr[i]);
 		i++;
 	}
 	free(arr);

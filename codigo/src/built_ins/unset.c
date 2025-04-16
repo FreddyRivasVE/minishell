@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:47:14 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/09 15:54:47 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 16:52:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ int	ms_unset(t_mshell *data, char **data_ref)
 			if (data_ref[i][0] != '-')
 				ft_list_remove_if(&data->env, data_ref[i], var_cmp);
 			else
-				return (ft_putendl_fd("unset: subject doesn't allow opts.", 2), 2);
+				return (ft_putendl_fd(SUBJECTOPTIONERROR, 2), 2);
 			i++;
 		}
 	}
-	printf("unset\n"); // borrrar al terminar todas las pruebas!!!
 	return (0);
 }

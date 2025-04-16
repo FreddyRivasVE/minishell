@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/09 15:26:14 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 16:47:12 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ms_get_dir(void)
 	if (!dir)
 		dir = ms_get_cwd();
 	if (!dir)
-		return (ft_putendl_fd("minishell-init: error retrieving current directory", 2), NULL);
+		return (ft_putendl_fd(INITDIRWRONG, 2), NULL);
 	lenhom = ft_strlen(home);
 	start = ft_strspn(home, dir);
 	if (start >= lenhom)

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/15 20:19:46 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 16:47:50 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*ms_found_word(char *toexpand, t_list **env, int i, char *result)
 	result = ms_found_word_aux(toexpand, i, result, expand);
 	return (free(word), ft_free_ptr(expand), result);
 }
-
 
 char	*ms_expand_str(char *toexpand, t_list **env)
 {

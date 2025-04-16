@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/11 19:24:23 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/16 15:53:40 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_list	*ms_get_env(char **env)
 		new_node = ft_lstnew(envread);
 		if (!new_node)
 		{
-			perror("Error al crear nodo\n");
+			perror(ERRORCREATENODO);
 			free(envread);
 			ft_lstclear(&env_list, free);
 		}

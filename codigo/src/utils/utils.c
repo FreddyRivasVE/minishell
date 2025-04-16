@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/12 18:45:35 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 16:48:31 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*ft_strtrim_spaces(char *s)
 	ft_free_ptr(s);
 	return (res);
 }
-
 
 /*
 Compara dos strings
@@ -96,4 +95,3 @@ size_t	ft_strcspn(const char *s, const char *reject)
 	}
 	return (i);
 }
-

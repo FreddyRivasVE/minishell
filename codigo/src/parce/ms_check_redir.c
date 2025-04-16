@@ -3,28 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ms_check_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/11 20:09:42 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/16 15:56:25 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-Verifica si el carácter es un operador de redirección
-*/
 static bool	is_redirection_char(char c)
 {
 	return (c == '<' || c == '>');
 }
-
-/*
-Verifica la validez de las redirecciones en un string
-str String a analizar
-return true si las redirecciones son válidas, false si hay errores
-*/
 
 static bool	ms_redir_result(size_t i, size_t flag, bool check_redir, char *str)
 {

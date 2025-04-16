@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/14 17:09:17 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 16:06:03 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,20 @@ char	***ms_split_postpipe(t_mshell *data)
 	return (commands);
 }
 
-int	ms_split_input(t_mshell *data)
+void	ms_split_input(t_mshell *data)
 {
-	int	exit;
-
 	data->inputs = malloc(sizeof(t_input));
 	if (!data->inputs)
-		return (0); 
+		return ;
 	data->inputs->splitpipes = ft_split_pipes(data->input_row);
 	if (!data->inputs->splitpipes)
-		return (0);
-	//ft_print_array(data->inputs->splitpipes); // Borrar mas adelante.
+		return ;
 	data->inputs->splitaftpipes = ms_split_postpipe(data);
-	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.
-	exit = ms_expand_variable(data);
-	printf("\n-----> array luego de expandir:\n");
+	if (!data->inputs->splitaftpipes)
+		return ;
+	ms_expand_variable(data);
+	printf("\n-----> array luego de expandir:\n"); //Borrar mas adelante.
 	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.	
 	free_array(data->inputs->splitpipes);
-	return (1);
+	return ;
 }

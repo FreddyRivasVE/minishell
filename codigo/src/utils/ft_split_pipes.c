@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 18:48:25 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/11 19:35:19 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/16 16:02:24 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Nueva función: Salta hasta encontrar un pipe NO entre comillas
 static size_t	skip_pipe_word(const char *s, size_t i)
 {
 	int	flag_single;
@@ -31,7 +30,6 @@ static size_t	skip_pipe_word(const char *s, size_t i)
 	return (i);
 }
 
-// cuenta palabras separadas por pipes (no por espacios)
 static size_t	ft_count_pipe_words(const char *s)
 {
 	size_t	count;
@@ -54,7 +52,6 @@ static size_t	ft_count_pipe_words(const char *s)
 	return (count);
 }
 
-// Modificada: Rellena el array, dividiendo por pipes (no por espacios)
 static char	**ft_fill_pipe_strs(char const *s, char **strs)
 {
 	size_t	i;
@@ -84,7 +81,6 @@ static char	**ft_fill_pipe_strs(char const *s, char **strs)
 	return (strs);
 }
 
-// Divide por pipes, respetando comillas
 char	**ft_split_pipes(char const *s)
 {
 	size_t	word_count;

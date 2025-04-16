@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/15 19:23:06 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/16 16:49:58 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,13 @@
 # include <sys/stat.h>
 # include "../libs/libft/libft.h"
 # include "../include/ms_struct.h"
+# include "minisherror.h"
 
 # define GREEN			"\001\033[92;1m\002"
 # define CLEAR_COLOR	"\001\033[0m\002"
 # define CYAN			"\033[96;1m"
 
 # define MINI_PRONT          "\001\033[92;1m\002minishell:$ \001\033[0m\002"
-
-/*Este error indica: no hay
-suficiente memoria disponible.*/
-# define ENOMEM 12
 
 /*Es la forma que encontre de poder usar la variable en mac
 la tengo que extraer explicitamente, seguro norminete te salta
@@ -55,7 +52,7 @@ bool	ms_check_pipes(char *str);
 bool	ms_check_redir(char *str);
 int		ms_input_row_validation(t_mshell *data);
 int		ms_exec_builtin_or_other(char ***command, t_mshell *data, int i);
-int		ms_split_input(t_mshell *data);
+void	ms_split_input(t_mshell *data);
 int		ms_exec(t_mshell *data);
 int		ms_expand_variable(t_mshell *data);
 
@@ -78,7 +75,6 @@ char	**ft_split_quotes(char const *s, bool check);
 char	**ft_split_pipes(char const *s);
 char	*ft_strtrim_spaces(char *s);
 char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)());
-
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
