@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_get_prompt.c                                    :+:      :+:    :+:   */
+/*   ms_update_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/19 18:25:12 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/19 18:55:33 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ms_get_host(void)
+char	*ms_update_host(void)
 {
 	char	*res;
 	int		fd;
@@ -40,52 +40,40 @@ char	*ms_get_host(void)
 	return (res);
 }
 
-char	*ms_get_home(void)
-{
-	char	*temp;
-
-	temp = getenv("HOME");
-	if (!temp)
-		return (NULL);
-	return (temp);
-}
-
-char	*ms_get_dir(void)
+char	*ms_update_dir(t_mshell *data)
 {
 	char	*dir;
 	char	*home;
 	int		start;
 	int		lenhom;
+	char	*temp;
 
-	home = ms_get_home();
-	if (!home)
-		return (ms_get_cwd());
-	dir = ft_strdup(getenv("PWD"));
-	if (!dir)
-		dir = ms_get_cwd();
-	if (!dir)
-		return (ft_putendl_fd(INITDIRWRONG, 2), NULL);
+	home = ft_list_extract_if(&data->env, "HOME", var_cmp);
+	dir = ft_list_extract_if(&data->env, "PWD", var_cmp);
+	if (!home || !dir)
+		return (NULL);
 	lenhom = ft_strlen(home);
 	start = ft_strspn(home, dir);
 	if (start >= lenhom)
 	{
-		home = ft_substr(dir, start, (ft_strlen(dir) - start));
+		temp = ft_substr(dir, start, (ft_strlen(dir) - start));
 		ft_free_ptr(dir);
-		dir = ft_strjoin("~", home);
+		dir = ft_strjoin("~", temp);
 		free(home);
+		free(temp);
 	}
 	return (dir);
 }
 
-void	ms_get_prompt(t_mshell *data)
+void	ms_update_prompt(t_mshell *data)
 {
 	char	*hostn;
 	char	*pwdir;
 	char	*temp1;
 	char	*temp2;
 
-	hostn = ms_get_host();
-	pwdir = ms_get_dir();
+	hostn = ms_update_host();
+	pwdir = ms_update_dir(data);
 	if (!pwdir)
 		pwdir = ft_strdup("");
 	temp1 = ft_strjoin(GREEN, "minishell@");
@@ -97,6 +85,7 @@ void	ms_get_prompt(t_mshell *data)
 	ft_free_ptr((void *)temp1);
 	temp1 = ft_strjoin(temp2, "$ ");
 	ft_free_ptr((void *)temp2);
+	free(data->prompt);
 	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
 	if (!data->prompt)
 		data->prompt = MINI_PRONT;

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/19 15:50:00 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/19 19:03:55 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,42 @@ char	*ms_obtain_target(char **command, t_list **env, char *oldpwd)
 	}
 }
 
-int	ms_cd(char	**command, t_list **env)
+void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
+{
+	char	*newoldpwd;
+	char	*pwdupdated;
+
+	if (!oldpwd)
+		ft_list_replace_cont(env, "OLDPWD=", var_cmp);
+	else
+	{
+		newoldpwd = ft_strjoin("OLDPWD=", oldpwd);
+		ft_list_replace_cont(env, newoldpwd, var_cmp);
+	}
+	free(oldpwd);
+	pwdupdated = ft_strjoin("PWD=", newpwd);
+	ft_list_replace_cont(env, pwdupdated, var_cmp);
+	free(newpwd);
+}
+
+int	ms_cd(char	**command, t_list **env, t_mshell *data)
 {
 	char	*oldpwd;
 	char	*target;
+	char	*newpwd;
 
 	oldpwd = ft_list_extract_if(env, "PWD", var_cmp);
 	target = ms_obtain_target(command, env, oldpwd);
-	printf("check cd %s\n", target); // Borrar
-	//if (chdir(target) == -1)
-	//	perror("cd");
-	free(oldpwd);
+	if (chdir(target) != 0)
+	{
+		perror("cd");
+		free(oldpwd);
+		free(target);
+		return (1);
+	}
+	newpwd = ms_get_cwd();
+	ms_update_env_cd(oldpwd, newpwd, env);
 	free(target);
+	ms_update_prompt(data);
 	return (0);
 }

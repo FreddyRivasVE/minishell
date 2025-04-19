@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/19 16:22:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/19 18:12:56 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ms_exec_builtin_or_other(char ***command, t_mshell *data, int i)
 	if (!ft_strncmp(command[i][0], "echo", 5))
 		return (ms_echo(command[i]));
 	else if (!ft_strncmp(command[i][0], "cd", 3))
-		return (ms_cd(command[i], &data->env));
+		return (ms_cd(command[i], &data->env, data));
 	else if (!ft_strncmp(command[i][0], "pwd", 4))
 		return (ms_pwd(command[i]));
 	else if (!ft_strncmp(command[i][0], "export", 7))

@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/19 15:34:59 by frivas           ###   ########.fr        #
+#    Updated: 2025/04/19 18:37:16 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c \
 UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_array.c \
 				$(UTILS_DIR)ft_list_remove_if.c $(UTILS_DIR)ft_split_quotes.c \
 				$(UTILS_DIR)ft_split_pipes.c $(UTILS_DIR)ft_list_extract_if.c \
-				$(UTILS_DIR)ft_free_memory.c $(UTILS_DIR)ft_special_char.c
+				$(UTILS_DIR)ft_free_memory.c $(UTILS_DIR)ft_special_char.c \
+				$(UTILS_DIR)ms_update_prompt.c
 
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 
