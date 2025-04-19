@@ -70,10 +70,10 @@ char	*ms_obtain_target(char **command, t_list **env, char *oldpwd)
 	}
 	else if (ft_strcmp(command[1], "-") == 0)
 	{
-		target = oldpwd;
+		target = ft_strdup(oldpwd);
 		if (!target)
 			return (ft_putendl_fd("cd: OLDPWD not set\n", 2), NULL);
-		printf("%s\n", target);
+		printf("%s\n", target); //borrar
 		return (target);
 	}
 	else
@@ -95,10 +95,10 @@ void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
 		newoldpwd = ft_strjoin("OLDPWD=", oldpwd);
 		ft_list_replace_cont(env, newoldpwd, var_cmp);
 	}
-	free(oldpwd);
+//	free(oldpwd);
 	pwdupdated = ft_strjoin("PWD=", newpwd);
 	ft_list_replace_cont(env, pwdupdated, var_cmp);
-	free(newpwd);
+//	free(newpwd);
 }
 
 int	ms_cd(char	**command, t_list **env, t_mshell *data)
@@ -118,7 +118,9 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 	}
 	newpwd = ms_get_cwd();
 	ms_update_env_cd(oldpwd, newpwd, env);
-	free(target);
+	ft_free_ptr(oldpwd);
+	ft_free_ptr(newpwd);
+	ft_free_ptr(target);
 	ms_update_prompt(data);
 	return (0);
 }

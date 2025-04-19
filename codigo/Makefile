@@ -107,9 +107,9 @@ valgrind:
 		--track-origins=yes \
 		--trace-children=yes \
 		--track-fds=yes \
-		--suppressions=/home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/valgrind.sup \
-		--log-file=/home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe \
-		/home/frivas/entregas/cursus42/viajera/minishell/codigo/$(NAME)
+		--suppressions=valgrind/valgrind.sup \
+		--log-file=valgrind/informe \
+		./$(NAME)
 
 norminette:
 	@norminette $(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS) $(INCLUDE_DIR)
