@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/19 13:10:26 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/19 16:14:12 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ms_exit_minishell(t_mshell *data)
 
 int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 {
-	char	*temp;
+	char	*new_input;
 
 	if (data->input_row)
 		ft_free_ptr((void *)data->input_row);
@@ -41,8 +41,13 @@ int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 	data->exits = ms_input_row_validation(data);
 	if (data->exits != 2)
 	{
-		temp = ft_escape_special_chars(data->input_row); // PARA LOS CASOS QUE NO HAY QUE EXPANDIR
-		printf("%s\n", temp); // BORRAR 
+		if (ft_strchr(data->input_row, '$'))
+		{
+			new_input = ft_escape_special_chars(data->input_row);
+			free(data->input_row);
+			data->input_row = new_input;
+			printf("%s\n", data->input_row); // BORRAR
+		}
 		ms_split_input(data);
 		return (1);
 	}

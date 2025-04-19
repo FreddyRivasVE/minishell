@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
+#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/19 13:06:13 by brivera@stu      ###   ########.fr        #
+#    Updated: 2025/04/19 15:34:59 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,9 +106,9 @@ valgrind:
 		--track-origins=yes \
 		--trace-children=yes \
 		--track-fds=yes \
-		--suppressions=valgrind/valgrind.sup \
-		--log-file=valgrind/informe \
-		./$(NAME)
+		--suppressions=/home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/valgrind.sup \
+		--log-file=/home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe \
+		/home/frivas/entregas/cursus42/viajera/minishell/codigo/$(NAME)
 
 norminette:
 	@norminette $(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS) $(INCLUDE_DIR)

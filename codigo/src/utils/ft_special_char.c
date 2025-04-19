@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_special_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:01:23 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/19 13:07:56 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/19 16:20:02 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	is_special_char(char c)
+static bool	is_special_char(int c)
 {
 	return (c == '$' || c == '!' || c == '_'
 		|| c == '#' || c == '@' || c == '*'
-		|| c == '\0' || c == ' ');
+		|| c == '\0' || c == ' ' || ft_isdigit(c));
 }
 
 static size_t	calculate_required_length(const char *input)
@@ -31,7 +31,10 @@ static size_t	calculate_required_length(const char *input)
 		if (input[i] == '$' && is_special_char(input[i + 1]))
 		{
 			len += 4;
-			i += (input[i + 1] != ' ' && input[i + 1] != '\0') ? 2 : 1;
+			if (input[i + 1] != ' ' && input[i + 1] != '\0')
+				i += 2;
+			else
+				i++;
 			continue ;
 		}
 		len++;

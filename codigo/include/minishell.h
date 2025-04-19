@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/19 12:04:57 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/19 14:46:40 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int		ms_pwd(char **command);
 int		var_cmp(void *data, void *ref);
 int		ms_echo(char **command);
 int		ft_list_replace_cont(t_list **begin_list, void *ref, int (*cmp)());
+int		ms_cd(char	**s_command, t_list **env);
 
 #endif

@@ -6,21 +6,17 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/16 17:51:32 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/19 16:22:29 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_cd(void)
+int	ms_exec_other(char **command, t_list **env)
 {
-	printf("cd\n");
-	return (0);
-}
+	(void)	env;
 
-int	ms_exec_other(void)
-{
-	printf("demas comandos\n");
+	execve("/usr/bin/ls", command, NULL);
 	return (0);
 }
 
@@ -34,7 +30,7 @@ int	ms_exec_builtin_or_other(char ***command, t_mshell *data, int i)
 	if (!ft_strncmp(command[i][0], "echo", 5))
 		return (ms_echo(command[i]));
 	else if (!ft_strncmp(command[i][0], "cd", 3))
-		ms_cd();
+		return (ms_cd(command[i], &data->env));
 	else if (!ft_strncmp(command[i][0], "pwd", 4))
 		return (ms_pwd(command[i]));
 	else if (!ft_strncmp(command[i][0], "export", 7))
@@ -45,7 +41,7 @@ int	ms_exec_builtin_or_other(char ***command, t_mshell *data, int i)
 		return (ms_env(command[i], &data->env));
 	else if (!ft_strncmp(command[i][0], "exit", 5))
 		ms_exit(data);
-	else
-		ms_exec_other();
+	//else
+	//	ms_exec_other(command[i], &data->env);
 	return (0);
 }
