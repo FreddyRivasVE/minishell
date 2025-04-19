@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 16:41:49 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/19 13:10:26 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ void	ms_exit_minishell(t_mshell *data)
 
 int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 {
+	char	*temp;
+
 	if (data->input_row)
 		ft_free_ptr((void *)data->input_row);
 	data->input_row = ft_substr(read_line, 0, ft_strlen(read_line));
 	data->exits = ms_input_row_validation(data);
 	if (data->exits != 2)
 	{
+		temp = ft_escape_special_chars(data->input_row); // PARA LOS CASOS QUE NO HAY QUE EXPANDIR
+		printf("%s\n", temp); // BORRAR 
 		ms_split_input(data);
 		return (1);
 	}

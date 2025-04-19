@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/16 19:20:05 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/19 12:04:57 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	**ft_split_quotes(char const *s, bool check);
 char	**ft_split_pipes(char const *s);
 char	*ft_strtrim_spaces(char *s);
 char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)());
+char	*ft_escape_special_chars(char *input);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
