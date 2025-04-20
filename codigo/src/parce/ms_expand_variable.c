@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 17:21:53 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/20 18:17:19 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ char	*ms_found_word(char *toexpand, t_list **env, int i, char *result)
 		i++;
 	end = i;
 	word = ft_substr(toexpand, start, end - start);
-	expand = ft_list_extract_if(env, word, var_cmp);
+	if (special_char(word[0]))
+		expand = ft_strjoin("$", word);
+	else
+		expand = ft_list_extract_if(env, word, var_cmp);
 	result = ms_found_word_aux(toexpand, i, result, expand);
 	return (free(word), ft_free_ptr(expand), result);
 }

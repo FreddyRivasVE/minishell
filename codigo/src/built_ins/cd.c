@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/19 19:03:55 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/20 14:25:32 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char	*ms_get_cwd(void)
 char	*ms_expand_tilde(char *command, t_list **env)
 {
 	char	*home;
-	size_t	home_len;
-	size_t	suffix_len;
+//	size_t	home_len;
+//	size_t	suffix_len;
 	char	*expanded;
 
 	if (!command || command[0] != '~')
@@ -46,8 +46,8 @@ char	*ms_expand_tilde(char *command, t_list **env)
 		return (home);
 	if (command[1] == '/')
 	{
-		home_len = ft_strlen(home);
-		suffix_len = ft_strlen(command + 1);
+//		home_len = ft_strlen(home);
+//		suffix_len = ft_strlen(command + 1);
 		expanded = ft_strjoin(home, command + 1);
 		free(home);
 		return (expanded);

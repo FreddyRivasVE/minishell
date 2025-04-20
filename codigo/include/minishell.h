@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/19 18:37:38 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/20 18:07:13 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char	*ft_strtrim_spaces(char *s);
 char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)());
 char	*ft_escape_special_chars(char *input);
 void	ms_update_prompt(t_mshell *data);
+bool	special_char(int c);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
