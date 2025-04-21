@@ -3,107 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   export_00.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:41:48 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/16 19:58:58 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:39:42 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	split_list(t_list *head, t_list **left, t_list **right)
+static int	handle_export_args(char **command, t_mshell *data, int *exit_code)
 {
-	t_list	*slow;
-	t_list	*fast;
-
-	slow = head;
-	fast = head->next;
-	while (fast && fast->next)
-	{
-		slow = slow->next;
-		fast = fast->next->next;
-	}
-	*left = head;
-	*right = slow->next;
-	slow->next = NULL;
-}
-
-t_list	*merge_sorted_lists(t_list *a, t_list *b)
-{
-	if (!a)
-		return (b);
-	if (!b)
-		return (a);
-	if (ft_strcmp((char *)a->content, (char *)b->content) <= 0)
-	{
-		a->next = merge_sorted_lists(a->next, b);
-		return (a);
-	}
-	else
-	{
-		b->next = merge_sorted_lists(a, b->next);
-		return (b);
-	}
-}
-
-void	ms_merge_sort(t_list **head)
-{
-	t_list	*left;
-	t_list	*right;
-
-	if (!*head || !(*head)->next)
-		return ;
-	left = NULL;
-	right = NULL;
-	split_list(*head, &left, &right);
-	ms_merge_sort(&left);
-	ms_merge_sort(&right);
-	*head = merge_sorted_lists(left, right);
-}
-//pasos
-// 1. copiar la lista
-// 2. Ordenar la lista con Merge Sort
-// 3. imprimir 
-// 4. limpiar y salir
-
-int	ms_export_print_list(t_list **env)
-{
-	t_list	*copy_env;
-
-	copy_env = ms_copy_export_env(env);
-	if (!copy_env)
-		return (ENOMEM);
-	ms_merge_sort(&copy_env);
-	print_list_sorted(&copy_env);
-	ft_lstclear(&copy_env, free);
-	return (0);
-}
-
-//export sin opciones pero con argumentos
-int	ms_export(char **command, t_mshell *data)
-{
-	t_list	*new_node;
 	char	*argt;
-	int		exit;
+	t_list	*new_node;
+	int		i;
 
-	exit = 0;
-	if (command[1])
+	i = 1;
+	while (command[i])
 	{
-		if (command[1][0] == '-')
-			return (ft_putendl_fd(SUBJECTEXPORTERROR, 2), 2);
-		if (ft_isdigit(command[1][0]))
-			return (ft_putendl_fd(EXPORTNUMBERERROR, 2), 2);
-		argt = ft_strdup(command[1]);
+		if (special_char(command[i][0]))
+		{
+			ft_print_error("export: ", command[i], SPECIALCHAR);
+			*exit_code = 1;
+		}
+		argt = ft_strdup(command[i]);
 		if (!argt)
 			return (perror("malloc"), ENOMEM);
 		if ((ft_list_replace_cont(&data->env, argt, var_cmp)) == 0)
 		{
 			new_node = ft_lstnew(argt);
 			if (!new_node)
-				return (perror("malloc"), ft_free_ptr(argt), 1);
+				return (perror("malloc"), ft_free_ptr(argt), ENOMEM);
 			ft_lstadd_back(&data->env, new_node);
 		}
+		i++;
+	}
+	return (0);
+}
+
+int	ms_export(char **command, t_mshell *data)
+{
+	int	exit;
+	int	result;
+
+	exit = 0;
+	if (command[1])
+	{
+		if (command[1][0] == '-')
+			return (ft_putendl_fd(SUBJECTEXPORTERROR, 2), 2);
+		result = handle_export_args(command, data, &exit);
+		if (result != 0)
+			return (result);
 	}
 	else
 		exit = ms_export_print_list(&data->env);

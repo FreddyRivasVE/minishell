@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_01.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:36:51 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/16 19:57:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 18:57:03 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_list_sorted(t_list **lst)
-{
-	t_list	*current;
-
-	current = *lst;
-	while (current != NULL)
-	{
-		if (current->content != NULL)
-			printf("declare -x %s\n", (char *)current->content);
-		current = current->next;
-	}
-}
 
 t_list	*ms_copy_export_env(t_list **env)
 {
