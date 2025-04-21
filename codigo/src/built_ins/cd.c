@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/20 14:25:32 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/21 15:09:16 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ char	*ms_get_cwd(void)
 char	*ms_expand_tilde(char *command, t_list **env)
 {
 	char	*home;
-//	size_t	home_len;
-//	size_t	suffix_len;
 	char	*expanded;
 
 	if (!command || command[0] != '~')
-		return (command);
+		return (ft_strdup(command));
 	home = ft_list_extract_if(env, "HOME", var_cmp);
 	if (!home)
 		return (ft_putendl_fd("cd: HOME not set\n", 2), NULL);
@@ -46,17 +44,15 @@ char	*ms_expand_tilde(char *command, t_list **env)
 		return (home);
 	if (command[1] == '/')
 	{
-//		home_len = ft_strlen(home);
-//		suffix_len = ft_strlen(command + 1);
 		expanded = ft_strjoin(home, command + 1);
 		free(home);
 		return (expanded);
 	}
 	free(home);
-	return (command);
+	return (ft_strdup(command));
 }
 
-char	*ms_obtain_target(char **command, t_list **env, char *oldpwd)
+char	*ms_obtain_target(char **command, t_list **env)
 {
 	char	*target;
 
@@ -70,7 +66,7 @@ char	*ms_obtain_target(char **command, t_list **env, char *oldpwd)
 	}
 	else if (ft_strcmp(command[1], "-") == 0)
 	{
-		target = ft_strdup(oldpwd);
+		target = ft_list_extract_if(env, "OLDPWD", var_cmp);
 		if (!target)
 			return (ft_putendl_fd("cd: OLDPWD not set\n", 2), NULL);
 		printf("%s\n", target); //borrar
@@ -108,12 +104,12 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 	char	*newpwd;
 
 	oldpwd = ft_list_extract_if(env, "PWD", var_cmp);
-	target = ms_obtain_target(command, env, oldpwd);
+	target = ms_obtain_target(command, env);
 	if (chdir(target) != 0)
 	{
 		perror("cd");
 		free(oldpwd);
-		free(target);
+		ft_free_ptr(target);
 		return (1);
 	}
 	newpwd = ms_get_cwd();
