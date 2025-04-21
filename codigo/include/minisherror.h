@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minisherror.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 18:41:19 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 20:06:49 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 /*Este error indica: no hay suficiente memoria disponible.*/
 # define ENOMEM 12
-# define ERRORCREATENODO  "Error al crear nodo\n"
-# define SUBJECTOPTIONERROR "unset: subject doesn't allow opts."
-# define SUBJECTECHOOPTERROR "echo: subject only allow -n option"
-# define SUBJECTEXPORTERROR "export: subject doesn't options"
-# define EXPORTNUMBERERROR "export: not an identifier"
+# define ERRORCREATENODO  		"Error creating node"
+# define SUBJECTOPTIONERROR 	"unset: subject doesn't allow option"
+# define SUBJECTECHOOPTERROR 	"echo: subject only allow -n option"
+# define SUBJECTEXPORTERROR 	"export: subject doesn't options"
+# define SPECIALCHAR 			": not an identifier"
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/21 16:48:00 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:42:47 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,23 @@ char	*ft_escape_special_chars(char *input);
 void	ms_update_prompt(t_mshell *data);
 bool	special_char(int c);
 size_t	ft_seek_lastc(char *str, char c);
+void	ft_print_error(char *arg, char	*var, char *msj);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
 /*****************************************************************************/
 
-char	*ms_get_cwd(void);
 int		ms_export(char **command, t_mshell *data);
-t_list	*ms_copy_export_env(t_list **env);
-void	print_list_sorted(t_list **lst);
 int		ms_env(char **command, t_list **lst);
 int		ms_exit(t_mshell *data);
 int		ms_unset(t_mshell *data, char **data_ref);
 int		ms_pwd(char **command, t_list **env);
-int		var_cmp(void *data, void *ref);
 int		ms_echo(char **command);
-int		ft_list_replace_cont(t_list **begin_list, void *ref, int (*cmp)());
 int		ms_cd(char	**s_command, t_list **env, t_mshell *data);
+t_list	*ms_copy_export_env(t_list **env);
+int		ms_export_print_list(t_list **env);
+int		ft_list_replace_cont(t_list **begin_list, void *ref, int (*cmp)());
+char	*ms_get_cwd(void);
+int		var_cmp(void *data, void *ref);
 
 #endif
