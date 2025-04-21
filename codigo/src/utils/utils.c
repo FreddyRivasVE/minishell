@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 16:48:31 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 17:13:56 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,20 @@ size_t	ft_strcspn(const char *s, const char *reject)
 		}
 		k = 0;
 		i++;
+	}
+	return (i);
+}
+
+size_t	ft_seek_lastc(char *str, char c)
+{
+	int	i;
+
+	i = ft_strlen(str) - 1;
+	while (str[i] && i >= 0)
+	{
+		if (str[i] == c)
+			return (i);
+		i--;
 	}
 	return (i);
 }

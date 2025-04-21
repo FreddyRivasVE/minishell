@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ms_get_cwd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 14:35:24 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/21 15:36:26 by frivas           ###   ########.fr       */
+/*   Created: 2025/04/21 16:07:50 by frivas            #+#    #+#             */
+/*   Updated: 2025/04/21 16:08:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_pwd(char **command, t_list **env)
+char	*ms_get_cwd(void)
 {
-	char		*pwd;
+	char	*rpwd;
 
-	if (command[1])
+	rpwd = getcwd(NULL, 0);
+	if (!rpwd)
 	{
-		ft_putendl_fd("env: subject doesn't allow arguments or options", 2);
-		return (2);
+		perror("getcwd");
+		return (NULL);
 	}
-	pwd = ft_list_extract_if(env, "PWD", var_cmp);
-	if (!pwd)
-		pwd = ms_get_cwd();
-	if (!pwd)
-	{
-		ft_putendl_fd("pwd: error retrieving current directory", 2);
-		return (1);
-	}
-	printf("%s\n", pwd);
-	free(pwd);
-	return (0);
+	return (rpwd);
 }

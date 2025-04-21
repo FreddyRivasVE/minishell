@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/20 18:07:13 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/21 16:48:00 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)());
 char	*ft_escape_special_chars(char *input);
 void	ms_update_prompt(t_mshell *data);
 bool	special_char(int c);
+size_t	ft_seek_lastc(char *str, char c);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
@@ -90,7 +91,7 @@ void	print_list_sorted(t_list **lst);
 int		ms_env(char **command, t_list **lst);
 int		ms_exit(t_mshell *data);
 int		ms_unset(t_mshell *data, char **data_ref);
-int		ms_pwd(char **command);
+int		ms_pwd(char **command, t_list **env);
 int		var_cmp(void *data, void *ref);
 int		ms_echo(char **command);
 int		ft_list_replace_cont(t_list **begin_list, void *ref, int (*cmp)());

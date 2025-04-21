@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/19 18:12:56 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 17:13:29 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	ms_exec_other(char **command, t_list **env)
 {
-	(void)	env;
-
+	(void) env;
 	execve("/usr/bin/ls", command, NULL);
 	return (0);
 }
@@ -32,7 +31,7 @@ int	ms_exec_builtin_or_other(char ***command, t_mshell *data, int i)
 	else if (!ft_strncmp(command[i][0], "cd", 3))
 		return (ms_cd(command[i], &data->env, data));
 	else if (!ft_strncmp(command[i][0], "pwd", 4))
-		return (ms_pwd(command[i]));
+		return (ms_pwd(command[i], &data->env));
 	else if (!ft_strncmp(command[i][0], "export", 7))
 		return (ms_export(command[i], data));
 	else if (!ft_strncmp(command[i][0], "unset", 6))

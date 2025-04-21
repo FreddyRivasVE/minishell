@@ -6,29 +6,11 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/21 15:09:16 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 17:12:07 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-como saca la shell el error
-getcwd: cannot access parent directories: No such file or directory
-*/
-
-char	*ms_get_cwd(void)
-{
-	char	*rpwd;
-
-	rpwd = getcwd(NULL, 0);
-	if (!rpwd)
-	{
-		perror("getcwd");
-		return (NULL);
-	}
-	return (rpwd);
-}
 
 char	*ms_expand_tilde(char *command, t_list **env)
 {
@@ -97,26 +79,47 @@ void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
 //	free(newpwd);
 }
 
+void	ms_backup_pwd(char *oldpwd, t_list **env)
+{
+	char	*tempwd;
+
+	tempwd = ft_strdup(oldpwd);
+	while (1)
+	{
+		if (access(tempwd, F_OK))
+		{
+			ms_update_env_cd(oldpwd, tempwd, env);
+			break ;
+		}
+		tempwd = ft_substr(tempwd, 0, (ft_strlen(tempwd) \
+		- ft_seek_lastc(tempwd, '/')));
+	}
+}
+
 int	ms_cd(char	**command, t_list **env, t_mshell *data)
 {
 	char	*oldpwd;
 	char	*target;
 	char	*newpwd;
+	bool	flag;
 
+	flag = false;
 	oldpwd = ft_list_extract_if(env, "PWD", var_cmp);
 	target = ms_obtain_target(command, env);
 	if (chdir(target) != 0)
 	{
 		perror("cd");
-		free(oldpwd);
-		ft_free_ptr(target);
-		return (1);
+		return (free(oldpwd), ft_free_ptr(target), 1);
 	}
 	newpwd = ms_get_cwd();
-	ms_update_env_cd(oldpwd, newpwd, env);
-	ft_free_ptr(oldpwd);
-	ft_free_ptr(newpwd);
-	ft_free_ptr(target);
+	if (!newpwd)
+	{
+		if (flag)
+			ms_backup_pwd(oldpwd, env);
+		flag = true;
+	}
+	else
+		ms_update_env_cd(oldpwd, newpwd, env);
 	ms_update_prompt(data);
-	return (0);
+	return (ft_free_ptr(oldpwd), ft_free_ptr(newpwd), ft_free_ptr(target), 0);
 }
