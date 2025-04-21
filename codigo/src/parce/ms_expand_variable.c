@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/21 13:58:54 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/21 20:43:20 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ char	*ms_expand_str(char *toexpand, t_list **env)
 	start = i;
 	while (toexpand[i] != '$')
 		i++;
+	if (ft_isspace(toexpand[i]))
+		i++;
+	if (special_char(toexpand[i]))
+		i = i + 2;
 	end = i;
 	result = ft_substr(toexpand, start, end - start);
 	while (toexpand[i])
