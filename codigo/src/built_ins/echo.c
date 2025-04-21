@@ -6,31 +6,40 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:40:04 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 18:32:49 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 23:23:57 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ms_is_n_flag(char *str)
+{
+	int	i;
+	
+	if (str[0] != '-' || str[1] != 'n')
+		return (0);
+	i = 2;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ms_echo(char **command)
 {
 	int	i;
+	int	newline;
 
 	i = 1;
-	if (command[i][0] != '-')
+	newline = 1;
+	while (command[i] && ms_is_n_flag(command[i]))
 	{
-		while (command[i])
-		{
-			printf("%s", command[i]);
-			if (command[i + 1])
-				printf (" ");
-			i++;
-		}
-		return (printf("\n"), 0);
+		newline = 0;
+		i++;
 	}
-	else if (ft_strncmp(command[i], "-n", ft_strlen(command[i])))
-		return (ft_putendl_fd(SUBJECTECHOOPTERROR, 2), 2);
-	i = 2;
 	while (command[i])
 	{
 		printf("%s", command[i]);
@@ -38,5 +47,7 @@ int	ms_echo(char **command)
 			printf (" ");
 		i++;
 	}
+	if (newline)
+		printf("\n");
 	return (0);
 }
