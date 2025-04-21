@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
+#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/21 16:53:22 by frivas           ###   ########.fr        #
+#    Updated: 2025/04/21 19:44:26 by brivera@stu      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ UTILS_DIR := src/utils/
 SOURCES		:=	$(SOURCES_DIR)main.c
 BUILT		:=	$(BUILT_INS_DIR)cd.c $(BUILT_INS_DIR)env.c \
 				$(BUILT_INS_DIR)export_00.c $(BUILT_INS_DIR)export_01.c \
+				$(BUILT_INS_DIR)export_02.c \
 				$(BUILT_INS_DIR)unset.c $(BUILT_INS_DIR)exit.c \
 				$(BUILT_INS_DIR)pwd.c $(BUILT_INS_DIR)echo.c
 EXECUTION	:=	$(EXECUTION_DIR)ms_execution.c
@@ -44,7 +45,8 @@ UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_arra
 				$(UTILS_DIR)ft_list_remove_if.c $(UTILS_DIR)ft_split_quotes.c \
 				$(UTILS_DIR)ft_split_pipes.c $(UTILS_DIR)ft_list_extract_if.c \
 				$(UTILS_DIR)ft_free_memory.c $(UTILS_DIR)ft_special_char.c \
-				$(UTILS_DIR)ms_update_prompt.c $(UTILS_DIR)ms_get_cwd.c
+				$(UTILS_DIR)ms_update_prompt.c $(UTILS_DIR)ms_get_cwd.c \
+				$(UTILS_DIR)ft_print_error.c
 
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 
