@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/20 18:23:28 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/21 14:00:47 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 			new_input = ft_escape_special_chars(data->input_row);
 			free(data->input_row);
 			data->input_row = new_input;
-			printf("%s\n", data->input_row); // BORRAR
 		}
 		ms_split_input(data);
 		return (1);
