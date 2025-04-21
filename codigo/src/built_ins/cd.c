@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/21 17:12:07 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/21 18:34:21 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 		if (flag)
 			ms_backup_pwd(oldpwd, env);
 		flag = true;
+		ft_putendl_fd("cd: error retrieving current directory:", 2);
 	}
 	else
 		ms_update_env_cd(oldpwd, newpwd, env);
