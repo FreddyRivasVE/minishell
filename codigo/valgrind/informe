@@ -1,39 +1,29 @@
-==1268977== Memcheck, a memory error detector
-==1268977== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1268977== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1268977== Command: ./minishell
-==1268977== Parent PID: 1268975
-==1268977== 
-==1268977== 
-==1268977== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==1268977== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==1268977==    <inherited from parent>
-==1268977== 
-==1268977== 
-==1268977== HEAP SUMMARY:
-==1268977==     in use at exit: 208,237 bytes in 221 blocks
-==1268977==   total heap usage: 744 allocs, 523 frees, 242,260 bytes allocated
-==1268977== 
-==1268977== 70 bytes in 1 blocks are definitely lost in loss record 13 of 62
-==1268977==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1268977==    by 0x405D93: ft_strjoin (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
-==1268977==    by 0x401653: ms_update_env_cd (cd.c:73)
-==1268977==    by 0x401821: ms_cd (cd.c:123)
-==1268977==    by 0x402569: ms_exec_builtin_or_other (ms_execution.c:32)
-==1268977==    by 0x402E02: ms_exec (ms_loop_minishell.c:19)
-==1268977==    by 0x403004: ms_loop_minishell (ms_loop_minishell.c:77)
-==1268977==    by 0x40137B: main (main.c:37)
-==1268977== 
-==1268977== LEAK SUMMARY:
-==1268977==    definitely lost: 70 bytes in 1 blocks
-==1268977==    indirectly lost: 0 bytes in 0 blocks
-==1268977==      possibly lost: 0 bytes in 0 blocks
-==1268977==    still reachable: 0 bytes in 0 blocks
-==1268977==         suppressed: 208,167 bytes in 220 blocks
-==1268977== 
-==1268977== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
---1268977-- 
---1268977-- used_suppression:     60 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,151 bytes in 219 blocks
---1268977-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
-==1268977== 
-==1268977== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==1272849== Memcheck, a memory error detector
+==1272849== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1272849== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1272849== Command: ./minishell
+==1272849== Parent PID: 1272847
+==1272849== 
+==1272849== 
+==1272849== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==1272849== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
+==1272849==    <inherited from parent>
+==1272849== 
+==1272849== 
+==1272849== HEAP SUMMARY:
+==1272849==     in use at exit: 208,324 bytes in 222 blocks
+==1272849==   total heap usage: 851 allocs, 629 frees, 240,793 bytes allocated
+==1272849== 
+==1272849== LEAK SUMMARY:
+==1272849==    definitely lost: 0 bytes in 0 blocks
+==1272849==    indirectly lost: 0 bytes in 0 blocks
+==1272849==      possibly lost: 0 bytes in 0 blocks
+==1272849==    still reachable: 0 bytes in 0 blocks
+==1272849==         suppressed: 208,324 bytes in 222 blocks
+==1272849== 
+==1272849== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--1272849-- 
+--1272849-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,308 bytes in 221 blocks
+--1272849-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
+==1272849== 
+==1272849== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

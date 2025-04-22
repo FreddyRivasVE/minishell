@@ -12,21 +12,21 @@
 
 #include "minishell.h"
 
-static int	handle_export_args(char **command, t_mshell *data, int *exit_code)
+static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
 {
 	char	*argt;
 	t_list	*new_node;
-	int		i;
 
-	i = 1;
-	while (command[i])
+	while (command[*i])
 	{
-		if (special_char(command[i][0]))
+		if (special_char(command[*i][0]))
 		{
-			ft_print_error("export: ", command[i], SPECIALCHAR);
+			ft_print_error("export: ", command[*i], SPECIALCHAR);
 			*exit_code = 1;
+			(*i)++;
+			continue ;
 		}
-		argt = ft_strdup(command[i]);
+		argt = ft_strdup(command[*i]);
 		if (!argt)
 			return (perror("malloc"), ENOMEM);
 		if ((ft_list_replace_cont(&data->env, argt, var_cmp)) == 0)
@@ -36,7 +36,7 @@ static int	handle_export_args(char **command, t_mshell *data, int *exit_code)
 				return (perror("malloc"), ft_free_ptr(argt), ENOMEM);
 			ft_lstadd_back(&data->env, new_node);
 		}
-		i++;
+		(*i)++;
 	}
 	return (0);
 }
@@ -45,13 +45,15 @@ int	ms_export(char **command, t_mshell *data)
 {
 	int	exit;
 	int	result;
+	int i;
 
 	exit = 0;
-	if (command[1])
+	i = 1;
+	if (command[i])
 	{
-		if (command[1][0] == '-')
+		if (command[i][0] == '-')
 			return (ft_putendl_fd(SUBJECTEXPORTERROR, 2), 2);
-		result = handle_export_args(command, data, &exit);
+		result = export_args(command, data, &exit, &i);
 		if (result != 0)
 			return (result);
 	}
