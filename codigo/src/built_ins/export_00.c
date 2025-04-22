@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_00.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:41:48 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/21 19:39:42 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/22 23:38:51 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ms_export(char **command, t_mshell *data)
 {
 	int	exit;
 	int	result;
-	int i;
+	int	i;
 
 	exit = 0;
 	i = 1;

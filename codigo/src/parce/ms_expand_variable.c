@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/22 21:12:34 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/22 23:32:22 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_list **env)
 
 char	*ms_expand_str(char *toexpand, t_list **env)
 {
-	int		start;
+	//int		start;
 	//int		end;
 	char	*result;
 	int		i;
@@ -118,7 +118,7 @@ char	*ms_expand_str(char *toexpand, t_list **env)
 		return (ft_substr(toexpand, 1, (ft_strlen(toexpand) - 2)));
 	if (toexpand[i] == '\"')
 		i++;
-	start = i;
+	//start = i;
 	// while (toexpand[i] != '$')
 	// 	i++;
 	// end = i;

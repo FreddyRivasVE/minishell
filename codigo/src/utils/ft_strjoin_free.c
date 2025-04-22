@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:27:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/22 14:28:05 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/22 23:40:39 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*joined;
-	
+
 	if (!s1 || !s2)
 		return (NULL);
 	joined = ft_strjoin(s1, s2);
