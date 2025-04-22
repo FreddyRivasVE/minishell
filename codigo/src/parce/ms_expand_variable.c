@@ -6,43 +6,11 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/22 23:32:22 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/23 00:09:53 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*char	*ms_found_word_aux(char *toexpand, int i, char *result, char *expand)
-{
-	char	*strtemp;
-	char	*word;
-	int		start;
-	int		end;
-
-	strtemp = NULL;
-	if (expand)
-	{
-		strtemp = ft_strjoin(result, expand);
-		free(result);
-		result = ft_strdup(strtemp);
-		printf("%s\n", result); // borrar
-		free(strtemp);
-	}
-	
-	if (toexpand[i] && toexpand[i] != '\"' && toexpand[i] != '$')
-	{
-		start = i;
-		printf("%d\n", i); // borrar
-		while (toexpand[i] != '\"' && toexpand[i] != '$' && toexpand[i])
-			i++;
-		end = i;
-		word = ft_substr(toexpand, start, end - start);
-		strtemp = ft_strjoin(result, word);
-		free(result);
-		return (free(word), strtemp);
-	}
-	return (result);
-}*/
 
 char	*ms_found_word(char *toexpand, t_list **env, int *i, char *result)
 {
@@ -108,8 +76,6 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_list **env)
 
 char	*ms_expand_str(char *toexpand, t_list **env)
 {
-	//int		start;
-	//int		end;
 	char	*result;
 	int		i;
 
@@ -118,19 +84,12 @@ char	*ms_expand_str(char *toexpand, t_list **env)
 		return (ft_substr(toexpand, 1, (ft_strlen(toexpand) - 2)));
 	if (toexpand[i] == '\"')
 		i++;
-	//start = i;
-	// while (toexpand[i] != '$')
-	// 	i++;
-	// end = i;
-	// printf ("----> primer star: %d,y primer end:%d\n", start, end);
-	// result = ft_substr(toexpand, start, end - start);
-	// start = i;
 	result = ft_calloc(1, sizeof(char));
 	while (toexpand[i])
 	{
 		if (ft_isspace(toexpand[i]))
 		{
-			//result = ft_strjoin_free(result, ft_substr(toexpand, i, 1));
+			//result = ft_strjoin_free(result, ft_substr(toexpand, i, 1)); se debe eliminar el if ft_isspace?
 			printf("result espacio: %sR\n", result); //borrar
 		}
 		printf("%d\n", i); //borrar
