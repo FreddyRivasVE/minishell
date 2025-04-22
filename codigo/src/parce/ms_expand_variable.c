@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/21 20:43:20 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/22 21:12:34 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ms_found_word_aux(char *toexpand, int i, char *result, char *expand)
+/*char	*ms_found_word_aux(char *toexpand, int i, char *result, char *expand)
 {
 	char	*strtemp;
 	char	*word;
@@ -25,11 +25,14 @@ char	*ms_found_word_aux(char *toexpand, int i, char *result, char *expand)
 		strtemp = ft_strjoin(result, expand);
 		free(result);
 		result = ft_strdup(strtemp);
+		printf("%s\n", result); // borrar
 		free(strtemp);
 	}
+	
 	if (toexpand[i] && toexpand[i] != '\"' && toexpand[i] != '$')
 	{
 		start = i;
+		printf("%d\n", i); // borrar
 		while (toexpand[i] != '\"' && toexpand[i] != '$' && toexpand[i])
 			i++;
 		end = i;
@@ -39,31 +42,74 @@ char	*ms_found_word_aux(char *toexpand, int i, char *result, char *expand)
 		return (free(word), strtemp);
 	}
 	return (result);
-}
+}*/
 
-char	*ms_found_word(char *toexpand, t_list **env, int i, char *result)
+char	*ms_found_word(char *toexpand, t_list **env, int *i, char *result)
 {
 	int		start;
 	int		end;
 	char	*word;
 	char	*expand;
 
-	i++;
-	start = i;
-	while (toexpand[i] != '$' && toexpand [i] != '\"'
-		&& !(ft_isspace(toexpand[i])) && toexpand[i] && toexpand[i] != '\'')
-		i++;
-	end = i;
+	(*i)++;
+	start = *i;
+	while (toexpand[*i] != '$' && toexpand [*i] != '\"'
+		&& !(ft_isspace(toexpand[*i])) && toexpand[*i] && toexpand[*i] != '\'')
+		(*i)++;
+	end = *i;
 	word = ft_substr(toexpand, start, end - start);
 	expand = ft_list_extract_if(env, word, var_cmp);
-	result = ms_found_word_aux(toexpand, i, result, expand);
-	return (free(word), ft_free_ptr(expand), result);
+	printf("%d\n", *i); // borrar
+	if (expand)
+		result = ft_strjoin_free(result, expand);
+	(*i)--;
+	return (free(word), result);
+}
+
+char	*ms_router_expand(char *toexpand, int *i, char *result, t_list **env)
+{
+	int		start;
+	int		end;
+	char	*temp;
+
+	end = *i;
+	printf("quien es toexpand [i]: %c\n", toexpand [*i]); //borrar
+	start = *i;
+	if (toexpand[*i + 1] == '\"')
+	{
+		(*i)++;
+		end = (*i);
+		temp = ft_substr(toexpand, start, end - start);
+		result = ft_strjoin_free(result, temp);
+		return (result);
+	}
+	else if (toexpand[*i] == '$')
+	{
+		if (special_char(toexpand[*i + 1]))
+		{
+			(*i)++;
+			end = (*i + 1);
+			temp = ft_substr(toexpand, start, end - start);
+			result = ft_strjoin_free(result, temp);
+			printf("agregados a result: %s\n", result); //borrar
+			*i = end - 1;
+			printf("devuelve %d\n", *i); //borrar
+			return (result);
+		}
+		else if (ft_isspace(toexpand[*i + 1]))
+			result = ft_strjoin_free(result, ft_substr(toexpand, *i, 1));
+		else
+			result = ms_found_word(toexpand, env, i, result);
+	}
+	else if (toexpand[*i] != '\"')
+		result = ft_strjoin_free(result, ft_substr(toexpand, *i, 1));
+	return (result);
 }
 
 char	*ms_expand_str(char *toexpand, t_list **env)
 {
 	int		start;
-	int		end;
+	//int		end;
 	char	*result;
 	int		i;
 
@@ -73,19 +119,24 @@ char	*ms_expand_str(char *toexpand, t_list **env)
 	if (toexpand[i] == '\"')
 		i++;
 	start = i;
-	while (toexpand[i] != '$')
-		i++;
-	if (ft_isspace(toexpand[i]))
-		i++;
-	if (special_char(toexpand[i]))
-		i = i + 2;
-	end = i;
-	result = ft_substr(toexpand, start, end - start);
+	// while (toexpand[i] != '$')
+	// 	i++;
+	// end = i;
+	// printf ("----> primer star: %d,y primer end:%d\n", start, end);
+	// result = ft_substr(toexpand, start, end - start);
+	// start = i;
+	result = ft_calloc(1, sizeof(char));
 	while (toexpand[i])
 	{
-		if (toexpand[i] == '$')
-			result = ms_found_word(toexpand, env, i, result);
+		if (ft_isspace(toexpand[i]))
+		{
+			//result = ft_strjoin_free(result, ft_substr(toexpand, i, 1));
+			printf("result espacio: %sR\n", result); //borrar
+		}
+		printf("%d\n", i); //borrar
+		result = ms_router_expand(toexpand, &i, result, env);
 		i++;
+		printf("ronda completa\n");
 	}
 	return (result);
 }

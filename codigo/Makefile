@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
+#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/21 19:44:26 by brivera@stu      ###   ########.fr        #
+#    Updated: 2025/04/22 16:32:20 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_arra
 				$(UTILS_DIR)ft_split_pipes.c $(UTILS_DIR)ft_list_extract_if.c \
 				$(UTILS_DIR)ft_free_memory.c $(UTILS_DIR)ft_special_char.c \
 				$(UTILS_DIR)ms_update_prompt.c $(UTILS_DIR)ms_get_cwd.c \
-				$(UTILS_DIR)ft_print_error.c
+				$(UTILS_DIR)ft_print_error.c $(UTILS_DIR)ft_strjoin_free.c
 
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 

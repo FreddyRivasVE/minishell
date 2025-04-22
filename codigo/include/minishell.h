@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/21 19:42:47 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/22 16:31:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ms_update_prompt(t_mshell *data);
 bool	special_char(int c);
 size_t	ft_seek_lastc(char *str, char c);
 void	ft_print_error(char *arg, char	*var, char *msj);
+char	*ft_strjoin_free(char *s1, char *s2);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */

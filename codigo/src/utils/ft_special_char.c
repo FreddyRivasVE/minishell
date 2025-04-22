@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_special_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:01:23 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/20 18:02:50 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/22 19:40:54 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 bool	special_char(int c)
 {
-	return (c == '$' || c == '!' || c == '_'
-		|| c == '#' || c == '@' || c == '*'
-		|| c == '\0' || c == ' ' || ft_isdigit(c));
+	return (c == '$' || c == '!' || c == '_' || c == '#' || c == '@'
+		|| c == '*' || c == '\0' || ft_isdigit(c) || c == '(' || c == ')'
+		|| c == '{' || c == '}');
 }
 
 static size_t	calculate_new_len(char *input, bool squote, bool dquote)
