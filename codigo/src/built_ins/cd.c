@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/21 18:34:21 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/24 00:04:47 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ms_obtain_target(char **command, t_list **env)
 		target = ft_list_extract_if(env, "OLDPWD", var_cmp);
 		if (!target)
 			return (ft_putendl_fd("cd: OLDPWD not set\n", 2), NULL);
-		printf("%s\n", target); //borrar
+		printf("%s\n", target);
 		return (target);
 	}
 	else
@@ -73,10 +73,8 @@ void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
 		newoldpwd = ft_strjoin("OLDPWD=", oldpwd);
 		ft_list_replace_cont(env, newoldpwd, var_cmp);
 	}
-//	free(oldpwd);
 	pwdupdated = ft_strjoin("PWD=", newpwd);
 	ft_list_replace_cont(env, pwdupdated, var_cmp);
-//	free(newpwd);
 }
 
 void	ms_backup_pwd(char *oldpwd, t_list **env)
