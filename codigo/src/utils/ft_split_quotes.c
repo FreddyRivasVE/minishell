@@ -28,7 +28,10 @@ static size_t	skip_word(const char *s, size_t i, bool check)
 			if (!flag_single && !flag_double)
 			{
 				if (s[i] == '"' || s[i] == '\'')
+				{
+					i++;
 					break ;
+				}
 			}
 		}
 		else
@@ -76,9 +79,10 @@ static char	**ft_fill_strs(char const *s, char **strs, bool check)
 		if (!s[i])
 			break ;
 		start = i;
-		end = skip_word(s, i, check);
-		if (check == true && s[end])
-			end++;
+		end = skip_word(s, i, check); 
+		printf("i en relleno: %zu\n", end); //borrar
+		//if (check == true && s[end])
+			//end++;
 		strs[j] = ft_strtrim_spaces(ft_substr(s, start, end - start));
 		if (!strs[j])
 			return (free_array(strs));

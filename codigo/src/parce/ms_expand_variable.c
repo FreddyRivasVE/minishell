@@ -43,7 +43,7 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_list **env)
 	end = *i;
 	printf("quien es toexpand [i]: %c\n", toexpand [*i]); //borrar
 	start = *i;
-	if (toexpand[*i + 1] == '\"')
+	if (toexpand[*i + 1] == '\0')
 	{
 		(*i)++;
 		end = (*i);
@@ -69,7 +69,7 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_list **env)
 		else
 			result = ms_found_word(toexpand, env, i, result);
 	}
-	else if (toexpand[*i] != '\"')
+	else if (toexpand[*i] != '\0')
 		result = ft_strjoin_free(result, ft_substr(toexpand, *i, 1));
 	return (result);
 }
@@ -81,9 +81,14 @@ char	*ms_expand_str(char *toexpand, t_list **env)
 
 	i = 0;
 	if (toexpand[i] == '\'')
-		return (ft_substr(toexpand, 1, (ft_strlen(toexpand) - 2)));
-	if (toexpand[i] == '\"')
-		i++;
+	{
+		result = ft_strdup(toexpand);
+		printf("test brenda: %s\n", result);
+		return (result);
+		//return (ft_substr(toexpand, 1, (ft_strlen(toexpand) - 2)));
+	}
+	//if (toexpand[i] == '\"')
+	//	i++;
 	result = ft_calloc(1, sizeof(char));
 	while (toexpand[i])
 	{
@@ -109,6 +114,7 @@ char	*ms_expand_child(char *str, t_list **env)
 	char	*result;
 
 	expandsplit = ft_split_quotes(str, true);
+	ft_print_array(expandsplit); //borrar
 	result = ft_calloc(1, sizeof(char));
 	i = 0;
 	while (expandsplit[i])
@@ -137,6 +143,7 @@ int	ms_expand_variable(t_mshell *data)
 
 	i = 0;
 	toexpand = data->inputs->splitaftpipes;
+	ft_print_array_triple(toexpand); // BORRAR
 	while (toexpand[i])
 	{
 		j = 0;
