@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:07:42 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/14 19:05:20 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:05:20 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ static size_t	skip_word(const char *s, size_t i, bool check)
 			if (!flag_single && !flag_double)
 			{
 				if (s[i] == '"' || s[i] == '\'')
-				{
-					i++;
-					break ;
-				}
+					return (i++);
 			}
 		}
 		else
@@ -79,10 +76,7 @@ static char	**ft_fill_strs(char const *s, char **strs, bool check)
 		if (!s[i])
 			break ;
 		start = i;
-		end = skip_word(s, i, check); 
-		printf("i en relleno: %zu\n", end); //borrar
-		//if (check == true && s[end])
-			//end++;
+		end = skip_word(s, i, check);
 		strs[j] = ft_strtrim_spaces(ft_substr(s, start, end - start));
 		if (!strs[j])
 			return (free_array(strs));
