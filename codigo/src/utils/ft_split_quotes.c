@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:07:42 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/23 16:05:20 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/23 20:10:27 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ static size_t	skip_word(const char *s, size_t i, bool check)
 	{
 		flag_single = toggle_simples(s[i], flag_single, flag_double);
 		flag_double = toggle_doubles(s[i], flag_single, flag_double);
-		if (check == true)
+		if (check == true && !flag_single && !flag_double)
 		{
-			if (!flag_single && !flag_double)
-			{
-				if (s[i] == '"' || s[i] == '\'')
-					return (i++);
-			}
+			if (s[i] == '\"' || s[i] == '\'' || s[i + 1] == '\''
+				|| s[i + 1] == '\"')
+				return (i + 1);
 		}
 		else
 		{
@@ -76,14 +74,19 @@ static char	**ft_fill_strs(char const *s, char **strs, bool check)
 		if (!s[i])
 			break ;
 		start = i;
+		printf("entra start: %zu\n", start); //borrar
 		end = skip_word(s, i, check);
+		printf("entra: %zu\n", end); //borrar
 		strs[j] = ft_strtrim_spaces(ft_substr(s, start, end - start));
 		if (!strs[j])
 			return (free_array(strs));
 		j++;
 		i = end;
+		printf("sale: %zu\n", i); //borrar
 	}
 	strs[j] = NULL;
+	printf("splitcode2"); //borrar
+	ft_print_array(strs); //borrar
 	return (strs);
 }
 

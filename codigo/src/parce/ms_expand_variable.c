@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/23 16:38:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/23 17:24:49 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ms_found_word(char *toexpand, t_list **env, int *i, char *result)
 	return (free(word), result);
 }
 
-char	*ms_router_expand(char *toexpand, int *i, char *result, t_list **env)
+char	*ms_router_expand(char *toexpand, int *i, char *result, t_mshell *data)
 {
 	int		start;
 	int		end;
@@ -45,6 +45,8 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_list **env)
 		ft_substr(toexpand, start, ++end - start)));
 	if (toexpand[*i] == '$')
 	{
+		if (toexpand[*i + 1] == '?')
+			return ((*i)++, ft_strjoin_free(result, ft_itoa(data->exits)));
 		if (special_char(toexpand[*i + 1]))
 		{
 			(*i)++;
@@ -55,12 +57,12 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_list **env)
 		if (ft_isspace(toexpand[*i + 1]) || toexpand[*i + 1] == '\"'
 			|| (toexpand[*i + 1] == '\'' && toexpand[0] == '\"'))
 			return (ft_strjoin_free(result, ft_substr(toexpand, *i, 1)));
-		return (ms_found_word(toexpand, env, i, result));
+		return (ms_found_word(toexpand, &data->env, i, result));
 	}
 	return (ft_strjoin_free(result, ft_substr(toexpand, *i, 1)));
 }
 
-char	*ms_expand_str(char *toexpand, t_list **env)
+char	*ms_expand_str(char *toexpand, t_mshell *data)
 {
 	char	*result;
 	int		i;
@@ -76,13 +78,13 @@ char	*ms_expand_str(char *toexpand, t_list **env)
 		return (NULL);
 	while (toexpand[i])
 	{
-		result = ms_router_expand(toexpand, &i, result, env);
+		result = ms_router_expand(toexpand, &i, result, data);
 		i++;
 	}
 	return (result);
 }
 
-char	*ms_expand_child(char *str, t_list **env)
+char	*ms_expand_child(char *str, t_mshell *data)
 {
 	char	**expandsplit;
 	int		i;
@@ -99,7 +101,7 @@ char	*ms_expand_child(char *str, t_list **env)
 	{
 		if (ft_strchr(expandsplit[i], '$'))
 		{
-			found_word = ms_expand_str(expandsplit[i], env);
+			found_word = ms_expand_str(expandsplit[i], data);
 			ft_free_ptr(expandsplit[i]);
 			expandsplit[i] = found_word;
 		}
@@ -111,7 +113,7 @@ char	*ms_expand_child(char *str, t_list **env)
 	return (free_array(expandsplit), result);
 }
 
-int	ms_expand_variable(t_mshell *data)
+void	ms_expand_variable(t_mshell *data)
 {
 	int		i;
 	int		j;
@@ -127,7 +129,7 @@ int	ms_expand_variable(t_mshell *data)
 		{
 			if (ft_strchr(toexpand[i][j], '$'))
 			{
-				temp = ms_expand_child(toexpand[i][j], &data->env);
+				temp = ms_expand_child(toexpand[i][j], data);
 				ft_free_ptr(toexpand[i][j]);
 				toexpand[i][j] = temp;
 			}
@@ -135,5 +137,4 @@ int	ms_expand_variable(t_mshell *data)
 		}
 		i++;
 	}
-	return (0);
 }

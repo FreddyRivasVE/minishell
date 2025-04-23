@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/22 16:32:20 by frivas           ###   ########.fr        #
+#    Updated: 2025/04/23 18:24:44 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
 PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c \
 				$(PARCE_DIR)ms_check_quotation_marks.c \
 				$(PARCE_DIR)ms_check_pipes.c $(PARCE_DIR)ms_check_redir.c \
-				$(PARCE_DIR)ms_split_input.c $(PARCE_DIR)ms_expand_variable.c
+				$(PARCE_DIR)ms_split_input.c $(PARCE_DIR)ms_expand_variable.c \
+				$(PARCE_DIR)ms_quotes_killer.c
 
 UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_array.c \
 				$(UTILS_DIR)ft_list_remove_if.c $(UTILS_DIR)ft_split_quotes.c \

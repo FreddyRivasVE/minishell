@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/22 16:31:44 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/23 18:25:10 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int		ms_input_row_validation(t_mshell *data);
 int		ms_exec_builtin_or_other(char ***command, t_mshell *data, int i);
 void	ms_split_input(t_mshell *data);
 int		ms_exec(t_mshell *data);
-int		ms_expand_variable(t_mshell *data);
+void	ms_expand_variable(t_mshell *data);
+void	ms_quotes_killer(char ***inputs);
 
 /*****************************************************************************/
 /*                                utils	                            		 */
