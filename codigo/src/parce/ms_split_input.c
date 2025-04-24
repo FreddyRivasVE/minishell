@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/24 14:44:46 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/24 18:46:40 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void	ms_split_input(t_mshell *data)
 	data->inputs = malloc(sizeof(t_input));
 	if (!data->inputs)
 		return ;
+	data->commands = malloc(sizeof(t_command));
+	if (!data->commands)
+		return ;
 	data->inputs->splitpipes = ft_split_pipes(data->input_row);
 	if (!data->inputs->splitpipes)
 		return ;
@@ -51,8 +54,9 @@ void	ms_split_input(t_mshell *data)
 	ms_expand_variable(data);
 	ms_quotes_killer(data->inputs->splitaftpipes);
 	printf("-----> array luego de expandir:\n"); //Borrar mas adelante.
-	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.	
+	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.
 	ms_pre_commands(data);
+	printf("type: %s name: %s\n", data->commands->redir.type, data->commands->redir.namefile); //borrar
 	free_array(data->inputs->splitpipes);
 	return ;
 }

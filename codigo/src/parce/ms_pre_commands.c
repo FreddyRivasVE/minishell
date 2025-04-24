@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:45:33 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/24 17:11:58 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/24 19:22:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ms_pre_commands(t_mshell *data)
 
 	inputs = data->inputs->splitaftpipes;
 	redir = &data->commands->redir;
-	redir = malloc(sizeof(t_redir));
 	i = 0;
 	while (inputs[i])
 	{
@@ -29,23 +28,32 @@ void	ms_pre_commands(t_mshell *data)
 		redir->namefile = NULL;
 		while (inputs[i][j])
 		{
-			if (!ft_strcmp(inputs[i][j], "<") || !ft_strcmp(inputs[i][j], ">")
-				|| !ft_strcmp(inputs[i][j], "<<")
-					|| !ft_strcmp(inputs[i][j], ">>"))
+			if (inputs[i][j][0] == '<' || inputs[i][j][0] == '>'
+				|| (inputs[i][j][0] == '<' && inputs[i][j][1] == '<')
+					|| (inputs[i][j][0] == '>' && inputs[i][j][1] == '>'))
 			{
 				ft_free_ptr(redir->namefile);
 				redir->namefile = ft_strdup(inputs[i][j + 1]);
-				if (!ft_strcmp(inputs[i][j], "<"))
+				if (inputs[i][j][0] == '<')
+				{
 					redir->type = "INPUT";
-				else if (!ft_strcmp(inputs[i][j], ">"))
+					if (access(redir->namefile, R_OK) == -1)
+						break ;
+				}
+				else if (inputs[i][j][0] == '>')
+				{
 					redir->type = "OUTPUT";
-				else if (!ft_strcmp(inputs[i][j], "<<"))
+					if (access(redir->namefile, F_OK | W_OK) == -1)
+						return ;
+				}
+				else if (inputs[i][j][0] == '<' && inputs[i][j][1] == '<')
 					redir->type = "HEREDOC";
-				else if (!ft_strcmp(inputs[i][j], ">>"))
+				else if (inputs[i][j][0] == '>' && inputs[i][j][1] == '>')
+				{
 					redir->type = "OUTPUTAPPEND";
-				printf("type: %s name: %s\n", redir->type, redir->namefile);
-				if (access(redir->namefile, F_OK | R_OK | W_OK | X_OK) == -1)
-					return ;	
+					if (access(redir->namefile, F_OK | W_OK | R_OK) == -1)
+						return ;
+				}
 			}
 			j++;
 		}
