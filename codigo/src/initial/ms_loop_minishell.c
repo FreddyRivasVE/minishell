@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 10:40:07 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 11:57:40 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ms_exec(t_mshell *data)
 	exit = ms_exec_builtin_or_other(data->inputs->splitaftpipes, data, 0);
 	free_triple_array(data->inputs->splitaftpipes);
 	free(data->inputs);
+	free(data->commands->redir.namefile);
+	free(data->commands);
 	return (exit);
 }
 
