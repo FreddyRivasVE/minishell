@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 12:02:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 12:28:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ void	ms_split_input(t_mshell *data)
 	ms_quotes_killer(data->inputs->splitaftpipes);
 	printf("-----> array luego de expandir:\n"); //Borrar mas adelante.
 	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.
-	ms_pre_commands(data);
+	ms_pre_redir(data);
 	printf("type: %s name: %s\n", data->commands->redir.type, data->commands->redir.namefile); //borrar
 	free_array(data->inputs->splitpipes);
-	
 	return ;
 }

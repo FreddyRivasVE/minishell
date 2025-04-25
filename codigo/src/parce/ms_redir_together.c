@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:24 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 11:37:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 12:27:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ms_newlen_str(char *str)
 	int		i;
 	int		j;
 	char	*res;
-		
+
 	i = 0;
 	j = 0;
 	while (str[i])
