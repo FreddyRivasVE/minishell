@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/25 17:19:04 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/25 18:19:31 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ size_t	ft_strspn(const char *s, const char *accept);
 bool	ft_special_char(int c);
 bool	toggle_doubles(char c, bool check_simples, bool check_doubles);
 bool	toggle_simples(char c, bool check_simples, bool check_doubles);
+bool	ft_isredirection_char(char c);
 char	**ft_split_pipes(char const *s);
 char	**ft_split_quotes(char const *s, bool check);
 char	*ft_strjoin_free(char *s1, char *s2);

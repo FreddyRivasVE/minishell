@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_check_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 15:56:25 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 18:16:31 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	is_redirection_char(char c)
+bool	ft_isredirection_char(char c)
 {
 	return (c == '<' || c == '>');
 }
@@ -21,12 +21,12 @@ static bool	ms_redir_result(size_t i, size_t flag, bool check_redir, char *str)
 {
 	while (str[i])
 	{
-		if (is_redirection_char(str[i]))
+		if (ft_isredirection_char(str[i]))
 		{
 			flag++;
 			check_redir = false;
 		}
-		if (ft_isascii(str[i]) && !is_redirection_char(str[i]) && (flag < 3))
+		if (ft_isascii(str[i]) && !ft_isredirection_char(str[i]) && (flag < 3))
 		{
 			check_redir = true;
 			flag = 0;
