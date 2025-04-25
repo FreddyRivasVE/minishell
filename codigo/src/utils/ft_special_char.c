@@ -6,18 +6,11 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:01:23 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/25 17:36:14 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/25 20:22:50 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	ft_special_char(int c)
-{
-	return (c == '$' || c == '!' || c == '_' || c == '#' || c == '@'
-		|| c == '*' || c == '\0' || ft_isdigit(c) || c == '(' || c == ')'
-		|| c == '{' || c == '}' || c == '~');
-}
 
 static size_t	calculate_new_len(char *input, bool squote, bool dquote)
 {
@@ -68,7 +61,7 @@ static char	*reserve_memory(char *input, bool squote, bool dquote)
 	return (output);
 }
 
-char	*ms_escape_special_chars(char *str)
+char	*ms_escape_special_chars(char *input)
 {
 	char	*output;
 	size_t	i;
@@ -78,21 +71,21 @@ char	*ms_escape_special_chars(char *str)
 
 	squote = false;
 	dquote = false;
-	output = reserve_memory(str, squote, dquote);
+	output = reserve_memory(input, squote, dquote);
 	if (!output)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (str[i])
+	while (input[i])
 	{
-		squote = toggle_simples(str[i], squote, dquote);
-		dquote = toggle_doubles(str[i], squote, dquote);
-		if (str[i] == '$' && !squote && !dquote && ft_special_char(str[i + 1]))
+		squote = toggle_simples(input[i], squote, dquote);
+		dquote = toggle_doubles(input[i], squote, dquote);
+		if (input[i] == '$' && !squote && !dquote && ft_special_char(input[i + 1]))
 		{
-			escape_aux(&output, &j, &str, &i);
+			escape_aux(&output, &j, &input, &i);
 			continue ;
 		}
-		output[j++] = str[i++];
+		output[j++] = input[i++];
 	}
 	return (output);
 }

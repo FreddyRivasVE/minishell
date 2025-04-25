@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 18:20:12 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/25 20:25:26 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int	ms_exec(t_mshell *data)
 	exit = ms_exec_builtin_or_other(data->inputs->splitaftpipes, data, 0);
 	free_triple_array(data->inputs->splitaftpipes);
 	free(data->inputs);
-	free(data->commands->redir.namefile);
-	free(data->commands);
+	if (data->commands->redir.namefile)
+		free(data->commands->redir.namefile);
+	if (data->commands)
+		free(data->commands);
 	return (exit);
 }
 
@@ -49,6 +51,11 @@ int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 			new_input = ms_escape_special_chars(data->input_row);
 			free(data->input_row);
 			data->input_row = new_input;
+			if (ft_strnstr(data->input_row, "$'", \
+				ft_strlen(data->input_row)) != NULL)
+			{
+				printf ("hay un caso de $\' \n"); //borrar
+			}
 		}
 		if (ft_strchr(data->input_row, '<') || ft_strchr(data->input_row, '>'))
 		{

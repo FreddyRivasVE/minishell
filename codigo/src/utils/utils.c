@@ -6,33 +6,17 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 17:30:16 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/25 19:30:44 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-funcion para limpiar espacios en los extremos
-*/
-
-char	*ft_strtrim_spaces(char *s)
+bool	ft_special_char(int c)
 {
-	size_t	start;
-	size_t	end;
-	char	*res;
-
-	if (!s)
-		return (NULL);
-	start = 0;
-	end = ft_strlen(s);
-	while (s[start] && ft_isspace(s[start]))
-		start++;
-	while (end > start && ft_isspace(s[end - 1]))
-		end--;
-	res = ft_substr(s, start, end - start);
-	ft_free_ptr((void **)&s);
-	return (res);
+	return (c == '!' || c == '#' || c == '@' || c == '*' || c == '\0'
+		|| ft_isdigit(c) || c == '(' || c == ')' || c == '{'
+		|| c == '}' || c == '~' || c == '\'' || c == '"');
 }
 
 /*
