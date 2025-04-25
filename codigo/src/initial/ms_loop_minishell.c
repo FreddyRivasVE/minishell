@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/24 19:51:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 10:40:07 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 		if (ft_strchr(data->input_row, '$'))
 		{
 			new_input = ft_escape_special_chars(data->input_row);
+			free(data->input_row);
+			data->input_row = new_input;
+		}
+		if (ft_strchr(data->input_row, '<') || ft_strchr(data->input_row, '>'))
+		{
+			new_input = ms_redir_together(data->input_row);
 			free(data->input_row);
 			data->input_row = new_input;
 		}

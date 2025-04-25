@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/21 17:13:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 11:44:36 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ms_exec_other(char **command, t_list **env)
 {
 	(void) env;
-	execve("/usr/bin/ls", command, NULL);
+	execve("/usr/bin/cat", command, NULL);
 	return (0);
 }
 
