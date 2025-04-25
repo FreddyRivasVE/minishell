@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 11:57:40 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:28:39 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ms_exit_minishell(t_mshell *data)
 {
 	printf("exit\n");
 	ft_lstclear(&data->env, free);
-	ft_free_ptr((void *)data->prompt);
-	ft_free_ptr((void *)data->input_row);
+	ft_free_ptr((void **)&data->prompt);
+	ft_free_ptr((void **)&data->input_row);
 	rl_clear_history();
 }
 
@@ -39,14 +39,14 @@ int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 	int		door;
 
 	if (data->input_row)
-		ft_free_ptr((void *)data->input_row);
+		ft_free_ptr((void **)&data->input_row);
 	data->input_row = ft_substr(read_line, 0, ft_strlen(read_line));
 	door = ms_input_row_validation(data);
 	if (door == 0)
 	{
 		if (ft_strchr(data->input_row, '$'))
 		{
-			new_input = ft_escape_special_chars(data->input_row);
+			new_input = ms_escape_special_chars(data->input_row);
 			free(data->input_row);
 			data->input_row = new_input;
 		}

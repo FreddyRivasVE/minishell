@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pre_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:34:03 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 15:27:11 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 16:36:04 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ms_num_commands(t_mshell *data)
 				j++;
 			}
 		}
-		i++;	
+		i++;
 	}
 	return (ncommand);
 }
@@ -47,8 +47,10 @@ void	ms_pre_commands(t_mshell *data)
 	int		j;
 	int		k;
 	char	***inputs;
+
 	data->commands->command = ft_calloc(ms_num_commands(data) + 1, sizeof(char *));
 	if (!data->commands->command)
+		return ;
 	inputs = data->inputs->splitaftpipes;
 	i = 0;
 	while (inputs[i])

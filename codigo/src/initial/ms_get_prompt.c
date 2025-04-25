@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/19 18:25:12 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:07:37 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ms_get_host(void)
+static char	*ms_get_host(void)
 {
 	char	*res;
 	int		fd;
@@ -40,7 +40,7 @@ char	*ms_get_host(void)
 	return (res);
 }
 
-char	*ms_get_home(void)
+static char	*ms_get_home(void)
 {
 	char	*temp;
 
@@ -70,7 +70,7 @@ char	*ms_get_dir(void)
 	if (start >= lenhom)
 	{
 		home = ft_substr(dir, start, (ft_strlen(dir) - start));
-		ft_free_ptr(dir);
+		free(dir);
 		dir = ft_strjoin("~", home);
 		free(home);
 	}
@@ -90,17 +90,17 @@ void	ms_get_prompt(t_mshell *data)
 		pwdir = ft_strdup("");
 	temp1 = ft_strjoin(GREEN, "minishell@");
 	temp2 = ft_strjoin(temp1, hostn);
-	ft_free_ptr(temp1);
+	ft_free_ptr((void **)&temp1);
 	temp1 = ft_strjoin(temp2, ":");
-	ft_free_ptr((void *)temp2);
+	ft_free_ptr((void **)&temp2);
 	temp2 = ft_strjoin(temp1, pwdir);
-	ft_free_ptr((void *)temp1);
+	ft_free_ptr((void **)&temp1);
 	temp1 = ft_strjoin(temp2, "$ ");
-	ft_free_ptr((void *)temp2);
+	ft_free_ptr((void **)&temp2);
 	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
 	if (!data->prompt)
-		data->prompt = MINI_PRONT;
-	ft_free_ptr((void *)temp1);
-	ft_free_ptr((void *)pwdir);
-	ft_free_ptr((void *)hostn);
+		data->prompt = ft_strdup(MINI_PRONT);
+	ft_free_ptr((void **)&temp1);
+	ft_free_ptr((void **)&pwdir);
+	ft_free_ptr((void **)&hostn);
 }

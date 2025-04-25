@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:33:49 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/21 17:13:56 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:30:16 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strtrim_spaces(char *s)
 	while (end > start && ft_isspace(s[end - 1]))
 		end--;
 	res = ft_substr(s, start, end - start);
-	ft_free_ptr(s);
+	ft_free_ptr((void **)&s);
 	return (res);
 }
 

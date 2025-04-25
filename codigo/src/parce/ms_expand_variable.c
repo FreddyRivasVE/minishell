@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/23 17:24:49 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:28:06 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_mshell *data)
 	{
 		if (toexpand[*i + 1] == '?')
 			return ((*i)++, ft_strjoin_free(result, ft_itoa(data->exits)));
-		if (special_char(toexpand[*i + 1]))
+		if (ft_special_char(toexpand[*i + 1]))
 		{
 			(*i)++;
 			end = *i + 1;
@@ -102,12 +102,12 @@ char	*ms_expand_child(char *str, t_mshell *data)
 		if (ft_strchr(expandsplit[i], '$'))
 		{
 			found_word = ms_expand_str(expandsplit[i], data);
-			ft_free_ptr(expandsplit[i]);
+			ft_free_ptr((void **)&expandsplit[i]);
 			expandsplit[i] = found_word;
 		}
 		temp = result;
 		result = ft_strjoin(temp, expandsplit[i]);
-		ft_free_ptr(temp);
+		ft_free_ptr((void **)&temp);
 		i++;
 	}
 	return (free_array(expandsplit), result);
@@ -130,7 +130,7 @@ void	ms_expand_variable(t_mshell *data)
 			if (ft_strchr(toexpand[i][j], '$'))
 			{
 				temp = ms_expand_child(toexpand[i][j], data);
-				ft_free_ptr(toexpand[i][j]);
+				ft_free_ptr((void **)&toexpand[i][j]);
 				toexpand[i][j] = temp;
 			}
 			j++;

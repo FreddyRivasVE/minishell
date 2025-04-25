@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/24 00:04:47 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:37:54 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,7 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 	oldpwd = ft_list_extract_if(env, "PWD", var_cmp);
 	target = ms_obtain_target(command, env);
 	if (chdir(target) != 0)
-	{
-		perror("cd");
-		return (free(oldpwd), ft_free_ptr(target), 1);
-	}
+		return (perror("cd"), free(oldpwd), ft_free_ptr((void **)&target), 1);
 	newpwd = ms_get_cwd();
 	if (!newpwd)
 	{
@@ -120,5 +117,6 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 	else
 		ms_update_env_cd(oldpwd, newpwd, env);
 	ms_update_prompt(data);
-	return (ft_free_ptr(oldpwd), ft_free_ptr(newpwd), ft_free_ptr(target), 0);
+	return (ft_free_ptr((void **)&oldpwd), ft_free_ptr((void **)&newpwd), \
+	ft_free_ptr((void **)&target), 0);
 }

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 15:53:40 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 16:48:38 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_get_ttyinfo(t_mshell *data)
+static void	ms_get_ttyinfo(t_mshell *data)
 {
 	if (isatty(STDIN_FILENO))
 		tcgetattr(STDIN_FILENO, &data->conftty);
 }
 
-char	*ft_getnstr(char *str, char *c)
+static char	*ft_getnstr(char *str, char *c)
 {
 	char	*nstr;
 	int		len;
@@ -30,7 +30,7 @@ char	*ft_getnstr(char *str, char *c)
 	return (nstr);
 }
 
-char	*ms_get_env_line(char	*env)
+static char	*ms_get_env_line(char	*env)
 {
 	char	*env_line;
 	char	*level;
@@ -48,7 +48,7 @@ char	*ms_get_env_line(char	*env)
 		if (level[0] == '-')
 		{
 			free(level);
-			level = ft_strjoin("0", "");
+			level = ft_strdup("0");
 		}
 		env_line = ft_strjoin("SHLVL=", level);
 		free(level);
@@ -58,7 +58,7 @@ char	*ms_get_env_line(char	*env)
 	return (env_line);
 }
 
-t_list	*ms_get_env(char **env)
+static t_list	*ms_get_env(char **env)
 {
 	int		i;
 	char	*envread;

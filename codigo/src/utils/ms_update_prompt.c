@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_update_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/19 18:55:33 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:33:06 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ms_update_dir(t_mshell *data)
 	if (start >= lenhom)
 	{
 		temp = ft_substr(dir, start, (ft_strlen(dir) - start));
-		ft_free_ptr(dir);
+		ft_free_ptr((void **)&dir);
 		dir = ft_strjoin("~", temp);
 		free(home);
 		free(temp);
@@ -78,18 +78,18 @@ void	ms_update_prompt(t_mshell *data)
 		pwdir = ft_strdup("");
 	temp1 = ft_strjoin(GREEN, "minishell@");
 	temp2 = ft_strjoin(temp1, hostn);
-	ft_free_ptr(temp1);
+	ft_free_ptr((void **)&temp1);
 	temp1 = ft_strjoin(temp2, ":");
-	ft_free_ptr((void *)temp2);
+	ft_free_ptr((void **)&temp2);
 	temp2 = ft_strjoin(temp1, pwdir);
-	ft_free_ptr((void *)temp1);
+	ft_free_ptr((void **)&temp1);
 	temp1 = ft_strjoin(temp2, "$ ");
-	ft_free_ptr((void *)temp2);
+	ft_free_ptr((void **)&temp2);
 	free(data->prompt);
 	data->prompt = ft_strjoin(temp1, CLEAR_COLOR);
 	if (!data->prompt)
 		data->prompt = MINI_PRONT;
-	ft_free_ptr((void *)temp1);
-	ft_free_ptr((void *)pwdir);
-	ft_free_ptr((void *)hostn);
+	ft_free_ptr((void **)&temp1);
+	ft_free_ptr((void **)&pwdir);
+	ft_free_ptr((void **)&hostn);
 }

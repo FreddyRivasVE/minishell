@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_pre_commands.c                                  :+:      :+:    :+:   */
+/*   ms_pre_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:45:33 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 12:27:42 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:29:27 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ms_process_redir_token(t_redir *redir, char **inputs, int j)
 {
 	if (!inputs[j + 1])
 		return (-1);
-	ft_free_ptr(redir->namefile);
+	ft_free_ptr((void **)&redir->namefile);
 	redir->namefile = ft_strdup(inputs[j + 1]);
 	ms_set_redir_type(redir, inputs[j]);
 	if (ms_check_redir_access(redir) == -1)

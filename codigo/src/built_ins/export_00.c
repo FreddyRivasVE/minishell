@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_00.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:41:48 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/22 23:38:51 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:25:07 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
 {
-	char	*argt;
+	char	*arg;
 	t_list	*new_node;
 
 	while (command[*i])
 	{
-		if (special_char(command[*i][0]))
+		if (ft_special_char(command[*i][0]))
 		{
 			ft_print_error("export: ", command[*i], SPECIALCHAR);
 			*exit_code = 1;
 			(*i)++;
 			continue ;
 		}
-		argt = ft_strdup(command[*i]);
-		if (!argt)
+		arg = ft_strdup(command[*i]);
+		if (!arg)
 			return (perror("malloc"), ENOMEM);
-		if ((ft_list_replace_cont(&data->env, argt, var_cmp)) == 0)
+		if ((ft_list_replace_cont(&data->env, arg, var_cmp)) == 0)
 		{
-			new_node = ft_lstnew(argt);
+			new_node = ft_lstnew(arg);
 			if (!new_node)
-				return (perror("malloc"), ft_free_ptr(argt), ENOMEM);
+				return (perror("malloc"), ft_free_ptr((void **)&arg), ENOMEM);
 			ft_lstadd_back(&data->env, new_node);
 		}
 		(*i)++;

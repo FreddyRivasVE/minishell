@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:47:14 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/21 20:05:10 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/25 16:40:42 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ms_unset(t_mshell *data, char **data_ref)
 			return (ft_putendl_fd(SUBJECTOPTIONERROR, 2), 2);
 		while (data_ref[i])
 		{
-			if (special_char(data_ref[i][0]))
+			if (ft_special_char(data_ref[i][0]))
 			{
 				ft_print_error("unset: ", data_ref[i], SPECIALCHAR);
 				exit = 1;

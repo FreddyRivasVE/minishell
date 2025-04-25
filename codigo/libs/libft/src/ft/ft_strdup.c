@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com      +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:15:39 by brivera           #+#    #+#             */
-/*   Updated: 2024/09/28 11:36:49 by brivera          ###   ########.fr       */
+/*   Updated: 2025/04/25 17:00:43 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *str)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str);
-	ps = malloc(len + 1);
+	ps = ft_calloc(len + 1, sizeof(char));
 	if (ps == NULL)
 		return (NULL);
 	i = 0;
