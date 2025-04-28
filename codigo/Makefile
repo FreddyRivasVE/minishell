@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
+#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/04/25 16:43:42 by brivera@stu      ###   ########.fr        #
+#    Updated: 2025/04/28 14:24:09 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c \
 				$(PARCE_DIR)ms_check_pipes.c $(PARCE_DIR)ms_check_redir.c \
 				$(PARCE_DIR)ms_split_input.c $(PARCE_DIR)ms_expand_variable.c \
 				$(PARCE_DIR)ms_quotes_killer.c $(PARCE_DIR)ms_pre_redir.c \
-				$(PARCE_DIR)ms_redir_together.c $(PARCE_DIR)ms_pre_commands.c
+				$(PARCE_DIR)ms_redir_together.c $(PARCE_DIR)ms_pre_commands.c \
+				$(PARCE_DIR)ms_token_input.c
 
 UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_array.c \
 				$(UTILS_DIR)ft_list_remove_if.c $(UTILS_DIR)ft_split_quotes.c \

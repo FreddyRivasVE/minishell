@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_split_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 19:38:19 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/28 17:47:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	***ms_split_postpipe(t_mshell *data)
 		i++;
 	}
 	commands[i] = NULL;
+	data->pipesnum = i - 1;
 	return (commands);
 }
 
@@ -53,12 +54,13 @@ void	ms_split_input(t_mshell *data)
 		return ;
 	ms_expand_variable(data);
 	ms_quotes_killer(data->inputs->splitaftpipes);
-	printf("-----> array luego de expandir:\n"); //Borrar mas adelante.
-	ft_print_array_triple(data->inputs->splitaftpipes); // Borrar mas adelante.
-	ms_pre_redir(data);
+	printf("luego de expandir ----->\n"); // borrar.
+	ft_print_array_triple(data->inputs->splitaftpipes); //borrar.
+	ms_token_input(data);
+	ft_print_array(data->inputs->tag); //borrar.
+	//ms_pre_redir(data);
+	//ft_print_array(data->inputs->tag); //borrar.
 	ms_pre_commands(data);
-	printf("type: %s name: %s\n", data->commands->redir.type, data->commands->redir.namefile); //borrar
-	ft_print_array(data->commands->command); // Borrar
 	free_array(data->inputs->splitpipes);
 	return ;
 }

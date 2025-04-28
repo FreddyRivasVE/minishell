@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/25 18:19:31 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/28 15:15:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ms_pre_redir(t_mshell *data);
 void	ms_quotes_killer(char ***inputs);
 char	*ms_redir_together(char *str);
 void	ms_split_input(t_mshell *data);
+void	ms_token_input(t_mshell *data);
 
 /*****************************************************************************/
 /*                                utils	                            		 */

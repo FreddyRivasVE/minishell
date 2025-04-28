@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/24 15:16:39 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/28 14:22:21 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_input
 {
 	char	**splitpipes;
 	char	***splitaftpipes;
+	char	**tag;
 }	t_input;
 
 typedef struct s_mshell
@@ -53,5 +54,6 @@ typedef struct s_mshell
 	int			exits;
 	t_input		*inputs;
 	char		*prompt;
+	int			pipesnum;
 }	t_mshell;
 #endif

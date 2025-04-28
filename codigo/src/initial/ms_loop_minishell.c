@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 20:25:26 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/28 16:58:19 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	ms_exec(t_mshell *data)
 	exit = ms_exec_builtin_or_other(data->inputs->splitaftpipes, data, 0);
 	free_triple_array(data->inputs->splitaftpipes);
 	free(data->inputs);
-	if (data->commands->redir.namefile)
-		free(data->commands->redir.namefile);
 	if (data->commands)
 		free(data->commands);
 	return (exit);

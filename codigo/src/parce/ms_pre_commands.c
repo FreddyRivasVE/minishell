@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pre_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:34:03 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 16:36:04 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/28 11:56:34 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	ms_num_commands(t_mshell *data)
 		{
 			if (inputs[i][j][0] == '<' || inputs[i][j][0] == '>')
 				j = j + 2;
-			
 			else
 			{
 				ncommand++;
@@ -68,6 +67,6 @@ void	ms_pre_commands(t_mshell *data)
 				k++;
 			}
 		}
-		i++;	
+		i++;
 	}
 }

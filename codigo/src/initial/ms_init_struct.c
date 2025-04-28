@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 16:48:38 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/28 14:06:16 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	ms_init_struct(t_mshell *data, char **env)
 	data->exits = 0;
 	data->inputs = 0;
 	data->env = 0;
+	data->pipesnum = 0;
 	mini_env = ms_get_env(env);
 	if (!mini_env)
 		ft_lstclear(&mini_env, free);
