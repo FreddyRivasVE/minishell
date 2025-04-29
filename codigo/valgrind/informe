@@ -1,117 +1,57 @@
-==203385== Memcheck, a memory error detector
-==203385== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==203385== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==203385== Command: ./minishell
-==203385== Parent PID: 203383
-==203385== 
-==203385== Invalid read of size 8
-==203385==    at 0x4049C0: ms_num_commands (ms_pre_commands.c:28)
-==203385==    by 0x404A64: ms_pre_commands (ms_pre_commands.c:50)
-==203385==    by 0x403ACE: ms_split_input (ms_split_input.c:63)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385==  Address 0x4b67ea0 is 0 bytes after a block of size 32 alloc'd
-==203385==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==203385==    by 0x406DF4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
-==203385==    by 0x405592: ft_split_quotes (ft_split_quotes.c:96)
-==203385==    by 0x40392D: ms_split_postpipe (ms_split_input.c:31)
-==203385==    by 0x403A48: ms_split_input (ms_split_input.c:52)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385== 
-==203385== Invalid read of size 8
-==203385==    at 0x404AE4: ms_pre_commands (ms_pre_commands.c:59)
-==203385==    by 0x403ACE: ms_split_input (ms_split_input.c:63)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385==  Address 0x4b67ea0 is 0 bytes after a block of size 32 alloc'd
-==203385==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==203385==    by 0x406DF4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
-==203385==    by 0x405592: ft_split_quotes (ft_split_quotes.c:96)
-==203385==    by 0x40392D: ms_split_postpipe (ms_split_input.c:31)
-==203385==    by 0x403A48: ms_split_input (ms_split_input.c:52)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385== 
-==203385== 
-==203385== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==203385== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==203385==    <inherited from parent>
-==203385== 
-==203385== 
-==203385== HEAP SUMMARY:
-==203385==     in use at exit: 208,366 bytes in 224 blocks
-==203385==   total heap usage: 604 allocs, 380 frees, 235,470 bytes allocated
-==203385== 
-==203385== 8 bytes in 1 blocks are definitely lost in loss record 3 of 65
-==203385==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==203385==    by 0x406DF4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
-==203385==    by 0x404A74: ms_pre_commands (ms_pre_commands.c:50)
-==203385==    by 0x403ACE: ms_split_input (ms_split_input.c:63)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385== 
-==203385== 32 bytes in 1 blocks are definitely lost in loss record 12 of 65
-==203385==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==203385==    by 0x406DF4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
-==203385==    by 0x404C54: ms_token_input (ms_token_input.c:65)
-==203385==    by 0x403AB4: ms_split_input (ms_split_input.c:59)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385== 
-==203385== LEAK SUMMARY:
-==203385==    definitely lost: 40 bytes in 2 blocks
-==203385==    indirectly lost: 0 bytes in 0 blocks
-==203385==      possibly lost: 0 bytes in 0 blocks
-==203385==    still reachable: 0 bytes in 0 blocks
-==203385==         suppressed: 208,326 bytes in 222 blocks
-==203385== 
-==203385== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
-==203385== 
-==203385== 1 errors in context 1 of 4:
-==203385== Invalid read of size 8
-==203385==    at 0x404AE4: ms_pre_commands (ms_pre_commands.c:59)
-==203385==    by 0x403ACE: ms_split_input (ms_split_input.c:63)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385==  Address 0x4b67ea0 is 0 bytes after a block of size 32 alloc'd
-==203385==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==203385==    by 0x406DF4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
-==203385==    by 0x405592: ft_split_quotes (ft_split_quotes.c:96)
-==203385==    by 0x40392D: ms_split_postpipe (ms_split_input.c:31)
-==203385==    by 0x403A48: ms_split_input (ms_split_input.c:52)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385== 
-==203385== 
-==203385== 1 errors in context 2 of 4:
-==203385== Invalid read of size 8
-==203385==    at 0x4049C0: ms_num_commands (ms_pre_commands.c:28)
-==203385==    by 0x404A64: ms_pre_commands (ms_pre_commands.c:50)
-==203385==    by 0x403ACE: ms_split_input (ms_split_input.c:63)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385==  Address 0x4b67ea0 is 0 bytes after a block of size 32 alloc'd
-==203385==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==203385==    by 0x406DF4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
-==203385==    by 0x405592: ft_split_quotes (ft_split_quotes.c:96)
-==203385==    by 0x40392D: ms_split_postpipe (ms_split_input.c:31)
-==203385==    by 0x403A48: ms_split_input (ms_split_input.c:52)
-==203385==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
-==203385==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
-==203385==    by 0x40137B: main (main.c:37)
-==203385== 
---203385-- 
---203385-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,310 bytes in 221 blocks
---203385-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
-==203385== 
-==203385== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==123765== Memcheck, a memory error detector
+==123765== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==123765== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==123765== Command: ./minishell
+==123765== Parent PID: 123763
+==123765== 
+==123765== 
+==123765== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==123765== Open file descriptor 3: /home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe
+==123765==    <inherited from parent>
+==123765== 
+==123765== 
+==123765== HEAP SUMMARY:
+==123765==     in use at exit: 208,416 bytes in 226 blocks
+==123765==   total heap usage: 643 allocs, 417 frees, 235,802 bytes allocated
+==123765== 
+==123765== 9 bytes in 2 blocks are indirectly lost in loss record 3 of 66
+==123765==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==123765==    by 0x406EB4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
+==123765==    by 0x406F42: ft_strdup (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
+==123765==    by 0x404B55: ms_pre_commands (ms_pre_commands.c:65)
+==123765==    by 0x403ACE: ms_split_input (ms_split_input.c:63)
+==123765==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
+==123765==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
+==123765==    by 0x40137B: main (main.c:37)
+==123765== 
+==123765== 33 (24 direct, 9 indirect) bytes in 1 blocks are definitely lost in loss record 12 of 66
+==123765==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==123765==    by 0x406EB4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
+==123765==    by 0x404A74: ms_pre_commands (ms_pre_commands.c:50)
+==123765==    by 0x403ACE: ms_split_input (ms_split_input.c:63)
+==123765==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
+==123765==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
+==123765==    by 0x40137B: main (main.c:37)
+==123765== 
+==123765== 72 bytes in 1 blocks are definitely lost in loss record 16 of 66
+==123765==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==123765==    by 0x406EB4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
+==123765==    by 0x404C54: ms_token_input (ms_token_input.c:75)
+==123765==    by 0x403AB4: ms_split_input (ms_split_input.c:59)
+==123765==    by 0x40305B: ms_parcetoken_mini (ms_loop_minishell.c:64)
+==123765==    by 0x4030F4: ms_loop_minishell (ms_loop_minishell.c:87)
+==123765==    by 0x40137B: main (main.c:37)
+==123765== 
+==123765== LEAK SUMMARY:
+==123765==    definitely lost: 96 bytes in 2 blocks
+==123765==    indirectly lost: 9 bytes in 2 blocks
+==123765==      possibly lost: 0 bytes in 0 blocks
+==123765==    still reachable: 0 bytes in 0 blocks
+==123765==         suppressed: 208,311 bytes in 222 blocks
+==123765== 
+==123765== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+--123765-- 
+--123765-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,295 bytes in 221 blocks
+--123765-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
+==123765== 
+==123765== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
