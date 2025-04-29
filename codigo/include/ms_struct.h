@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/28 14:22:21 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:01:39 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,16 @@
 
 typedef struct termios	t_term;
 
-typedef struct s_redir
+/*typedef struct s_pipe
+{
+}	t_pipe;
+*/
+typedef struct s_command
 {
 	char	*namefile;
 	int		fd;
 	char	*type;
-}	t_redir;
-
-typedef struct s_pipe
-{
-}	t_pipe;
-
-typedef struct s_command
-{
-	t_redir		redir;
-	char		**command;
+	char	**command;
 }	t_command;
 
 // typedef struct s_exit
@@ -49,7 +44,7 @@ typedef struct s_mshell
 	t_list		*env;
 	t_term		conftty;
 	char		*input_row;
-	t_pipe		*pipes;
+	//t_pipe		*pipes;
 	t_command	*commands;
 	int			exits;
 	t_input		*inputs;

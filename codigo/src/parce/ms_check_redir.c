@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_check_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 18:16:31 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/29 15:14:25 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ms_ignored_quotes(char *str, int i)
 {
 	bool	squote;
 	bool	dquote;
-	
+
 	squote = false;
 	dquote = false;
 	squote = toggle_simples(str[i], squote, dquote);

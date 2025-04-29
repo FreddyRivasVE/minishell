@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/28 15:15:08 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/29 17:48:14 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ms_quotes_killer(char ***inputs);
 char	*ms_redir_together(char *str);
 void	ms_split_input(t_mshell *data);
 void	ms_token_input(t_mshell *data);
+void	ms_orquest(t_mshell *data, char ***split, char **tag);
 
 /*****************************************************************************/
 /*                                utils	                            		 */

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/28 17:47:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/29 17:56:07 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ms_split_input(t_mshell *data)
 	data->inputs = malloc(sizeof(t_input));
 	if (!data->inputs)
 		return ;
-	data->commands = malloc(sizeof(t_command));
+	data->commands = ft_calloc(data->pipesnum + 2, sizeof(t_command));
 	if (!data->commands)
 		return ;
 	data->inputs->splitpipes = ft_split_pipes(data->input_row);
@@ -58,9 +58,8 @@ void	ms_split_input(t_mshell *data)
 	ft_print_array_triple(data->inputs->splitaftpipes); //borrar.
 	ms_token_input(data);
 	ft_print_array(data->inputs->tag); //borrar.
-	//ms_pre_redir(data);
-	//ft_print_array(data->inputs->tag); //borrar.
-	ms_pre_commands(data);
+	ms_orquest(data, data->inputs->splitaftpipes, data->inputs->tag);
 	free_array(data->inputs->splitpipes);
+	free(data->inputs->tag);
 	return ;
 }

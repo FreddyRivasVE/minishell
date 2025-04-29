@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 14:23:12 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/29 15:05:56 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/29 15:17:00 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*ms_get_token(char	*word)
 		return ("COMMAND");
 }
 
-static char	*ms_subfix_redir(char *tag)
+static char	*ms_subfix(char *tag)
 {
 	if (!ft_strcmp(tag, "HEREDOC")
 		|| !ft_strcmp(tag, "OUTPUTAPPEND")
@@ -84,7 +84,7 @@ void	ms_token_input(t_mshell *data)
 		{
 			data->inputs->tag[k] = ms_get_token(inpt[i][j]);
 			if (j > 0 && !ft_strcmp(data->inputs->tag[k], "COMMAND"))
-				data->inputs->tag[k] = ms_subfix_redir(data->inputs->tag[k - 1]);
+				data->inputs->tag[k] = ms_subfix(data->inputs->tag[k - 1]);
 			j++;
 			k++;
 		}
