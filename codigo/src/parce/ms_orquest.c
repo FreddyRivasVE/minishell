@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/29 17:53:28 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/29 19:21:03 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ms_is_redirection(char *tag)
 		|| !ft_strcmp(tag, "OUTPUT" ));
 }
 
-void	ms_orquest(t_mshell *data, char ***split, char **tag)
+static void	ms_orquest_redir(t_mshell *data, char ***split, char **tag)
 {
 	int		i;
 	int		j;
@@ -63,4 +63,11 @@ void	ms_orquest(t_mshell *data, char ***split, char **tag)
 		}
 		i++;
 	}
+}
+
+void	ms_orquest(t_mshell *data, char ***split, char **tag)
+{
+	ms_orquest_redir(data, split, tag);
+	if (ms_orquest_command(data, split, tag) == -1)
+		printf("recordemos blindar si falla la asignacion de memoria en la struct comandos");
 }
