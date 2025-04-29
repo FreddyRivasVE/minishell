@@ -17,10 +17,40 @@ bool	ft_isredirection_char(char c)
 	return (c == '<' || c == '>');
 }
 
-static bool	ms_redir_result(size_t i, size_t flag, bool check_redir, char *str)
+static int	ms_ignored_quotes(char *str, int i)
 {
+	bool	squote;
+	bool	dquote;
+	
+	squote = false;
+	dquote = false;
+	squote = toggle_simples(str[i], squote, dquote);
+	dquote = toggle_doubles(str[i], squote, dquote);
+	if (squote || dquote)
+	{
+		i++;
+		if (squote)
+		{
+			while (str[i] && str[i] != '\'')
+				i++;
+		}
+		if (dquote)
+		{
+			while (str[i] && str[i] != '\"')
+				i++;
+		}
+	}
+	return (i);
+}
+
+static bool	ms_redir_result(size_t flag, bool check_redir, char *str)
+{
+	int		i;
+
+	i = 0;
 	while (str[i])
 	{
+		i = ms_ignored_quotes(str, i);
 		if (ft_isredirection_char(str[i]))
 		{
 			flag++;
@@ -38,18 +68,12 @@ static bool	ms_redir_result(size_t i, size_t flag, bool check_redir, char *str)
 
 bool	ms_check_redir(char *str)
 {
-	size_t	i;
 	size_t	flag;
 	bool	check_redir;
 
 	flag = 0;
 	check_redir = true;
-	i = ft_strcspn(str, "<>");
-	if (i < ft_strlen(str))
-	{
+	if (ft_strchr(str, '<') || ft_strchr(str, '>'))
 		check_redir = false;
-		flag = 1;
-		i++;
-	}
-	return (ms_redir_result(i, flag, check_redir, str));
+	return (ms_redir_result(flag, check_redir, str));
 }

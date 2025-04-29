@@ -58,7 +58,7 @@ void	ms_sigctrlc_handler(int signo);
 bool	ms_check_pipes(char *str);
 bool	ms_check_quotation_marks(char *str);
 bool	ms_check_redir(char *str);
-char	*ms_escape_special_chars(char *input);
+char	*ms_escape_special_chars(char *str);
 void	ms_expand_variable(t_mshell *data);
 int		ms_input_row_validation(t_mshell *data);
 void	ms_pre_commands(t_mshell *data);
