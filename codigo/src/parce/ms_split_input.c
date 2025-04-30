@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/29 19:03:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 11:43:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ms_split_input(t_mshell *data)
 	ms_token_input(data);
 	ft_print_array(data->inputs->tag); //borrar.
 	ms_orquest(data, data->inputs->splitaftpipes, data->inputs->tag);
-	ft_print_array(data->commands[1].command); // borrar.
+	//ft_print_array(data->commands[1].command); // borrar.
 	free_array(data->inputs->splitpipes);
 	free(data->inputs->tag);
 	return ;

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/28 16:58:19 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 13:03:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,27 @@ void	ms_exit_minishell(t_mshell *data)
 	rl_clear_history();
 }
 
-int	ms_parcetoken_mini(t_mshell *data, char *read_line)
+bool	ms_special_expand(t_mshell *data)
+{
+	char	*new_input;
+
+	new_input = ms_escape_special_chars(data->input_row);
+	if (!new_input)
+	{
+		data->exits = ENOMEM;
+		perror("malloc");
+		return (false);
+	}
+	free(data->input_row);
+	data->input_row = new_input;
+	if (ft_strnstr(data->input_row, "$'", ft_strlen(data->input_row)) != NULL)
+	{
+		printf ("hay un caso de $\' \n"); //construir caso!!
+	}
+	return (true);
+}
+
+bool	ms_parcetoken_mini(t_mshell *data, char *read_line)
 {
 	char	*new_input;
 	int		door;
@@ -46,14 +66,8 @@ int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 	{
 		if (ft_strchr(data->input_row, '$'))
 		{
-			new_input = ms_escape_special_chars(data->input_row);
-			free(data->input_row);
-			data->input_row = new_input;
-			if (ft_strnstr(data->input_row, "$'", \
-				ft_strlen(data->input_row)) != NULL)
-			{
-				printf ("hay un caso de $\' \n"); //borrar
-			}
+			if (!ms_special_expand(data))
+				return (false);
 		}
 		if (ft_strchr(data->input_row, '<') || ft_strchr(data->input_row, '>'))
 		{
@@ -62,7 +76,7 @@ int	ms_parcetoken_mini(t_mshell *data, char *read_line)
 			data->input_row = new_input;
 		}
 		ms_split_input(data);
-		return (1);
+		return (true);
 	}
 	data->exits = door;
 	return (0);

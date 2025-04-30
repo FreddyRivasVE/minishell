@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/29 15:14:25 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 12:26:59 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ bool	ms_check_redir(char *str)
 	flag = 0;
 	check_redir = true;
 	if (ft_strchr(str, '<') || ft_strchr(str, '>'))
-		check_redir = false;
-	return (ms_redir_result(flag, check_redir, str));
+		check_redir = ms_redir_result(flag, check_redir, str);
+	return (check_redir);
 }
