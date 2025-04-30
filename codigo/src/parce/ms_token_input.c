@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 14:23:12 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/29 15:17:00 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 17:24:01 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*ms_subfix(char *tag)
 	return ("COMMAND");
 }
 
-void	ms_token_input(t_mshell *data)
+bool	ms_token_input(t_mshell *data)
 {
 	int		i;
 	int		j;
@@ -74,7 +74,7 @@ void	ms_token_input(t_mshell *data)
 	inpt = data->inputs->splitaftpipes;
 	data->inputs->tag = ft_calloc(ms_array_count(inpt) + 1, sizeof(char *));
 	if (!data->inputs->tag)
-		return ;
+		return (ms_print_perror_malloc(data), false);
 	i = 0;
 	k = 0;
 	while (inpt[i])
@@ -90,4 +90,5 @@ void	ms_token_input(t_mshell *data)
 		}
 		i++;
 	}
+	return (true);
 }

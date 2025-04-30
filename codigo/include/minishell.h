@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/30 14:20:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 17:47:50 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ bool	ms_check_pipes(char *str);
 bool	ms_check_quotation_marks(char *str);
 bool	ms_check_redir(char *str);
 char	*ms_escape_special_chars(char *str);
-void	ms_expand_variable(t_mshell *data);
+bool	ms_expand_variable(t_mshell *data);
 int		ms_input_row_validation(t_mshell *data);
 void	ms_pre_commands(t_mshell *data);
 void	ms_pre_redir(t_mshell *data);
-void	ms_quotes_killer(char ***inputs);
-char	*ms_redir_together(char *str);
-void	ms_split_input(t_mshell *data);
-void	ms_token_input(t_mshell *data);
-void	ms_orquest(t_mshell *data, char ***split, char **tag);
+bool	ms_quotes_killer(char ***inputs, t_mshell *data);
+bool	ms_redir_together(t_mshell *data);
+bool	ms_split_input(t_mshell *data);
+bool	ms_token_input(t_mshell *data);
+bool	ms_orquest(t_mshell *data, char ***split, char **tag);
 int		ms_orquest_command(t_mshell *data, char ***split, char **tag);
 bool	ms_special_expand(t_mshell *data);
 
@@ -100,6 +100,7 @@ void	ft_print_array(char **array);
 void	ft_print_array_triple(char ***array);
 void	ft_print_error(char *arg, char *var, char *msj);
 void	ms_update_prompt(t_mshell *data);
+void	ms_print_perror_malloc(t_mshell *data);
 
 
 /*****************************************************************************/

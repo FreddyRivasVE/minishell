@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 19:09:31 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/30 17:49:46 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ char	*ms_expand_child(char *str, t_mshell *data)
 
 	expandsplit = ft_split_quotes(str, true);
 	result = ft_calloc(1, sizeof(char));
-	if (!result)
-		return (NULL);
+	if (!result || !expandsplit)
+		return (free_array(expandsplit), ft_free_ptr((void **)&result), NULL);
 	i = 0;
 	while (expandsplit[i])
 	{
@@ -113,7 +113,7 @@ char	*ms_expand_child(char *str, t_mshell *data)
 	return (free_array(expandsplit), result);
 }
 
-void	ms_expand_variable(t_mshell *data)
+bool	ms_expand_variable(t_mshell *data)
 {
 	int		i;
 	int		j;
@@ -130,6 +130,8 @@ void	ms_expand_variable(t_mshell *data)
 			if (ft_strchr(toexpand[i][j], '$'))
 			{
 				temp = ms_expand_child(toexpand[i][j], data);
+				if (!temp)
+					return (ms_print_perror_malloc(data), false);
 				ft_free_ptr((void **)&toexpand[i][j]);
 				toexpand[i][j] = temp;
 			}
@@ -137,4 +139,5 @@ void	ms_expand_variable(t_mshell *data)
 		}
 		i++;
 	}
+	return (true);
 }

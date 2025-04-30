@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redir_together.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:24 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 18:25:44 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/30 16:25:42 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,22 @@ static void	ms_build_new_string(char *str, char *new_str)
 	new_str[j] = '\0';
 }
 
-char	*ms_redir_together(char *str)
+bool	ms_redir_together(t_mshell *data)
 {
 	char	*new_str;
 	int		new_len;
 
-	new_len = ms_calculate_new_length(str);
+	new_len = ms_calculate_new_length(data->input_row);
 	new_str = (char *)ft_calloc(new_len + 1, sizeof(char));
 	if (!new_str)
-		return (NULL);
-	ms_build_new_string(str, new_str);
-	return (new_str);
+	{
+		data->exits = ENOMEM;
+		perror("malloc");
+		return (false);
+	}
+	ms_build_new_string(data->input_row, new_str);
+	free(data->input_row);
+	data->input_row = new_str;
+
+	return (true);
 }

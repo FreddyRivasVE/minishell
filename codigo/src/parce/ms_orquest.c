@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/29 19:21:03 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:53:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,25 @@ static int	ms_is_redirection(char *tag)
 		|| !ft_strcmp(tag, "OUTPUT" ));
 }
 
-static void	ms_orquest_redir(t_mshell *data, char ***split, char **tag)
+static bool	ms_fill_commands(char *tag, char *split, t_mshell *data, int i)
+{
+	data->commands[i].type = ft_strdup(tag);
+	data->commands[i].namefile = ft_strdup(split);
+	if (!data->commands[i].type)
+		return (ms_print_perror_malloc(data), false);
+	return (true);
+}
+
+static bool	ms_orquest_redir(t_mshell *data, char ***split, char **tag)
 {
 	int		i;
 	int		j;
 	int		k;
 	bool	flag;
 
-	i = 0;
+	i = -1;
 	k = 0;
-	while (split[i])
+	while (split[++i])
 	{
 		flag = false;
 		j = 0;
@@ -52,22 +61,23 @@ static void	ms_orquest_redir(t_mshell *data, char ***split, char **tag)
 		{
 			if (ms_is_redirection(tag[k]) && !flag)
 			{
-				data->commands[i].type = ft_strdup(tag[k]);
-				data->commands[i].namefile = ft_strdup(split[i][j + 1]);
-				printf("estructura: %d type: %s namefile: %s\n", i, data->commands[i].type, data->commands[i].namefile); //Borrar.
+				if (!ms_fill_commands(tag[k], split[i][j + 1], data, i))
+					return (false);
 				if (ms_check_redir_access(tag[k], split[i][j + 1]) == -1)
 					flag = true;
 			}
 			j++;
 			k++;
 		}
-		i++;
 	}
+	return (true);
 }
 
-void	ms_orquest(t_mshell *data, char ***split, char **tag)
+bool	ms_orquest(t_mshell *data, char ***split, char **tag)
 {
-	ms_orquest_redir(data, split, tag);
+	if (!ms_orquest_redir(data, split, tag))
+		return (false);
 	if (ms_orquest_command(data, split, tag) == -1)
-		printf("recordemos blindar si falla la asignacion de memoria en la struct comandos");
+		return (false);
+	return (true);
 }

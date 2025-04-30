@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/30 14:27:01 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:55:54 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ms_exec(t_mshell *data)
 {
 	int		exit;
 
+	printf("luego de expandir ----->\n"); // borrar.
+	ft_print_array_triple(data->inputs->splitaftpipes); //borrar.
 	exit = ms_exec_builtin_or_other(data->inputs->splitaftpipes, data, 0);
 	free_triple_array(data->inputs->splitaftpipes);
 	free(data->inputs);
@@ -35,7 +37,6 @@ void	ms_exit_minishell(t_mshell *data)
 
 bool	ms_parcetoken_mini(t_mshell *data, char *read_line)
 {
-	char	*new_input;
 	int		door;
 
 	if (data->input_row)
@@ -51,15 +52,14 @@ bool	ms_parcetoken_mini(t_mshell *data, char *read_line)
 		}
 		if (ft_strchr(data->input_row, '<') || ft_strchr(data->input_row, '>'))
 		{
-			new_input = ms_redir_together(data->input_row);
-			free(data->input_row);
-			data->input_row = new_input;
+			if (!ms_redir_together(data))
+				return (false);
 		}
-		ms_split_input(data);
-		return (true);
+		if (!ms_split_input(data))
+			return (false);
 	}
 	data->exits = door;
-	return (0);
+	return (true);
 }
 
 void	ms_loop_minishell(t_mshell *data)

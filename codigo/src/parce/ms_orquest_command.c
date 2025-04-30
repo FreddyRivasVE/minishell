@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/29 19:18:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:47:42 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	ms_reserve_mm_command(t_mshell *data, char ***split, char **tag)
 		}
 		data->commands[i].command = ft_calloc(commands + 1, sizeof(char *));
 		if (!data->commands[i].command)
-			return (-1);
+			return (ms_print_perror_malloc(data), -1);
 		i++;
 	}
 	return (0);
@@ -50,23 +50,22 @@ int	ms_orquest_command(t_mshell *data, char ***split, char **tag)
 
 	if (ms_reserve_mm_command(data, split, tag) == -1)
 		return (-1);
-	i = 0;
-	k = 0;
-	while (split[i])
+	i = -1;
+	k = -1;
+	while (split[++i])
 	{
 		j = 0;
-		l = 0;
+		l = -1;
 		while (split[i][j])
 		{
-			if (!ft_strcmp(tag[k], "COMMAND"))
+			if (!ft_strcmp(tag[++k], "COMMAND"))
 			{
-				data->commands[i].command[l] = ft_strdup(split[i][j]);
-				l++;
+				data->commands[i].command[++l] = ft_strdup(split[i][j]);
+				if (!data->commands[i].command[l])
+					return (ms_print_perror_malloc(data), -1);
 			}
 			j++;
-			k++;
 		}
-		i++;
 	}
 	return (0);
 }
