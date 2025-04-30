@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_special_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:01:23 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/25 20:22:50 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/04/30 15:50:47 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static size_t	calculate_new_len(char *str, bool squote, bool dquote)
 		squote = toggle_simples(str[i], squote, dquote);
 		dquote = toggle_doubles(str[i], squote, dquote);
 		if (str[i] == '$' && !squote && !dquote
-			&& ft_special_char(str[i + 1]))
+			&& (ft_special_char(str[i + 1]) || str[i + 1] == '\0'))
 		{
 			len += 4;
 			if (!ft_isspace(str[i + 1]) && str[i + 1] != '\0')

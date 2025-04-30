@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/30 13:03:04 by frivas           ###   ########.fr       */
+/*   Updated: 2025/04/30 14:27:01 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,6 @@ void	ms_exit_minishell(t_mshell *data)
 	ft_free_ptr((void **)&data->prompt);
 	ft_free_ptr((void **)&data->input_row);
 	rl_clear_history();
-}
-
-bool	ms_special_expand(t_mshell *data)
-{
-	char	*new_input;
-
-	new_input = ms_escape_special_chars(data->input_row);
-	if (!new_input)
-	{
-		data->exits = ENOMEM;
-		perror("malloc");
-		return (false);
-	}
-	free(data->input_row);
-	data->input_row = new_input;
-	if (ft_strnstr(data->input_row, "$'", ft_strlen(data->input_row)) != NULL)
-	{
-		printf ("hay un caso de $\' \n"); //construir caso!!
-	}
-	return (true);
 }
 
 bool	ms_parcetoken_mini(t_mshell *data, char *read_line)
