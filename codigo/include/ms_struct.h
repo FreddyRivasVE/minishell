@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/29 16:01:39 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/01 12:11:34 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ typedef struct termios	t_term;
 {
 }	t_pipe;
 */
-typedef struct s_command
+
+typedef struct	s_redir
 {
+	char	*type;
 	char	*namefile;
 	int		fd;
-	char	*type;
+}	t_redir;
+
+typedef struct s_command
+{
 	char	**command;
 }	t_command;
 
@@ -46,6 +51,7 @@ typedef struct s_mshell
 	char		*input_row;
 	//t_pipe		*pipes;
 	t_command	*commands;
+	t_redir		**redir;
 	int			exits;
 	t_input		*inputs;
 	char		*prompt;
