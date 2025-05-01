@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_split_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/01 12:28:28 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/01 12:38:05 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ bool	ms_split_input(t_mshell *data)
 	data->commands = ft_calloc(data->pipesnum + 2, sizeof(t_command));
 	if (!data->commands)
 		return (ms_print_perror_malloc(data), false);
-//	data->redir = ft_calloc(data->pipesnum + 2, sizeof(t_redir));
-//	if (!data->redir)
-//		return (ms_print_perror_malloc(data), false);
+	data->redir = ft_calloc(data->pipesnum + 2, sizeof(t_redir));
+	if (!data->redir)
+		return (ms_print_perror_malloc(data), false);
 	data->inputs->splitpipes = ft_split_pipes(data->input_row);
 	if (!data->inputs->splitpipes)
 		return (ms_print_perror_malloc(data), false);
@@ -62,8 +62,8 @@ bool	ms_split_input(t_mshell *data)
 	if (!ms_token_input(data))
 		return (false);
 	ft_print_array(data->inputs->tag); //borrar.
-//	if (!ms_orquest(data, data->inputs->splitaftpipes, data->inputs->tag))
-//		return (false);
+	if (!ms_orquest(data, data->inputs->splitaftpipes, data->inputs->tag))
+		return (false);
 	free_array(data->inputs->splitpipes);
 	free(data->inputs->tag);
 	return (true);

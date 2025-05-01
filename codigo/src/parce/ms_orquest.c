@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_orquest.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/01 12:23:22 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/01 13:00:37 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static bool	ms_fill_commands(char *tag, char *split, t_mshell *data, int i, int 
 	data->redir[i][l].namefile = ft_strdup(split);
 	if (!data->redir[i][l].type)
 		return (ms_print_perror_malloc(data), false);
-	printf("redir estructura: %d --- lado del pipe: %d --- valor guardado type:%s name: %s", i, l, data->redir[i][l].type, data->redir[i][l].namefile); //borrar
+	printf("redir estructura: %d --- lado del pipe: %d --- valor guardado type:%s name: %s\n", i, l, data->redir[i][l].type, data->redir[i][l].namefile); //borrar
 	return (true);
 }
 
@@ -56,7 +56,7 @@ static bool	ms_reserve_memory_redir(char *str, t_mshell *data)
 	while (str[i])
 	{
 		num_redir = 0;
-		printf("valores de i %d y num redir%d ", i, num_redir); //borrar
+		printf("valores de i %d y num redir%d\n", i, num_redir); //borrar
 		while (str[i] && str[i] != '|')
 		{
 			if (ft_isredirection_char(str[i]))
@@ -65,6 +65,7 @@ static bool	ms_reserve_memory_redir(char *str, t_mshell *data)
 					i++;
 				num_redir++;
 			}
+			printf("valor de i: %d valor de numdir: %d letra: %c\n", i, num_redir, str[i]); //borrar.
 			i++;
 		}
 		data->redir[i_r] = ft_calloc(num_redir + 1, sizeof(t_redir));
