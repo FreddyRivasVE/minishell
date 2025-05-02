@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/01 13:00:37 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/02 14:31:34 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,26 @@ static bool	ms_reserve_memory_redir(char *str, t_mshell *data)
 
 	i = 0;
 	i_r = 0;
-	while (str[i])
+	while (str[i] != '\0')
 	{
 		num_redir = 0;
-		printf("valores de i %d y num redir%d\n", i, num_redir); //borrar
-		while (str[i] && str[i] != '|')
+		while (str[i] != '\0' && str[i] != '|')
 		{
 			if (ft_isredirection_char(str[i]))
 			{
-				if (ft_isredirection_char(str[i + 1]))
+				if (str[i + 1] != '\0' && str[i + 1] != '\0' && ft_isredirection_char(str[i + 1]))
 					i++;
 				num_redir++;
 			}
-			printf("valor de i: %d valor de numdir: %d letra: %c\n", i, num_redir, str[i]); //borrar.
-			i++;
+			if (str[i] != '\0')
+				i++;
 		}
 		data->redir[i_r] = ft_calloc(num_redir + 1, sizeof(t_redir));
 		if (!data->redir[i_r])
 			return (ms_print_perror_malloc(data), false);
 		i_r++;
-		i++;
+		if (str[i] == '|')
+			i++;
 	}
 	return (true);
 }
