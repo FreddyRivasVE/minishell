@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_check_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/30 12:26:59 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/03 18:59:21 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static bool	ms_redir_result(size_t flag, bool check_redir, char *str)
 			flag++;
 			check_redir = false;
 		}
-		if (ft_isascii(str[i]) && !ft_isredirection_char(str[i]) && (flag < 3))
+		if (ft_isascii(str[i]) && !ft_isredirection_char(str[i])
+			&& (flag < 3) && !ft_isspace(str[i]))
 		{
 			check_redir = true;
 			flag = 0;
