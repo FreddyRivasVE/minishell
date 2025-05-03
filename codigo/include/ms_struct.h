@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/01 12:11:34 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/03 13:38:20 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct termios	t_term;
 }	t_pipe;
 */
 
-typedef struct	s_redir
+typedef struct s_redir
 {
 	char	*type;
 	char	*namefile;

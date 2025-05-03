@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:50:19 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/16 17:39:02 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/03 13:37:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,47 @@ void	ft_print_array_triple(char ***array)
 		{
 			printf("ARRAY [%d][%d]: %s\n", i, j, array[i][j]);
 			j++;
+		}
+		i++;
+	}
+}
+
+void	ft_print_redir_array(t_redir **redir)
+{
+	int	i;
+
+	i = 0;
+	while (redir[i])
+	{
+		printf("Redir #%d:\n", i);
+		printf("  Type: %s\n", redir[i]->type);
+		printf("  Namefile: %s\n", redir[i]->namefile);
+		printf("  FD: %d\n", redir[i]->fd);
+		i++;
+	}
+}
+
+void	ft_print_command_array(t_command *commands, int count)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < count)
+	{
+		printf("Command #%d:\n", i);
+		if (commands[i].command == NULL)
+		{
+			printf("  (null command)\n");
+		}
+		else
+		{
+			j = 0;
+			while (commands[i].command[j])
+			{
+				printf("  Arg[%d]: %s\n", j, commands[i].command[j]);
+				j++;
+			}
 		}
 		i++;
 	}

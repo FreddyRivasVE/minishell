@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/30 18:55:54 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/03 13:23:46 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,9 @@ int	ms_exec(t_mshell *data)
 {
 	int		exit;
 
-	printf("luego de expandir ----->\n"); // borrar.
-	ft_print_array_triple(data->inputs->splitaftpipes); //borrar.
-	exit = ms_exec_builtin_or_other(data->inputs->splitaftpipes, data, 0);
-	free_triple_array(data->inputs->splitaftpipes);
-	free(data->inputs);
-	if (data->commands)
-		free(data->commands);
+	exit = ms_exec_builtin_or_other(data->commands[0].command, data);
+	ft_free_redir_array(data->redir);
+	ft_free_command_array(data->commands, data->pipesnum + 1);
 	return (exit);
 }
 

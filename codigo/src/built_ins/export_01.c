@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_01.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:36:51 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/21 18:57:03 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/03 12:55:58 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_list_replace_cont(t_list **begin_list, void *ref, int (*cmp)())
 	cur = *begin_list;
 	if (cmp(cur->content, cutref) == 0)
 	{
-		free(cur->content);
+		ft_free_ptr((void **)&cur->content);
 		cur->content = ref;
 		free(cutref);
 		return (1);

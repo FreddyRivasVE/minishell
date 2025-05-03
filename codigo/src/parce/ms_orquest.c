@@ -6,13 +6,13 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/02 14:31:34 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/03 13:29:38 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ms_check_redir_access(char *tag, char *file_name)
+/*static int	ms_check_redir_access(char *tag, char *file_name)
 {
 	if (!file_name)
 		return (-1);
@@ -25,7 +25,7 @@ static int	ms_check_redir_access(char *tag, char *file_name)
 		&& access(file_name, F_OK | W_OK | R_OK) == -1)
 		return (-1);
 	return (0);
-}
+}*/
 
 static int	ms_is_redirection(char *tag)
 {
@@ -35,72 +35,35 @@ static int	ms_is_redirection(char *tag)
 		|| !ft_strcmp(tag, "OUTPUT" ));
 }
 
-static bool	ms_fill_commands(char *tag, char *split, t_mshell *data, int i, int l)
+static bool	ms_fill_commands(char *tag, char *split, t_mshell *data, \
+	int i, int l)
 {
 	data->redir[i][l].type = ft_strdup(tag);
 	data->redir[i][l].namefile = ft_strdup(split);
 	if (!data->redir[i][l].type)
 		return (ms_print_perror_malloc(data), false);
-	printf("redir estructura: %d --- lado del pipe: %d --- valor guardado type:%s name: %s\n", i, l, data->redir[i][l].type, data->redir[i][l].namefile); //borrar
-	return (true);
-}
-
-static bool	ms_reserve_memory_redir(char *str, t_mshell *data)
-{
-	int	i;
-	int	i_r;
-	int	num_redir;
-
-	i = 0;
-	i_r = 0;
-	while (str[i] != '\0')
-	{
-		num_redir = 0;
-		while (str[i] != '\0' && str[i] != '|')
-		{
-			if (ft_isredirection_char(str[i]))
-			{
-				if (str[i + 1] != '\0' && str[i + 1] != '\0' && ft_isredirection_char(str[i + 1]))
-					i++;
-				num_redir++;
-			}
-			if (str[i] != '\0')
-				i++;
-		}
-		data->redir[i_r] = ft_calloc(num_redir + 1, sizeof(t_redir));
-		if (!data->redir[i_r])
-			return (ms_print_perror_malloc(data), false);
-		i_r++;
-		if (str[i] == '|')
-			i++;
-	}
 	return (true);
 }
 
 static bool	ms_orquest_redir(t_mshell *data, char ***split, char **tag)
 {
-	int		i;
-	int		j;
-	int		k;
-	bool	flag;
-	int 	l;
+	int	i;
+	int	j;
+	int	k;
+	int	l;
 
 	i = -1;
 	k = 0;
 	while (split[++i])
 	{
-		flag = false;
 		j = 0;
 		l = 0;
-		printf("valores de i %d y j %d ", i, j); //borrar
 		while (split[i][j])
 		{
-			if (ms_is_redirection(tag[k]) && !flag)
+			if (ms_is_redirection(tag[k]))
 			{
 				if (!ms_fill_commands(tag[k], split[i][j + 1], data, i, l))
 					return (false);
-				if (ms_check_redir_access(tag[k], split[i][j + 1]) == -1)
-					flag = true;
 				l++;
 			}
 			j++;
@@ -112,12 +75,13 @@ static bool	ms_orquest_redir(t_mshell *data, char ***split, char **tag)
 
 bool	ms_orquest(t_mshell *data, char ***split, char **tag)
 {
-	printf("entramos a orquest\n"); //borrar
 	if (!ms_reserve_memory_redir(data->input_row, data))
 		return (false);
 	if (!ms_orquest_redir(data, split, tag))
 		return (false);
 	if (ms_orquest_command(data, split, tag) == -1)
 		return (false);
+	ft_print_redir_array(data->redir); //borrar.
+	ft_print_command_array(data->commands, data->pipesnum + 1); // borrar
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/01 12:38:05 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/03 13:24:20 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ bool	ms_split_input(t_mshell *data)
 		return (false);
 	if (!ms_token_input(data))
 		return (false);
-	ft_print_array(data->inputs->tag); //borrar.
 	if (!ms_orquest(data, data->inputs->splitaftpipes, data->inputs->tag))
 		return (false);
+	free_triple_array(data->inputs->splitaftpipes);
 	free_array(data->inputs->splitpipes);
 	free(data->inputs->tag);
+	free(data->inputs);
 	return (true);
 }

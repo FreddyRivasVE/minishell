@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_memory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:24:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/25 17:10:38 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/03 13:37:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,53 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	free(s1);
 	free(s2);
 	return (joined);
+}
+
+void	ft_free_redir_array(t_redir **redir)
+{
+	int	i;
+	int	j;
+
+	if (!redir)
+		return ;
+	i = 0;
+	while (redir[i])
+	{
+		j = 0;
+		while (redir[i][j].type || redir[i][j].namefile || redir[i][j].fd != 0)
+		{
+			free(redir[i][j].type);
+			free(redir[i][j].namefile);
+			// No necesitas cerrar el fd aquí, a menos que esté abierto
+			j++;
+		}
+		free(redir[i]);
+		i++;
+	}
+	free(redir);
+}
+
+void	ft_free_command_array(t_command *commands, int count)
+{
+	int	i;
+	int	j;
+
+	if (!commands)
+		return ;
+	i = 0;
+	while (i < count)
+	{
+		if (commands[i].command)
+		{
+			j = 0;
+			while (commands[i].command[j])
+			{
+				free(commands[i].command[j]);
+				j++;
+			}
+			free(commands[i].command);
+		}
+		i++;
+	}
+	free(commands);
 }

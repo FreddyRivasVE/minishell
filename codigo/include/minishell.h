@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/30 17:47:50 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/03 13:21:16 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ bool	ms_token_input(t_mshell *data);
 bool	ms_orquest(t_mshell *data, char ***split, char **tag);
 int		ms_orquest_command(t_mshell *data, char ***split, char **tag);
 bool	ms_special_expand(t_mshell *data);
+bool	ms_reserve_memory_redir(char *str, t_mshell *data);
 
 /*****************************************************************************/
 /*                                utils	                            		 */
@@ -101,13 +102,17 @@ void	ft_print_array_triple(char ***array);
 void	ft_print_error(char *arg, char *var, char *msj);
 void	ms_update_prompt(t_mshell *data);
 void	ms_print_perror_malloc(t_mshell *data);
+void	ft_print_redir_array(t_redir **redir);
+void	ft_print_command_array(t_command *commands, int count);
+void	ft_free_redir_array(t_redir **redir);
+void	ft_free_command_array(t_command *commands, int count);
 
 
 /*****************************************************************************/
 /*                             	execution                           		 */
 /*****************************************************************************/
 int		ms_exec(t_mshell *data);
-int		ms_exec_builtin_or_other(char ***command, t_mshell *data, int i);
+int		ms_exec_builtin_or_other(char **command, t_mshell *data);
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
 /*****************************************************************************/
