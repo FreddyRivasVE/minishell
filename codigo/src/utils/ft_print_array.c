@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:50:19 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 13:37:04 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/03 19:36:28 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,26 @@ void	ft_print_array_triple(char ***array)
 void	ft_print_redir_array(t_redir **redir)
 {
 	int	i;
+	int	j;
 
+	if (!redir)
+		return ;
 	i = 0;
 	while (redir[i])
 	{
-		printf("Redir #%d:\n", i);
-		printf("  Type: %s\n", redir[i]->type);
-		printf("  Namefile: %s\n", redir[i]->namefile);
-		printf("  FD: %d\n", redir[i]->fd);
+		j = 0;
+		printf("  Redir #%d:\n", i);
+		while (redir[i][j].type)
+		{
+			printf("    Type: %s\n", redir[i][j].type);
+			printf("    Namefile: %s\n", redir[i][j].namefile);
+			printf("    FD: %d\n", redir[i][j].fd);
+			j++;
+		}
 		i++;
 	}
 }
+
 
 void	ft_print_command_array(t_command *commands, int count)
 {
