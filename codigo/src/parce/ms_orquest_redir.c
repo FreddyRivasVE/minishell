@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_orquest_redir.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:47:55 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 13:32:22 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/03 18:47:00 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,20 @@ static void	free_redir_blocks(t_mshell *data, int count)
 	}
 }
 
-static int	count_redirections(const char *str, int *index)
+static int	count_redirections(char *str, int *index)
 {
-	int	count;
+	int		count;
+	bool	dqoute;
+	bool	sqoute;
 
+	sqoute = false;
+	dqoute = false;
 	count = 0;
-	while (str[*index] != '\0' && str[*index] != '|')
+	while (str[*index] != '\0')
 	{
-		if (ft_isredirection_char(str[*index]))
+		sqoute = toggle_simples(str[*index], sqoute, dqoute);
+		dqoute = toggle_doubles(str[*index], sqoute, dqoute);
+		if (ft_isredirection_char(str[*index]) && !sqoute && !dqoute)
 		{
 			if (str[*index + 1] != '\0'
 				&& ft_isredirection_char(str[*index + 1]))
@@ -40,13 +46,15 @@ static int	count_redirections(const char *str, int *index)
 			count++;
 		}
 		(*index)++;
+		if (str[*index] == '|' && !sqoute && !dqoute)
+			break ;
 	}
 	return (count);
 }
 
-static bool	process_segment(const char *str, t_mshell *data, int *i, int *i_r)
+static bool	process_segment(char *str, t_mshell *data, int *i, int *i_r)
 {
-	int	redir_count;
+	int		redir_count;
 
 	redir_count = count_redirections(str, i);
 	data->redir[*i_r] = ft_calloc(redir_count + 1, sizeof(t_redir));
@@ -63,8 +71,8 @@ static bool	process_segment(const char *str, t_mshell *data, int *i, int *i_r)
 
 bool	ms_reserve_memory_redir(char *str, t_mshell *data)
 {
-	int	i;
-	int	i_r;
+	int		i;
+	int		i_r;
 
 	i = 0;
 	i_r = 0;
