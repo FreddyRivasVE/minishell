@@ -6,7 +6,7 @@
 /*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 17:36:56 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/03 19:42:23 by brivera@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,3 +69,6 @@ bool	ms_split_input(t_mshell *data)
 	free(data->inputs);
 	return (true);
 }
+
+/* si alguna reserva falla deberia liberar hacia atras.
+if tal cosa existe ....free)*/
