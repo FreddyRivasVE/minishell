@@ -28,7 +28,7 @@ void	ms_handle_heredoc(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		exit(130);
+		//exit(130);
 	}
 }
 

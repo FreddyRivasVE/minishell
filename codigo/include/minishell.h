@@ -25,6 +25,7 @@
 # include <unistd.h>
 # include <termios.h>
 # include <sys/stat.h>
+#include <sys/wait.h>
 # include "../libs/libft/libft.h"
 # include "../include/ms_struct.h"
 # include "minisherror.h"

@@ -27,40 +27,60 @@
 	return (0);
 }*/
 
-void	ms_heredoc(t_mshell *data, t_redir *redir)
+int	ms_heredoc(t_redir *redir)
 {
+	pid_t	pid;
+	int		status;
 	char	*line;
 
-	data->mode = MODE_HEREDOC;
-	redir->fd = open(redir->namefile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (redir->fd == -1)
+	pid = fork();
+	if (pid == -1)
 	{
-		perror("here_doc");
-		data->exits = 2;
-		return ;
+		perror("fork");
+		return (1);
 	}
-	while (1)
+	redir->fd = 0;
+	if (pid == 0)
 	{
 		ms_set_signal_handler(MODE_HEREDOC);
-		line = readline("> ");
-		if (!line)
+		redir->fd = open(redir->namefile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (redir->fd == -1)
 		{
-			ft_putendl_fd(ERRORHEREDOC, 2);
-			close(redir->fd);
-			data->exits = 0;
-			return ;
-
+			perror("here_doc");
+			exit(1);
 		}
-		if (!ft_strcmp(line, redir->namefile))
+		while (1)
 		{
-			printf("entro a romper\n"); //borrar
-			break ;
+			line = readline("> ");
+			if (!line)
+			{
+				ft_putendl_fd(ERRORHEREDOC, 2);
+				close(redir->fd);
+				exit(0);
+			}
+			if (!ft_strcmp(line, redir->namefile))
+			{
+				free(line);
+				break ;
+			}
+			ft_putendl_fd(line, redir->fd);
+			free(line);
 		}
-		ft_putendl_fd(line, redir->fd);
 		free(line);
+		close(redir->fd);
+		exit(0);
 	}
-	close(redir->fd);
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			return (130);
+		else if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+	}
+	return (0);
 }
+
 
 void	ms_redir_management(t_mshell *data)
 {
@@ -74,9 +94,9 @@ void	ms_redir_management(t_mshell *data)
 		while (data->redir[i][j].type != NULL)
 		{
 			if (!ft_strcmp(data->redir[i][j].type, "HEREDOC"))
-			{
-				ms_heredoc(data, &data->redir[i][j]);
-			}
+				data->exits = ms_heredoc(&data->redir[i][j]);
+			if (data->exits == 130)
+				return ;
 			j++;
 		}
 		i++;
