@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minisherror.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/21 20:06:49 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/05 15:42:43 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 # define SUBJECTECHOOPTERROR 	"echo: subject only allow -n option"
 # define SUBJECTEXPORTERROR 	"export: subject doesn't options"
 # define SPECIALCHAR 			": not an identifier"
+# define ERRORHEREDOC			"minishell warning: here-doc delimited by EOF"
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 17:09:47 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/05 17:44:00 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ms_exec(t_mshell *data)
 {
 	int		exit;
 
+	ms_redir_management(data);
 	exit = ms_exec_builtin_or_other(data->commands[0].command, data);
 	ft_free_redir_array(data->redir);
 	ft_free_command_array(data->commands, data->pipesnum + 1);
@@ -67,6 +68,7 @@ void	ms_loop_minishell(t_mshell *data)
 	data->input_row = NULL;
 	while (1)
 	{
+		ms_set_signal_handler(MODE_PROMPT);
 		read_line = readline(data->prompt);
 		if (!read_line)
 		{

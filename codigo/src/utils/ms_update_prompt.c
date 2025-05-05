@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_update_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/25 17:33:06 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/05 13:08:53 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*ms_update_dir(t_mshell *data)
 
 	home = ft_list_extract_if(&data->env, "HOME", var_cmp);
 	dir = ft_list_extract_if(&data->env, "PWD", var_cmp);
-	if (!home || !dir)
-		return (NULL);
+	if (!home)
+		return (dir);
 	lenhom = ft_strlen(home);
 	start = ft_strspn(home, dir);
 	if (start >= lenhom)

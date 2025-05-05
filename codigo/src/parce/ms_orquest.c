@@ -6,26 +6,11 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 13:29:38 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/05 14:15:59 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*static int	ms_check_redir_access(char *tag, char *file_name)
-{
-	if (!file_name)
-		return (-1);
-	if (!ft_strcmp(tag, "INPUT") && access(file_name, R_OK) == -1)
-		return (-1);
-	if (!ft_strcmp(tag, "OUTPUT")
-		&& access(file_name, F_OK | W_OK) == -1)
-		return (-1);
-	if (!ft_strcmp(tag, "OUTPUTAPPEND")
-		&& access(file_name, F_OK | W_OK | R_OK) == -1)
-		return (-1);
-	return (0);
-}*/
 
 static int	ms_is_redirection(char *tag)
 {

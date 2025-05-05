@@ -6,12 +6,18 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 13:38:20 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/05 17:18:28 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_STRUCT_H
 # define MS_STRUCT_H
+
+
+# define MODE_PROMPT   0
+# define MODE_HEREDOC  1
+# define MODE_CHILD    2
+
 
 typedef struct termios	t_term;
 
@@ -44,6 +50,9 @@ typedef struct s_input
 	char	**tag;
 }	t_input;
 
+
+
+
 typedef struct s_mshell
 {
 	t_list		*env;
@@ -56,5 +65,6 @@ typedef struct s_mshell
 	t_input		*inputs;
 	char		*prompt;
 	int			pipesnum;
+	int			mode;
 }	t_mshell;
 #endif

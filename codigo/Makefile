@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/05/03 10:55:07 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/05 15:20:49 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ BUILT		:=	$(BUILT_INS_DIR)cd.c $(BUILT_INS_DIR)env.c \
 				$(BUILT_INS_DIR)export_02.c \
 				$(BUILT_INS_DIR)unset.c $(BUILT_INS_DIR)exit.c \
 				$(BUILT_INS_DIR)pwd.c $(BUILT_INS_DIR)echo.c
-EXECUTION	:=	$(EXECUTION_DIR)ms_execution.c
+EXECUTION	:=	$(EXECUTION_DIR)ms_execution.c $(EXECUTION_DIR)ms_redir_management.c
 INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
 				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c 
 
