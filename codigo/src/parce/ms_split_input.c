@@ -30,7 +30,7 @@ char	***ms_split_postpipe(t_mshell *data)
 	{
 		commands[i] = ft_split_quotes(temp[i], false);
 		if (!commands[i])
-			return (free_triple_array(commands), NULL);
+			return (free_triple_array(commands), free_array(temp), NULL);
 		i++;
 	}
 	commands[i] = NULL;
@@ -38,37 +38,43 @@ char	***ms_split_postpipe(t_mshell *data)
 	return (commands);
 }
 
+static void	ms_free_struct(t_mshell	*data)
+{
+	if (data->inputs->splitpipes)
+		free_array(data->inputs->splitpipes);
+	if (data->inputs->splitaftpipes)
+		free_triple_array(data->inputs->splitaftpipes);
+	if (data->inputs->tag)
+		free(data->inputs->tag);
+	if (data->inputs)
+		free(data->inputs);
+}
+
 bool	ms_split_input(t_mshell *data)
 {
 	data->inputs = malloc(sizeof(t_input));
 	if (!data->inputs)
 		return (ms_print_perror_malloc(data), false);
-	data->commands = ft_calloc(data->pipesnum + 2, sizeof(t_command));
-	if (!data->commands)
-		return (ms_print_perror_malloc(data), false);
-	data->redir = ft_calloc(data->pipesnum + 2, sizeof(t_redir));
-	if (!data->redir)
-		return (ms_print_perror_malloc(data), false);
 	data->inputs->splitpipes = ft_split_pipes(data->input_row);
 	if (!data->inputs->splitpipes)
-		return (ms_print_perror_malloc(data), false);
+		return (free(data->inputs), ms_print_perror_malloc(data), false);
 	data->inputs->splitaftpipes = ms_split_postpipe(data);
 	if (!data->inputs->splitaftpipes)
-		return (ms_print_perror_malloc(data), false);
+		return (free(data->inputs), ms_print_perror_malloc(data), false);
+	data->commands = ft_calloc(data->pipesnum + 2, sizeof(t_command));
+	if (!data->commands)
+		return (ms_free_struct(data), ms_print_perror_malloc(data), false);
+	data->redir = ft_calloc(data->pipesnum + 2, sizeof(t_redir));
+	if (!data->redir)
+		return (ms_free_struct(data), ms_print_perror_malloc(data), false);
 	if (!ms_expand_variable(data))
-		return (false);
+		return (ms_free_struct(data), false);
 	if (!ms_quotes_killer(data->inputs->splitaftpipes, data))
-		return (false);
+		return (ms_free_struct(data), false);
 	if (!ms_token_input(data))
-		return (false);
+		return (ms_free_struct(data), false);
 	if (!ms_orquest(data, data->inputs->splitaftpipes, data->inputs->tag))
-		return (false);
-	free_triple_array(data->inputs->splitaftpipes);
-	free_array(data->inputs->splitpipes);
-	free(data->inputs->tag);
-	free(data->inputs);
+		return (ms_free_struct(data), false);
+	ms_free_struct(data);
 	return (true);
 }
-
-/* si alguna reserva falla deberia liberar hacia atras.
-if tal cosa existe ....free)*/

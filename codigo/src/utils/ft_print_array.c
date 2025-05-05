@@ -65,7 +65,6 @@ void	ft_print_redir_array(t_redir **redir)
 	}
 }
 
-
 void	ft_print_command_array(t_command *commands, int count)
 {
 	int	i;

@@ -35,40 +35,55 @@ static int	ms_is_redirection(char *tag)
 		|| !ft_strcmp(tag, "OUTPUT" ));
 }
 
-static bool	ms_fill_commands(char *tag, char *split, t_mshell *data, \
-	int i, int l)
+static bool	ms_fill_commands(char *tag, char *split, t_mshell *data, int *idx)
 {
-	data->redir[i][l].type = ft_strdup(tag);
-	data->redir[i][l].namefile = ft_strdup(split);
-	if (!data->redir[i][l].type)
-		return (ms_print_perror_malloc(data), false);
+	data->redir[idx[0]][idx[1]].type = ft_strdup(tag);
+	data->redir[idx[0]][idx[1]].namefile = ft_strdup(split);
+	if (!data->redir[idx[0]][idx[1]].type)
+	{
+		ms_print_perror_malloc(data);
+		return (false);
+	}
+	return (true);
+}
+
+static bool	ms_handle_split(char **split, char **tag, t_mshell *data, int *ik)
+{
+	int	j;
+	int	l;
+	int	idx[2];
+
+	j = 0;
+	l = 0;
+	while (split[j])
+	{
+		if (ms_is_redirection(tag[ik[1]]))
+		{
+			idx[0] = ik[0];
+			idx[1] = l;
+			if (!ms_fill_commands(tag[ik[1]], split[j + 1], data, idx))
+				return (false);
+			l++;
+		}
+		j++;
+		ik[1]++;
+	}
 	return (true);
 }
 
 static bool	ms_orquest_redir(t_mshell *data, char ***split, char **tag)
 {
 	int	i;
-	int	j;
-	int	k;
-	int	l;
+	int	ik[2];
 
-	i = -1;
-	k = 0;
-	while (split[++i])
+	i = 0;
+	ik[1] = 0;
+	while (split[i])
 	{
-		j = 0;
-		l = 0;
-		while (split[i][j])
-		{
-			if (ms_is_redirection(tag[k]))
-			{
-				if (!ms_fill_commands(tag[k], split[i][j + 1], data, i, l))
-					return (false);
-				l++;
-			}
-			j++;
-			k++;
-		}
+		ik[0] = i;
+		if (!ms_handle_split(split[i], tag, data, ik))
+			return (false);
+		i++;
 	}
 	return (true);
 }
