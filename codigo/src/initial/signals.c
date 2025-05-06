@@ -6,11 +6,21 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:11:19 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/05 18:30:26 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/06 16:43:03 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	reset_terminal_settings(void)
+{
+	struct termios	t;
+
+	tcgetattr(STDIN_FILENO, &t);
+	t.c_lflag |= (ECHO | ICANON);
+	tcsetattr(STDIN_FILENO, TCSANOW, &t);
+}
+
 
 void	ms_handle_prompt(int sig)
 {
@@ -28,7 +38,8 @@ void	ms_handle_heredoc(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		//exit(130);
+		reset_terminal_settings();
+		exit(130);
 	}
 }
 
