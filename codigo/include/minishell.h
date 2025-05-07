@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/05 18:22:03 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/07 17:00:32 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	ft_print_redir_array(t_redir **redir);
 void	ft_print_command_array(t_command *commands, int count);
 void	ft_free_redir_array(t_redir **redir);
 void	ft_free_command_array(t_command *commands, int count);
+void	ft_close_heredoc_fds(t_mshell *data);
 
 /*****************************************************************************/
 /*                             	execution                           		 */
@@ -117,6 +118,7 @@ void	ft_free_command_array(t_command *commands, int count);
 int		ms_exec(t_mshell *data);
 int		ms_exec_builtin_or_other(char **command, t_mshell *data);
 void	ms_redir_management(t_mshell *data);
+bool	ms_heredoc_management(t_mshell *data);
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
 /*****************************************************************************/

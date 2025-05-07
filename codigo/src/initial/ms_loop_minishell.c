@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/05 17:44:00 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/07 15:15:05 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ bool	ms_parcetoken_mini(t_mshell *data, char *read_line)
 	return (true);
 }
 
+void	ms_update_signal(t_mshell *data)
+{
+	if (g_signal == SIGINT)
+	{
+		data->exits = 128 + g_signal;
+		g_signal = 0;
+	}
+}
+
 void	ms_loop_minishell(t_mshell *data)
 {
 	char	*read_line;
@@ -75,11 +84,7 @@ void	ms_loop_minishell(t_mshell *data)
 			ms_exit_minishell(data);
 			break ;
 		}
-		if (g_signal == SIGINT)
-		{
-			data->exits = 128 + g_signal;
-			g_signal = 0;
-		}
+		ms_update_signal(data);
 		if (*read_line)
 		{
 			add_history(read_line);

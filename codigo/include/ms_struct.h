@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/05 17:18:28 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/07 17:22:15 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@ typedef struct s_redir
 {
 	char	*type;
 	char	*namefile;
-	int		fd;
+	bool	ok_tag;
 	int		fd_pipe[2];
 }	t_redir;
 
 typedef struct s_command
 {
+	char	*input_name;
+	int		fd_input;
+	char	*type_input;
+	char	*output_name;
+	int		fd_output;
+	char	*type_output;
 	char	**command;
 }	t_command;
 

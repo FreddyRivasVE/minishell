@@ -1,37 +1,45 @@
-==1426344== Memcheck, a memory error detector
-==1426344== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1426344== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1426344== Command: ./minishell
-==1426344== Parent PID: 1426342
-==1426344== 
-==1426344== 
-==1426344== FILE DESCRIPTORS: 5 open (3 std) at exit.
-==1426344== Open file descriptor 4:
-==1426344==    at 0x49DD07D: pipe (pipe.c:29)
-==1426344==    by 0x402712: ms_heredoc (ms_redir_management.c:35)
-==1426344==    by 0x4028AB: ms_redir_management (ms_redir_management.c:71)
-==1426344==    by 0x403004: ms_exec (ms_loop_minishell.c:19)
-==1426344==    by 0x4032B7: ms_loop_minishell (ms_loop_minishell.c:91)
-==1426344==    by 0x40136B: main (main.c:34)
-==1426344== 
-==1426344== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==1426344==    <inherited from parent>
-==1426344== 
-==1426344== 
-==1426344== HEAP SUMMARY:
-==1426344==     in use at exit: 208,326 bytes in 222 blocks
-==1426344==   total heap usage: 614 allocs, 392 frees, 235,534 bytes allocated
-==1426344== 
-==1426344== LEAK SUMMARY:
-==1426344==    definitely lost: 0 bytes in 0 blocks
-==1426344==    indirectly lost: 0 bytes in 0 blocks
-==1426344==      possibly lost: 0 bytes in 0 blocks
-==1426344==    still reachable: 0 bytes in 0 blocks
-==1426344==         suppressed: 208,326 bytes in 222 blocks
-==1426344== 
-==1426344== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---1426344-- 
---1426344-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,310 bytes in 221 blocks
---1426344-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
-==1426344== 
-==1426344== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==178960== Memcheck, a memory error detector
+==178960== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==178960== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==178960== Command: ./minishell
+==178960== Parent PID: 178958
+==178960== 
+==178960== 
+==178960== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==178960== Open file descriptor 5:
+==178960==    at 0x49DD07D: pipe (pipe.c:29)
+==178960==    by 0x402712: ms_heredoc (ms_redir_management.c:35)
+==178960==    by 0x402AFB: ms_redir_management (ms_redir_management.c:94)
+==178960==    by 0x403264: ms_exec (ms_loop_minishell.c:19)
+==178960==    by 0x403533: ms_loop_minishell (ms_loop_minishell.c:96)
+==178960==    by 0x40136B: main (main.c:34)
+==178960== 
+==178960== Open file descriptor 4:
+==178960==    at 0x49DD07D: pipe (pipe.c:29)
+==178960==    by 0x402712: ms_heredoc (ms_redir_management.c:35)
+==178960==    by 0x402AFB: ms_redir_management (ms_redir_management.c:94)
+==178960==    by 0x403264: ms_exec (ms_loop_minishell.c:19)
+==178960==    by 0x403533: ms_loop_minishell (ms_loop_minishell.c:96)
+==178960==    by 0x40136B: main (main.c:34)
+==178960== 
+==178960== Open file descriptor 3: /home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe
+==178960==    <inherited from parent>
+==178960== 
+==178960== 
+==178960== HEAP SUMMARY:
+==178960==     in use at exit: 208,568 bytes in 225 blocks
+==178960==   total heap usage: 713 allocs, 488 frees, 237,046 bytes allocated
+==178960== 
+==178960== LEAK SUMMARY:
+==178960==    definitely lost: 0 bytes in 0 blocks
+==178960==    indirectly lost: 0 bytes in 0 blocks
+==178960==      possibly lost: 0 bytes in 0 blocks
+==178960==    still reachable: 0 bytes in 0 blocks
+==178960==         suppressed: 208,568 bytes in 225 blocks
+==178960== 
+==178960== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--178960-- 
+--178960-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,552 bytes in 224 blocks
+--178960-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
+==178960== 
+==178960== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
