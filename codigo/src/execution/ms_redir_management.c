@@ -30,38 +30,29 @@
 int	ms_heredoc(t_redir *redir)
 {
 	char	*line;
-	char	*temp ;
 
 	ms_set_signal_handler(MODE_HEREDOC);
-	temp = ft_calloc(1024 + 1, sizeof(char)); //borrar 
 	if (pipe(redir->fd_pipe) == -1)
 		return (perror ("pipe"), 1);
-	//close (redir->fd_pipe[0]);
 	while (g_signal != SIGINT)
 	{
 		line = readline("> ");
 		if (!line)
 		{
-				ft_putendl_fd(ERRORHEREDOC, 2);
-				close(redir->fd_pipe[1]);
-				return (0);
-			}
-			if (!ft_strcmp(line, redir->namefile))
-				break ;
-			ft_putendl_fd(line, redir->fd_pipe[1]);
-			ft_free_ptr((void **)&line);
+			ft_putendl_fd(ERRORHEREDOC, 2);
+			break ;
+		}
+		if (!ft_strcmp(line, redir->namefile))
+			break ;
+		ft_putendl_fd(line, redir->fd_pipe[1]);
+		ft_free_ptr((void **)&line);
 	}
 	ft_free_ptr((void **)&line);
-	read (redir->fd_pipe[0], temp,1024); //borrar
-	printf ("lo que hay en pipe de %s %s\n", redir->namefile, temp); //borrar
-	free(temp); //borrar
-	close (redir->fd_pipe[0]);
 	close(redir->fd_pipe[1]);
 	if (g_signal == SIGINT)
 		return (130);
 	return (0);
 }
-
 
 void	ms_redir_management(t_mshell *data)
 {
@@ -74,14 +65,15 @@ void	ms_redir_management(t_mshell *data)
 		j = 0;
 		while (data->redir[i][j].type != NULL)
 		{
-			printf("valor de i: %d y j: %d y redir %s\n", i, j, data->redir[i][j].type);
-			if (!ft_strcmp(data->redir[i][0].type, "HEREDOC"))
+			if (!ft_strcmp(data->redir[i][j].type, "HEREDOC"))
+			{
 				data->exits = ms_heredoc(&data->redir[i][j]);
-			// if (data->exits == 130)
-			// {
-			// 	g_signal = 0;
-			// 	return ;
-			// }
+				if (data->exits == 130)
+				{
+					g_signal = 0;
+					break ;
+				}
+			}
 			j++;
 		}
 		i++;

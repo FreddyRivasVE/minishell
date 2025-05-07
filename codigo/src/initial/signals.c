@@ -21,7 +21,6 @@ void	reset_terminal_settings(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &t);
 }
 
-
 void	ms_handle_prompt(int sig)
 {
 	if (sig == SIGINT)

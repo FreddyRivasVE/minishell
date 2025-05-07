@@ -68,7 +68,7 @@ void	ft_free_redir_array(t_redir **redir)
 	while (redir[i])
 	{
 		j = 0;
-		while (redir[i][j].type || redir[i][j].namefile)
+		while (redir[i][j].type != NULL || redir[i][j].namefile != NULL)
 		{
 			ft_free_ptr((void **)&redir[i][j].type);
 			ft_free_ptr((void **)&redir[i][j].namefile);

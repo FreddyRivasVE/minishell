@@ -13,11 +13,9 @@
 #ifndef MS_STRUCT_H
 # define MS_STRUCT_H
 
-
 # define MODE_PROMPT   0
 # define MODE_HEREDOC  1
 # define MODE_CHILD    2
-
 
 typedef struct termios	t_term;
 
@@ -50,9 +48,6 @@ typedef struct s_input
 	char	***splitaftpipes;
 	char	**tag;
 }	t_input;
-
-
-
 
 typedef struct s_mshell
 {

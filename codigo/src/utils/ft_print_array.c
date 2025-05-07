@@ -58,7 +58,8 @@ void	ft_print_redir_array(t_redir **redir)
 		{
 			printf("    [%d][%d] Type: %s\n", i, j, redir[i][j].type);
 			printf("    [%d][%d] Namefile: %s\n", i, j, redir[i][j].namefile);
-			printf("    FD: %d\n", redir[i][j].fd);
+			printf("    [%d][%d] FD: %d\n", i, j, redir[i][j].fd);
+			//printf("    [%d][%d] FD[2]: %d\n", redir[i][j].fd_pipe);
 			j++;
 		}
 		i++;

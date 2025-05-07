@@ -36,7 +36,7 @@
 
 # define MINI_PRONT          "\001\033[92;1m\002minishell:$ \001\033[0m\002"
 
-extern int  g_signal;
+extern int	g_signal;
 
 /*Es la forma que encontre de poder usar la variable en mac
 la tengo que extraer explicitamente, seguro norminete te salta
@@ -110,7 +110,6 @@ void	ft_print_redir_array(t_redir **redir);
 void	ft_print_command_array(t_command *commands, int count);
 void	ft_free_redir_array(t_redir **redir);
 void	ft_free_command_array(t_command *commands, int count);
-
 
 /*****************************************************************************/
 /*                             	execution                           		 */
