@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int	g_signal = 0;
+
 int	main(int argc, char **argv, char **env)
 
 {

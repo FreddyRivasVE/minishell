@@ -68,10 +68,10 @@ void	ft_free_redir_array(t_redir **redir)
 	while (redir[i])
 	{
 		j = 0;
-		while (redir[i][j].type || redir[i][j].namefile || redir[i][j].fd != 0)
+		while (redir[i][j].type || redir[i][j].namefile)
 		{
-			free(redir[i][j].type);
-			free(redir[i][j].namefile);
+			ft_free_ptr((void **)&redir[i][j].type);
+			ft_free_ptr((void **)&redir[i][j].namefile);
 			// No necesitas cerrar el fd aquí, a menos que esté abierto
 			j++;
 		}

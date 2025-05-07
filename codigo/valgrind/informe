@@ -1,164 +1,76 @@
-==853974== Memcheck, a memory error detector
-==853974== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==853974== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==853974== Command: ./minishell
-==853974== Parent PID: 853972
-==853974== 
-==853975== 
-==853975== FILE DESCRIPTORS: 5 open (3 std) at exit.
-==853975== Open file descriptor 4: test
-==853975==    at 0x49DC53B: open (open64.c:41)
-==853975==    by 0x402760: ms_heredoc (ms_redir_management.c:46)
-==853975==    by 0x40296B: ms_redir_management (ms_redir_management.c:97)
-==853975==    by 0x4030B4: ms_exec (ms_loop_minishell.c:19)
-==853975==    by 0x40333A: ms_loop_minishell (ms_loop_minishell.c:86)
-==853975==    by 0x40136B: main (main.c:32)
-==853975== 
-==853975== Open file descriptor 3: /home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe
-==853975==    <inherited from parent>
-==853975== 
-==853975== 
-==853975== HEAP SUMMARY:
-==853975==     in use at exit: 212,989 bytes in 354 blocks
-==853975==   total heap usage: 600 allocs, 246 frees, 235,108 bytes allocated
-==853975== 
-==853975== 5 bytes in 1 blocks are still reachable in loss record 3 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4082E4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x408372: ft_strdup (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x4055D1: ms_fill_commands (ms_orquest.c:26)
-==853975==    by 0x405483: ms_handle_split (ms_orquest.c:49)
-==853975==    by 0x4053B7: ms_orquest_redir (ms_orquest.c:69)
-==853975==    by 0x4052E6: ms_orquest (ms_orquest.c:80)
-==853975==    by 0x404105: ms_split_input (ms_split_input.c:76)
-==853975==    by 0x403266: ms_parcetoken_mini (ms_loop_minishell.c:55)
-==853975==    by 0x40331B: ms_loop_minishell (ms_loop_minishell.c:81)
-==853975==    by 0x40136B: main (main.c:32)
-==853975== 
-==853975== 8 bytes in 1 blocks are still reachable in loss record 4 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x408563: ft_strjoin (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x402FE2: ms_get_env_line (ms_init_struct.c:53)
-==853975==    by 0x402E4E: ms_get_env (ms_init_struct.c:72)
-==853975==    by 0x402DBC: ms_init_struct (ms_init_struct.c:99)
-==853975==    by 0x40135F: main (main.c:31)
-==853975== 
-==853975== 8 bytes in 1 blocks are still reachable in loss record 8 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4082E4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x404B2E: ms_redir_together (ms_redir_together.c:77)
-==853975==    by 0x403247: ms_parcetoken_mini (ms_loop_minishell.c:52)
-==853975==    by 0x40331B: ms_loop_minishell (ms_loop_minishell.c:81)
-==853975==    by 0x40136B: main (main.c:32)
-==853975== 
-==853975== 8 bytes in 1 blocks are still reachable in loss record 9 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4082E4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x408372: ft_strdup (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x4055A0: ms_fill_commands (ms_orquest.c:25)
-==853975==    by 0x405483: ms_handle_split (ms_orquest.c:49)
-==853975==    by 0x4053B7: ms_orquest_redir (ms_orquest.c:69)
-==853975==    by 0x4052E6: ms_orquest (ms_orquest.c:80)
-==853975==    by 0x404105: ms_split_input (ms_split_input.c:76)
-==853975==    by 0x403266: ms_parcetoken_mini (ms_loop_minishell.c:55)
-==853975==    by 0x40331B: ms_loop_minishell (ms_loop_minishell.c:81)
-==853975==    by 0x40136B: main (main.c:32)
-==853975== 
-==853975== 8 bytes in 1 blocks are still reachable in loss record 10 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4082E4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x405854: ms_reserve_mm_command (ms_orquest_command.c:35)
-==853975==    by 0x405674: ms_orquest_command (ms_orquest_command.c:50)
-==853975==    by 0x405308: ms_orquest (ms_orquest.c:82)
-==853975==    by 0x404105: ms_split_input (ms_split_input.c:76)
-==853975==    by 0x403266: ms_parcetoken_mini (ms_loop_minishell.c:55)
-==853975==    by 0x40331B: ms_loop_minishell (ms_loop_minishell.c:81)
-==853975==    by 0x40136B: main (main.c:32)
-==853975== 
-==853975== 16 bytes in 1 blocks are still reachable in loss record 18 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4082E4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x403FEE: ms_split_input (ms_split_input.c:64)
-==853975==    by 0x403266: ms_parcetoken_mini (ms_loop_minishell.c:55)
-==853975==    by 0x40331B: ms_loop_minishell (ms_loop_minishell.c:81)
-==853975==    by 0x40136B: main (main.c:32)
-==853975== 
-==853975== 48 bytes in 1 blocks are still reachable in loss record 26 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4082E4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x40403A: ms_split_input (ms_split_input.c:67)
-==853975==    by 0x403266: ms_parcetoken_mini (ms_loop_minishell.c:55)
-==853975==    by 0x40331B: ms_loop_minishell (ms_loop_minishell.c:81)
-==853975==    by 0x40136B: main (main.c:32)
-==853975== 
-==853975== 48 bytes in 1 blocks are still reachable in loss record 27 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4082E4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x405D4A: process_segment (ms_orquest_redir.c:60)
-==853975==    by 0x405CD7: ms_reserve_memory_redir (ms_orquest_redir.c:81)
-==853975==    by 0x4052C4: ms_orquest (ms_orquest.c:78)
-==853975==    by 0x404105: ms_split_input (ms_split_input.c:76)
-==853975==    by 0x403266: ms_parcetoken_mini (ms_loop_minishell.c:55)
-==853975==    by 0x40331B: ms_loop_minishell (ms_loop_minishell.c:81)
-==853975==    by 0x40136B: main (main.c:32)
-==853975== 
-==853975== 80 bytes in 1 blocks are still reachable in loss record 29 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x408563: ft_strjoin (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x402BFF: ms_get_prompt (ms_get_prompt.c:100)
-==853975==    by 0x402DF2: ms_init_struct (ms_init_struct.c:103)
-==853975==    by 0x40135F: main (main.c:31)
-==853975== 
-==853975== 960 bytes in 60 blocks are still reachable in loss record 40 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4089F5: ft_lstnew (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x402E6B: ms_get_env (ms_init_struct.c:75)
-==853975==    by 0x402DBC: ms_init_struct (ms_init_struct.c:99)
-==853975==    by 0x40135F: main (main.c:31)
-==853975== 
-==853975== 3,591 bytes in 59 blocks are still reachable in loss record 53 of 78
-==853975==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==853975==    by 0x4082E4: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x408372: ft_strdup (in /home/frivas/entregas/cursus42/viajera/minishell/codigo/minishell)
-==853975==    by 0x402FFD: ms_get_env_line (ms_init_struct.c:57)
-==853975==    by 0x402E4E: ms_get_env (ms_init_struct.c:72)
-==853975==    by 0x402DBC: ms_init_struct (ms_init_struct.c:99)
-==853975==    by 0x40135F: main (main.c:31)
-==853975== 
-==853975== LEAK SUMMARY:
-==853975==    definitely lost: 0 bytes in 0 blocks
-==853975==    indirectly lost: 0 bytes in 0 blocks
-==853975==      possibly lost: 0 bytes in 0 blocks
-==853975==    still reachable: 4,780 bytes in 128 blocks
-==853975==         suppressed: 208,209 bytes in 226 blocks
-==853975== 
-==853975== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---853975-- 
---853975-- used_suppression:     63 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,149 bytes in 222 blocks
---853975-- used_suppression:      3 readline_history valgrind/valgrind.sup:30 suppressed: 4,052 bytes in 3 blocks
---853975-- used_suppression:      1 readline_history_entry valgrind/valgrind.sup:47 suppressed: 8 bytes in 1 blocks
-==853975== 
-==853975== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==853974== 
-==853974== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==853974== Open file descriptor 3: /home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe
-==853974==    <inherited from parent>
-==853974== 
-==853974== 
-==853974== HEAP SUMMARY:
-==853974==     in use at exit: 208,311 bytes in 222 blocks
-==853974==   total heap usage: 621 allocs, 399 frees, 235,634 bytes allocated
-==853974== 
-==853974== LEAK SUMMARY:
-==853974==    definitely lost: 0 bytes in 0 blocks
-==853974==    indirectly lost: 0 bytes in 0 blocks
-==853974==      possibly lost: 0 bytes in 0 blocks
-==853974==    still reachable: 0 bytes in 0 blocks
-==853974==         suppressed: 208,311 bytes in 222 blocks
-==853974== 
-==853974== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---853974-- 
---853974-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,295 bytes in 221 blocks
---853974-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
-==853974== 
-==853974== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1406324== Memcheck, a memory error detector
+==1406324== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1406324== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1406324== Command: ./minishell
+==1406324== Parent PID: 1406322
+==1406324== 
+==1406324== Invalid read of size 8
+==1406324==    at 0x40733A: ft_free_redir_array (ft_free_memory.c:71)
+==1406324==    by 0x4030A8: ms_exec (ms_loop_minishell.c:21)
+==1406324==    by 0x403337: ms_loop_minishell (ms_loop_minishell.c:91)
+==1406324==    by 0x40136B: main (main.c:34)
+==1406324==  Address 0x4b68848 is 0 bytes after a block of size 72 alloc'd
+==1406324==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1406324==    by 0x4082E4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
+==1406324==    by 0x405D6A: process_segment (ms_orquest_redir.c:60)
+==1406324==    by 0x405CF7: ms_reserve_memory_redir (ms_orquest_redir.c:81)
+==1406324==    by 0x4052E4: ms_orquest (ms_orquest.c:78)
+==1406324==    by 0x404125: ms_split_input (ms_split_input.c:76)
+==1406324==    by 0x403236: ms_parcetoken_mini (ms_loop_minishell.c:55)
+==1406324==    by 0x403318: ms_loop_minishell (ms_loop_minishell.c:86)
+==1406324==    by 0x40136B: main (main.c:34)
+==1406324== 
+==1406324== 
+==1406324== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==1406324== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
+==1406324==    <inherited from parent>
+==1406324== 
+==1406324== 
+==1406324== HEAP SUMMARY:
+==1406324==     in use at exit: 208,332 bytes in 223 blocks
+==1406324==   total heap usage: 614 allocs, 391 frees, 235,491 bytes allocated
+==1406324== 
+==1406324== 6 bytes in 1 blocks are definitely lost in loss record 1 of 64
+==1406324==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1406324==    by 0x4082E4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
+==1406324==    by 0x408372: ft_strdup (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
+==1406324==    by 0x4055C0: ms_fill_commands (ms_orquest.c:25)
+==1406324==    by 0x4054A3: ms_handle_split (ms_orquest.c:49)
+==1406324==    by 0x4053D7: ms_orquest_redir (ms_orquest.c:69)
+==1406324==    by 0x405306: ms_orquest (ms_orquest.c:80)
+==1406324==    by 0x404125: ms_split_input (ms_split_input.c:76)
+==1406324==    by 0x403236: ms_parcetoken_mini (ms_loop_minishell.c:55)
+==1406324==    by 0x403318: ms_loop_minishell (ms_loop_minishell.c:86)
+==1406324==    by 0x40136B: main (main.c:34)
+==1406324== 
+==1406324== LEAK SUMMARY:
+==1406324==    definitely lost: 6 bytes in 1 blocks
+==1406324==    indirectly lost: 0 bytes in 0 blocks
+==1406324==      possibly lost: 0 bytes in 0 blocks
+==1406324==    still reachable: 0 bytes in 0 blocks
+==1406324==         suppressed: 208,326 bytes in 222 blocks
+==1406324== 
+==1406324== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==1406324== 
+==1406324== 1 errors in context 1 of 2:
+==1406324== Invalid read of size 8
+==1406324==    at 0x40733A: ft_free_redir_array (ft_free_memory.c:71)
+==1406324==    by 0x4030A8: ms_exec (ms_loop_minishell.c:21)
+==1406324==    by 0x403337: ms_loop_minishell (ms_loop_minishell.c:91)
+==1406324==    by 0x40136B: main (main.c:34)
+==1406324==  Address 0x4b68848 is 0 bytes after a block of size 72 alloc'd
+==1406324==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1406324==    by 0x4082E4: ft_calloc (in /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/minishell)
+==1406324==    by 0x405D6A: process_segment (ms_orquest_redir.c:60)
+==1406324==    by 0x405CF7: ms_reserve_memory_redir (ms_orquest_redir.c:81)
+==1406324==    by 0x4052E4: ms_orquest (ms_orquest.c:78)
+==1406324==    by 0x404125: ms_split_input (ms_split_input.c:76)
+==1406324==    by 0x403236: ms_parcetoken_mini (ms_loop_minishell.c:55)
+==1406324==    by 0x403318: ms_loop_minishell (ms_loop_minishell.c:86)
+==1406324==    by 0x40136B: main (main.c:34)
+==1406324== 
+--1406324-- 
+--1406324-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,310 bytes in 221 blocks
+--1406324-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
+==1406324== 
+==1406324== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

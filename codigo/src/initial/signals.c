@@ -26,10 +26,11 @@ void	ms_handle_prompt(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("^C\n");
+		ft_putendl_fd("^C", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_signal = SIGINT;
 	}
 }
 
@@ -37,9 +38,9 @@ void	ms_handle_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
-		reset_terminal_settings();
-		exit(130);
+		ft_putstr_fd("^C", 1);
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		g_signal = SIGINT;
 	}
 }
 

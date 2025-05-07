@@ -75,6 +75,11 @@ void	ms_loop_minishell(t_mshell *data)
 			ms_exit_minishell(data);
 			break ;
 		}
+		if (g_signal ==  SIGINT)
+		{
+			data->exits = 128 + g_signal;
+			g_signal = 0;
+		}
 		if (*read_line)
 		{
 			add_history(read_line);

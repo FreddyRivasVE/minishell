@@ -29,55 +29,36 @@
 
 int	ms_heredoc(t_redir *redir)
 {
-	pid_t	pid;
-	int		status;
 	char	*line;
+	char	*temp ;
 
-	pid = fork();
-	if (pid == -1)
+	ms_set_signal_handler(MODE_HEREDOC);
+	temp = ft_calloc(1024 + 1, sizeof(char)); //borrar 
+	if (pipe(redir->fd_pipe) == -1)
+		return (perror ("pipe"), 1);
+	//close (redir->fd_pipe[0]);
+	while (g_signal != SIGINT)
 	{
-		perror("fork");
-		return (1);
-	}
-	redir->fd = 0;
-	if (pid == 0)
-	{
-		ms_set_signal_handler(MODE_HEREDOC);
-		redir->fd = open(redir->namefile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (redir->fd == -1)
+		line = readline("> ");
+		if (!line)
 		{
-			perror("here_doc");
-			exit(1);
-		}
-		while (1)
-		{
-			line = readline("> ");
-			if (!line)
-			{
 				ft_putendl_fd(ERRORHEREDOC, 2);
-				close(redir->fd);
-				exit(0);
+				close(redir->fd_pipe[1]);
+				return (0);
 			}
 			if (!ft_strcmp(line, redir->namefile))
-			{
-				free(line);
 				break ;
-			}
-			ft_putendl_fd(line, redir->fd);
-			free(line);
-		}
-		free(line);
-		close(redir->fd);
-		exit(0);
+			ft_putendl_fd(line, redir->fd_pipe[1]);
+			ft_free_ptr((void **)&line);
 	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			return (130);
-		else if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-	}
+	ft_free_ptr((void **)&line);
+	read (redir->fd_pipe[0], temp,1024); //borrar
+	printf ("lo que hay en pipe de %s %s\n", redir->namefile, temp); //borrar
+	free(temp); //borrar
+	close (redir->fd_pipe[0]);
+	close(redir->fd_pipe[1]);
+	if (g_signal == SIGINT)
+		return (130);
 	return (0);
 }
 
@@ -93,10 +74,14 @@ void	ms_redir_management(t_mshell *data)
 		j = 0;
 		while (data->redir[i][j].type != NULL)
 		{
-			if (!ft_strcmp(data->redir[i][j].type, "HEREDOC"))
+			printf("valor de i: %d y j: %d y redir %s\n", i, j, data->redir[i][j].type);
+			if (!ft_strcmp(data->redir[i][0].type, "HEREDOC"))
 				data->exits = ms_heredoc(&data->redir[i][j]);
-			if (data->exits == 130)
-				return ;
+			// if (data->exits == 130)
+			// {
+			// 	g_signal = 0;
+			// 	return ;
+			// }
 			j++;
 		}
 		i++;

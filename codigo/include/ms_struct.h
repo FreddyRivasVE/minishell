@@ -31,6 +31,7 @@ typedef struct s_redir
 	char	*type;
 	char	*namefile;
 	int		fd;
+	int		fd_pipe[2];
 }	t_redir;
 
 typedef struct s_command

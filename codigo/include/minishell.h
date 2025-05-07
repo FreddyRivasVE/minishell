@@ -25,7 +25,8 @@
 # include <unistd.h>
 # include <termios.h>
 # include <sys/stat.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
+# include <sys/ioctl.h>
 # include "../libs/libft/libft.h"
 # include "../include/ms_struct.h"
 # include "minisherror.h"
@@ -34,6 +35,8 @@
 # define CLEAR_COLOR	"\001\033[0m\002"
 
 # define MINI_PRONT          "\001\033[92;1m\002minishell:$ \001\033[0m\002"
+
+extern int  g_signal;
 
 /*Es la forma que encontre de poder usar la variable en mac
 la tengo que extraer explicitamente, seguro norminete te salta
