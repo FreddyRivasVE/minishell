@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:14:29 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/07 17:38:13 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/08 14:34:47 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static bool	ms_redir_fill_input(t_mshell *data, int i, int j)
 	}
 	if (!ft_strcmp(data->redir[i][j].type, "INPUT"))
 	{
-		if (!ft_strcmp(data->commands[i].input_name, "HEREDOC"))
+		if (data->commands[i].input_name != NULL
+			&& !ft_strcmp(data->commands[i].input_name, "HEREDOC"))
 			close(data->commands[i].fd_input);
 		ft_free_ptr((void **)&data->commands[i].input_name);
 		data->commands[i].input_name = ft_strdup(data->redir[i][j].namefile);

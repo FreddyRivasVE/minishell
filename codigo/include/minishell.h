@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/07 17:00:32 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/08 15:58:27 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ms_get_prompt(t_mshell *data);
 void	ms_init_struct(t_mshell *data, char **env);
 void	ms_loop_minishell(t_mshell *data);
 void	ms_set_signal_handler(int mode);
+void	reset_terminal_settings(void);
 
 /*****************************************************************************/
 /*                             		parce                            		 */
@@ -119,6 +120,7 @@ void	ms_exec(t_mshell *data);
 int		ms_exec_builtin_or_other(char **command, t_mshell *data);
 bool	ms_redir_management(t_mshell *data);
 bool	ms_heredoc_management(t_mshell *data);
+void	ms_simple_execution(t_mshell *data);
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
 /*****************************************************************************/
