@@ -1,38 +1,29 @@
-==1062558== Memcheck, a memory error detector
-==1062558== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1062558== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1062558== Command: ./minishell
-==1062558== Parent PID: 1062556
-==1062558== 
-==1062558== 
-==1062558== FILE DESCRIPTORS: 5 open (3 std) at exit.
-==1062558== Open file descriptor 4:
-==1062558==    at 0x49DD07D: pipe (pipe.c:29)
-==1062558==    by 0x402992: ms_heredoc (ms_heredoc_management.c:20)
-==1062558==    by 0x402B3B: ms_heredoc_management (ms_heredoc_management.c:56)
-==1062558==    by 0x402944: ms_redir_management (ms_redir_management.c:95)
-==1062558==    by 0x4032B4: ms_exec (ms_loop_minishell.c:19)
-==1062558==    by 0x403583: ms_loop_minishell (ms_loop_minishell.c:96)
-==1062558==    by 0x40136B: main (main.c:34)
-==1062558== 
-==1062558== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==1062558==    <inherited from parent>
-==1062558== 
-==1062558== 
-==1062558== HEAP SUMMARY:
-==1062558==     in use at exit: 208,326 bytes in 222 blocks
-==1062558==   total heap usage: 644 allocs, 422 frees, 236,378 bytes allocated
-==1062558== 
-==1062558== LEAK SUMMARY:
-==1062558==    definitely lost: 0 bytes in 0 blocks
-==1062558==    indirectly lost: 0 bytes in 0 blocks
-==1062558==      possibly lost: 0 bytes in 0 blocks
-==1062558==    still reachable: 0 bytes in 0 blocks
-==1062558==         suppressed: 208,326 bytes in 222 blocks
-==1062558== 
-==1062558== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---1062558-- 
---1062558-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,310 bytes in 221 blocks
---1062558-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
-==1062558== 
-==1062558== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1204404== Memcheck, a memory error detector
+==1204404== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1204404== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1204404== Command: ./minishell
+==1204404== Parent PID: 1204402
+==1204404== 
+==1204404== 
+==1204404== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==1204404== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
+==1204404==    <inherited from parent>
+==1204404== 
+==1204404== 
+==1204404== HEAP SUMMARY:
+==1204404==     in use at exit: 208,326 bytes in 222 blocks
+==1204404==   total heap usage: 671 allocs, 449 frees, 236,439 bytes allocated
+==1204404== 
+==1204404== LEAK SUMMARY:
+==1204404==    definitely lost: 0 bytes in 0 blocks
+==1204404==    indirectly lost: 0 bytes in 0 blocks
+==1204404==      possibly lost: 0 bytes in 0 blocks
+==1204404==    still reachable: 0 bytes in 0 blocks
+==1204404==         suppressed: 208,326 bytes in 222 blocks
+==1204404== 
+==1204404== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--1204404-- 
+--1204404-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,310 bytes in 221 blocks
+--1204404-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
+==1204404== 
+==1204404== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

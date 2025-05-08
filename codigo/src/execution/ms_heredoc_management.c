@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ms_heredoc(t_redir *redir)
+static int	ms_heredoc(t_redir *redir)
 {
 	char	*line;
 
@@ -58,12 +58,12 @@ bool	ms_heredoc_management(t_mshell *data)
 				{
 					g_signal = 0;
 					ft_close_heredoc_fds(data);
-					return (true);
+					return (false);
 				}
 			}
 			j++;
 		}
 		i++;
 	}
-	return (false);
+	return (true);
 }

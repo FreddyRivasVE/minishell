@@ -101,6 +101,9 @@ void	ft_free_command_array(t_command *commands, int count)
 			}
 			free(commands[i].command);
 		}
+		ft_free_ptr((void **)&commands[i].input_name);
+		ft_free_ptr((void **)&commands[i].output_name);
+		ft_free_ptr((void **)&commands[i].type_output);
 		i++;
 	}
 	free(commands);

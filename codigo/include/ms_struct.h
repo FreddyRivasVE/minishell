@@ -36,7 +36,6 @@ typedef struct s_command
 {
 	char	*input_name;
 	int		fd_input;
-	char	*type_input;
 	char	*output_name;
 	int		fd_output;
 	char	*type_output;

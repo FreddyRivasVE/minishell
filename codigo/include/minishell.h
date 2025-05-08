@@ -115,9 +115,9 @@ void	ft_close_heredoc_fds(t_mshell *data);
 /*****************************************************************************/
 /*                             	execution                           		 */
 /*****************************************************************************/
-int		ms_exec(t_mshell *data);
+void	ms_exec(t_mshell *data);
 int		ms_exec_builtin_or_other(char **command, t_mshell *data);
-void	ms_redir_management(t_mshell *data);
+bool	ms_redir_management(t_mshell *data);
 bool	ms_heredoc_management(t_mshell *data);
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */

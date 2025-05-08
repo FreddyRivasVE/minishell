@@ -75,18 +75,21 @@ void	ft_print_command_array(t_command *commands, int count)
 	{
 		printf("Command #%d:\n", i);
 		if (commands[i].command == NULL)
-		{
 			printf("  (null command)\n");
-		}
 		else
 		{
 			j = 0;
 			while (commands[i].command[j])
 			{
-				printf("  Arg[%d]: %s\n", j, commands[i].command[j]);
+				printf("  Comando[%d]: %s\n", j, commands[i].command[j]);
 				j++;
 			}
 		}
+		printf("  Input_name: %s\n", commands[i].input_name);
+		printf("  Input_fd: %d\n", commands[i].fd_input);
+		printf("  Output_name: %s\n", commands[i].output_name);
+		printf("  Output_fd: %d\n", commands[i].fd_output);
+		printf("  Output_type: %s\n", commands[i].type_output);
 		i++;
 	}
 }

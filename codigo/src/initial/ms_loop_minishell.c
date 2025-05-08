@@ -12,15 +12,20 @@
 
 #include "minishell.h"
 
-int	ms_exec(t_mshell *data)
+void	ms_exec(t_mshell *data)
 {
 	int		exit;
 
-	ms_redir_management(data);
+	if(!ms_redir_management(data))
+	{
+		ft_free_redir_array(data->redir);
+		ft_free_command_array(data->commands, data->pipesnum + 1);
+		return ;
+	}
 	exit = ms_exec_builtin_or_other(data->commands[0].command, data);
 	ft_free_redir_array(data->redir);
 	ft_free_command_array(data->commands, data->pipesnum + 1);
-	return (exit);
+	return ;
 }
 
 void	ms_exit_minishell(t_mshell *data)
@@ -93,7 +98,7 @@ void	ms_loop_minishell(t_mshell *data)
 				free(read_line);
 				continue ;
 			}
-			data->exits = ms_exec(data);
+			ms_exec(data);
 		}
 		free(read_line);
 	}

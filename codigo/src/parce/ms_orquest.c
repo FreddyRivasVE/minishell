@@ -81,7 +81,5 @@ bool	ms_orquest(t_mshell *data, char ***split, char **tag)
 		return (false);
 	if (ms_orquest_command(data, split, tag) == -1)
 		return (false);
-	ft_print_redir_array(data->redir); //borrar.
-	ft_print_command_array(data->commands, data->pipesnum + 1); // borrar
 	return (true);
 }
