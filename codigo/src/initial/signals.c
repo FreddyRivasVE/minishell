@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:11:19 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/06 16:43:03 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/08 20:14:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ void	ms_handle_heredoc(int sig)
 void	ms_handle_child(int sig)
 {
 	if (sig == SIGINT)
-		write(1, "\n", 1);
+	{
+		ft_putendl_fd("^C", 1);
+		reset_terminal_settings();
+		g_signal = SIGINT;
+		exit(130);
+	}
 }
 
 void	ms_set_signal_handler(int mode)
