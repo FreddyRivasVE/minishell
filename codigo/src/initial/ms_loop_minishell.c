@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 16:41:34 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:58:36 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ms_exec(t_mshell *data)
 {
-
 	if (!ms_redir_management(data))
 	{
 		ft_free_redir_array(data->redir);

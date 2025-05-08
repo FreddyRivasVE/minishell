@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:14:29 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 14:34:47 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:58:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,17 @@ static bool	ms_redir_fill_output(t_mshell *data, int i, int j)
 	{
 		ft_free_ptr((void **)&data->commands[i].output_name);
 		data->commands[i].output_name = ft_strdup(data->redir[i][j].namefile);
-		if(!data->commands[i].output_name)
+		if (!data->commands[i].output_name)
 			return (ms_print_perror_malloc(data), false);
 		ft_free_ptr((void **)&data->commands[i].type_output);
 		data->commands[i].type_output = ft_strdup(data->redir[i][j].type);
-		if(!data->commands[i].output_name)
+		if (!data->commands[i].output_name)
 			return (ms_print_perror_malloc(data), false);
 		if (!ft_strcmp(data->redir[i][j].type, "OUTPUT"))
-			data->commands[i].fd_output = open(data->redir[i][j].namefile , \
+			data->commands[i].fd_output = open(data->redir[i][j].namefile, \
 			O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (!ft_strcmp(data->redir[i][j].type, "OUTPUTAPPEND"))
-			data->commands[i].fd_output = open(data->redir[i][j].namefile , \
+			data->commands[i].fd_output = open(data->redir[i][j].namefile, \
 			O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (data->commands[i].fd_output != -1)
 			close (data->commands[i].fd_output);
@@ -113,9 +113,9 @@ bool	ms_redir_management(t_mshell *data)
 		j = 0;
 		while (data->redir[i][j].type != NULL)
 		{
-			if(!ms_redir_fill_input(data, i, j))
+			if (!ms_redir_fill_input(data, i, j))
 				return (false);
-			if(!ms_redir_fill_output(data, i, j))
+			if (!ms_redir_fill_output(data, i, j))
 				return (false);
 			if (!data->redir[i][j].ok_tag)
 				break ;
