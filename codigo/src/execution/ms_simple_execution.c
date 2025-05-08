@@ -6,13 +6,13 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:41:17 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 16:15:59 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:53:50 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_simple_execution_input(t_mshell *data)
+static bool	ms_simple_execution_input(t_mshell *data)
 {
 	if (data->commands[0].input_name != NULL
 		&& ft_strcmp(data->commands[0].input_name, "HEREDOC"))
@@ -23,7 +23,7 @@ void	ms_simple_execution_input(t_mshell *data)
 		{
 			perror(data->commands[0].input_name);
 			data->exits = 1;
-			return ;
+			return (false);
 		}
 	}
 	if (data->commands[0].input_name != NULL)
@@ -32,17 +32,18 @@ void	ms_simple_execution_input(t_mshell *data)
 		{
 			perror(data->commands[0].input_name);
 			data->exits = 1;
-			return ;
+			return (false);
 		}
 		close(data->commands[0].fd_input);
 	}
+	return (true);
 }
 
-void	ms_simple_execution_output(t_mshell *data)
+static bool	ms_simple_execution_output(t_mshell *data)
 {
 	if (data->commands[0].type_output != NULL
 		&& (!ft_strcmp(data->commands[0].type_output, "OUTPUT")
-		|| !ft_strcmp(data->commands[0].type_output, "OUTPUTAPPEND")))
+			|| !ft_strcmp(data->commands[0].type_output, "OUTPUTAPPEND")))
 	{
 		if (!ft_strcmp(data->commands[0].type_output, "OUTPUT"))
 			data->commands[0].fd_output = open(data->commands[0].output_name, \
@@ -54,21 +55,37 @@ void	ms_simple_execution_output(t_mshell *data)
 		{
 			perror(data->commands[0].output_name);
 			data->exits = 1;
-			return ;
+			return (false);
 		}
 		if (dup2(data->commands[0].fd_output, STDOUT_FILENO) == -1)
 		{
 			perror(data->commands[0].output_name);
 			data->exits = 1;
-			return ;
+			return (false);
 		}
 		close(data->commands[0].fd_output);
 	}
+	return (true);
 }
 
 void	ms_simple_execution(t_mshell *data)
 {
-	ms_simple_execution_input(data);
-	ms_simple_execution_output(data);
+	int	input;
+	int	output;
+
+	input = dup(STDIN_FILENO);
+	output = dup(STDOUT_FILENO);
+	if (!ms_simple_execution_input(data) || !ms_simple_execution_output(data))
+	{
+		dup2(input, STDIN_FILENO);
+		dup2(output, STDOUT_FILENO);
+		close(input);
+		close(output);
+		return ;
+	}
 	data->exits = ms_exec_builtin_or_other(data->commands[0].command, data);
+	dup2(input, STDIN_FILENO);
+	dup2(output, STDOUT_FILENO);
+	close(input);
+	close(output);
 }

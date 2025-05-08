@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 15:53:28 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:41:34 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	ms_exec(t_mshell *data)
 {
-	//int		exit;
 
-	if(!ms_redir_management(data))
+	if (!ms_redir_management(data))
 	{
 		ft_free_redir_array(data->redir);
 		ft_free_command_array(data->commands, data->pipesnum + 1);
@@ -29,7 +28,6 @@ void	ms_exec(t_mshell *data)
 	}
 	else
 		ms_simple_execution(data);
-	//exit = ms_exec_builtin_or_other(data->commands[0].command, data);
 	ft_free_redir_array(data->redir);
 	ft_free_command_array(data->commands, data->pipesnum + 1);
 	return ;
