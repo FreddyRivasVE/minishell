@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/08 20:22:52 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/09 13:07:54 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static char	*ms_recoverpath(char *commands, t_list **env)
 	}
 	return (free_array(paths), NULL);
 }
-
 
 static void	ms_move_env_to_pointer(t_mshell *data)
 {
@@ -89,23 +88,16 @@ int	ms_exec_other(char **command, t_mshell *data)
 		perror(command[0]);
 		exit(127);
 	}
-	if (g_signal == SIGINT)
-		exit(130);
 	exit(0);
 }
-
 
 int	ms_exec_builtin_or_other(char **command, t_mshell *data)
 {
 	int		status;
 	pid_t	pid;
-	struct sigaction	sa_ignore;
 
 	if (!command || !command[0])
-	{
-		printf("-----> comando a ejecutar: %s\n", command[0]);
-		return (-1); // provisorio borrar 
-	}
+		return (0);
 	if (!ft_strncmp(command[0], "echo", 5))
 		return (ms_echo(command));
 	else if (!ft_strncmp(command[0], "cd", 3))
@@ -123,23 +115,16 @@ int	ms_exec_builtin_or_other(char **command, t_mshell *data)
 	else
 	{
 		pid = ms_exec_other(command, data);
-		sigemptyset(&sa_ignore.sa_mask);
-		sa_ignore.sa_flags = 0;
-		sa_ignore.sa_handler = SIG_IGN;
-		sigaction(SIGINT, &sa_ignore, NULL);
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			data->exits = WEXITSTATUS(status);
+			return (WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
-			data->exits = 128 + WTERMSIG(status);
-		ms_set_signal_handler(MODE_PROMPT);
-		if (data->exits == 130) // SIGINT
 		{
-			write(1, "\n", 1); // newline para prompt limpio
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
+			write(1, "\n", 1);
+			return (128 + WTERMSIG(status));
 		}
+		ms_set_signal_handler(MODE_PROMPT);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:55:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 19:45:34 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/09 12:57:29 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ms_heredoc(t_redir *redir)
 		}
 		if (!ft_strcmp(line, redir->namefile))
 			break ;
-		ft_putstr_fd(line, redir->fd_pipe[1]);
+		ft_putendl_fd(line, redir->fd_pipe[1]);
 		ft_free_ptr((void **)&line);
 	}
 	redir->ok_tag = true;

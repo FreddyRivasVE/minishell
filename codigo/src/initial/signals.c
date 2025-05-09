@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:11:19 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 20:14:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/09 12:11:38 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ void	ms_handle_child(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_putendl_fd("^C", 1);
-		reset_terminal_settings();
-		g_signal = SIGINT;
-		exit(130);
+		//act.sa_handler = SIG_DFL;
+		//ft_putendl_fd("^D", 1);
+		//ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		//reset_terminal_settings();
+		//g_signal = SIGINT;
+		//exit(130);
 	}
 }
 
@@ -67,6 +69,7 @@ void	ms_set_signal_handler(int mode)
 		act.sa_handler = ms_handle_heredoc;
 	}
 	else if (mode == MODE_CHILD)
-		act.sa_handler = ms_handle_child;
+		act.sa_handler = SIG_DFL;
+		//act.sa_handler = ms_handle_child;
 	sigaction(SIGINT, &act, NULL);
 }

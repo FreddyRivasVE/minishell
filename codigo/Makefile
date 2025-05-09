@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/05/08 15:49:50 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/09 12:54:19 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,6 +111,9 @@ valgrind:
 		--tool=memcheck \
 		--leak-check=full \
 		--show-leak-kinds=all \
+		--show-reachable=yes \
+		--error-limit=no \
+		--malloc-fill=0xAA \
 		--track-origins=yes \
 		--trace-children=yes \
 		--track-fds=yes \
