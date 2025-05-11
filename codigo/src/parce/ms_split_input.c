@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_split_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:46:39 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 19:42:23 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/11 12:24:18 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	***ms_split_postpipe(t_mshell *data)
 	{
 		commands[i] = ft_split_quotes(temp[i], false);
 		if (!commands[i])
-			return (free_triple_array(commands), free_array(temp), NULL);
+			return (ft_free_triple_array(commands), free_array(temp), NULL);
 		i++;
 	}
 	commands[i] = NULL;
@@ -43,7 +43,7 @@ static void	ms_free_struct(t_mshell	*data)
 	if (data->inputs->splitpipes)
 		free_array(data->inputs->splitpipes);
 	if (data->inputs->splitaftpipes)
-		free_triple_array(data->inputs->splitaftpipes);
+		ft_free_triple_array(data->inputs->splitaftpipes);
 	if (data->inputs->tag)
 		free(data->inputs->tag);
 	if (data->inputs)

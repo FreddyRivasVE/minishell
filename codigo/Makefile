@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
+#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/05/09 12:54:19 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/11 11:54:36 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,9 @@ BUILT		:=	$(BUILT_INS_DIR)cd.c $(BUILT_INS_DIR)env.c \
 				$(BUILT_INS_DIR)unset.c $(BUILT_INS_DIR)exit.c \
 				$(BUILT_INS_DIR)pwd.c $(BUILT_INS_DIR)echo.c
 EXECUTION	:=	$(EXECUTION_DIR)ms_execution.c $(EXECUTION_DIR)ms_redir_management.c \
-				$(EXECUTION_DIR)ms_heredoc_management.c $(EXECUTION_DIR)ms_simple_execution.c
+				$(EXECUTION_DIR)ms_heredoc_management.c $(EXECUTION_DIR)ms_simple_execution.c \
+				$(EXECUTION_DIR)ms_exec_other_onecommand.c $(EXECUTION_DIR)ms_execution_utils.c
+
 INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
 				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_orquest.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/05 14:15:59 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/11 10:09:57 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ms_is_redirection(char *tag)
 		|| !ft_strcmp(tag, "OUTPUT" ));
 }
 
-static bool	ms_fill_commands(char *tag, char *split, t_mshell *data, int *idx)
+static bool	ms_fill_redir(char *tag, char *split, t_mshell *data, int *idx)
 {
 	data->redir[idx[0]][idx[1]].type = ft_strdup(tag);
 	data->redir[idx[0]][idx[1]].namefile = ft_strdup(split);
@@ -46,7 +46,7 @@ static bool	ms_handle_split(char **split, char **tag, t_mshell *data, int *ik)
 		{
 			idx[0] = ik[0];
 			idx[1] = l;
-			if (!ms_fill_commands(tag[ik[1]], split[j + 1], data, idx))
+			if (!ms_fill_redir(tag[ik[1]], split[j + 1], data, idx))
 				return (false);
 			l++;
 		}

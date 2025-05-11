@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_array.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 10:59:13 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/05 18:55:09 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/11 12:48:00 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@
  *       dangling references.
  */
 
+static void	ft_free_ptr(void **ptr)
+{
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
+
 void	*free_array(char **array)
 {
 	size_t	i;
@@ -34,7 +43,7 @@ void	*free_array(char **array)
 	i = 0;
 	while (array[i] != NULL)
 	{
-		free(array[i]);
+		ft_free_ptr((void **)&array[i]);
 		i++;
 	}
 	free(array);

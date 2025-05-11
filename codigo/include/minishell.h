@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/08 15:58:27 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/11 12:30:13 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,46 @@ void	reset_terminal_settings(void);
 /*                             		parce                            		 */
 /*****************************************************************************/
 
+int		ms_input_row_validation(t_mshell *data);
+int		ms_orquest_command(t_mshell *data, char ***split, char **tag);
 bool	ms_check_pipes(char *str);
 bool	ms_check_quotation_marks(char *str);
 bool	ms_check_redir(char *str);
-char	*ms_escape_special_chars(char *str);
 bool	ms_expand_variable(t_mshell *data);
-int		ms_input_row_validation(t_mshell *data);
-void	ms_pre_commands(t_mshell *data);
-void	ms_pre_redir(t_mshell *data);
 bool	ms_quotes_killer(char ***inputs, t_mshell *data);
 bool	ms_redir_together(t_mshell *data);
 bool	ms_split_input(t_mshell *data);
 bool	ms_token_input(t_mshell *data);
 bool	ms_orquest(t_mshell *data, char ***split, char **tag);
-int		ms_orquest_command(t_mshell *data, char ***split, char **tag);
+char	*ms_escape_special_chars(char *str);
 bool	ms_special_expand(t_mshell *data);
 bool	ms_reserve_memory_redir(char *str, t_mshell *data);
+
+/*****************************************************************************/
+/*                             	execution                           		 */
+/*****************************************************************************/
+
+int		ms_exec_builtin_or_other(char **command, t_mshell *data);
+int		ms_exec_other(char **command, t_mshell *data);
+bool	ms_redir_management(t_mshell *data);
+bool	ms_heredoc_management(t_mshell *data);
+char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data);
+void	ms_exec(t_mshell *data);
+void	ms_execute_command(char *path, char **command, char **envp);
+void	ms_simple_execution(t_mshell *data);
+
+/*****************************************************************************/
+/*                              BUILT-INS                           		 */
+/*****************************************************************************/
+
+int		ms_export(char **command, t_mshell *data);
+int		ms_export_print_list(t_list **env);
+int		ms_env(char **command, t_list **lst);
+int		ms_exit(t_mshell *data);
+int		ms_unset(t_mshell *data, char **data_ref);
+int		ms_pwd(char **command, t_list **env);
+int		ms_echo(char **command);
+int		ms_cd(char	**s_command, t_list **env, t_mshell *data);
 
 /*****************************************************************************/
 /*                                utils	                            		 */
@@ -99,38 +123,20 @@ char	*ft_strtrim_spaces(char *s);
 char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)());
 char	*ms_get_cwd(void);
 t_list	*ms_copy_export_env(t_list **env);
-void	free_triple_array(char ***arr);
+void	ft_close_heredoc_fds(t_mshell *data);
+void	ft_error_and_exit(char *shell, char *command, char *msj, int num);
 void	ft_free_ptr(void **ptr);
+void	ft_free_triple_array(char ***arr);
+void	ft_free_redir_array(t_redir **redir);
+void	ft_free_command_array(t_command *commands, int count);
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 void	ft_print_array(char **array);
 void	ft_print_array_triple(char ***array);
 void	ft_print_error(char *arg, char *var, char *msj);
-void	ms_update_prompt(t_mshell *data);
-void	ms_print_perror_malloc(t_mshell *data);
 void	ft_print_redir_array(t_redir **redir);
 void	ft_print_command_array(t_command *commands, int count);
-void	ft_free_redir_array(t_redir **redir);
-void	ft_free_command_array(t_command *commands, int count);
-void	ft_close_heredoc_fds(t_mshell *data);
+void	ms_print_perror_malloc(t_mshell *data);
+void	ms_print_perror_exit(char *str, int num);
+void	ms_update_prompt(t_mshell *data);
 
-/*****************************************************************************/
-/*                             	execution                           		 */
-/*****************************************************************************/
-void	ms_exec(t_mshell *data);
-int		ms_exec_builtin_or_other(char **command, t_mshell *data);
-bool	ms_redir_management(t_mshell *data);
-bool	ms_heredoc_management(t_mshell *data);
-void	ms_simple_execution(t_mshell *data);
-/*****************************************************************************/
-/*                              BUILT-INS                           		 */
-/*****************************************************************************/
-
-int		ms_export(char **command, t_mshell *data);
-int		ms_export_print_list(t_list **env);
-int		ms_env(char **command, t_list **lst);
-int		ms_exit(t_mshell *data);
-int		ms_unset(t_mshell *data, char **data_ref);
-int		ms_pwd(char **command, t_list **env);
-int		ms_echo(char **command);
-int		ms_cd(char	**s_command, t_list **env, t_mshell *data);
 #endif

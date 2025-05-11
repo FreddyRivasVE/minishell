@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_memory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:24:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/03 13:37:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/11 12:24:18 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_free_ptr(void **ptr)
 	}
 }
 
-void	free_triple_array(char ***arr)
+void	ft_free_triple_array(char ***arr)
 {
 	int	i;
 
