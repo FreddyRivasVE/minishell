@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/11 12:30:13 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/11 13:15:34 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ms_simple_execution(t_mshell *data);
 int		ms_export(char **command, t_mshell *data);
 int		ms_export_print_list(t_list **env);
 int		ms_env(char **command, t_list **lst);
-int		ms_exit(t_mshell *data);
+int		ms_exit(char **command, t_mshell *data);
 int		ms_unset(t_mshell *data, char **data_ref);
 int		ms_pwd(char **command, t_list **env);
 int		ms_echo(char **command);
@@ -135,8 +135,8 @@ void	ft_print_array_triple(char ***array);
 void	ft_print_error(char *arg, char *var, char *msj);
 void	ft_print_redir_array(t_redir **redir);
 void	ft_print_command_array(t_command *commands, int count);
+void	ms_exit_minishell(t_mshell *data);
 void	ms_print_perror_malloc(t_mshell *data);
 void	ms_print_perror_exit(char *str, int num);
 void	ms_update_prompt(t_mshell *data);
-
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/09 12:58:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/11 13:13:16 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ void	ms_exec(t_mshell *data)
 	ft_free_redir_array(data->redir);
 	ft_free_command_array(data->commands, data->pipesnum + 1);
 	return ;
-}
-
-void	ms_exit_minishell(t_mshell *data)
-{
-	printf("exit\n");
-	ft_lstclear(&data->env, free);
-	ft_free_ptr((void **)&data->prompt);
-	ft_free_ptr((void **)&data->input_row);
-	rl_clear_history();
 }
 
 bool	ms_parcetoken_mini(t_mshell *data, char *read_line)
