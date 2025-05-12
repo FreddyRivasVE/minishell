@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 11:51:22 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/12 10:27:05 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/12 12:20:35 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ void	ms_execute_command(char *path, char **command, char **envp)
 {
 	if (execve(path, command, envp) == -1)
 		ms_print_perror_exit(command[0], 127);
+	free_array(envp);
 	exit(0);
 }

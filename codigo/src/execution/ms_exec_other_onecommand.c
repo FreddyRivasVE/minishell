@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:08:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/12 10:19:44 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/12 12:47:01 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	ms_move_env_to_pointer(t_mshell *data)
 		return ;
 	}
 	current = data->env;
-	while (current != NULL && current->next != NULL)
+	//while (current != NULL && current->next != NULL)
+	while (current != NULL)
 	{
 		data->envp[i] = ft_strdup(current->content);
 		if (!data->envp[i])
@@ -66,7 +67,6 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 		else if (data->exits == ENOMEM)
 			exit(ENOMEM);
 	}
-	printf("entro 2"); //borrar
 	ms_execute_command(path, command, data->envp);
 	return (0);
 }
@@ -84,6 +84,7 @@ int	ms_exec_other(char **command, t_mshell *data)
 		pid = ms_exec_other_onecommand(command, data);
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		free_array(data->envp);
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
