@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/12 10:30:54 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:25:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@
 # define MODE_CHILD    2
 
 typedef struct termios	t_term;
-
-/*typedef struct s_pipe
-{
-}	t_pipe;
-*/
 
 typedef struct s_redir
 {
@@ -40,12 +35,8 @@ typedef struct s_command
 	int		fd_output;
 	char	*type_output;
 	char	**command;
+	int		pipefd[2];
 }	t_command;
-
-// typedef struct s_exit
-// {
-// 	char	*code;
-// }	t_exit;
 
 typedef struct s_input
 {
@@ -59,7 +50,6 @@ typedef struct s_mshell
 	t_list		*env;
 	t_term		conftty;
 	char		*input_row;
-	//t_pipe		*pipes;
 	t_command	*commands;
 	t_redir		**redir;
 	int			exits;

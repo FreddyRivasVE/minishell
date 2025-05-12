@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/11 13:15:34 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/12 18:12:25 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data);
 void	ms_exec(t_mshell *data);
 void	ms_execute_command(char *path, char **command, char **envp);
 void	ms_simple_execution(t_mshell *data);
+void	ms_pipe_management(t_mshell *data);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */

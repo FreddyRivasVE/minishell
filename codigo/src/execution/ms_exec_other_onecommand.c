@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:08:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/12 12:47:01 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:47:46 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,30 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 	return (0);
 }
 
+int	ms_exec_pipes(char **command, t_mshell *data)
+{
+	char	*path;
+	
+	path = NULL;
+	if (ft_strchr(command[0], '/'))
+	{
+		if (access(command[0], F_OK | X_OK) == 0)
+			path = ft_strdup(command[0]);
+		else
+			ft_error_and_exit(MINI, command[0], NOFILEDIRCTORY, 127);
+	}
+	else
+	{
+		path = ms_recoverpath(command[0], &data->env, data);
+		if (!path && data->exits != ENOMEM)
+			ft_error_and_exit(MINI, command[0], ERROCOMMAND, 127);
+		else if (data->exits == ENOMEM)
+			exit(ENOMEM);
+	}
+	ms_execute_command(path, command, data->envp);
+	return (0);
+}
+
 int	ms_exec_other(char **command, t_mshell *data)
 {
 	int		status;
@@ -91,6 +115,10 @@ int	ms_exec_other(char **command, t_mshell *data)
 			return (ft_putstr_fd("\n", 1), 128 + WTERMSIG(status));
 		ms_set_signal_handler(MODE_PROMPT);
 	}
-	free_array(data->envp);
+	else
+	{
+		pid = ms_exec_pipes(command, data);
+		free_array(data->envp);
+	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_loop_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/11 13:13:16 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/12 18:08:29 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	ms_exec(t_mshell *data)
 		return ;
 	}
 	if (data->pipesnum != 0)
-	{
-		//ms_pipe_management(data);
-		printf("hola"); //borrar
-	}
+		ms_pipe_management(data);
 	else
 		ms_simple_execution(data);
 	ft_free_redir_array(data->redir);
