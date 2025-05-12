@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/05 17:04:15 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/12 10:31:35 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	ms_init_struct(t_mshell *data, char **env)
 	data->inputs = 0;
 	data->env = 0;
 	data->pipesnum = 0;
+	data->inistdin = 0;
+	data->inistdout = 0;
 	mini_env = ms_get_env(env);
 	if (!mini_env)
 		ft_lstclear(&mini_env, free);

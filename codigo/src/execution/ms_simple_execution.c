@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:41:17 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 16:53:50 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/12 10:33:47 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,19 @@ static bool	ms_simple_execution_output(t_mshell *data)
 
 void	ms_simple_execution(t_mshell *data)
 {
-	int	input;
-	int	output;
-
-	input = dup(STDIN_FILENO);
-	output = dup(STDOUT_FILENO);
+	data->inistdin = dup(STDIN_FILENO);
+	data->inistdout = dup(STDOUT_FILENO);
 	if (!ms_simple_execution_input(data) || !ms_simple_execution_output(data))
 	{
-		dup2(input, STDIN_FILENO);
-		dup2(output, STDOUT_FILENO);
-		close(input);
-		close(output);
+		dup2(data->inistdin, STDIN_FILENO);
+		dup2(data->inistdout, STDOUT_FILENO);
+		close(data->inistdin);
+		close(data->inistdout);
 		return ;
 	}
 	data->exits = ms_exec_builtin_or_other(data->commands[0].command, data);
-	dup2(input, STDIN_FILENO);
-	dup2(output, STDOUT_FILENO);
-	close(input);
-	close(output);
+	dup2(data->inistdin, STDIN_FILENO);
+	dup2(data->inistdout, STDOUT_FILENO);
+	close(data->inistdin);
+	close(data->inistdout);
 }

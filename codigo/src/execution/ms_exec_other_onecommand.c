@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exec_other_onecommand.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:08:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/11 12:27:15 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/12 10:19:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 		path = ms_recoverpath(command[0], &data->env, data);
 		if (!path && data->exits != ENOMEM)
 			ft_error_and_exit(MINI, command[0], ERROCOMMAND, 127);
-		else
+		else if (data->exits == ENOMEM)
 			exit(ENOMEM);
 	}
+	printf("entro 2"); //borrar
 	ms_execute_command(path, command, data->envp);
 	return (0);
 }

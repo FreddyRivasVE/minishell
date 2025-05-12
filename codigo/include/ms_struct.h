@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 17:17:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/12 10:30:54 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ typedef struct s_mshell
 	int			pipesnum;
 	int			mode;
 	char		**envp;
+	int			inistdin;
+	int			inistdout;
 }	t_mshell;
 #endif
