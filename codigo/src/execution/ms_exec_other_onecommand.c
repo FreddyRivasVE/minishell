@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:08:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/12 19:47:46 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:41:20 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 int	ms_exec_pipes(char **command, t_mshell *data)
 {
 	char	*path;
-	
+
 	path = NULL;
 	if (ft_strchr(command[0], '/'))
 	{
@@ -117,7 +117,7 @@ int	ms_exec_other(char **command, t_mshell *data)
 	}
 	else
 	{
-		pid = ms_exec_pipes(command, data);
+		ms_exec_pipes(command, data);
 		free_array(data->envp);
 	}
 	return (0);

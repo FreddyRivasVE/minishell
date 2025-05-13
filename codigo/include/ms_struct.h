@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/12 19:25:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/13 12:19:53 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_command
 	char	*type_output;
 	char	**command;
 	int		pipefd[2];
+	pid_t	pid;
 }	t_command;
 
 typedef struct s_input
