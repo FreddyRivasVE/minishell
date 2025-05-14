@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:15:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/13 16:45:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/14 11:36:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ int	ms_exec_builtin_or_other(char **command, t_mshell *data)
 	else if (!ft_strncmp(command[0], "exit", 5))
 		return (ms_exit(command, data));
 	else
-	{
-		printf("camino de pipes\n"); //borrar
 		return (ms_exec_other(command, data));
-	}
 	return (0);
 }

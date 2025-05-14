@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:10:40 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/13 17:32:21 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:12:03 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,8 @@ void	close_all_pipes(t_command *cmds, int total)
 	i = 0;
 	while (i < total)
 	{
-		// Solo cierra los pipes en el padre o cuando ya no sean necesarios
-		// En los hijos, no debes cerrar los pipes hasta después de exec
-		printf("pipefd0: %d\n", cmds[i].pipefd[0]); //borrar
 		if (cmds[i].pipefd[0] != -1)
 			close(cmds[i].pipefd[0]);
-		printf("pipefd1: %d\n", cmds[i].pipefd[1]); //borrar
 		if (cmds[i].pipefd[1] != -1)
 			close(cmds[i].pipefd[1]);
 		i++;
@@ -156,7 +152,9 @@ void	close_all_pipes(t_command *cmds, int total)
 void	exec_child(t_command *cmds, int i, int total, t_mshell *data)
 {
 	t_command	*cmd;
+	char		*readline;
 
+	readline = ft_calloc(1024, sizeof(char));
 	cmd = &cmds[i];
 	open_input(cmd);
 	open_output(cmd);
@@ -165,26 +163,29 @@ void	exec_child(t_command *cmds, int i, int total, t_mshell *data)
 		dup2(cmd->fd_input, STDIN_FILENO);
 	else if (i > 0)
 	{
-		printf("ENTRO READ\n"); //BORRAR
 		dup2(cmds[i - 1].pipefd[0], STDIN_FILENO);
-		close(cmds->pipefd[1]);
+		close(cmds[i - 1].pipefd[0]);
 	}
 	if (cmd->output_name)
 		dup2(cmd->fd_output, STDOUT_FILENO);
-	else if (i < total - 1)
+	else if (i < (total - 1))
 	{
-		printf("ENTRO WRITE\n"); //BORRAR
 		dup2(cmd->pipefd[1], STDOUT_FILENO);
-		close(cmds->pipefd[0]);
+		close(cmd->pipefd[1]);
 	}
-	//close_all_pipes(cmds, total);
-	ms_exec_builtin_or_other(cmds[i].command, data);
+	if (i > 0)
+	{
+		if (cmds[i - 1].pipefd[0] != -1)
+			close(cmds[i - 1].pipefd[0]);
+	}
+	data->exits = ms_exec_builtin_or_other(cmds[i].command, data);
+	exit(data->exits);
 }
 
 
 void	run_pipeline(t_command *commands, int cmd_len, t_mshell *data)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < cmd_len)
@@ -195,10 +196,14 @@ void	run_pipeline(t_command *commands, int cmd_len, t_mshell *data)
 			{
 				perror("pipe");
 				data->exits = 1;
+				return ;
 			}
 		}
-		printf("padrepipefd0: %d\n", commands[i].pipefd[0]); //borrar
-		printf("padrepipefd1: %d\n", commands[i].pipefd[1]); //borrar
+		else
+		{
+			commands[i].pipefd[0] = -1;
+			commands[i].pipefd[1] = -1;
+		}
 		commands[i].pid = fork();
 		if (commands[i].pid == -1)
 		{
@@ -207,10 +212,12 @@ void	run_pipeline(t_command *commands, int cmd_len, t_mshell *data)
 		}
 		if (commands[i].pid == 0)
 			exec_child(commands, i, cmd_len, data);
+		if (i < cmd_len - 1)
+			close(commands[i].pipefd[1]);
 		i++;
 	}
-	close_all_pipes(commands, cmd_len);
 	i = 0;
+	close_all_pipes(commands, cmd_len);
 	while (i < cmd_len)
 	{
 		waitpid(commands[i].pid, NULL, 0);
