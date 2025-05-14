@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/05/12 18:11:25 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/14 19:17:25 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ BUILT		:=	$(BUILT_INS_DIR)cd.c $(BUILT_INS_DIR)env.c \
 EXECUTION	:=	$(EXECUTION_DIR)ms_execution.c $(EXECUTION_DIR)ms_redir_management.c \
 				$(EXECUTION_DIR)ms_heredoc_management.c $(EXECUTION_DIR)ms_simple_execution.c \
 				$(EXECUTION_DIR)ms_exec_other_onecommand.c $(EXECUTION_DIR)ms_execution_utils.c \
-				$(EXECUTION_DIR)ms_pipe_management.c
+				$(EXECUTION_DIR)ms_pipe_management.c $(EXECUTION_DIR)ms_redir_child.c
 
 INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
 				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c 

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/13 15:27:52 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/14 19:19:59 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,12 @@ char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data);
 void	ms_exec(t_mshell *data);
 void	ms_execute_command(char *path, char **command, char **envp);
 void	ms_simple_execution(t_mshell *data);
-//void	ms_pipe_management(t_mshell *data);
 void	run_pipeline(t_command *cmds, int total, t_mshell *data);
+void	ms_free_child(char *msm, t_mshell *data, int flag);
+void	ms_free_command_child(char **command, t_mshell *data, char *msm);
+void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data);
+void	ms_redirect_child_output(t_command *cmds, int i, int total, \
+		t_mshell *data);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */
@@ -126,7 +130,6 @@ char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)());
 char	*ms_get_cwd(void);
 t_list	*ms_copy_export_env(t_list **env);
 void	ft_close_heredoc_fds(t_mshell *data);
-void	ft_error_and_exit(char *shell, char *command, char *msj, int num);
 void	ft_free_ptr(void **ptr);
 void	ft_free_triple_array(char ***arr);
 void	ft_free_redir_array(t_redir **redir);

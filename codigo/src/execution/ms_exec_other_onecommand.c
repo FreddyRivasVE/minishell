@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:08:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/14 17:46:16 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/14 19:09:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ static void	ms_move_env_to_pointer(t_mshell *data)
 	}
 }
 
+static void	ms_free_onecommand(char	**command, t_mshell *data, char *msm)
+{
+	close(data->inistdin);
+	close(data->inistdout);
+	ms_free_command_child(command, data, msm);
+}
+
 static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 {
 	char	*path;
@@ -55,13 +62,13 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 		if (access(command[0], F_OK | X_OK) == 0)
 			path = ft_strdup(command[0]);
 		else
-			ft_error_and_exit(MINI, command[0], NOFILEDIRCTORY, 127);
+			ms_free_onecommand(command, data, NOFILEDIRCTORY);
 	}
 	else
 	{
 		path = ms_recoverpath(command[0], &data->env, data);
 		if (!path && data->exits != ENOMEM)
-			ft_error_and_exit(MINI, command[0], ERROCOMMAND, 127);
+			ms_free_onecommand(command, data, ERROCOMMAND);
 		else if (data->exits == ENOMEM)
 			exit(ENOMEM);
 	}
@@ -79,13 +86,13 @@ int	ms_exec_pipes(char **command, t_mshell *data)
 		if (access(command[0], F_OK | X_OK) == 0)
 			path = ft_strdup(command[0]);
 		else
-			ft_error_and_exit(MINI, command[0], NOFILEDIRCTORY, 127);
+			ms_free_command_child(command, data, NOFILEDIRCTORY);
 	}
 	else
 	{
 		path = ms_recoverpath(command[0], &data->env, data);
 		if (!path && data->exits != ENOMEM)
-			ft_error_and_exit(MINI, command[0], ERROCOMMAND, 127);
+			ms_free_command_child(command, data, ERROCOMMAND);
 		else if (data->exits == ENOMEM)
 			exit(ENOMEM);
 	}
@@ -114,9 +121,6 @@ int	ms_exec_other(char **command, t_mshell *data)
 		ms_set_signal_handler(MODE_PROMPT);
 	}
 	else
-	{
 		ms_exec_pipes(command, data);
-		free_array(data->envp);
-	}
 	return (0);
 }
