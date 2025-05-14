@@ -6,131 +6,55 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:10:40 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/14 16:12:03 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:49:50 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*int	ms_child_management(t_mshell *data, int i)
+void	ms_free_child(char *msm, t_mshell *data)
 {
-	char	*buff;
-	
-	buff = ft_calloc(1024, sizeof(char));
-	if (pipe(data->commands[i].pipefd) == -1)
-	{
-		perror("pipe");
-		data->exits = 1;
-		return (-1);
-	}
-	data->commands[i].pid = fork();
-	if (data->commands[i].pid == -1)
-		return (-1);
-	ms_set_signal_handler(MODE_CHILD);
-	if (data->commands[i].pid == 0)
-	{
-		//close(data->commands[i].pipefd[0]);
-		if (dup2(data->commands[i].pipefd[1], STDOUT_FILENO) == -1)
-		{
-			printf("dup: %d\n", data->commands[i].pipefd[1]);
-			perror("dup2");
-			exit(1);
-		}
-		close(data->commands[i].pipefd[1]);
-		read(data->commands[i].pipefd[0], buff, 1024);
-		printf("%s\n", buff);// borrar
-		ms_exec_builtin_or_other(data->commands[i].command, data);
-	}
-	close(data->commands[i].pipefd[1]);
-	if (dup2(data->commands[i].pipefd[0], STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		data->exits = 1;
-		return (-1);
-	}
-	close(data->commands[i].pipefd[0]);
-	return (0);
+	perror(msm);
+	ft_free_redir_array(data->redir);
+	ft_free_command_array(data->commands, data->pipesnum + 1);
+	ft_lstclear(&data->env, free);
+	ft_free_ptr((void **)&data->prompt);
+	ft_free_ptr((void **)&data->input_row);
+	rl_clear_history();
+	exit(1);
 }
 
-int	ms_last_child(t_mshell *data, int i)
-{
-	data->commands[i].pid = fork();
-	if (data->commands[i].pid == -1)
-		return (-1);
-	ms_set_signal_handler(MODE_CHILD);
-	if (data->commands[i].pid == 0)
-		ms_exec_builtin_or_other(data->commands[i].command, data);
-	return (0);
-}
-
-void	ms_pipe_management(t_mshell *data)
-{
-	int		i;
-	int		status;
-	int		inistdin;
-
-	inistdin = dup(STDIN_FILENO);
-	if (inistdin == -1)
-	{
-		perror("dup");
-		data->exits = 1;
-	}
-	i = 0;
-	while (i < data->pipesnum)
-	{
-		signal(SIGINT, SIG_IGN);
-		if (ms_child_management(data, i) == -1)
-			return ;
-		i++;
-	}
-	if (ms_last_child(data, i))
-		return ;
-	if (dup2(inistdin, STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		data->exits = 1;
-	}
-	close(inistdin);
-	i = 0;
-	while (i <= data->pipesnum)
-	{
-		waitpid(data->commands[i].pid, &status, 0);
-		if (WIFEXITED(status))
-			data->exits = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			data->exits = 128 + WTERMSIG(status);
-		i++;
-	}
-	ms_set_signal_handler(MODE_PROMPT);
-}
-*/
-
-void	open_input(t_command *cmd)
+void	open_input(t_command *cmd, t_mshell *data)
 {
 	if (!cmd->input_name)
 		return ;
-	cmd->fd_input = open(cmd->input_name, O_RDONLY);
-	if (cmd->fd_input < 0)
+	if (cmd->input_name != NULL
+		&& ft_strcmp(cmd->input_name, "HEREDOC"))
 	{
-		perror("open input");
-		exit(EXIT_FAILURE);
+		cmd->fd_input = open(cmd->input_name, \
+		O_RDONLY);
+		if (cmd->fd_input == -1)
+			ms_free_child(cmd->input_name, data);
 	}
 }
 
-void	open_output(t_command *cmd)
+void	open_output(t_command *cmd, t_mshell *data)
 {
+	(void) data;
 	if (!cmd->output_name)
 		return ;
-	if (cmd->type_output && cmd->type_output[0] == 'A')
-		cmd->fd_output = open(cmd->output_name, O_WRONLY | O_CREAT
-				| O_APPEND, 0644);
-	else
-		cmd->fd_output = open(cmd->output_name, O_WRONLY | O_CREAT
-				| O_TRUNC, 0644);
-	if (cmd->fd_output < 0)
+	if (cmd->type_output != NULL
+		&& (!ft_strcmp(cmd->type_output, "OUTPUT")
+			|| !ft_strcmp(cmd->type_output, "OUTPUTAPPEND")))
 	{
-		perror("open output");
-		exit(EXIT_FAILURE);
+		if (!ft_strcmp(cmd->type_output, "OUTPUT"))
+			cmd->fd_output = open(cmd->output_name, \
+			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else
+			cmd->fd_output = open(cmd->output_name, \
+			O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (cmd->fd_output == -1)
+			ms_free_child(cmd->output_name, data);
 	}
 }
 
@@ -152,22 +76,25 @@ void	close_all_pipes(t_command *cmds, int total)
 void	exec_child(t_command *cmds, int i, int total, t_mshell *data)
 {
 	t_command	*cmd;
-	char		*readline;
 
-	readline = ft_calloc(1024, sizeof(char));
 	cmd = &cmds[i];
-	open_input(cmd);
-	open_output(cmd);
-
+	open_input(cmd, data);
+	open_output(cmd, data);
 	if (cmd->input_name)
+	{
 		dup2(cmd->fd_input, STDIN_FILENO);
+		close(cmd->fd_input);
+	}
 	else if (i > 0)
 	{
 		dup2(cmds[i - 1].pipefd[0], STDIN_FILENO);
 		close(cmds[i - 1].pipefd[0]);
 	}
 	if (cmd->output_name)
+	{
 		dup2(cmd->fd_output, STDOUT_FILENO);
+		close(cmd->fd_output);
+	}
 	else if (i < (total - 1))
 	{
 		dup2(cmd->pipefd[1], STDOUT_FILENO);
@@ -182,10 +109,10 @@ void	exec_child(t_command *cmds, int i, int total, t_mshell *data)
 	exit(data->exits);
 }
 
-
 void	run_pipeline(t_command *commands, int cmd_len, t_mshell *data)
 {
 	int		i;
+	int		status;
 
 	i = 0;
 	while (i < cmd_len)
@@ -218,10 +145,19 @@ void	run_pipeline(t_command *commands, int cmd_len, t_mshell *data)
 	}
 	i = 0;
 	close_all_pipes(commands, cmd_len);
+	signal(SIGINT, SIG_IGN);
 	while (i < cmd_len)
 	{
-		waitpid(commands[i].pid, NULL, 0);
+		waitpid(commands[i].pid, &status, 0);
+		if (WIFEXITED(status))
+			data->exits = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			write(1,"\n", 1);
+			data->exits = 128 + WTERMSIG(status);
+			break ;
+		}
 		i++;
 	}
+	ms_set_signal_handler(MODE_PROMPT);
 }
-

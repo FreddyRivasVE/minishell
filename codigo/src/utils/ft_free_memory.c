@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_memory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:24:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/11 12:24:18 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/14 17:19:30 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	ft_free_redir_array(t_redir **redir)
 		{
 			ft_free_ptr((void **)&redir[i][j].type);
 			ft_free_ptr((void **)&redir[i][j].namefile);
-			// No necesitas cerrar el fd aquí, a menos que esté abierto
 			j++;
 		}
 		free(redir[i]);

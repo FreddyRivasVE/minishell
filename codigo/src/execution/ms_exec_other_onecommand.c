@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:08:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/13 16:41:20 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:46:16 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	ms_move_env_to_pointer(t_mshell *data)
 		return ;
 	}
 	current = data->env;
-	//while (current != NULL && current->next != NULL)
 	while (current != NULL)
 	{
 		data->envp[i] = ft_strdup(current->content);
@@ -50,7 +49,6 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 	pid = fork();
 	if (pid != 0)
 		return (pid);
-	ms_set_signal_handler(MODE_CHILD);
 	path = NULL;
 	if (ft_strchr(command[0], '/'))
 	{

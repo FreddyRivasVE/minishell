@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:14:29 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/08 16:58:04 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:15:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,5 @@ bool	ms_redir_management(t_mshell *data)
 		}
 		i++;
 	}
-	ft_print_redir_array(data->redir); //borrar.
-	ft_print_command_array(data->commands, data->pipesnum + 1); // borrar
 	return (true);
 }

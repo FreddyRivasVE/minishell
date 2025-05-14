@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/12 10:31:35 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:17:39 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	ms_init_struct(t_mshell *data, char **env)
 	t_list	*mini_env;
 
 	rl_catch_signals = 0;
-	//data->pipes = 0;
 	data->commands = 0;
 	data->exits = 0;
 	data->inputs = 0;

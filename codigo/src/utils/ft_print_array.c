@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:50:19 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 19:36:28 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/14 17:18:49 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	ft_print_redir_array(t_redir **redir)
 		{
 			printf("    [%d][%d] Type: %s\n", i, j, redir[i][j].type);
 			printf("    [%d][%d] Namefile: %s\n", i, j, redir[i][j].namefile);
-			//printf("    [%d][%d] FD[2]: %d\n", redir[i][j].fd_pipe);
 			j++;
 		}
 		i++;
