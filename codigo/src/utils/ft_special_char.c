@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:01:23 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/30 18:36:51 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/15 18:02:23 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static char	*reserve_memory(char *str, bool squote, bool dquote)
 	size_t	len;
 
 	len = calculate_new_len(str, squote, dquote) + 1;
+	printf("len: %zu\n", len); //borrar
 	output = ft_calloc(len, sizeof(char));
 	return (output);
 }

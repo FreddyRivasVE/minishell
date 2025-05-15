@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:19:06 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/30 16:06:22 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:53:19 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	ms_new_len_mem(char *input)
 		i++;
 	}
 	new_len = ft_strlen(input) - rest;
+	printf("new len: %d\n", new_len); //borrar
 	return (new_len);
 }
 
