@@ -112,32 +112,3 @@ char	*ms_expand_child(char *str, t_mshell *data)
 	}
 	return (free_array(expandsplit), result);
 }
-
-bool	ms_expand_variable(t_mshell *data)
-{
-	int		i;
-	int		j;
-	char	***toexpand;
-	char	*temp;
-
-	i = 0;
-	toexpand = data->inputs->splitaftpipes;
-	while (toexpand[i])
-	{
-		j = 0;
-		while (toexpand[i][j])
-		{
-			if (ft_strchr(toexpand[i][j], '$'))
-			{
-				temp = ms_expand_child(toexpand[i][j], data);
-				if (!temp)
-					return (ms_print_perror_malloc(data), false);
-				ft_free_ptr((void **)&toexpand[i][j]);
-				toexpand[i][j] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (true);
-}

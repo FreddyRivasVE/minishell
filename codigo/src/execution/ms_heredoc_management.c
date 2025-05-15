@@ -12,7 +12,19 @@
 
 #include "minishell.h"
 
-static int	ms_heredoc(t_redir *redir)
+static int	ms_heredoc_exit(t_redir *redir, t_mshell *data, char *line)
+{
+	redir->ok_tag = true;
+	ft_free_ptr((void **)&line);
+	close(redir->fd_pipe[1]);
+	if (data->exits == ENOMEM)
+		return (ENOMEM);
+	if (g_signal == SIGINT)
+		return (130);
+	return (0);
+}
+
+static int	ms_heredoc(t_redir *redir, t_mshell *data)
 {
 	char	*line;
 
@@ -29,15 +41,16 @@ static int	ms_heredoc(t_redir *redir)
 		}
 		if (!ft_strcmp(line, redir->namefile))
 			break ;
+		line = ms_expand_child(line, data);
+		if (!line)
+		{
+			data->exits = ENOMEM;
+			break ;
+		}
 		ft_putendl_fd(line, redir->fd_pipe[1]);
 		ft_free_ptr((void **)&line);
 	}
-	redir->ok_tag = true;
-	ft_free_ptr((void **)&line);
-	close(redir->fd_pipe[1]);
-	if (g_signal == SIGINT)
-		return (130);
-	return (0);
+	return (ms_heredoc_exit(redir, data, line));
 }
 
 bool	ms_heredoc_management(t_mshell *data)
@@ -53,8 +66,8 @@ bool	ms_heredoc_management(t_mshell *data)
 		{
 			if (!ft_strcmp(data->redir[i][j].type, "HEREDOC"))
 			{
-				data->exits = ms_heredoc(&data->redir[i][j]);
-				if (data->exits == 130)
+				data->exits = ms_heredoc(&data->redir[i][j], data);
+				if (data->exits == 130 || data->exits == ENOMEM)
 				{
 					g_signal = 0;
 					ft_close_heredoc_fds(data);

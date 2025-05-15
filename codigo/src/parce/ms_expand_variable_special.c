@@ -73,10 +73,7 @@ bool	ms_special_expand(t_mshell *data)
 
 	new_input = ms_escape_special_chars(data->input_row);
 	if (!new_input)
-	{
-		data->exits = ENOMEM;
-		return (perror("malloc"), false);
-	}
+		return (ms_print_perror_malloc(data), false);
 	free(data->input_row);
 	data->input_row = new_input;
 	if (ft_strnstr(data->input_row, "$'", ft_strlen(data->input_row)) != NULL
@@ -85,12 +82,14 @@ bool	ms_special_expand(t_mshell *data)
 	{
 		new_input = ms_special_dollar_quote(data->input_row);
 		if (!new_input)
-		{
-			data->exits = ENOMEM;
-			return (perror("malloc"), false);
-		}
+			return (ms_print_perror_malloc(data), false);
 		free(data->input_row);
 		data->input_row = new_input;
 	}
+	new_input = ms_expand_child(data->input_row, data);
+	if (!new_input)
+		return (ms_print_perror_malloc(data), false);
+	free(data->input_row);
+	data->input_row = new_input;
 	return (true);
 }

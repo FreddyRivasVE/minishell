@@ -67,8 +67,6 @@ bool	ms_split_input(t_mshell *data)
 	data->redir = ft_calloc(data->pipesnum + 2, sizeof(t_redir));
 	if (!data->redir)
 		return (ms_free_struct(data), ms_print_perror_malloc(data), false);
-	if (!ms_expand_variable(data))
-		return (ms_free_struct(data), false);
 	if (!ms_quotes_killer(data->inputs->splitaftpipes, data))
 		return (ms_free_struct(data), false);
 	if (!ms_token_input(data))

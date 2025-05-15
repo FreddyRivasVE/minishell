@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*ms_quotes_killer_aux(char **split)
+static char	*ms_quotes_killer_aux(char **split)
 {
 	int		i;
 	char	*result;

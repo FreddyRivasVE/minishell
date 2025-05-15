@@ -65,13 +65,13 @@ int		ms_orquest_command(t_mshell *data, char ***split, char **tag);
 bool	ms_check_pipes(char *str);
 bool	ms_check_quotation_marks(char *str);
 bool	ms_check_redir(char *str);
-bool	ms_expand_variable(t_mshell *data);
 bool	ms_quotes_killer(char ***inputs, t_mshell *data);
 bool	ms_redir_together(t_mshell *data);
 bool	ms_split_input(t_mshell *data);
 bool	ms_token_input(t_mshell *data);
 bool	ms_orquest(t_mshell *data, char ***split, char **tag);
 char	*ms_escape_special_chars(char *str);
+char	*ms_expand_child(char *str, t_mshell *data);
 bool	ms_special_expand(t_mshell *data);
 bool	ms_reserve_memory_redir(char *str, t_mshell *data);
 
