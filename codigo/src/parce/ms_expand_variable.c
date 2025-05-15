@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/15 18:23:49 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/15 19:46:17 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_mshell *data)
 	if (toexpand[*i] == '$')
 	{
 		if (toexpand[*i + 1] == '?')
-			return ((*i)++, ft_strjoin_free(result, ft_itoa(data->exits)));
+			return ((*i)++, (*i)++, ft_strjoin_free(result, ft_itoa(data->exits)));
 		if (ft_special_char(toexpand[*i + 1]))
 		{
 			(*i)++;
@@ -56,7 +56,7 @@ char	*ms_router_expand(char *toexpand, int *i, char *result, t_mshell *data)
 		}
 		if (ft_isspace(toexpand[*i + 1]) || toexpand[*i + 1] == '\"'
 			|| (toexpand[*i + 1] == '\'' && toexpand[0] == '\"'))
-			return (ft_strjoin_free(result, ft_substr(toexpand, *i, 1)));
+			return ((*i)++, ft_strjoin_free(result, ft_substr(toexpand, start, 1)));
 		return (ms_found_word(toexpand, &data->env, i, result));
 	}
 	return (ft_strjoin_free(result, ft_substr(toexpand, *i, 1)));
@@ -126,9 +126,11 @@ char	*ms_expand_child(char *str, t_mshell *data)
 			{
 				i++;
 			}
-			printf("valor de i: %d\n", i); //borrar
+			printf("valor de ix: %d\n", i); //borrar
 			if (i > 0 && str[i] && str[i] == '$' && str[i - 1] == '\'' && str[i + 1] == '\'')
 				i = i + 2;
+			else if (i > 0 && str[i] && str[i] == '$' && str[i - 1] == '\'' && ft_special_char(str[i + 1]))
+				i = i + 3;
 			end = i;
 			temp = ft_substr(str, start, end - start);
 			printf("temp [%d]: %s\n", i, temp);// borrar
@@ -140,9 +142,9 @@ char	*ms_expand_child(char *str, t_mshell *data)
 				result = ms_router_expand(str, &i, result, data);
 				printf("regresa: %s\n", result); //borrar
 			}
+			//i--;
 		}
 		printf("valor de i letra: %c: %d\n", str[i - 1], i); //borrar
-		
 		//i++;
 	}
 	return (result);
