@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:08:26 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/30 17:20:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/16 15:23:15 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ bool	ms_quotes_killer(char ***inputs, t_mshell *data)
 	int		i;
 	int		j;
 	char	**temp;
-
+	
+	printf ("antes del killerqoute\n"); //borrar
+	ft_print_array_triple(inputs); //borrar
 	i = 0;
 	while (inputs[i])
 	{

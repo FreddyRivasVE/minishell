@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_orquest.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/11 10:09:57 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:05:54 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ bool	ms_orquest(t_mshell *data, char ***split, char **tag)
 		return (false);
 	if (ms_orquest_command(data, split, tag) == -1)
 		return (false);
+	ft_print_array_triple(split); //borrar
 	return (true);
 }
