@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/16 12:52:35 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/16 15:00:18 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,78 +37,96 @@ static char	*ms_found_word(char *toexpand, t_mshell *data, int *i, char *result)
 	return (free(word), result);
 }
 
-char	*ms_router_expand(char *toexpand, int *i, char *result, t_mshell *data)
+static char	*ms_router_expand(char *str, int *i, char *res, t_mshell *data)
 {
 	int		start;
 	int		end;
 
 	end = *i;
 	start = *i;
-	if (toexpand[*i + 1] == '\0')
-		return (ft_strjoin_free(result, \
-		ft_substr(toexpand, start, ++end - start)));
-	if (toexpand[*i] == '$')
+	if (str[*i + 1] == '\0')
+		return (ft_strjoin_free(res, ft_substr(str, start, ++end - start)));
+	if (str[*i] == '$')
 	{
-		if (toexpand[*i + 1] == '?')
-			return ((*i)++, (*i)++, ft_strjoin_free(result, ft_itoa(data->exits)));
-		if (ft_special_char(toexpand[*i + 1]))
+		if (str[*i + 1] == '?')
+			return ((*i)++, (*i)++, ft_strjoin_free(res, ft_itoa(data->exits)));
+		if (ft_special_char(str[*i + 1]))
 		{
 			(*i)++;
 			end = *i + 1;
-			return (ft_strjoin_free(result, \
-			ft_substr(toexpand, start, end - start)));
+			return (ft_strjoin_free(res, ft_substr(res, start, end - start)));
 		}
-		if (ft_isspace(toexpand[*i + 1]) || toexpand[*i + 1] == '\"'
-			|| (toexpand[*i + 1] == '\'' && toexpand[0] == '\"'))
-			return ((*i)++, ft_strjoin_free(result, ft_substr(toexpand, start, 1)));
-		return (ms_found_word(toexpand, data, i, result));
+		if (ft_isspace(str[*i + 1]) || str[*i + 1] == '\"'
+			|| (str[*i + 1] == '\'' && str[0] == '\"'))
+			return ((*i)++, ft_strjoin_free(res, ft_substr(str, start, 1)));
+		return (ms_found_word(str, data, i, res));
 	}
-	return (ft_strjoin_free(result, ft_substr(toexpand, *i, 1)));
+	return (ft_strjoin_free(res, ft_substr(str, *i, 1)));
+}
+
+static char	*ms_expand_part(char *str, int *i, bool *sq, bool *dq)
+{
+	int		start;
+	int		end;
+
+	start = *i;
+	*sq = toggle_simples(str[*i], *sq, *dq);
+	*dq = toggle_doubles(str[*i], *sq, *dq);
+	while (str[*i] && str[*i] != '$' && !(*sq))
+	{
+		(*i)++;
+		*sq = toggle_simples(str[*i], *sq, *dq);
+		*dq = toggle_doubles(str[*i], *sq, *dq);
+	}
+	if (*sq)
+	{
+		while (str[*i] && *sq)
+		{
+			(*i)++;
+			*sq = toggle_simples(str[*i], *sq, *dq);
+			*dq = toggle_doubles(str[*i], *sq, *dq);
+		}
+		(*i)++;
+	}
+	end = *i;
+	return (ft_substr(str, start, end - start));
+}
+
+static char	*ms_expand_loop(char *str, char *res, t_mshell *data)
+{
+	int		i;
+	bool	sq;
+	bool	dq;
+	char	*tmp;
+
+	i = 0;
+	sq = false;
+	dq = false;
+	while (str[i])
+	{
+		tmp = ms_expand_part(str, &i, &sq, &dq);
+		if (!tmp)
+			return (free(res), ms_print_perror_malloc(data), NULL);
+		res = ft_strjoin_free(res, tmp);
+		if (!res)
+			return (ms_print_perror_malloc(data), NULL);
+		if (str[i] == '$')
+			res = ms_router_expand(str, &i, res, data);
+		if (!res && data->exits == ENOMEM)
+			return (NULL);
+	}
+	return (res);
 }
 
 char	*ms_expand_child(char *str, t_mshell *data)
 {
-	int		i;
-	bool	simpleq;
-	bool	doubleq;
-	int		start;
-	int		end;
-	char	*temp;
 	char	*result;
 
-	i = 0;
-	simpleq = false;
-	doubleq = false;
 	result = ft_calloc(1, sizeof(char));
-	while (str[i])
+	if (!result)
 	{
-		start = i;
-		simpleq = toggle_simples(str[i], simpleq, doubleq);
-		doubleq = toggle_doubles(str[i], simpleq, doubleq);
-		while (str[i] && str[i] != '$' && !simpleq)
-		{
-			i++;
-			simpleq = toggle_simples(str[i], simpleq, doubleq);
-			doubleq = toggle_doubles(str[i], simpleq, doubleq);
-		}
-		if (simpleq)
-		{
-			while (str[i] && simpleq)
-			{
-				i++;
-				simpleq = toggle_simples(str[i], simpleq, doubleq);
-				doubleq = toggle_doubles(str[i], simpleq, doubleq);
-			}
-			i++;
-		}
-		printf("valor de ix: %d\n", i); //borrar
-		end = i;
-		temp = ft_substr(str, start, end - start);
-		result = ft_strjoin_free(result, temp);
-		if (str[i] == '$')
-			result = ms_router_expand(str, &i, result, data);
-		if (!result && data->exits == ENOMEM)
-			return (NULL);
+		ms_print_perror_malloc(data);
+		return (NULL);
 	}
-	return (result);
+	return (ms_expand_loop(str, result, data));
 }

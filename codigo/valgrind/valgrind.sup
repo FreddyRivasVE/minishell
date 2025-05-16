@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/21 17:11:36 by brivera           #+#    #+#              #
-#    Updated: 2025/05/16 11:30:44 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/16 13:19:16 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,16 +55,108 @@
     grep_malloc_leak
     Memcheck:Leak
     match-leak-kinds: all
-    ...
     fun:malloc
-    obj:/usr/bin/grep
+    obj:/lib/x86_64-linux-gnu/libc.so.6
 }
+
+{
+    grep_calloc_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:calloc
+    obj:/lib/x86_64-linux-gnu/libc.so.6
+}
+
+{
+    grep_realloc_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:realloc
+    obj:/lib/x86_64-linux-gnu/libc.so.6
+}
+
+{
+    grep_compile_pattern_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_compile_pattern
+}
+
+{
+    grep_cd_newstate_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:create_cd_newstate
+}
+
+{
+    grep_acquire_state_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_acquire_state_context
+}
+
+{
+    grep_compile_internal_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_compile_internal
+}
+
+{
+    grep_node_set_init_copy_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_node_set_init_copy
+}
+
+{
+    grep_acquire_state_context_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_acquire_state_context
+}
+
+{
+    grep_create_cd_newstate_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:create_cd_newstate
+}
+
+{
+    grep_regex_node_set_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_node_set_alloc
+}
+
+{
+    grep_regex_eclosure_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:calc_eclosure
+}
+
+{
+    grep_regex_analyze_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:analyze
+}
+
+{
+    grep_regex_create_initial_state_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:create_initial_state
+}
+
 
 {
     cat_malloc_leak
     Memcheck:Leak
     match-leak-kinds: all
-    ...
     fun:malloc
     obj:/usr/bin/cat
 }
