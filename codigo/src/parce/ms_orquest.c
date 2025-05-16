@@ -22,6 +22,8 @@ static int	ms_is_redirection(char *tag)
 
 static bool	ms_fill_redir(char *tag, char *split, t_mshell *data, int *idx)
 {
+	if (!ft_strcmp(tag, "HEREDOC") && (split[0] == '\"' || split[0] == '\''))
+		tag = "HEREDOCNE";
 	data->redir[idx[0]][idx[1]].type = ft_strdup(tag);
 	data->redir[idx[0]][idx[1]].namefile = ft_strdup(split);
 	if (!data->redir[idx[0]][idx[1]].type)
@@ -81,6 +83,5 @@ bool	ms_orquest(t_mshell *data, char ***split, char **tag)
 		return (false);
 	if (ms_orquest_command(data, split, tag) == -1)
 		return (false);
-	ft_print_array_triple(split); //borrar
 	return (true);
 }

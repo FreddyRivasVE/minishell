@@ -23,7 +23,8 @@ void	ft_close_heredoc_fds(t_mshell *data)
 		j = 0;
 		while (data->redir[i][j].type != NULL)
 		{
-			if (!ft_strcmp(data->redir[i][j].type, "HEREDOC")
+			if ((!ft_strcmp(data->redir[i][j].type, "HEREDOC")
+				|| !ft_strcmp(data->redir[i][j].type, "HEREDOCNE"))
 			&& data->redir[i][j].ok_tag == true)
 			{
 				close(data->redir[i][j].fd_pipe[0]);

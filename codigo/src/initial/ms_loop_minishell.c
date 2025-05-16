@@ -20,6 +20,8 @@ void	ms_exec(t_mshell *data)
 		ft_free_command_array(data->commands, data->pipesnum + 1);
 		return ;
 	}
+	ft_print_redir_array(data->redir); //borrar
+	ft_print_command_array(data->commands, data->pipesnum + 1); //borrar
 	if (data->pipesnum != 0)
 		run_pipeline(data->commands, data->pipesnum + 1, data);
 	else

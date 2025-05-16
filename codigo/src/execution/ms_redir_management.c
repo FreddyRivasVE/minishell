@@ -77,10 +77,12 @@ static bool	ms_redir_fill_output(t_mshell *data, int i, int j)
 
 static bool	ms_redir_fill_input(t_mshell *data, int i, int j)
 {
-	if (!ft_strcmp(data->redir[i][j].type, "HEREDOC"))
+	if (!ft_strcmp(data->redir[i][j].type, "HEREDOC")
+		|| !ft_strcmp(data->redir[i][j].type, "HEREDOCNE"))
 	{
 		if (data->commands[i].input_name != NULL
-			&& !ft_strcmp(data->commands[i].input_name, "HEREDOC"))
+			&& (!ft_strcmp(data->commands[i].input_name, "HEREDOC")
+				|| !ft_strcmp(data->commands[i].input_name, "HEREDOCNE")))
 			close(data->commands[i].fd_input);
 		ft_free_ptr((void **)&data->commands[i].input_name);
 		data->commands[i].input_name = ft_strdup(data->redir[i][j].type);
@@ -91,7 +93,8 @@ static bool	ms_redir_fill_input(t_mshell *data, int i, int j)
 	if (!ft_strcmp(data->redir[i][j].type, "INPUT"))
 	{
 		if (data->commands[i].input_name != NULL
-			&& !ft_strcmp(data->commands[i].input_name, "HEREDOC"))
+			&& (!ft_strcmp(data->commands[i].input_name, "HEREDOC")
+				|| !ft_strcmp(data->commands[i].input_name, "HEREDOCNE")))
 			close(data->commands[i].fd_input);
 		ft_free_ptr((void **)&data->commands[i].input_name);
 		data->commands[i].input_name = ft_strdup(data->redir[i][j].namefile);

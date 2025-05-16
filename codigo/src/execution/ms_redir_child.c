@@ -17,7 +17,8 @@ static void	open_input(t_command *cmd, t_mshell *data)
 	if (!cmd->input_name)
 		return ;
 	if (cmd->input_name != NULL
-		&& ft_strcmp(cmd->input_name, "HEREDOC"))
+		&& ft_strcmp(cmd->input_name, "HEREDOC")
+		&& ft_strcmp(cmd->input_name, "HEREDOCNE"))
 	{
 		cmd->fd_input = open(cmd->input_name, \
 		O_RDONLY);

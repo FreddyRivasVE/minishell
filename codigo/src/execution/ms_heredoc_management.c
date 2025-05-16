@@ -24,7 +24,7 @@ static int	ms_heredoc_exit(t_redir *redir, t_mshell *data, char *line)
 	return (0);
 }
 
-static int	ms_heredoc(t_redir *redir, t_mshell *data)
+static int	ms_heredoc(t_redir *redir, t_mshell *data, bool flag)
 {
 	char	*line;
 
@@ -41,7 +41,8 @@ static int	ms_heredoc(t_redir *redir, t_mshell *data)
 		}
 		if (!ft_strcmp(line, redir->namefile))
 			break ;
-		line = ms_expand_child(line, data);
+		if (!flag)
+			line = ms_expand_child(line, data);
 		if (!line)
 		{
 			data->exits = ENOMEM;
@@ -57,23 +58,28 @@ bool	ms_heredoc_management(t_mshell *data)
 {
 	int		i;
 	int		j;
+	bool	flag;
 
 	i = 0;
+	flag = false;
 	while (data->redir[i])
 	{
 		j = 0;
 		while (data->redir[i][j].type != NULL)
 		{
-			if (!ft_strcmp(data->redir[i][j].type, "HEREDOC"))
+			if (!ft_strcmp(data->redir[i][j].type, "HEREDOC")
+				|| !ft_strcmp(data->redir[i][j].type, "HEREDOCNE"))
 			{
-				data->exits = ms_heredoc(&data->redir[i][j], data);
+				if (!ft_strcmp(data->redir[i][j].type, "HEREDOCNE"))
+					flag = true;
+				data->exits = ms_heredoc(&data->redir[i][j], data, flag);
 				if (data->exits == 130 || data->exits == ENOMEM)
 				{
 					g_signal = 0;
-					ft_close_heredoc_fds(data);
-					return (false);
+					return (ft_close_heredoc_fds(data), false);
 				}
 			}
+			flag = false;
 			j++;
 		}
 		i++;

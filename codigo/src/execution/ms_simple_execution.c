@@ -15,8 +15,10 @@
 static bool	ms_simple_execution_input(t_mshell *data)
 {
 	if (data->commands[0].input_name != NULL
-		&& ft_strcmp(data->commands[0].input_name, "HEREDOC"))
+		&& ft_strcmp(data->commands[0].input_name, "HEREDOC")
+		&& ft_strcmp(data->commands[0].input_name, "HEREDOCNE"))
 	{
+		printf("hola\n");
 		data->commands[0].fd_input = open(data->commands[0].input_name, \
 		O_RDONLY);
 		if (data->commands[0].fd_input == -1)
