@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/16 15:00:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/17 15:02:29 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ static char	*ms_router_expand(char *str, int *i, char *res, t_mshell *data)
 			return ((*i)++, (*i)++, ft_strjoin_free(res, ft_itoa(data->exits)));
 		if (ft_special_char(str[*i + 1]))
 		{
-			(*i)++;
-			end = *i + 1;
-			return (ft_strjoin_free(res, ft_substr(res, start, end - start)));
+			(*i) = (*i) + 2;
+			end = *i;
+			printf("i: %d start: %d end: %d res: %s\n", *i, start, end, res); //borrar
+			return (ft_strjoin_free(res, ft_substr(str, start, end - start)));
 		}
 		if (ft_isspace(str[*i + 1]) || str[*i + 1] == '\"'
 			|| (str[*i + 1] == '\'' && str[0] == '\"'))
@@ -111,7 +112,10 @@ static char	*ms_expand_loop(char *str, char *res, t_mshell *data)
 		if (!res)
 			return (ms_print_perror_malloc(data), NULL);
 		if (str[i] == '$')
+		{
 			res = ms_router_expand(str, &i, res, data);
+			printf("regresa: %s\n", res); //borrar
+		}
 		if (!res && data->exits == ENOMEM)
 			return (NULL);
 	}
