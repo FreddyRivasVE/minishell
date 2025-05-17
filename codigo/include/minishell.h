@@ -119,6 +119,7 @@ size_t	ft_seek_lastc(char *str, char c);
 size_t	ft_strcspn(const char *s, const char *reject);
 size_t	ft_strspn(const char *s, const char *accept);
 bool	ft_special_char(int c);
+bool	ms_is_quoted_redirection(char *s);
 bool	toggle_doubles(char c, bool check_simples, bool check_doubles);
 bool	toggle_simples(char c, bool check_simples, bool check_doubles);
 bool	ft_isredirection_char(char c);

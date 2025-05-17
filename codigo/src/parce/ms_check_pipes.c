@@ -18,6 +18,11 @@ static bool	is_valid_pipe_position(char *str, int i, bool dquote, bool squote)
 
 	if (str[i] != '|' || dquote || squote)
 		return (true);
+	j = i - 1;
+	while (j >= 0 && ft_isspace(str[j]))
+		j--;
+	if (ft_isredirection_char(str[j]))
+		return (false);
 	j = i + 1;
 	while (str[j] && ft_isspace(str[j]))
 		j++;
@@ -38,7 +43,7 @@ static bool	has_leading_pipe(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && ft_isspace(str[i]))
+	while (str[i] && (ft_isspace(str[i]) || ft_isredirection_char(str[i])))
 		i++;
 	return (str[i] == '|');
 }

@@ -57,6 +57,8 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 	if (pid != 0)
 		return (pid);
 	path = NULL;
+	if (ft_strlen(command[0]) == 0)
+		ms_free_onecommand(command, data, ERROCOMMANDSL);
 	if (ft_strchr(command[0], '/'))
 	{
 		if (access(command[0], F_OK | X_OK) == 0)
@@ -72,8 +74,7 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 		else if (data->exits == ENOMEM)
 			exit(ENOMEM);
 	}
-	ms_execute_command(path, command, data->envp);
-	return (0);
+	return (ms_execute_command(path, command, data->envp), 0);
 }
 
 int	ms_exec_pipes(char **command, t_mshell *data)
@@ -81,6 +82,8 @@ int	ms_exec_pipes(char **command, t_mshell *data)
 	char	*path;
 
 	path = NULL;
+	if (ft_strlen(command[0]) == 0)
+		ms_free_onecommand(command, data, ERROCOMMANDSL);
 	if (ft_strchr(command[0], '/'))
 	{
 		if (access(command[0], F_OK | X_OK) == 0)

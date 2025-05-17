@@ -34,13 +34,12 @@ static int	ms_heredoc(t_redir *redir, t_mshell *data, bool flag)
 	while (g_signal != SIGINT)
 	{
 		line = readline("> ");
-		if (!line)
+		if (!line || !ft_strcmp(line, redir->namefile))
 		{
-			ft_putendl_fd(ERRORHEREDOC, 2);
+			if (!line)
+				ft_putendl_fd(ERRORHEREDOC, 2);
 			break ;
 		}
-		if (!ft_strcmp(line, redir->namefile))
-			break ;
 		if (!flag)
 			line = ms_expand_child(line, data);
 		if (!line)

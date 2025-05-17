@@ -40,6 +40,17 @@ static int	ms_reserve_mm_command(t_mshell *data, char ***split, char **tag)
 	return (0);
 }
 
+static char	*ms_fill_command(char *str)
+{
+	char	*new;
+
+	if (ms_is_quoted_redirection(str))
+		new = ft_substr(str, 1, (ft_strlen(str) - 2));
+	else
+		new = ft_strdup(str);
+	return (new);
+}
+
 int	ms_orquest_command(t_mshell *data, char ***split, char **tag)
 {
 	int	i;
@@ -59,7 +70,7 @@ int	ms_orquest_command(t_mshell *data, char ***split, char **tag)
 		{
 			if (!ft_strcmp(tag[++k], "COMMAND"))
 			{
-				data->commands[i].command[++l] = ft_strdup(split[i][j]);
+				data->commands[i].command[++l] = ms_fill_command(split[i][j]);
 				if (!data->commands[i].command[l])
 					return (ms_print_perror_malloc(data), -1);
 			}

@@ -36,7 +36,7 @@ static char	*ms_quotes_killer_aux(char **split, bool flag)
 	return (free_array(split), result);
 }
 
-static bool	ms_is_quoted_redirection(const char *s)
+bool	ms_is_quoted_redirection(char *s)
 {
 	return (!ft_strcmp(s, "\"<<\"") || !ft_strcmp(s, "\"<\"")
 		|| !ft_strcmp(s, "\">\"") || !ft_strcmp(s, "\">>\"")
@@ -44,14 +44,13 @@ static bool	ms_is_quoted_redirection(const char *s)
 		|| !ft_strcmp(s, "\'>\'") || !ft_strcmp(s, "\'>>\'"));
 }
 
-
 bool	ms_quotes_killer(char ***inputs, t_mshell *data)
 {
 	int		i;
 	int		j;
 	char	**temp;
 	bool	flag;
-	
+
 	i = 0;
 	flag = false;
 	while (inputs[i])
@@ -64,7 +63,7 @@ bool	ms_quotes_killer(char ***inputs, t_mshell *data)
 				return (ms_print_perror_malloc(data), false);
 			if (j > 0 && (!ft_strcmp(inputs[i][j - 1], "<<")))
 				flag = true;
-			if(inputs[i][j] != NULL && ms_is_quoted_redirection(inputs[i][j]))
+			if (inputs[i][j] != NULL && ms_is_quoted_redirection(inputs[i][j]))
 				flag = true;
 			free(inputs[i][j]);
 			inputs[i][j] = ms_quotes_killer_aux(temp, flag);

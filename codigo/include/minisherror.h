@@ -27,6 +27,7 @@
 # define ERRORHEREDOC			"minishell warning: here-doc delimited by EOF"
 # define NOFILEDIRCTORY         ": No such file or directory"
 # define ERROCOMMAND            ": command not found"
+# define ERROCOMMANDSL          "Command '' not found"
 # define ENOMEM 12
 
 #endif

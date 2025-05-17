@@ -25,12 +25,13 @@ static bool	ms_fill_redir(char *tag, char *split, t_mshell *data, int *idx)
 	if (!ft_strcmp(tag, "HEREDOC") && (split[0] == '\"' || split[0] == '\''))
 		tag = "HEREDOCNE";
 	data->redir[idx[0]][idx[1]].type = ft_strdup(tag);
-	data->redir[idx[0]][idx[1]].namefile = ft_strdup(split);
+	if (!ft_strcmp(tag, "HEREDOCNE"))
+		data->redir[idx[0]][idx[1]].namefile = \
+		ft_substr(split, 1, (ft_strlen(split) - 2));
+	else
+		data->redir[idx[0]][idx[1]].namefile = ft_strdup(split);
 	if (!data->redir[idx[0]][idx[1]].type)
-	{
-		ms_print_perror_malloc(data);
-		return (false);
-	}
+		return (ms_print_perror_malloc(data), false);
 	return (true);
 }
 
