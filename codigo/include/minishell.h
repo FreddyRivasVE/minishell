@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/14 19:19:59 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/17 17:39:56 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*ms_escape_special_chars(char *str);
 char	*ms_expand_child(char *str, t_mshell *data);
 bool	ms_special_expand(t_mshell *data);
 bool	ms_reserve_memory_redir(char *str, t_mshell *data);
+bool	ms_control_expand_heredoc(t_mshell *data);
 
 /*****************************************************************************/
 /*                             	execution                           		 */

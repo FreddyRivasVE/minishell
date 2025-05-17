@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/05/14 19:17:25 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/17 15:30:24 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c \
 				$(PARCE_DIR)ms_quotes_killer.c $(PARCE_DIR)ms_redir_together.c \
 				$(PARCE_DIR)ms_token_input.c $(PARCE_DIR)ms_orquest.c \
 				$(PARCE_DIR)ms_orquest_command.c $(PARCE_DIR)ms_expand_variable_special.c \
-				$(PARCE_DIR)ms_orquest_redir.c
+				$(PARCE_DIR)ms_orquest_redir.c $(PARCE_DIR)ms_control_expand_heredoc.c
 
 UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_array.c \
 				$(UTILS_DIR)ft_list_remove_if.c $(UTILS_DIR)ft_split_quotes.c \

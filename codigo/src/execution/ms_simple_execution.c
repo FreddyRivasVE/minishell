@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:41:17 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:55 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/17 15:26:20 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static bool	ms_simple_execution_input(t_mshell *data)
 		&& ft_strcmp(data->commands[0].input_name, "HEREDOC")
 		&& ft_strcmp(data->commands[0].input_name, "HEREDOCNE"))
 	{
-		printf("hola\n");
 		data->commands[0].fd_input = open(data->commands[0].input_name, \
 		O_RDONLY);
 		if (data->commands[0].fd_input == -1)
