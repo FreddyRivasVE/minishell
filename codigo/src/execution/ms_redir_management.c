@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:14:29 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/14 17:15:44 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/18 18:44:12 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,9 @@ static bool	ms_redir_fill_output(t_mshell *data, int i, int j)
 	return (true);
 }
 
-static bool	ms_redir_fill_input(t_mshell *data, int i, int j)
+static bool	ms_redir_fill_input(t_mshell *data, int i, int j, char *dredir)
 {
-	if (!ft_strcmp(data->redir[i][j].type, "HEREDOC")
-		|| !ft_strcmp(data->redir[i][j].type, "HEREDOCNE"))
+	if (!ft_strcmp(dredir, "HEREDOC") || !ft_strcmp(dredir, "HEREDOCNE"))
 	{
 		if (data->commands[i].input_name != NULL
 			&& (!ft_strcmp(data->commands[i].input_name, "HEREDOC")
@@ -107,8 +106,9 @@ static bool	ms_redir_fill_input(t_mshell *data, int i, int j)
 
 bool	ms_redir_management(t_mshell *data)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*dredir;
 
 	if (!ms_heredoc_management(data))
 		return (false);
@@ -119,7 +119,8 @@ bool	ms_redir_management(t_mshell *data)
 		j = 0;
 		while (data->redir[i][j].type != NULL)
 		{
-			if (!ms_redir_fill_input(data, i, j))
+			dredir = data->redir[i][j].type;
+			if (!ms_redir_fill_input(data, i, j, dredir))
 				return (false);
 			if (!ms_redir_fill_output(data, i, j))
 				return (false);
