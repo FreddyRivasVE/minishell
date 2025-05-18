@@ -1,52 +1,52 @@
-==9574== Memcheck, a memory error detector
-==9574== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==9574== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==9574== Command: ./minishell
-==9574== Parent PID: 9572
-==9574== 
-==10027== 
-==10027== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==10027== Open file descriptor 3: /home/frivas/Cursus42/viajera42/minishell/codigo/valgrind/informe
-==10027==    <inherited from parent>
-==10027== 
-==10027== 
-==10027== HEAP SUMMARY:
-==10027==     in use at exit: 208,583 bytes in 226 blocks
-==10027==   total heap usage: 1,284 allocs, 1,058 frees, 269,742 bytes allocated
-==10027== 
-==10027== LEAK SUMMARY:
-==10027==    definitely lost: 0 bytes in 0 blocks
-==10027==    indirectly lost: 0 bytes in 0 blocks
-==10027==      possibly lost: 0 bytes in 0 blocks
-==10027==    still reachable: 0 bytes in 0 blocks
-==10027==         suppressed: 208,583 bytes in 226 blocks
-==10027== 
-==10027== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---10027-- 
---10027-- used_suppression:     66 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,567 bytes in 225 blocks
---10027-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
-==10027== 
-==10027== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==9574== 
-==9574== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==9574== Open file descriptor 3: /home/frivas/Cursus42/viajera42/minishell/codigo/valgrind/informe
-==9574==    <inherited from parent>
-==9574== 
-==9574== 
-==9574== HEAP SUMMARY:
-==9574==     in use at exit: 208,566 bytes in 225 blocks
-==9574==   total heap usage: 1,256 allocs, 1,031 frees, 266,085 bytes allocated
-==9574== 
-==9574== LEAK SUMMARY:
-==9574==    definitely lost: 0 bytes in 0 blocks
-==9574==    indirectly lost: 0 bytes in 0 blocks
-==9574==      possibly lost: 0 bytes in 0 blocks
-==9574==    still reachable: 0 bytes in 0 blocks
-==9574==         suppressed: 208,566 bytes in 225 blocks
-==9574== 
-==9574== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---9574-- 
---9574-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,550 bytes in 224 blocks
---9574-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
-==9574== 
-==9574== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41210== Memcheck, a memory error detector
+==41210== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41210== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41210== Command: ./minishell
+==41210== Parent PID: 41208
+==41210== 
+==41271== 
+==41271== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==41271== Open file descriptor 3: /home/frivas/Cursus42/viajera42/minishell/codigo/valgrind/informe
+==41271==    <inherited from parent>
+==41271== 
+==41271== 
+==41271== HEAP SUMMARY:
+==41271==     in use at exit: 208,601 bytes in 228 blocks
+==41271==   total heap usage: 792 allocs, 564 frees, 251,640 bytes allocated
+==41271== 
+==41271== LEAK SUMMARY:
+==41271==    definitely lost: 0 bytes in 0 blocks
+==41271==    indirectly lost: 0 bytes in 0 blocks
+==41271==      possibly lost: 0 bytes in 0 blocks
+==41271==    still reachable: 0 bytes in 0 blocks
+==41271==         suppressed: 208,601 bytes in 228 blocks
+==41271== 
+==41271== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--41271-- 
+--41271-- used_suppression:     68 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,585 bytes in 227 blocks
+--41271-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
+==41271== 
+==41271== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41210== 
+==41210== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==41210== Open file descriptor 3: /home/frivas/Cursus42/viajera42/minishell/codigo/valgrind/informe
+==41210==    <inherited from parent>
+==41210== 
+==41210== 
+==41210== HEAP SUMMARY:
+==41210==     in use at exit: 208,566 bytes in 225 blocks
+==41210==   total heap usage: 703 allocs, 478 frees, 246,988 bytes allocated
+==41210== 
+==41210== LEAK SUMMARY:
+==41210==    definitely lost: 0 bytes in 0 blocks
+==41210==    indirectly lost: 0 bytes in 0 blocks
+==41210==      possibly lost: 0 bytes in 0 blocks
+==41210==    still reachable: 0 bytes in 0 blocks
+==41210==         suppressed: 208,566 bytes in 225 blocks
+==41210== 
+==41210== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--41210-- 
+--41210-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,550 bytes in 224 blocks
+--41210-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
+==41210== 
+==41210== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

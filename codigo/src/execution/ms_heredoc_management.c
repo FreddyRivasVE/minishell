@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:55:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/09 12:57:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/18 21:18:54 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,47 @@ static int	ms_heredoc(t_redir *redir, t_mshell *data, bool flag)
 	return (ms_heredoc_exit(redir, data, line));
 }
 
+static bool	ms_handle_single_herdoc(t_redir *redir, t_mshell *data, bool *flag)
+{
+	if (!ft_strcmp(redir->type, "HEREDOC")
+		|| !ft_strcmp(redir->type, "HEREDOCNE"))
+	{
+		if (!ft_strcmp(redir->type, "HEREDOCNE"))
+			*flag = true;
+		data->exits = ms_heredoc(redir, data, *flag);
+		if (data->exits == 130 || data->exits == ENOMEM)
+		{
+			g_signal = 0;
+			ft_close_heredoc_fds(data);
+			return (false);
+		}
+	}
+	return (true);
+}
+
 bool	ms_heredoc_management(t_mshell *data)
+{
+	int		i;
+	int		j;
+	bool	flag;
+
+	i = 0;
+	while (data->redir[i])
+	{
+		j = 0;
+		while (data->redir[i][j].type != NULL)
+		{
+			flag = false;
+			if (!ms_handle_single_herdoc(&data->redir[i][j], data, &flag))
+				return (false);
+			j++;
+		}
+		i++;
+	}
+	return (true);
+}
+
+/*bool	ms_heredoc_management(t_mshell *data)
 {
 	int		i;
 	int		j;
@@ -84,4 +124,4 @@ bool	ms_heredoc_management(t_mshell *data)
 		i++;
 	}
 	return (true);
-}
+}*/
