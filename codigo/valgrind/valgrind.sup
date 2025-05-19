@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/21 17:11:36 by brivera           #+#    #+#              #
-#    Updated: 2025/05/16 13:19:16 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/19 13:02:52 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,14 @@
 	match-leak-kinds: all
 	...
 	fun:alloc_history_entry
+}
+
+{
+   grep_malloc_suppression
+   Memcheck:Leak
+   match-leak-kinds: all
+   fun:malloc
+   obj:/usr/bin/grep
 }
 
 {
@@ -152,6 +160,58 @@
     fun:create_initial_state
 }
 
+{
+    grep_memory_leaks
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:malloc
+    fun:calloc
+    fun:realloc
+    obj:/usr/bin/grep
+}
+
+{
+    grep_regex_leaks
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_compile_pattern
+    fun:re_compile_internal
+    fun:create_initial_state
+    fun:analyze
+    fun:calc_eclosure
+}
+
+{
+    grep_re_node_leaks
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_node_set_init_copy
+    fun:re_node_set_alloc
+}
+
+{
+    grep_analysis_leaks
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:analyze
+    fun:calc_eclosure
+}
+
+{
+    grep_regex_init_copy
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:re_node_set_init_copy
+    fun:re_node_set_alloc
+}
+
+{
+    grep_analysis_eclosure
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:analyze
+    fun:calc_eclosure
+}
 
 {
     cat_malloc_leak
@@ -159,4 +219,11 @@
     match-leak-kinds: all
     fun:malloc
     obj:/usr/bin/cat
+}
+
+{
+   libc_malloc_leak
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/libc.so.6
 }
