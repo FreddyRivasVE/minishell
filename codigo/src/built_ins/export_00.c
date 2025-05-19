@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   export_00.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:41:48 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/04/25 17:25:07 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/19 18:04:55 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*ms_add_dquotes(char *str)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		flag;
+
+	flag = 0;
+	result = ft_calloc(ft_strlen(str) + 3, sizeof(char));
+	i = 0;
+	j = 0;
+	while (str[i] != 0)
+	{
+		result[j] = str[i];
+		if (str[i] == '=' && flag == 0)
+		{
+			result[++j] = '\"';
+			flag = 1;
+		}
+		i++;
+		j++;
+	}
+	if (flag == 1)
+		result[j] = '\"';
+	result[++j] = '\0';
+	return (result);
+}
 
 static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
 {
@@ -26,7 +54,7 @@ static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
 			(*i)++;
 			continue ;
 		}
-		arg = ft_strdup(command[*i]);
+		arg = ms_add_dquotes(command[*i]);
 		if (!arg)
 			return (perror("malloc"), ENOMEM);
 		if ((ft_list_replace_cont(&data->env, arg, var_cmp)) == 0)

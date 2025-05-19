@@ -6,13 +6,13 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/17 15:09:07 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/19 20:42:47 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ms_found_word(char *toexpand, t_mshell *data, int *i, char *result)
+static char	*ms_found_word(char *toexpand, t_mshell *data, int *i, char *result, int flag)
 {
 	int		start;
 	int		end;
@@ -32,12 +32,23 @@ static char	*ms_found_word(char *toexpand, t_mshell *data, int *i, char *result)
 		return (NULL);
 	}
 	expand = ft_list_extract_if(&data->env, word, var_cmp);
+	if (expand && flag == 0)
+		expand = ms_block_expand_var(expand, data);
+	else
+	{
+		ft_free_ptr((void **)&word);
+		word = ft_substr(expand, 1, ft_strlen(expand) - 2);
+		ft_free_ptr((void **)&expand);
+		expand = ft_strdup(word);
+		
+	}
 	if (expand)
 		result = ft_strjoin_free(result, expand);
-	return (free(word), result);
+	printf("resul expand: %s\n", result); //borrar
+	return (ft_free_ptr((void **)&word), result);
 }
 
-static char	*ms_router_expand(char *str, int *i, char *res, t_mshell *data)
+static char	*ms_router_expand(char *str, int *i, char *res, t_mshell *data, int flag)
 {
 	int		start;
 	int		end;
@@ -60,7 +71,7 @@ static char	*ms_router_expand(char *str, int *i, char *res, t_mshell *data)
 		if (ft_isspace(str[*i + 1]) || str[*i + 1] == '\"'
 			|| (str[*i + 1] == '\'' && str[0] == '\"'))
 			return ((*i)++, ft_strjoin_free(res, ft_substr(str, start, 1)));
-		return (ms_found_word(str, data, i, res));
+		return (ms_found_word(str, data, i, res, flag));
 	}
 	return (ft_strjoin_free(res, ft_substr(str, *i, 1)));
 }
@@ -99,8 +110,10 @@ static char	*ms_expand_loop(char *str, char *res, t_mshell *data)
 	bool	sq;
 	bool	dq;
 	char	*tmp;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	sq = false;
 	dq = false;
 	while (str[i])
@@ -113,12 +126,16 @@ static char	*ms_expand_loop(char *str, char *res, t_mshell *data)
 			return (ms_print_perror_malloc(data), NULL);
 		if (str[i] == '$')
 		{
-			res = ms_router_expand(str, &i, res, data);
+			if (dq)
+				flag = 1;
+			res = ms_router_expand(str, &i, res, data, flag);
+			flag = 0;
 			printf("regresa: %s\n", res); //borrar
 		}
 		if (!res && data->exits == ENOMEM)
 			return (NULL);
 	}
+	printf("expand final: %s\n", res); //borrar
 	return (res);
 }
 
