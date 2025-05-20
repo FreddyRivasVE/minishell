@@ -22,6 +22,8 @@ static int	ms_is_redirection(char *tag)
 
 static bool	ms_fill_redir(char *tag, char *split, t_mshell *data, int *idx)
 {
+	if (!split)
+		split = "";
 	if (!ft_strcmp(tag, "HEREDOC") && (split[0] == '\"' || split[0] == '\''))
 		tag = "HEREDOCNE";
 	data->redir[idx[0]][idx[1]].type = ft_strdup(tag);

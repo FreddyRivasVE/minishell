@@ -34,7 +34,7 @@ static int	ms_heredoc(t_redir *redir, t_mshell *data, bool flag)
 	while (g_signal != SIGINT)
 	{
 		line = readline("> ");
-		if (!line || !ft_strcmp(line, redir->namefile))
+		if (!line || (redir->namefile && !ft_strcmp(line, redir->namefile)))
 		{
 			if (!line)
 				ft_putendl_fd(ERRORHEREDOC, 2);
