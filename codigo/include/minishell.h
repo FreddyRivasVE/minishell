@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/20 16:07:19 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/20 21:18:58 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ bool	ms_token_input(t_mshell *data);
 bool	ms_orquest(t_mshell *data, char ***split, char **tag);
 char	*ms_escape_special_chars(char *str);
 char	*ms_expand_child(char *str, t_mshell *data);
+char	*ms_block_expand_var(char *expand, t_mshell *data);
 bool	ms_special_expand(t_mshell *data);
 bool	ms_reserve_memory_redir(char *str, t_mshell *data);
-bool	ms_control_expand_heredoc(t_mshell *data);
-char	*ms_block_expand_var(char *expand, t_mshell *data);
+bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data);
 
 /*****************************************************************************/
 /*                             	execution                           		 */
