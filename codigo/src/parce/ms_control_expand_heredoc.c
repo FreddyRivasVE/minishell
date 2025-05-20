@@ -6,93 +6,106 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:29:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 16:50:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/20 17:58:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	ms_control_expand_heredoc(t_mshell *data)
+char	*ms_heredoc_case(int *i, char *str, char *result)
+{
+	int		start;
+	int		end;
+
+	start = *i;
+	(*i) = (*i) + 2;
+	end = (*i);
+	result = ft_strjoin_free(result, ft_substr(str, start, end - start));
+	start = (*i);
+	while (str[(*i)] && str[(*i)] != '\'' && str[(*i)] != '\"'
+		&& str[(*i)] != '$')
+		(*i)++;
+	end = (*i);
+	result = ft_strjoin_free(result, ft_substr(str, start, end - start));
+	if (str[(*i)] == '$')
+	{
+		result = ft_strjoin_free(result, ft_strdup("\'"));
+		start = (*i);
+		while (str[(*i)] && !ft_isspace(str[(*i)]))
+			(*i)++;
+		end = (*i);
+		result = ft_strjoin_free(result, ft_substr(str, start, end - start));
+		result = ft_strjoin_free(result, ft_strdup("'"));
+	}
+	else if (str[(*i)] == '\"')
+	{
+		result = ft_strjoin_free(result, ft_strdup("'"));
+		(*i)++;
+		start = (*i);
+		while (str[(*i)] && str[(*i)] != '\"')
+			(*i)++;
+		end = (*i);
+		result = ft_strjoin_free(result, ft_substr(str, start, end - start));
+		result = ft_strjoin_free(result, ft_strdup("'"));
+		(*i)++;
+	}
+	else
+	{
+		start = (*i);
+		while (str[(*i)] && str[(*i)] != '\'')
+			(*i)++;
+		end = (*i);
+		result = ft_strjoin_free(result, ft_substr(str, start, end - start));
+	}
+	return (result);
+}
+
+static char	*ms_read_str(char *temp, char *str)
 {
 	int		i;
 	bool	sq;
 	bool	dq;
 	int		start;
 	int		end;
-	char	*temp;
 
 	i = 0;
-	temp = ft_calloc(1, sizeof(char));
 	sq = false;
 	dq = false;
-	while (data->input_row[i])
+	while (str[i])
 	{
 		start = i;
-		while (data->input_row[i] && data->input_row[i] != '<')
+		while (str[i] && str[i] != '<')
 		{
-			sq = toggle_simples(data->input_row[i], sq, dq);
-			dq = toggle_doubles(data->input_row[i], sq, dq);
+			sq = toggle_simples(str[i], sq, dq);
+			dq = toggle_doubles(str[i], sq, dq);
 			i++;
 		}
 		end = i;
-		temp = ft_strjoin_free(temp, ft_substr(data->input_row, start, end - start));
-		printf ("SALE1: start: %d end: %d %s\n", start, end, temp); //borrar
+		temp = ft_strjoin_free(temp, ft_substr(str, start, end - start));
 		start = i;
-		if (data->input_row[i] != '\0' && data->input_row[i + 1] && data->input_row[i + 1] == '<' && !(sq || dq))
-		{
-			i = i + 2;
-			end = i;
-			temp = ft_strjoin_free(temp, ft_substr(data->input_row, start, end - start));
-			printf ("SALE2: start: %d end: %d %s\n", start, end, temp); //borrar
-			start = i;
-			while (data->input_row[i] && data->input_row[i] != '\'' && data->input_row[i] != '\"' && data->input_row[i] != '$')
-				i++;
-			end = i;
-			temp = ft_strjoin_free(temp, ft_substr(data->input_row, start, end - start));
-			printf ("SALE3: %s\n", temp); //borrar
-			if (data->input_row[i] == '$')
-			{
-				temp = ft_strjoin_free(temp, ft_strdup("\'"));
-				start = i;
-				while (data->input_row[i] && !ft_isspace(data->input_row[i]))
-					i++;
-				end = i;
-				temp = ft_strjoin_free(temp, ft_substr(data->input_row, start, end - start));
-				temp = ft_strjoin_free(temp, ft_strdup("'"));
-				printf ("SALE5: %s\n", temp); //borrar
-			}
-			else if (data->input_row[i] == '\"')
-			{
-				temp = ft_strjoin_free(temp, ft_strdup("'"));
-				i++;
-				start = i;
-				while (data->input_row[i] && data->input_row[i] != '\"')
-				i++;
-				end = i;
-				temp = ft_strjoin_free(temp, ft_substr(data->input_row, start, end - start));
-				temp = ft_strjoin_free(temp, ft_strdup("'"));
-				i++;
-			}
-			else
-			{
-				start = i;
-				while (data->input_row[i] && data->input_row[i] !='\'')
-					i++;
-				end = i;
-				temp = ft_strjoin_free(temp, ft_substr(data->input_row, start, end - start));
-			}
-		}
-		else if (data->input_row[i])
+		if (str[i] != '\0' && str[i + 1] && str[i + 1] == '<' && !(sq || dq))
+			temp = ms_heredoc_case(&i, str, temp);
+		else if (str[i])
 		{
 			end = i + 1;
-			printf ("SALE6: start: %d end: %d %s\n", start, end, temp); //borrar
-			temp = ft_strjoin_free(temp, ft_substr(data->input_row, start, end - start));
-			printf ("SALE7: start: %d end: %d %s\n", start, end, temp); //borrar
+			temp = ft_strjoin_free(temp, ft_substr(str, start, end - start));
 			i++;
 		}
 	}
+	return (temp);
+}
+
+bool	ms_control_expand_heredoc(t_mshell *data)
+{
+	char	*temp;
+
+	temp = ft_calloc(1, sizeof(char));
+	if (!temp)
+		return (false);
+	temp = ms_read_str(temp, data->input_row);
+	if (!temp)
+		return (false);
 	free(data->input_row);
 	data->input_row = temp;
-	printf ("SALE: %s\n", data->input_row); //borrar
 	return (true);
 }

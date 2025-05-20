@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:19:06 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/17 18:28:39 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/20 17:12:12 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ bool	ms_special_expand(t_mshell *data)
 		data->input_row = new_input;
 	}
 	if (!ms_control_expand_heredoc(data))
-		return (false);
+		return (ms_print_perror_malloc(data), false);
 	new_input = ms_expand_child(data->input_row, data);
 	if (!new_input)
 		return (false);
