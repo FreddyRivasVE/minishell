@@ -6,16 +6,17 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/13 12:19:53 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/20 16:13:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_STRUCT_H
 # define MS_STRUCT_H
 
-# define MODE_PROMPT   0
-# define MODE_HEREDOC  1
-# define MODE_CHILD    2
+# define MODE_PROMPT   	0
+# define MODE_HEREDOC  	1
+# define MODE_CHILD    	2
+# define OPEN_DQ		3
 
 typedef struct termios	t_term;
 
@@ -61,5 +62,6 @@ typedef struct s_mshell
 	char		**envp;
 	int			inistdin;
 	int			inistdout;
+	int			flag;
 }	t_mshell;
 #endif

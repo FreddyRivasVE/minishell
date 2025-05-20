@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:29:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/17 18:25:28 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/20 16:50:18 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	ms_control_expand_heredoc(t_mshell *data)
 				i++;
 				end = i;
 				temp = ft_strjoin_free(temp, ft_substr(data->input_row, start, end - start));
-				temp = ft_strjoin_free(temp, "'");
+				temp = ft_strjoin_free(temp, ft_strdup("'"));
 				i++;
 			}
 			else
@@ -90,7 +90,6 @@ bool	ms_control_expand_heredoc(t_mshell *data)
 			printf ("SALE7: start: %d end: %d %s\n", start, end, temp); //borrar
 			i++;
 		}
-		
 	}
 	free(data->input_row);
 	data->input_row = temp;

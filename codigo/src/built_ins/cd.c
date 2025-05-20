@@ -6,24 +6,11 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/05 13:14:35 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/20 16:06:37 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ms_qd_kill(char *str)
-{
-	char	*result;
-
-	if (!str)
-		return (NULL);
-	result = ft_substr(str, 1, ft_strlen(str) - 2);
-	if (!result)
-		return (NULL);
-	ft_free_ptr((void **)&str);
-	return (result);
-}
 
 char	*ms_expand_tilde(char *command, t_list **env)
 {
@@ -79,11 +66,17 @@ char	*ms_obtain_target(char **command, t_list **env, char *pwd)
 void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
 {
 	char	*newoldpwd;
-	char	*pwdupdated;
 	char	*temp;
+	char	*freeoldpwd;
 
 	if (!oldpwd)
-		ft_list_replace_cont(env, "OLDPWD=", var_cmp);
+	{
+		freeoldpwd = ft_strdup("OLDPWD");
+		if (ft_list_replace_cont(env, freeoldpwd, var_cmp) == 0)
+			ft_free_ptr((void **)&freeoldpwd);
+		ft_free_ptr((void **)&newpwd);
+		return ;
+	}
 	else
 	{
 		newoldpwd = ft_strjoin("OLDPWD=", oldpwd);
@@ -91,17 +84,11 @@ void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
 		ft_free_ptr((void **)&newoldpwd);
 		newoldpwd = ft_strdup(temp);
 		ft_free_ptr((void **)&temp);
-		ft_list_replace_cont(env, newoldpwd, var_cmp);
+		if (ft_list_replace_cont(env, newoldpwd, var_cmp) == 0)
+			ft_free_ptr((void **)&newoldpwd);
 	}
-	pwdupdated = ft_strjoin("PWD=", newpwd);
-	temp = ms_add_dquotes(pwdupdated);
-	ft_free_ptr((void **)&pwdupdated);
-	pwdupdated = ft_strdup(temp);
-	ft_free_ptr((void **)&temp);
-	ft_list_replace_cont(env, ft_strdup(pwdupdated), var_cmp);
-	ft_free_ptr((void **)&newpwd);
+	ms_update_pwd(newpwd, env);
 	ft_free_ptr((void **)&oldpwd);
-	ft_free_ptr((void **)&pwdupdated);
 }
 
 void	ms_backup_pwd(char *oldpwd, t_list **env)

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/19 20:22:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/20 16:07:19 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int		ms_unset(t_mshell *data, char **data_ref);
 int		ms_pwd(char **command, t_list **env);
 int		ms_echo(char **command);
 int		ms_cd(char	**s_command, t_list **env, t_mshell *data);
+void	ms_update_pwd(char *newpwd, t_list **env);
 
 /*****************************************************************************/
 /*                                utils	                            		 */

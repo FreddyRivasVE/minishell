@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:41:46 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/05 13:08:53 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/20 15:18:33 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ char	*ms_update_dir(t_mshell *data)
 	home = ms_qd_kill(ft_list_extract_if(&data->env, "HOME", var_cmp));
 	dir = ms_qd_kill(ft_list_extract_if(&data->env, "PWD", var_cmp));
 	if (!home)
+	{
+		if (!dir)
+			dir = ms_get_cwd();
 		return (dir);
+	}
 	lenhom = ft_strlen(home);
 	if (!dir)
 		dir = ms_get_cwd();
