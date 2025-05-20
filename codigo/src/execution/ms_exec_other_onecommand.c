@@ -15,7 +15,7 @@
 static void	ms_move_env_to_pointer(t_mshell *data)
 {
 	int		count;
-	t_list	*current;
+	t_list	*lst;
 	int		i;
 
 	i = 0;
@@ -26,10 +26,10 @@ static void	ms_move_env_to_pointer(t_mshell *data)
 		ms_print_perror_malloc(data);
 		return ;
 	}
-	current = data->env;
-	while (current != NULL)
+	lst = data->env;
+	while (lst != NULL)
 	{
-		data->envp[i] = ft_strdup(current->content);
+		data->envp[i] = ft_substr(lst->content, 1, ft_strlen(lst->content) - 2);
 		if (!data->envp[i])
 		{
 			ms_print_perror_malloc(data);
@@ -37,7 +37,7 @@ static void	ms_move_env_to_pointer(t_mshell *data)
 			return ;
 		}
 		i++;
-		current = current->next;
+		lst = lst->next;
 	}
 }
 

@@ -48,11 +48,13 @@ char	*ms_update_dir(t_mshell *data)
 	int		lenhom;
 	char	*temp;
 
-	home = ft_list_extract_if(&data->env, "HOME", var_cmp);
-	dir = ft_list_extract_if(&data->env, "PWD", var_cmp);
+	home = ms_qd_kill(ft_list_extract_if(&data->env, "HOME", var_cmp));
+	dir = ms_qd_kill(ft_list_extract_if(&data->env, "PWD", var_cmp));
 	if (!home)
 		return (dir);
 	lenhom = ft_strlen(home);
+	if (!dir)
+		dir = ms_get_cwd();
 	start = ft_strspn(home, dir);
 	if (start >= lenhom)
 	{

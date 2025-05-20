@@ -50,12 +50,13 @@ static char	*ms_get_env_line(char	*env)
 			free(level);
 			level = ft_strdup("0");
 		}
-		env_line = ft_strjoin("SHLVL=", level);
-		free(level);
+		env_line = ft_strjoin_free(ft_strdup("SHLVL="), level);
 	}
 	else
 		env_line = ft_strdup(env);
-	return (env_line);
+	temp = ms_add_dquotes(env_line);
+	free(env_line);
+	return (temp);
 }
 
 static t_list	*ms_get_env(char **env)

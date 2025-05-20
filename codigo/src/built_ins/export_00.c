@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*ms_add_dquotes(char *str)
+char	*ms_add_dquotes(char *str)
 {
 	char	*result;
 	int		i;
@@ -21,6 +21,8 @@ static char	*ms_add_dquotes(char *str)
 
 	flag = 0;
 	result = ft_calloc(ft_strlen(str) + 3, sizeof(char));
+	if (!result)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (str[i] != 0)
@@ -36,7 +38,6 @@ static char	*ms_add_dquotes(char *str)
 	}
 	if (flag == 1)
 		result[j] = '\"';
-	result[++j] = '\0';
 	return (result);
 }
 

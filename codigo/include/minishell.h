@@ -131,6 +131,8 @@ char	*ft_strjoin_free(char *s1, char *s2);
 char	*ft_strtrim_spaces(char *s);
 char	*ft_list_extract_if(t_list **begin_list, void *data_ref, int (*cmp)());
 char	*ms_get_cwd(void);
+char	*ms_add_dquotes(char *str);
+char	*ms_qd_kill(char *str);
 t_list	*ms_copy_export_env(t_list **env);
 void	ft_close_heredoc_fds(t_mshell *data);
 void	ft_free_ptr(void **ptr);

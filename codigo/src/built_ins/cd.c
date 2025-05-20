@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+char	*ms_qd_kill(char *str)
+{
+	char	*result;
+
+	if (!str)
+		return (NULL);
+	result = ft_substr(str, 1, ft_strlen(str) - 2);
+	if (!result)
+		return (NULL);
+	ft_free_ptr((void **)&str);
+	return (result);
+}
+
 char	*ms_expand_tilde(char *command, t_list **env)
 {
 	char	*home;
@@ -19,7 +32,7 @@ char	*ms_expand_tilde(char *command, t_list **env)
 
 	if (!command || command[0] != '~')
 		return (ft_strdup(command));
-	home = ft_list_extract_if(env, "HOME", var_cmp);
+	home = ms_qd_kill(ft_list_extract_if(env, "HOME", var_cmp));
 	if (!home)
 		return (ft_putendl_fd("cd: HOME not set", 2), NULL);
 	if (command[1] == '\0')
@@ -42,14 +55,14 @@ char	*ms_obtain_target(char **command, t_list **env, char *pwd)
 	if (!command[1] || ft_strcmp(command[1], "~") == 0
 		|| ft_strcmp(command[1], "--") == 0)
 	{
-		target = ft_list_extract_if(env, "HOME", var_cmp);
+		target = ms_qd_kill(ft_list_extract_if(env, "HOME", var_cmp));
 		if (!target)
 			return (ft_putendl_fd("cd: HOME not set", 2), NULL);
 		return (target);
 	}
 	else if (ft_strcmp(command[1], "-") == 0)
 	{
-		target = ft_list_extract_if(env, "OLDPWD", var_cmp);
+		target = ms_qd_kill(ft_list_extract_if(env, "OLDPWD", var_cmp));
 		if (!target || !pwd)
 			return (ft_free_ptr((void **)&target), \
 				ft_putendl_fd("cd: OLDPWD not set", 2), NULL);
@@ -67,16 +80,28 @@ void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
 {
 	char	*newoldpwd;
 	char	*pwdupdated;
+	char	*temp;
 
 	if (!oldpwd)
 		ft_list_replace_cont(env, "OLDPWD=", var_cmp);
 	else
 	{
 		newoldpwd = ft_strjoin("OLDPWD=", oldpwd);
+		temp = ms_add_dquotes(newoldpwd);
+		ft_free_ptr((void **)&newoldpwd);
+		newoldpwd = ft_strdup(temp);
+		ft_free_ptr((void **)&temp);
 		ft_list_replace_cont(env, newoldpwd, var_cmp);
 	}
 	pwdupdated = ft_strjoin("PWD=", newpwd);
-	ft_list_replace_cont(env, pwdupdated, var_cmp);
+	temp = ms_add_dquotes(pwdupdated);
+	ft_free_ptr((void **)&pwdupdated);
+	pwdupdated = ft_strdup(temp);
+	ft_free_ptr((void **)&temp);
+	ft_list_replace_cont(env, ft_strdup(pwdupdated), var_cmp);
+	ft_free_ptr((void **)&newpwd);
+	ft_free_ptr((void **)&oldpwd);
+	ft_free_ptr((void **)&pwdupdated);
 }
 
 void	ms_backup_pwd(char *oldpwd, t_list **env)
@@ -104,7 +129,7 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 	bool	flag;
 
 	flag = false;
-	oldpwd = ft_list_extract_if(env, "PWD", var_cmp);
+	oldpwd = ms_qd_kill(ft_list_extract_if(env, "PWD", var_cmp));
 	target = ms_obtain_target(command, env, oldpwd);
 	if (!target)
 		return (free(oldpwd), 1);
@@ -119,7 +144,7 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 		ft_putendl_fd("cd: error retrieving current directory:", 2);
 	}
 	else
-		ms_update_env_cd(oldpwd, newpwd, env);
+		ms_update_env_cd(ft_strdup(oldpwd), ft_strdup(newpwd), env);
 	ms_update_prompt(data);
 	return (ft_free_ptr((void **)&oldpwd), ft_free_ptr((void **)&newpwd), \
 	ft_free_ptr((void **)&target), 0);
