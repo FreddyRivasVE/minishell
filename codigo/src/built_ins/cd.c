@@ -132,7 +132,7 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 	oldpwd = ms_qd_kill(ft_list_extract_if(env, "PWD", var_cmp));
 	target = ms_obtain_target(command, env, oldpwd);
 	if (!target)
-		return (free(oldpwd), 1);
+		return (ft_free_ptr((void **)&oldpwd), 1);
 	if (chdir(target) != 0)
 		return (perror("cd"), free(oldpwd), ft_free_ptr((void **)&target), 1);
 	newpwd = ms_get_cwd();
