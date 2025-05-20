@@ -21,7 +21,7 @@ int	ms_pwd(char **command, t_list **env)
 		ft_putendl_fd("env: subject doesn't allow arguments or options", 2);
 		return (2);
 	}
-	pwd = ft_list_extract_if(env, "PWD", var_cmp);
+	pwd = ms_qd_kill(ft_list_extract_if(env, "PWD", var_cmp));
 	if (!pwd)
 		pwd = ms_get_cwd();
 	if (!pwd)
