@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 21:17:52 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/20 23:19:03 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*ms_router_expand(char *str, int *i, char *res, t_mshell *data)
 	if (str[*i + 1] == '\0')
 		return (ft_strjoin_free(res, ft_substr(str, start, ++end - start)));
 	if (ms_control_expand_heredoc(str, *i, data))
-        return ((*i)++, ft_strjoin_free(res, ft_substr(str, start, 1)));
+		return ((*i)++, ft_strjoin_free(res, ft_substr(str, start, 1)));
 	if (str[*i] == '$')
 	{
 		if (str[*i + 1] == '?')

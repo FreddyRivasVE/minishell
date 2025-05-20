@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_control_expand_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:29:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 21:18:14 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/20 23:33:53 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool ms_control_expand_heredoc(char *str, int pos, t_mshell *data)
+bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data)
 {
 	int		i;
 	bool	dobleq;
@@ -27,7 +27,7 @@ bool ms_control_expand_heredoc(char *str, int pos, t_mshell *data)
 			dobleq = true;
 		i--;
 	}
-	if (i > 0 && str[i] == '<' && str[i-1] == '<' && dobleq == 0) 
+	if (i > 0 && str[i] == '<' && str[i - 1] == '<' && dobleq == 0)
 		return (true);
 	return (false);
 }
