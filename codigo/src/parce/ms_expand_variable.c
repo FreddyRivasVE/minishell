@@ -29,7 +29,7 @@ static char	*ms_found_word(char *toexp, t_mshell *data, int *i, char *result)
 	if (!word)
 		return (ms_print_perror_malloc(data), NULL);
 	expand = ft_list_extract_if(&data->env, word, var_cmp);
-	if (expand && data->flag == 0)
+	if (expand && data->flag == 0 && data->hdflag != MODE_HEREDOC)
 		expand = ms_block_expand_var(expand, data);
 	else
 		expand = ms_qd_kill(expand);

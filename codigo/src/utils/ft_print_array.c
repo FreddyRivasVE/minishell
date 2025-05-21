@@ -58,6 +58,7 @@ void	ft_print_redir_array(t_redir **redir)
 		{
 			printf("    [%d][%d] Type: %s\n", i, j, redir[i][j].type);
 			printf("    [%d][%d] Namefile: %s\n", i, j, redir[i][j].namefile);
+			printf("    [%d][%d] ok_tag: %d\n", i, j, redir[i][j].ok_tag);
 			j++;
 		}
 		i++;

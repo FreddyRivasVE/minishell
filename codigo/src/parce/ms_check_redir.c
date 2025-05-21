@@ -43,7 +43,7 @@ static int	ms_ignored_quotes(char *str, int i)
 	return (i);
 }
 
-static bool	ms_redir_result(size_t flag, bool check_redir, char *str)
+static bool	ms_redir_result(char *str)
 {
 	int		i;
 
@@ -53,18 +53,24 @@ static bool	ms_redir_result(size_t flag, bool check_redir, char *str)
 		i = ms_ignored_quotes(str, i);
 		if (ft_isredirection_char(str[i]))
 		{
-			flag++;
-			check_redir = false;
-		}
-		if (ft_isascii(str[i]) && !ft_isredirection_char(str[i])
-			&& (flag < 3) && !ft_isspace(str[i]))
-		{
-			check_redir = true;
-			flag = 0;
+			i++;
+			if (i > 0 && str[i] == str[i - 1])
+				i++;
+			if (str[i] == '\0')
+				return (false);
+			while (str[i])
+			{
+				if (ft_isredirection_char (str[i]) || (str[i + 1] == '\0'))
+					return (false);
+				if (!ft_isspace(str[i]) && ft_isprint(str[i]))
+					break ;
+				i++;
+			}
+			i--;
 		}
 		i++;
 	}
-	return (check_redir);
+	return (true);
 }
 
 bool	ms_check_redir(char *str)
@@ -75,6 +81,6 @@ bool	ms_check_redir(char *str)
 	flag = 0;
 	check_redir = true;
 	if (ft_strchr(str, '<') || ft_strchr(str, '>'))
-		check_redir = ms_redir_result(flag, check_redir, str);
+		check_redir = ms_redir_result(str);
 	return (check_redir);
 }

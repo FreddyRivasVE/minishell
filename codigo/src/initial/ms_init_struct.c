@@ -95,6 +95,7 @@ void	ms_init_struct(t_mshell *data, char **env)
 	data->exits = 0;
 	data->inputs = 0;
 	data->flag = 0;
+	data->hdflag = 0;
 	data->env = 0;
 	data->pipesnum = 0;
 	data->inistdin = 0;

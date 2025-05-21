@@ -38,7 +38,7 @@ static bool	is_valid_pipe_position(char *str, int i, bool dquote, bool squote)
 	return (true);
 }
 
-static bool	has_leading_pipe(char *str)
+bool	ms_has_leading_pipe(char *str)
 {
 	int	i;
 
@@ -54,7 +54,7 @@ bool	ms_check_pipes(char *str)
 	bool	squote;
 	bool	dquote;
 
-	if (has_leading_pipe(str))
+	if (ms_has_leading_pipe(str))
 		return (false);
 	i = 0;
 	squote = false;

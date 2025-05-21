@@ -31,9 +31,9 @@ static int	ms_calculate_new_length(char *str)
 		{
 			if (i > 0 && !ft_isspace(str[i - 1]))
 				extra_spaces++;
-			if (ft_isredirection_char(str[i + 1]))
+			if (str[i + 1] != '\0' && ft_isredirection_char(str[i + 1]))
 				i++;
-			if (!ft_isspace(str[i + 1]) && str[i + 1] != '\0')
+			if (str[i + 1] != '\0' && !ft_isspace(str[i + 1]))
 				extra_spaces++;
 		}
 		i++;
@@ -45,9 +45,9 @@ static void	handle_redirection_chars(char *str, char *new_str, int *i, int *j)
 {
 	if (ft_isredirection_char(str[(*i)]))
 	{
-		if (ft_isredirection_char(str[(*i) + 1]))
+		if (str[(*i) + 1] != '\0' && ft_isredirection_char(str[(*i) + 1]))
 			new_str[++(*j)] = str[++(*i)];
-		if (!ft_isspace(str[(*i) + 1]) && str[(*i) + 1] != '\0')
+		if (str[(*i) + 1] != '\0' && !ft_isspace(str[(*i) + 1]))
 			new_str[++(*j)] = ' ';
 	}
 }

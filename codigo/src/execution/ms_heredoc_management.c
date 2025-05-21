@@ -60,6 +60,7 @@ static bool	ms_handle_single_herdoc(t_redir *redir, t_mshell *data, bool *flag)
 	{
 		if (!ft_strcmp(redir->type, "HEREDOCNE"))
 			*flag = true;
+		data->hdflag = MODE_HEREDOC;
 		data->exits = ms_heredoc(redir, data, *flag);
 		if (data->exits == 130 || data->exits == ENOMEM)
 		{
@@ -90,38 +91,7 @@ bool	ms_heredoc_management(t_mshell *data)
 		}
 		i++;
 	}
+	data->hdflag = 0;
 	return (true);
 }
 
-/*bool	ms_heredoc_management(t_mshell *data)
-{
-	int		i;
-	int		j;
-	bool	flag;
-
-	i = 0;
-	flag = false;
-	while (data->redir[i])
-	{
-		j = 0;
-		while (data->redir[i][j].type != NULL)
-		{
-			if (!ft_strcmp(data->redir[i][j].type, "HEREDOC")
-				|| !ft_strcmp(data->redir[i][j].type, "HEREDOCNE"))
-			{
-				if (!ft_strcmp(data->redir[i][j].type, "HEREDOCNE"))
-					flag = true;
-				data->exits = ms_heredoc(&data->redir[i][j], data, flag);
-				if (data->exits == 130 || data->exits == ENOMEM)
-				{
-					g_signal = 0;
-					return (ft_close_heredoc_fds(data), false);
-				}
-			}
-			flag = false;
-			j++;
-		}
-		i++;
-	}
-	return (true);
-}*/

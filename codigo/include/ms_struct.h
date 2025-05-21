@@ -62,5 +62,6 @@ typedef struct s_mshell
 	int			inistdin;
 	int			inistdout;
 	int			flag;
+	int			hdflag;
 }	t_mshell;
 #endif

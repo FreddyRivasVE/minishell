@@ -18,12 +18,24 @@ static int	ms_check_redir_access(char *tag, char *file_name)
 		return (-1);
 	if (!ft_strcmp(tag, "INPUT") && access(file_name, R_OK) == -1)
 		return (-1);
-	if (!ft_strcmp(tag, "OUTPUT")
-		&& access(file_name, F_OK | W_OK) == -1)
-		return (-1);
-	if (!ft_strcmp(tag, "OUTPUTAPPEND")
-		&& access(file_name, F_OK | W_OK | R_OK) == -1)
-		return (-1);
+	if (!ft_strcmp(tag, "OUTPUT"))
+	{
+		if (access(file_name, F_OK) != -1)
+		{
+			if (access(file_name, W_OK) == -1)
+				return (-1);
+		}
+		return (0);
+	}
+	if (!ft_strcmp(tag, "OUTPUTAPPEND"))
+	{
+		if (access(file_name, F_OK) != -1)
+		{
+			if (access(file_name, W_OK | R_OK) == -1)
+				return (-1);
+		}
+		return (0);
+	}
 	return (0);
 }
 

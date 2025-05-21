@@ -72,6 +72,7 @@ char	*ms_block_expand_var(char *expand, t_mshell *data);
 bool	ms_special_expand(t_mshell *data);
 bool	ms_reserve_memory_redir(char *str, t_mshell *data);
 bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data);
+bool	ms_has_leading_pipe(char *str);
 
 /*****************************************************************************/
 /*                             	execution                           		 */
