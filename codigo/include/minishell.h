@@ -33,18 +33,14 @@
 
 # define GREEN			"\001\033[92;1m\002"
 # define CLEAR_COLOR	"\001\033[0m\002"
-
-# define MINI_PRONT          "\001\033[92;1m\002minishell:$ \001\033[0m\002"
+# define MINI_PRONT		"\001\033[92;1m\002minishell:$ \001\033[0m\002"
 
 extern int	g_signal;
 
-/*Es la forma que encontre de poder usar la variable en mac
-la tengo que extraer explicitamente, seguro norminete te salta
-al final se retira.*/
-# ifdef __APPLE__
+/* # ifdef __APPLE__
 
 extern int	rl_catch_signals;
-# endif
+# endif */
 
 /*****************************************************************************/
 /*                              shell init                            		 */
@@ -95,7 +91,7 @@ void	ms_free_command_child(char **command, t_mshell *data, char *msm);
 void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data);
 void	ms_redirect_child_output(t_command *cmds, int i, int total, \
 		t_mshell *data);
-void	close_all_pipes(t_command *cmds, int total);
+void	ms_move_env_to_pointer(t_mshell *data);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */

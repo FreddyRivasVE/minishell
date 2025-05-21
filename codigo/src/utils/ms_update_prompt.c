@@ -64,11 +64,9 @@ char	*ms_update_dir(t_mshell *data)
 	{
 		temp = ft_substr(dir, start, (ft_strlen(dir) - start));
 		ft_free_ptr((void **)&dir);
-		dir = ft_strjoin("~", temp);
-		free(home);
-		free(temp);
+		dir = ft_strjoin_free(ft_strdup("~"), temp);
 	}
-	return (dir);
+	return (ft_free_ptr((void **)&home), dir);
 }
 
 void	ms_update_prompt(t_mshell *data)

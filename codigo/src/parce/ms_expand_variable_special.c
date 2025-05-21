@@ -86,8 +86,6 @@ bool	ms_special_expand(t_mshell *data)
 		free(data->input_row);
 		data->input_row = new_input;
 	}
-	// if (!ms_control_expand_heredoc(data))
-	// 	return (ms_print_perror_malloc(data), false);
 	new_input = ms_expand_child(data->input_row, data);
 	if (!new_input)
 		return (false);

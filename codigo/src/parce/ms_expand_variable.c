@@ -22,7 +22,7 @@ static char	*ms_found_word(char *toexp, t_mshell *data, int *i, char *result)
 	(*i)++;
 	start = *i;
 	while (toexp[*i] != '$' && toexp [*i] != '\"' && !(ft_isspace(toexp[*i]))
-		&& toexp[*i] && toexp[*i] != '\'')
+		&& toexp[*i] && toexp[*i] != '\'' && toexp[*i] != '=')
 		(*i)++;
 	end = *i;
 	word = ft_substr(toexp, start, end - start);

@@ -16,7 +16,6 @@
 # define MODE_PROMPT   	0
 # define MODE_HEREDOC  	1
 # define MODE_CHILD    	2
-# define OPEN_DQ		3
 
 typedef struct termios	t_term;
 

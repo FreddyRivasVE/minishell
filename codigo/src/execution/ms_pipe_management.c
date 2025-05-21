@@ -40,7 +40,6 @@ static void	exec_child(t_command *cmds, int i, int total, t_mshell *data)
 			close(cmds[i - 1].pipefd[0]);
 	}
 	data->exits = ms_exec_builtin_or_other(cmds[i].command, data);
-	printf("data exit %i\n", data->exits); //borrar
 	close_all_pipes(cmds, total);
 	ms_free_child(cmd->input_name, data, 1);
 	exit(data->exits);

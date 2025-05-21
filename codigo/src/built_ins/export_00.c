@@ -41,6 +41,12 @@ char	*ms_add_dquotes(char *str)
 	return (result);
 }
 
+static bool	ms_invalid_char(char c)
+{
+	return (ft_special_char(c) || ft_isredirection_char(c)
+		|| c == '|' || c == '\'' || c == '\"');
+}
+
 static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
 {
 	char	*arg;
@@ -48,7 +54,7 @@ static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
 
 	while (command[*i])
 	{
-		if (ft_special_char(command[*i][0]))
+		if (ms_invalid_char(command[*i][0]))
 		{
 			ft_print_error("export: ", command[*i], SPECIALCHAR);
 			*exit_code = 1;
