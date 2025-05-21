@@ -1,29 +1,29 @@
-==2889982== Memcheck, a memory error detector
-==2889982== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2889982== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2889982== Command: ./minishell
-==2889982== Parent PID: 2889980
-==2889982== 
-==2889982== 
-==2889982== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==2889982== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==2889982==    <inherited from parent>
-==2889982== 
-==2889982== 
-==2889982== HEAP SUMMARY:
-==2889982==     in use at exit: 208,326 bytes in 222 blocks
-==2889982==   total heap usage: 719 allocs, 497 frees, 240,795 bytes allocated
-==2889982== 
-==2889982== LEAK SUMMARY:
-==2889982==    definitely lost: 0 bytes in 0 blocks
-==2889982==    indirectly lost: 0 bytes in 0 blocks
-==2889982==      possibly lost: 0 bytes in 0 blocks
-==2889982==    still reachable: 0 bytes in 0 blocks
-==2889982==         suppressed: 208,326 bytes in 222 blocks
-==2889982== 
-==2889982== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---2889982-- 
---2889982-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,310 bytes in 221 blocks
---2889982-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
-==2889982== 
-==2889982== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==2891534== Memcheck, a memory error detector
+==2891534== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2891534== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2891534== Command: ./minishell
+==2891534== Parent PID: 2891532
+==2891534== 
+==2891534== 
+==2891534== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==2891534== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
+==2891534==    <inherited from parent>
+==2891534== 
+==2891534== 
+==2891534== HEAP SUMMARY:
+==2891534==     in use at exit: 208,583 bytes in 225 blocks
+==2891534==   total heap usage: 748 allocs, 523 frees, 240,998 bytes allocated
+==2891534== 
+==2891534== LEAK SUMMARY:
+==2891534==    definitely lost: 0 bytes in 0 blocks
+==2891534==    indirectly lost: 0 bytes in 0 blocks
+==2891534==      possibly lost: 0 bytes in 0 blocks
+==2891534==    still reachable: 0 bytes in 0 blocks
+==2891534==         suppressed: 208,583 bytes in 225 blocks
+==2891534== 
+==2891534== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--2891534-- 
+--2891534-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:22 suppressed: 204,567 bytes in 224 blocks
+--2891534-- used_suppression:      1 readline_history valgrind/valgrind.sup:30 suppressed: 4,016 bytes in 1 blocks
+==2891534== 
+==2891534== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

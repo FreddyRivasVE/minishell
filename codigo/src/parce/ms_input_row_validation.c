@@ -40,8 +40,15 @@ static bool	ms_heredoc_live(char *str)
 	i = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	if (ft_isredirection_char(str[i]))
+	if (str[i] != '\0' && ft_isredirection_char(str[i]) && str[i + 1] == '\0')
 		return (false);
+	if (str[i] != '\0' && ft_isredirection_char(str[i]) && !ft_isredirection_char(str[i + 1]))
+	{
+		while (str[i] && ft_isspace(str[i]))
+			i++;
+		if (str[i] == '\0' || ft_isredirection_char(str[i]))
+			return (false);
+	}
 	sq = false;
 	dq = false;
 	while (str[i])
