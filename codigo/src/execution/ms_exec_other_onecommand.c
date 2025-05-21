@@ -12,6 +12,36 @@
 
 #include "minishell.h"
 
+char	*ms_kill_dquotes_v2(char *str)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		flag;
+
+	flag = 0;
+	result = ft_calloc(ft_strlen(str) - 2, sizeof(char));
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i] != 0 )
+	{
+		if (str[i] == '\"' && str[i + 1] == '\0')
+			break ;
+		else
+			result[j] = str[i];
+		if (str[i] == '=' && flag == 0)
+		{
+			i++;
+			flag = 1;
+		}
+		i++;
+		j++;
+	}
+	return (result);
+}
+
 static void	ms_move_env_to_pointer(t_mshell *data)
 {
 	int		count;
@@ -29,7 +59,7 @@ static void	ms_move_env_to_pointer(t_mshell *data)
 	lst = data->env;
 	while (lst != NULL)
 	{
-		data->envp[i] = ft_substr(lst->content, 1, ft_strlen(lst->content) - 2);
+		data->envp[i] = ms_kill_dquotes_v2(lst->content);
 		if (!data->envp[i])
 		{
 			ms_print_perror_malloc(data);
@@ -77,6 +107,15 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 	return (ms_execute_command(path, command, data->envp), 0);
 }
 
+int	ms_free_command_child_pipe(char **command, t_mshell *data, char *msm)
+{
+	// (void) data;
+	free_array(data->envp);
+	ft_print_error(MINI, command[0], msm);
+	//ms_free_child("", data, 1);
+	return (127);
+}
+
 int	ms_exec_pipes(char **command, t_mshell *data)
 {
 	char	*path;
@@ -95,7 +134,7 @@ int	ms_exec_pipes(char **command, t_mshell *data)
 	{
 		path = ms_recoverpath(command[0], &data->env, data);
 		if (!path && data->exits != ENOMEM)
-			ms_free_command_child(command, data, ERROCOMMAND);
+			return(ms_free_command_child_pipe(command, data, ERROCOMMAND));
 		else if (data->exits == ENOMEM)
 			exit(ENOMEM);
 	}
@@ -124,6 +163,6 @@ int	ms_exec_other(char **command, t_mshell *data)
 		ms_set_signal_handler(MODE_PROMPT);
 	}
 	else
-		ms_exec_pipes(command, data);
+		return (ms_exec_pipes(command, data));
 	return (0);
 }

@@ -95,6 +95,7 @@ void	ms_free_command_child(char **command, t_mshell *data, char *msm);
 void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data);
 void	ms_redirect_child_output(t_command *cmds, int i, int total, \
 		t_mshell *data);
+void	close_all_pipes(t_command *cmds, int total);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */

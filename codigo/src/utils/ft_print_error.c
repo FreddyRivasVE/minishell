@@ -31,6 +31,7 @@ void	ms_print_perror_exit(char *str, int num)
 	exit(num);
 }
 
+
 void	ms_free_command_child(char **command, t_mshell *data, char *msm)
 {
 	free_array(data->envp);
