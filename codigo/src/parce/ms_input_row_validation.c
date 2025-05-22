@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_input_row_validation.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:55:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/22 09:12:12 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/22 17:52:18 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static bool	ms_heredoc_live(char *str)
 		return (false);
 	sq = false;
 	dq = false;
+	i = 0;
 	while (str[i])
 	{
 		sq = toggle_simples(str[i], sq, dq);

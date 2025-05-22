@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/22 08:17:41 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/22 15:20:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	ms_init_struct(t_mshell *data, char **env);
 void	ms_loop_minishell(t_mshell *data);
 void	ms_set_signal_handler(int mode);
 void	reset_terminal_settings(void);
+void	ms_loop_minishell_nointeractive(t_mshell *data);
+bool	ms_parcetoken_mini(t_mshell *data, char *read_line);
 
 /*****************************************************************************/
 /*                             		parce                            		 */

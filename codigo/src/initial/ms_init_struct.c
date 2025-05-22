@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:16:48 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 16:13:42 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/22 14:25:48 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 static void	ms_get_ttyinfo(t_mshell *data)
 {
 	if (isatty(STDIN_FILENO))
+	{
+		data->is_interactive = 1;
 		tcgetattr(STDIN_FILENO, &data->conftty);
+	}
 }
 
 static char	*ft_getnstr(char *str, char *c)
@@ -90,6 +93,7 @@ void	ms_init_struct(t_mshell *data, char **env)
 {
 	t_list	*mini_env;
 
+	data->is_interactive = 0;
 	rl_catch_signals = 0;
 	data->commands = 0;
 	data->exits = 0;

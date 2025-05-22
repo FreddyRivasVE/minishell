@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/05/20 16:01:30 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/22 15:16:30 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ EXECUTION	:=	$(EXECUTION_DIR)ms_execution.c $(EXECUTION_DIR)ms_redir_management.
 				$(EXECUTION_DIR)ms_pipe_management.c $(EXECUTION_DIR)ms_redir_child.c
 
 INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
-				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c 
+				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c \
+				$(INITIAL_DIR)ms_loop_minishell_nointeractive.c
 
 PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c \
 				$(PARCE_DIR)ms_check_quotation_marks.c \

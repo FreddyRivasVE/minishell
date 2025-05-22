@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:19:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 16:13:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/22 14:23:45 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_input
 typedef struct s_mshell
 {
 	t_list		*env;
+	int			is_interactive;
 	t_term		conftty;
 	char		*input_row;
 	t_command	*commands;

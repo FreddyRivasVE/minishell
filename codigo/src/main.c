@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:25:42 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/05/05 17:44:35 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:18:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	main(int argc, char **argv, char **env)
 	sigemptyset(&sa_quit.sa_mask);
 	sigaction(SIGQUIT, &sa_quit, NULL);
 	ms_init_struct(&data, env);
-	ms_loop_minishell(&data);
+	if (data.is_interactive)
+		ms_loop_minishell(&data);
+	else
+		ms_loop_minishell_nointeractive(&data);
 	return (0);
 }

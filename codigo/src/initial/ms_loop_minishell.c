@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:57:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/17 18:28:21 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/22 18:35:38 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ms_exec(t_mshell *data)
 		ft_free_command_array(data->commands, data->pipesnum + 1);
 		return ;
 	}
-	ft_print_redir_array(data->redir); //borrar
-	ft_print_command_array(data->commands, data->pipesnum + 1); //borrar
+	//ft_print_redir_array(data->redir); //borrar
+	//ft_print_command_array(data->commands, data->pipesnum + 1); //borrar
 	if (data->pipesnum != 0)
 		run_pipeline(data->commands, data->pipesnum + 1, data);
 	else
