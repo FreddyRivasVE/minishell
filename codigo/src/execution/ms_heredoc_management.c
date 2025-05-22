@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_heredoc_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:55:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/18 21:18:54 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/22 08:25:21 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static bool	ms_handle_single_herdoc(t_redir *redir, t_mshell *data, bool *flag)
 	{
 		if (!ft_strcmp(redir->type, "HEREDOCNE"))
 			*flag = true;
+		if (!redir->namefile || ft_strlen(redir->namefile) == 0)
+			return (ft_close_heredoc_fds(data), false);
 		data->hdflag = MODE_HEREDOC;
 		data->exits = ms_heredoc(redir, data, *flag);
 		if (data->exits == 130 || data->exits == ENOMEM)

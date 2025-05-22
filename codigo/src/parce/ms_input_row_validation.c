@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_input_row_validation.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:55:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/30 16:34:05 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/22 09:07:11 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,25 @@ static bool	is_heredoc_sequence(const char *str, int *i)
 	return (false);
 }
 
+static bool ms_has_redir_at_start(char *str)
+{
+	int	i;
+	
+	i = 0;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	if (str[i] != '\0' && ft_isredirection_char(str[i]) && str[i + 1] == '\0')
+		return (true);
+	if (str[i] != '\0' && ft_isredirection_char(str[i]) && !ft_isredirection_char(str[i + 1]))
+	{
+		while (str[i] && ft_isspace(str[i]))
+			i++;
+		if (str[i] == '\0' || ft_isredirection_char(str[i]))
+			return (true);
+	}
+	return (false);
+}
+
 static bool	ms_heredoc_live(char *str)
 {
 	int		i;
@@ -37,18 +56,8 @@ static bool	ms_heredoc_live(char *str)
 
 	if (ms_has_leading_pipe(str))
 		return (false);
-	i = 0;
-	while (str[i] && ft_isspace(str[i]))
-		i++;
-	if (str[i] != '\0' && ft_isredirection_char(str[i]) && str[i + 1] == '\0')
+	if (ms_has_redir_at_start(str))
 		return (false);
-	if (str[i] != '\0' && ft_isredirection_char(str[i]) && !ft_isredirection_char(str[i + 1]))
-	{
-		while (str[i] && ft_isspace(str[i]))
-			i++;
-		if (str[i] == '\0' || ft_isredirection_char(str[i]))
-			return (false);
-	}
 	sq = false;
 	dq = false;
 	while (str[i])

@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/20 21:18:58 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/22 08:17:41 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@
 
 extern int	g_signal;
 
-/* # ifdef __APPLE__
+# ifdef __APPLE__
 
 extern int	rl_catch_signals;
-# endif */
+# endif 
 
 /*****************************************************************************/
 /*                              shell init                            		 */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_check_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/03 18:59:21 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/22 08:35:44 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,29 @@ static int	ms_ignored_quotes(char *str, int i)
 	return (i);
 }
 
+static bool	check_after_redirection(char *str, int *i)
+{
+	(*i)++;
+	if (*i > 0 && str[*i] == str[*i - 1])
+		(*i)++;
+	if (str[*i] == '\0')
+		return (false);
+	while (str[*i])
+	{
+		if (ft_isredirection_char(str[*i]) || (str[*i + 1] == '\0'))
+			return (false);
+		if (!ft_isredirection_char(str[*i])
+			&& !ft_isspace(str[*i]) && ft_isprint(str[*i]))
+			break ;
+		(*i)++;
+	}
+	(*i)--;
+	return (true);
+}
+
 static bool	ms_redir_result(char *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -53,20 +73,8 @@ static bool	ms_redir_result(char *str)
 		i = ms_ignored_quotes(str, i);
 		if (ft_isredirection_char(str[i]))
 		{
-			i++;
-			if (i > 0 && str[i] == str[i - 1])
-				i++;
-			if (str[i] == '\0')
+			if (!check_after_redirection(str, &i))
 				return (false);
-			while (str[i])
-			{
-				if (ft_isredirection_char (str[i]) || (str[i + 1] == '\0'))
-					return (false);
-				if (!ft_isspace(str[i]) && ft_isprint(str[i]))
-					break ;
-				i++;
-			}
-			i--;
 		}
 		i++;
 	}
@@ -75,10 +83,8 @@ static bool	ms_redir_result(char *str)
 
 bool	ms_check_redir(char *str)
 {
-	size_t	flag;
 	bool	check_redir;
 
-	flag = 0;
 	check_redir = true;
 	if (ft_strchr(str, '<') || ft_strchr(str, '>'))
 		check_redir = ms_redir_result(str);
