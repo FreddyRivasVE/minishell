@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:55:27 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/22 09:07:11 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/22 09:12:12 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@ static bool	is_heredoc_sequence(const char *str, int *i)
 	return (false);
 }
 
-static bool ms_has_redir_at_start(char *str)
+static bool	ms_has_redir_at_start(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] != '\0' && ft_isredirection_char(str[i]) && str[i + 1] == '\0')
 		return (true);
-	if (str[i] != '\0' && ft_isredirection_char(str[i]) && !ft_isredirection_char(str[i + 1]))
+	if (str[i] != '\0' && ft_isredirection_char(str[i])
+		&& !ft_isredirection_char(str[i + 1]))
 	{
 		while (str[i] && ft_isspace(str[i]))
 			i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_control_expand_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:29:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 23:33:53 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/22 09:13:44 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,3 @@ bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data)
 		return (true);
 	return (false);
 }
-

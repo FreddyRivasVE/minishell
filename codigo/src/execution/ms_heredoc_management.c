@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:55:42 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/22 08:25:21 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/22 09:12:42 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,3 @@ bool	ms_heredoc_management(t_mshell *data)
 	data->hdflag = 0;
 	return (true);
 }
-
