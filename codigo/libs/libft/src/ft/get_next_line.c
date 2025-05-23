@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:08:58 by brivera           #+#    #+#             */
-/*   Updated: 2025/01/21 16:13:45 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/05/23 13:17:29 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static void	ft_free_ptr(void **ptr)
+{
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
 
 char	*readmyfd(char *texread, int fd)
 {
@@ -88,18 +97,18 @@ char	*update_texread(char *texread)
 	total_len = len - i;
 	while (j < total_len)
 		myupdate[j++] = texread[++i];
-	free(texread);
+	ft_free_ptr((void **)&texread);
 	return (myupdate);
 }
 
-char	*freefree(char *texread, char *texread_print)
+/* char	*freefree(char *texread, char *texread_print)
 {
 	free(texread_print);
 	free(texread);
 	texread_print = NULL;
 	texread = NULL;
 	return (NULL);
-}
+} */
 
 char	*get_next_line(int fd)
 {
@@ -122,6 +131,9 @@ char	*get_next_line(int fd)
 		return (free(texread), texread = NULL, NULL);
 	texread = update_texread(texread);
 	if (texread_print && *texread_print == '\0')
-		texread_print = freefree(texread, texread_print);
+	{
+		ft_free_ptr((void **)&texread);
+		ft_free_ptr((void **)&texread_print);
+	}
 	return (texread_print);
 }

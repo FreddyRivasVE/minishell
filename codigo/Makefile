@@ -6,7 +6,7 @@
 #    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/05/22 15:16:30 by frivas           ###   ########.fr        #
+#    Updated: 2025/05/23 14:28:24 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_arra
 				$(UTILS_DIR)ft_free_memory.c $(UTILS_DIR)ft_special_char.c \
 				$(UTILS_DIR)ms_update_prompt.c $(UTILS_DIR)ms_get_cwd.c \
 				$(UTILS_DIR)ft_print_error.c $(UTILS_DIR)ft_close_heredoc_fds.c \
-				$(UTILS_DIR)ms_qd_killer.c
+				$(UTILS_DIR)ms_qd_killer.c $(UTILS_DIR)ft_gnl.c
 
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 
