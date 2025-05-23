@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ms_is_n_flag(char *str)
+static int	ms_is_n_flag(char *str)
 {
 	int	i;
 

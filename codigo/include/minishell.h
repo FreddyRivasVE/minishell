@@ -37,15 +37,16 @@
 
 extern int	g_signal;
 
-# ifdef __APPLE__
+/* # ifdef __APPLE__
 
 extern int	rl_catch_signals;
-# endif 
+# endif  */
 
 /*****************************************************************************/
 /*                              shell init                            		 */
 /*****************************************************************************/
 
+char	*ms_get_host(void);
 void	ms_get_prompt(t_mshell *data);
 void	ms_init_struct(t_mshell *data, char **env);
 void	ms_loop_minishell(t_mshell *data);
@@ -88,7 +89,7 @@ char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data);
 void	ms_exec(t_mshell *data);
 void	ms_execute_command(char *path, char **command, char **envp);
 void	ms_simple_execution(t_mshell *data);
-void	run_pipeline(t_command *cmds, int total, t_mshell *data);
+void	ms_run_pipeline(t_command *cmds, int total, t_mshell *data);
 void	ms_free_child(char *msm, t_mshell *data, int flag);
 void	ms_free_command_child(char **command, t_mshell *data, char *msm);
 void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data);

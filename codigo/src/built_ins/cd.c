@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*ms_expand_tilde(char *command, t_list **env)
+static char	*ms_expand_tilde(char *command, t_list **env)
 {
 	char	*home;
 	char	*expanded;
@@ -34,7 +34,7 @@ char	*ms_expand_tilde(char *command, t_list **env)
 	return (ft_strdup(command));
 }
 
-char	*ms_obtain_target(char **command, t_list **env, char *pwd)
+static char	*ms_obtain_target(char **command, t_list **env, char *pwd)
 {
 	char	*target;
 
@@ -63,7 +63,7 @@ char	*ms_obtain_target(char **command, t_list **env, char *pwd)
 	}
 }
 
-void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
+static void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
 {
 	char	*newoldpwd;
 	char	*temp;
@@ -91,7 +91,7 @@ void	ms_update_env_cd(char *oldpwd, char *newpwd, t_list **env)
 	ft_free_ptr((void **)&oldpwd);
 }
 
-void	ms_backup_pwd(char *oldpwd, t_list **env)
+static void	ms_backup_pwd(char *oldpwd, t_list **env)
 {
 	char	*tempwd;
 

@@ -86,7 +86,7 @@ static int	ms_open_pipe(t_command *cmds, int i, int cmd_len, t_mshell *data)
 	return (0);
 }
 
-void	run_pipeline(t_command *commands, int cmd_len, t_mshell *data)
+void	ms_run_pipeline(t_command *commands, int cmd_len, t_mshell *data)
 {
 	int		i;
 

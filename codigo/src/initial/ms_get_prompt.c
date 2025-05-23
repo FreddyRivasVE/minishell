@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*ms_get_host(void)
+char	*ms_get_host(void)
 {
 	char	*res;
 	int		fd;
