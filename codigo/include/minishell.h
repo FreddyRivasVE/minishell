@@ -20,8 +20,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
-# include <signal.h>
 # include <stdio.h>
+# include <signal.h>
 # include <unistd.h>
 # include <termios.h>
 # include <sys/stat.h>
@@ -46,14 +46,14 @@ extern int	rl_catch_signals;
 /*                              shell init                            		 */
 /*****************************************************************************/
 
+int		ms_loop_minishell_nointeractive(t_mshell *data);
+bool	ms_parcetoken_mini(t_mshell *data, char *read_line);
 char	*ms_get_host(void);
 void	ms_get_prompt(t_mshell *data);
 void	ms_init_struct(t_mshell *data, char **env);
 void	ms_loop_minishell(t_mshell *data);
 void	ms_set_signal_handler(int mode);
 void	reset_terminal_settings(void);
-void	ms_loop_minishell_nointeractive(t_mshell *data);
-bool	ms_parcetoken_mini(t_mshell *data, char *read_line);
 
 /*****************************************************************************/
 /*                             		parce                            		 */
@@ -146,6 +146,7 @@ void	ft_print_array(char **array);
 void	ft_print_array_triple(char ***array);
 void	ft_print_error(char *arg, char *var, char *msj);
 void	ft_print_redir_array(t_redir **redir);
+void	ft_print_error_perror(char *arg, char *msj);
 void	ft_print_command_array(t_command *commands, int count);
 void	ms_exit_minishell(t_mshell *data);
 void	ms_print_perror_malloc(t_mshell *data);

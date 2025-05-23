@@ -20,12 +20,13 @@ bool	ft_special_char(int c)
 }
 
 /*
-Compara dos strings
-0  si `s1` y `s2` son iguales.
-<0 si `s1` es menor que `s2` (en orden ASCII).
->0 si `s1` es mayor que `s2`. 
-Nota:`unsigned char` para manejar valores >127 correctamente.
- */
+Compares two strings.
+Returns 0 if `s1` and `s2` are equal.
+Returns <0 if `s1` is less than `s2` (in ASCII order).
+Returns >0 if `s1` is greater than `s2`.
+Note: Uses `unsigned char` to correctly handle values >127.
+*/
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
@@ -37,10 +38,10 @@ int	ft_strcmp(const char *s1, const char *s2)
 }
 
 /*
-Su propósito es contar el número de caracteres
-consecutivos al principio de la cadena s 
-que están presentes en la cadena
+Its purpose is to count the number of consecutive characters 
+at the beginning of the string `s` that are present in the string `accept`.
 */
+
 size_t	ft_strspn(const char *s, const char *accept)
 {
 	size_t	i;
@@ -56,9 +57,10 @@ size_t	ft_strspn(const char *s, const char *accept)
 }
 
 /*
-La función recorre la cadena s buscando
-el primer carácter que esté presente en reject.
+The function scans the string `s` looking for
+the first character that is present in `reject`.
 */
+
 size_t	ft_strcspn(const char *s, const char *reject)
 {
 	int	i;
@@ -79,6 +81,11 @@ size_t	ft_strcspn(const char *s, const char *reject)
 	}
 	return (i);
 }
+
+/*
+Searches for the last occurrence of the character `c` in the string `str`.
+Returns its index, or -1 if not found.
+*/
 
 size_t	ft_seek_lastc(char *str, char c)
 {

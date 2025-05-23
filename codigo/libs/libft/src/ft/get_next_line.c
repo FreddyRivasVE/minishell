@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static void	ft_free_ptr(void **ptr)
+static void	clean_up(char **ptr)
 {
 	if (ptr && *ptr)
 	{
@@ -21,119 +21,88 @@ static void	ft_free_ptr(void **ptr)
 	}
 }
 
-char	*readmyfd(char *texread, int fd)
+static char	*read_and_store(int fd, char **store, char *buffer)
 {
-	ssize_t	bytesread;
-	char	*readline;
 	char	*temp;
+	ssize_t	bytes_read;
 
-	readline = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!readline)
-		return (NULL);
-	bytesread = 1;
-	while (!ft_strchr(texread, '\n') && bytesread > 0)
+	bytes_read = 1;
+	while (bytes_read > 0)
 	{
-		bytesread = read(fd, readline, BUFFER_SIZE);
-		if (bytesread < 0)
-			return (free(readline), free(texread), NULL);
-		if (bytesread == 0)
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return (clean_up(store), NULL);
+		if (bytes_read == 0)
 			break ;
-		readline[bytesread] = '\0';
-		temp = texread;
-		texread = ft_strjoin(temp, readline);
-		free(temp);
-		if (!texread)
+		buffer[bytes_read] = '\0';
+		temp = *store;
+		if (!temp)
+			temp = ft_strdup("");
+		if (!temp)
+			return (clean_up(store), NULL);
+		*store = ft_strjoin(temp, buffer);
+		clean_up(&temp);
+		if (!*store)
 			return (NULL);
+		if (ft_strchr(buffer, '\n'))
+			break ;
 	}
-	free(readline);
-	return (texread);
+	return (*store);
 }
 
-char	*createmyline(char *texread)
+static char	*extract_line_content(char **store)
 {
-	char	*createxread;
-	int		i;
-	int		j;
+	char	*line;
+	char	*newline_pos;
+	size_t	line_len;
 
-	i = 0;
-	if (!texread)
+	if (!*store || !**store)
 		return (NULL);
-	while (texread[i] && texread[i] != '\n')
-		i++;
-	if (texread[i] == '\n')
-		i++;
-	createxread = (char *)ft_calloc(i + 1, sizeof(char));
-	if (!createxread)
+	newline_pos = ft_strchr(*store, '\n');
+	if (newline_pos)
+		line_len = newline_pos - *store + 1;
+	else
+		line_len = ft_strlen(*store);
+	line = ft_substr(*store, 0, line_len);
+	if (!line)
 		return (NULL);
-	j = 0;
-	while (j < i)
-	{
-		createxread[j] = texread[j];
-		j++;
-	}
-	return (createxread);
+	return (line);
 }
 
-char	*update_texread(char *texread)
+static void	update_storage(char **store)
 {
-	size_t	i;
-	size_t	j;
-	char	*myupdate;
-	size_t	len;
-	size_t	total_len;
+	char	*new_storage;
+	char	*newline_pos;
+	size_t	remaining_len;
 
-	i = 0;
-	j = 0;
-	if (!texread)
-		return (NULL);
-	len = ft_strlen(texread);
-	while (texread[i] != '\0' && texread[i] != '\n')
-		i++;
-	if ((len - i) == 0)
-		return (free(texread), NULL);
-	myupdate = ft_calloc((ft_strlen(texread) - i + 1), sizeof(char));
-	if (!myupdate)
-		return (NULL);
-	total_len = len - i;
-	while (j < total_len)
-		myupdate[j++] = texread[++i];
-	ft_free_ptr((void **)&texread);
-	return (myupdate);
+	if (!*store)
+		return ;
+	newline_pos = ft_strchr(*store, '\n');
+	if (!newline_pos || !*(newline_pos + 1))
+		return (clean_up(store));
+	remaining_len = ft_strlen(newline_pos + 1);
+	new_storage = ft_substr(*store, newline_pos - *store + 1, remaining_len);
+	clean_up(store);
+	*store = new_storage;
 }
-
-/* char	*freefree(char *texread, char *texread_print)
-{
-	free(texread_print);
-	free(texread);
-	texread_print = NULL;
-	texread = NULL;
-	return (NULL);
-} */
 
 char	*get_next_line(int fd)
 {
-	static char			*texread;
-	char				*texread_print;
+	static char	*store;
+	char		*buffer;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (!texread)
-	{
-		texread = ft_calloc(1, sizeof(char));
-		if (!texread)
-			return (NULL);
-	}
-	texread = readmyfd(texread, fd);
-	if (!texread)
-		return (NULL);
-	texread_print = createmyline(texread);
-	if (!texread_print)
-		return (free(texread), texread = NULL, NULL);
-	texread = update_texread(texread);
-	if (texread_print && *texread_print == '\0')
-	{
-		ft_free_ptr((void **)&texread);
-		ft_free_ptr((void **)&texread_print);
-	}
-	return (texread_print);
+		return (clean_up(&store), NULL);
+	buffer = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buffer)
+		return (clean_up(&store), NULL);
+	if (!read_and_store(fd, &store, buffer))
+		return (clean_up(&buffer), NULL);
+	clean_up(&buffer);
+	line = extract_line_content(&store);
+	if (!line)
+		return (clean_up(&store), NULL);
+	update_storage(&store);
+	return (line);
 }

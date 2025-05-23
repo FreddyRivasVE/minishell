@@ -58,7 +58,7 @@ UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_arra
 				$(UTILS_DIR)ft_free_memory.c $(UTILS_DIR)ft_special_char.c \
 				$(UTILS_DIR)ms_update_prompt.c $(UTILS_DIR)ms_get_cwd.c \
 				$(UTILS_DIR)ft_print_error.c $(UTILS_DIR)ft_close_heredoc_fds.c \
-				$(UTILS_DIR)ms_qd_killer.c $(UTILS_DIR)ft_gnl.c
+				$(UTILS_DIR)ms_qd_killer.c $(UTILS_DIR)ft_free_memory_child.c
 
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 
@@ -75,7 +75,6 @@ ifeq ($(UNAME), Darwin)
 	LIBRARY := -L$(LIBFT_DIR) -lft -L/usr/local/opt/readline/lib -lreadline
 	INCLUDE := -I/usr/local/opt/readline/include -I$(LIBFT_DIR) -I$(INCLUDE_DIR)
 endif
-
 
 RED := \033[91;1m
 GREEN := \033[92;1m
@@ -98,7 +97,7 @@ $(OBJ_DIR)%.o: %.c | $(OBJ_SUBDIRS)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(OBJ) $(LIBRARY) $(INCLUDE) -o $(NAME)
-	@echo "$(GREEN)✅ Compilada la Minishell\n$(CLEAR_COLOR)"
+	@echo "$(GREEN)🖥️  Compilado Minishell\n$(CLEAR_COLOR)"
 
 clean:
 	@make clean --no-print-directory -C $(LIBFT_DIR)

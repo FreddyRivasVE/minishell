@@ -54,5 +54,6 @@ int	ms_unset(t_mshell *data, char **data_ref)
 			i++;
 		}
 	}
+	ms_update_prompt(data);
 	return (exit);
 }

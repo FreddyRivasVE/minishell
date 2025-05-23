@@ -11,6 +11,14 @@
 # **************************************************************************** #
 
 {
+   fd_leak_dev_ptmx
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/dev/ptmx
+}
+
+{
 	readline_all_1
 	Memcheck:Leak
 	match-leak-kinds: all
@@ -52,11 +60,39 @@
 }
 
 {
+    ls_malloc_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    ...
+    fun:malloc
+    obj:/usr/bin/ls
+}
+
+{
+    cat_malloc_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    ...
+    fun:malloc
+    obj:/usr/bin/cat
+}
+
+
+{
    grep_malloc_suppression
    Memcheck:Leak
    match-leak-kinds: all
    fun:malloc
    obj:/usr/bin/grep
+}
+
+{
+    clear_malloc_leak
+    Memcheck:Leak
+    match-leak-kinds: all
+    ...
+    fun:malloc
+    obj:/usr/bin/clear
 }
 
 {

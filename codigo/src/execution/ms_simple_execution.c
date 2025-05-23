@@ -22,7 +22,7 @@ static bool	ms_simple_execution_input(t_mshell *data)
 		O_RDONLY);
 		if (data->commands[0].fd_input == -1)
 		{
-			perror(data->commands[0].input_name);
+			ft_print_error_perror(MINI, data->commands[0].input_name);
 			data->exits = 1;
 			return (false);
 		}
@@ -31,7 +31,7 @@ static bool	ms_simple_execution_input(t_mshell *data)
 	{
 		if (dup2(data->commands[0].fd_input, STDIN_FILENO) == -1)
 		{
-			perror(data->commands[0].input_name);
+			ft_print_error_perror(MINI, data->commands[0].input_name);
 			data->exits = 1;
 			return (false);
 		}
@@ -54,13 +54,13 @@ static bool	ms_simple_execution_output(t_mshell *data)
 			O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (data->commands[0].fd_output == -1)
 		{
-			perror(data->commands[0].output_name);
+			ft_print_error_perror(MINI, data->commands[0].output_name);
 			data->exits = 1;
 			return (false);
 		}
 		if (dup2(data->commands[0].fd_output, STDOUT_FILENO) == -1)
 		{
-			perror(data->commands[0].output_name);
+			ft_print_error_perror(MINI, data->commands[0].output_name);
 			data->exits = 1;
 			return (false);
 		}

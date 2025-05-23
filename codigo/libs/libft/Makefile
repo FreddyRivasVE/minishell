@@ -10,13 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Variables
 NAME = libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I./
 
 SRC_DIR = src/ft
-# Archivos fuente y objetos
 SRC = $(SRC_DIR)/ft_isalpha.c $(SRC_DIR)/ft_isdigit.c $(SRC_DIR)/ft_isalnum.c \
       $(SRC_DIR)/ft_isascii.c $(SRC_DIR)/ft_isprint.c $(SRC_DIR)/ft_strlen.c \
       $(SRC_DIR)/ft_memset.c $(SRC_DIR)/ft_bzero.c $(SRC_DIR)/ft_memcpy.c \
@@ -51,7 +49,7 @@ $(NAME): $(OBJ)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
-#@echo -n "\rCompilando: $<"
+#	@echo -n "\rCompilando: $<"
 
 clean:
 	@rm -rf $(OBJ_DIR)

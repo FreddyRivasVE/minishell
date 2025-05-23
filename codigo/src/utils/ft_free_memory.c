@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-/*
-ft_free_ptr - Libera memoria de forma segura y evita punteros colgantes.
-Esta función toma un puntero a puntero (void **) y:
-	- Verifica que el puntero no sea NULL.
-	- Libera la memoria apuntada si existe.
-	- Establece el puntero original a NULL.
-Uso recomendado para prevenir errores de doble free o acceso a memoria liberada.
-*/
-
 void	ft_free_ptr(void **ptr)
 {
 	if (ptr && *ptr)

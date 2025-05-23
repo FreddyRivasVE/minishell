@@ -19,6 +19,12 @@ void	ft_print_error(char *arg, char	*var, char *msj)
 	ft_putendl_fd(msj, 2);
 }
 
+void	ft_print_error_perror(char *arg, char *msj)
+{
+	ft_putstr_fd(arg, 2);
+	perror(msj);
+}
+
 void	ms_print_perror_malloc(t_mshell *data)
 {
 	data->exits = ENOMEM;
@@ -37,18 +43,4 @@ void	ms_free_command_child(char **command, t_mshell *data, char *msm)
 	ft_print_error(MINI, command[0], msm);
 	ms_free_child("", data, 1);
 	exit(127);
-}
-
-void	ms_free_child(char *msm, t_mshell *data, int flag)
-{
-	if (flag == 0)
-		perror(msm);
-	ft_free_redir_array(data->redir);
-	ft_free_command_array(data->commands, data->pipesnum + 1);
-	ft_lstclear(&data->env, free);
-	ft_free_ptr((void **)&data->prompt);
-	ft_free_ptr((void **)&data->input_row);
-	rl_clear_history();
-	if (flag == 0)
-		exit(1);
 }

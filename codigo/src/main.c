@@ -34,6 +34,6 @@ int	main(int argc, char **argv, char **env)
 	if (data.is_interactive)
 		ms_loop_minishell(&data);
 	else
-		ms_loop_minishell_nointeractive(&data);
+		return (ms_loop_minishell_nointeractive(&data));
 	return (0);
 }
