@@ -21,7 +21,6 @@ static void	ms_free_onecommand(char	**command, t_mshell *data, char *msm)
 
 static int	ms_free_child_pipe(char **command, t_mshell *data, char *msm)
 {
-
 	int		cod_error;
 
 	free_array(data->envp);

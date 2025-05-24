@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data)
+bool	ms_control_expand_hered(char *str, int pos, t_mshell *data)
 {
 	int		i;
 	bool	dobleq;
@@ -34,7 +34,7 @@ bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data)
 			dobleq = true;
 		i--;
 	}
-	if (i >= 0 && str[i] == '<' && str[i - 1] == '<' && dobleq == 0)
+	if (i > 0 && str[i] == '<' && str[i - 1] == '<' && dobleq == 0)
 		return (true);
 	return (false);
 }

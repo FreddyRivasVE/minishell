@@ -16,7 +16,7 @@ void	ms_free_child(char *msm, t_mshell *data, int flag)
 {
 	if (flag == 0)
 	{
-		ft_putstr_fd(MINI, 2);
+		close_all_pipes(data->commands, data->pipesnum + 1);
 		perror(msm);
 	}
 	ft_free_redir_array(data->redir);

@@ -74,7 +74,7 @@ char	*ms_expand_child(char *str, t_mshell *data);
 char	*ms_block_expand_var(char *expand, t_mshell *data);
 bool	ms_special_expand(t_mshell *data);
 bool	ms_reserve_memory_redir(char *str, t_mshell *data);
-bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data);
+bool	ms_control_expand_hered(char *str, int pos, t_mshell *data);
 bool	ms_has_leading_pipe(char *str);
 
 /*****************************************************************************/
@@ -87,6 +87,7 @@ int		ms_execute_command_pipe(char *path, char **comm, char **env);
 bool	ms_redir_management(t_mshell *data);
 bool	ms_heredoc_management(t_mshell *data);
 char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data);
+void	close_all_pipes(t_command *cmds, int total);
 void	ms_exec(t_mshell *data);
 void	ms_execute_command(char *path, char **command, char **env, t_mshell *d);
 void	ms_simple_execution(t_mshell *data);

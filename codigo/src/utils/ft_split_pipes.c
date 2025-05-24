@@ -42,7 +42,7 @@ static size_t	ft_count_pipe_words(const char *s)
 		while (s[i] && ft_isspace(s[i]))
 			i++;
 		if (s[i] == '\0')
-            break;
+			break ;
 		if (!s[i] || s[i] == '|')
 		{
 			i++;
@@ -51,7 +51,7 @@ static size_t	ft_count_pipe_words(const char *s)
 		count++;
 		i = skip_pipe_word(s, i);
 		if (s[i] == '\0')
-            break;
+			break ;
 	}
 	return (count);
 }

@@ -25,7 +25,7 @@ static void	print_list_content_char(t_list **lst)
 			&& ft_strchr((char *)current->content, '='))
 		{
 			i = 0;
-			 content = (char *)current->content;
+			content = (char *)current->content;
 			while (content[i])
 			{
 				if (content[i] == '\"')

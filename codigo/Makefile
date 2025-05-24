@@ -119,8 +119,6 @@ valgrind:
 		--leak-check=full \
 		--show-leak-kinds=all \
 		--show-reachable=yes \
-		--error-limit=no \
-		--malloc-fill=0xAA \
 		--track-origins=yes \
 		--trace-children=yes \
 		--track-fds=yes \

@@ -47,7 +47,7 @@ static char	*ms_router_expand(char *str, int *i, char *res, t_mshell *data)
 	start = *i;
 	if (str[*i + 1] == '\0')
 		return (ft_strjoin_free(res, ft_substr(str, start, ++end - start)));
-	if ( data->hdflag != MODE_HEREDOC && ms_control_expand_heredoc(str, *i, data))
+	if (data->hdflag != MODE_HEREDOC && ms_control_expand_hered(str, *i, data))
 		return ((*i)++, ft_strjoin_free(res, ft_substr(str, start, 1)));
 	if (str[*i] == '$')
 	{

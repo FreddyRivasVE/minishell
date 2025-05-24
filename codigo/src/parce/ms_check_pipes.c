@@ -34,7 +34,8 @@ static bool	is_valid_pipe_position(char *str, int i, bool dquote, bool squote)
 	{
 		while (str[j] && ft_isspace(str[j]))
 			j++;
-		if (str[j] == '\0' || str[j] == '|' || ft_isredirection_char(str[j]))
+		if (str[j] == '\0' || str[j] == '|'
+			|| (ft_isredirection_char(str[j]) && str[j + 1] == '\0'))
 			return (false);
 	}
 	return (true);
