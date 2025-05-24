@@ -98,6 +98,7 @@ void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data);
 void	ms_redirect_child_output(t_command *cmds, int i, int total, \
 		t_mshell *data);
 void	ms_move_env_to_pointer(t_mshell *data);
+void	ms_free_command_point(char **command, t_mshell *data, char *msm, int e);
 
 /*****************************************************************************/
 /*                              BUILT-INS                           		 */

@@ -59,7 +59,8 @@ UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_arra
 				$(UTILS_DIR)ft_free_memory.c $(UTILS_DIR)ft_special_char.c \
 				$(UTILS_DIR)ms_update_prompt.c $(UTILS_DIR)ms_get_cwd.c \
 				$(UTILS_DIR)ft_print_error.c $(UTILS_DIR)ft_close_heredoc_fds.c \
-				$(UTILS_DIR)ms_qd_killer.c $(UTILS_DIR)ft_free_memory_child.c
+				$(UTILS_DIR)ms_qd_killer.c $(UTILS_DIR)ft_free_memory_child.c \
+				$(UTILS_DIR)ft_print_error_point.c
 
 SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 

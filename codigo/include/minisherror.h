@@ -29,6 +29,7 @@
 # define ERROCOMMAND            ": command not found"
 # define ERROCOMMANDSL          "Command '' not found"
 # define ERRORPERMISSION        ": Permission denied"
+# define ERRORP                 ": filename argument required"
 # define ENOMEM 12
 
 #endif
