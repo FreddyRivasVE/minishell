@@ -12,64 +12,6 @@
 
 #include "minishell.h"
 
-static char	*ms_kill_dquotes_v2(char *str)
-{
-	char	*result;
-	int		i;
-	int		j;
-	int		flag;
-
-	flag = 0;
-	result = ft_calloc(ft_strlen(str), sizeof(char));
-	if (!result)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i] != 0)
-	{
-		if (str[i] == '\"' && str[i + 1] == '\0')
-			break ;
-		result[j] = str[i];
-		if (str[i] == '=' && flag == 0)
-		{
-			i++;
-			flag = 1;
-		}
-		i++;
-		j++;
-	}
-	return (result);
-}
-
-void	ms_move_env_to_pointer(t_mshell *data)
-{
-	int		count;
-	t_list	*lst;
-	int		i;
-
-	i = 0;
-	count = ft_lstsize(data->env);
-	data->envp = ft_calloc(count + 1, sizeof(char *));
-	if (!data->envp)
-	{
-		ms_print_perror_malloc(data);
-		return ;
-	}
-	lst = data->env;
-	while (lst != NULL)
-	{
-		data->envp[i] = ms_kill_dquotes_v2(lst->content);
-		if (!data->envp[i])
-		{
-			ms_print_perror_malloc(data);
-			free_array(data->envp);
-			return ;
-		}
-		i++;
-		lst = lst->next;
-	}
-}
-
 static char	**ms_split_path(t_list **env, t_mshell *data)
 {
 	char	*path;
@@ -115,10 +57,36 @@ char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data)
 	return (free_array(paths), NULL);
 }
 
-void	ms_execute_command(char *path, char **command, char **envp)
+void	ms_execute_command(char *path, char **command, char **env, t_mshell *d)
 {
-	if (execve(path, command, envp) == -1)
-		ms_print_perror_exit(command[0], 127);
-	free_array(envp);
+	if (execve(path, command, env) == -1)
+	{
+		ft_putstr_fd(MINI, 2);
+		perror(command[0]);
+		ft_free_ptr((void **)&path);
+		free_array(env);
+		ms_free_child("", d, 1);
+		close(d->inistdin);
+		close(d->inistdout);
+		exit (127);
+	}
+	ft_free_ptr((void **)&path);
+	free_array(env);
 	exit(0);
 }
+
+int	ms_execute_command_pipe(char *path, char **command, char **env)
+{
+	if (execve(path, command, env) == -1)
+	{
+		ft_putstr_fd(MINI, 2);
+		perror(command[0]);
+		ft_free_ptr((void **)&path);
+		free_array(env);
+		return (127);
+	}
+	ft_free_ptr((void **)&path);
+	free_array(env);
+	return (0);
+}
+

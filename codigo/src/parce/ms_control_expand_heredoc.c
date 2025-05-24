@@ -18,7 +18,14 @@ bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data)
 	bool	dobleq;
 
 	dobleq = data->flag;
-	i = pos - 1;
+	i = 0;
+	if (pos > 0)
+		i = pos - 1;
+	if (!ft_isspace(str[i]))
+	{
+		while (i >= 0 && !ft_isspace(str[i]))
+			i--;
+	}
 	while (i >= 0 && (ft_isspace(str[i]) || str[i] == '\"'))
 	{
 		if (str[i] == '\"' && dobleq)
@@ -27,7 +34,7 @@ bool	ms_control_expand_heredoc(char *str, int pos, t_mshell *data)
 			dobleq = true;
 		i--;
 	}
-	if (i > 0 && str[i] == '<' && str[i - 1] == '<' && dobleq == 0)
+	if (i >= 0 && str[i] == '<' && str[i - 1] == '<' && dobleq == 0)
 		return (true);
 	return (false);
 }

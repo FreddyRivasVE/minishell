@@ -36,7 +36,8 @@ BUILT		:=	$(BUILT_INS_DIR)cd.c $(BUILT_INS_DIR)env.c \
 EXECUTION	:=	$(EXECUTION_DIR)ms_execution.c $(EXECUTION_DIR)ms_redir_management.c \
 				$(EXECUTION_DIR)ms_heredoc_management.c $(EXECUTION_DIR)ms_simple_execution.c \
 				$(EXECUTION_DIR)ms_exec_other_onecommand.c $(EXECUTION_DIR)ms_execution_utils.c \
-				$(EXECUTION_DIR)ms_pipe_management.c $(EXECUTION_DIR)ms_redir_child.c
+				$(EXECUTION_DIR)ms_pipe_management.c $(EXECUTION_DIR)ms_redir_child.c \
+				$(EXECUTION_DIR)ms_move_env_to_pointer.c
 
 INITIAL		:=	$(INITIAL_DIR)ms_get_prompt.c $(INITIAL_DIR)ms_init_struct.c \
 				$(INITIAL_DIR)ms_loop_minishell.c $(INITIAL_DIR)signals.c \

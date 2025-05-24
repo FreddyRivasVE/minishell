@@ -39,8 +39,27 @@ void	ms_print_perror_exit(char *str, int num)
 
 void	ms_free_command_child(char **command, t_mshell *data, char *msm)
 {
+	int		cod_error;
+
 	free_array(data->envp);
-	ft_print_error(MINI, command[0], msm);
+	if (!ft_strcmp(msm, ERROCOMMAND))
+	{
+		ft_print_error(MINI, command[0], msm);
+		cod_error = 127;
+	}
+	else
+	{
+		if (access(command[0], F_OK) == -1)
+		{
+			ft_print_error(MINI, command[0], msm);
+			cod_error = 127;
+		}
+		else
+		{
+			ft_print_error(MINI, command[0], ERRORPERMISSION);
+			cod_error = 126;
+		}
+	}
 	ms_free_child("", data, 1);
-	exit(127);
+	exit(cod_error);
 }

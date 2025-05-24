@@ -83,11 +83,12 @@ bool	ms_has_leading_pipe(char *str);
 
 int		ms_exec_builtin_or_other(char **command, t_mshell *data);
 int		ms_exec_other(char **command, t_mshell *data);
+int		ms_execute_command_pipe(char *path, char **comm, char **env);
 bool	ms_redir_management(t_mshell *data);
 bool	ms_heredoc_management(t_mshell *data);
 char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data);
 void	ms_exec(t_mshell *data);
-void	ms_execute_command(char *path, char **command, char **envp);
+void	ms_execute_command(char *path, char **command, char **env, t_mshell *d);
 void	ms_simple_execution(t_mshell *data);
 void	ms_run_pipeline(t_command *cmds, int total, t_mshell *data);
 void	ms_free_child(char *msm, t_mshell *data, int flag);

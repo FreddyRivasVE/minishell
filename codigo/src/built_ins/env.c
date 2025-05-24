@@ -15,13 +15,27 @@
 static void	print_list_content_char(t_list **lst)
 {
 	t_list	*current;
+	char	*content;
+	int		i;
 
 	current = *lst;
 	while (current != NULL)
 	{
 		if (current->content != NULL
 			&& ft_strchr((char *)current->content, '='))
-			printf("%s\n", (char *)current->content);
+		{
+			i = 0;
+			 content = (char *)current->content;
+			while (content[i])
+			{
+				if (content[i] == '\"')
+					i++;
+				write(1, &content[i], 1);
+				if (content[i] != '\0')
+					i++;
+			}
+			write(1, "\n", 1);
+		}
 		current = current->next;
 	}
 }

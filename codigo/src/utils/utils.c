@@ -26,7 +26,6 @@ Returns <0 if `s1` is less than `s2` (in ASCII order).
 Returns >0 if `s1` is greater than `s2`.
 Note: Uses `unsigned char` to correctly handle values >127.
 */
-
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
@@ -41,7 +40,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 Its purpose is to count the number of consecutive characters 
 at the beginning of the string `s` that are present in the string `accept`.
 */
-
 size_t	ft_strspn(const char *s, const char *accept)
 {
 	size_t	i;
@@ -60,7 +58,6 @@ size_t	ft_strspn(const char *s, const char *accept)
 The function scans the string `s` looking for
 the first character that is present in `reject`.
 */
-
 size_t	ft_strcspn(const char *s, const char *reject)
 {
 	int	i;
@@ -86,7 +83,6 @@ size_t	ft_strcspn(const char *s, const char *reject)
 Searches for the last occurrence of the character `c` in the string `str`.
 Returns its index, or -1 if not found.
 */
-
 size_t	ft_seek_lastc(char *str, char c)
 {
 	int	i;

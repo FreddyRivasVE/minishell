@@ -21,9 +21,29 @@ static void	ms_free_onecommand(char	**command, t_mshell *data, char *msm)
 
 static int	ms_free_child_pipe(char **command, t_mshell *data, char *msm)
 {
+
+	int		cod_error;
+
 	free_array(data->envp);
-	ft_print_error(MINI, command[0], msm);
-	return (127);
+	if (!ft_strcmp(msm, ERROCOMMAND))
+	{
+		ft_print_error(MINI, command[0], msm);
+		return (127);
+	}
+	else
+	{
+		if (access(command[0], F_OK) == -1)
+		{
+			ft_print_error(MINI, command[0], msm);
+			cod_error = 127;
+		}
+		else
+		{
+			ft_print_error(MINI, command[0], ERRORPERMISSION);
+			cod_error = 126;
+		}
+	}
+	return (cod_error);
 }
 
 static int	ms_exec_pipes(char **command, t_mshell *data)
@@ -38,7 +58,7 @@ static int	ms_exec_pipes(char **command, t_mshell *data)
 		if (access(command[0], F_OK | X_OK) == 0)
 			path = ft_strdup(command[0]);
 		else
-			ms_free_command_child(command, data, NOFILEDIRCTORY);
+			return (ms_free_child_pipe(command, data, NOFILEDIRCTORY));
 	}
 	else
 	{
@@ -48,8 +68,7 @@ static int	ms_exec_pipes(char **command, t_mshell *data)
 		else if (data->exits == ENOMEM)
 			return (ENOMEM);
 	}
-	ms_execute_command(path, command, data->envp);
-	return (0);
+	return (ms_execute_command_pipe(path, command, data->envp));
 }
 
 static int	ms_exec_other_onecommand(char **command, t_mshell *data)
@@ -78,7 +97,7 @@ static int	ms_exec_other_onecommand(char **command, t_mshell *data)
 		else if (data->exits == ENOMEM)
 			exit(ENOMEM);
 	}
-	return (ms_execute_command(path, command, data->envp), 0);
+	return (ms_execute_command(path, command, data->envp, data), 0);
 }
 
 int	ms_exec_other(char **command, t_mshell *data)

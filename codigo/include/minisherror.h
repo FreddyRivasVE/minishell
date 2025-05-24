@@ -28,6 +28,7 @@
 # define NOFILEDIRCTORY         ": No such file or directory"
 # define ERROCOMMAND            ": command not found"
 # define ERROCOMMANDSL          "Command '' not found"
+# define ERRORPERMISSION        ": Permission denied"
 # define ENOMEM 12
 
 #endif

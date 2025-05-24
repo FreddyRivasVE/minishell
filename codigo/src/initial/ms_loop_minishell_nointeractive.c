@@ -14,9 +14,6 @@
 
 static void	copy_segments(char *result, const char *src, int pos)
 {
-	size_t	src_len;
-
-	src_len = strlen(src);
 	ft_memmove(result, src, pos);
 	ft_memmove(result + pos, "\0", 1);
 }
