@@ -21,18 +21,19 @@ static void	print_list_content_char(t_list **lst)
 	current = *lst;
 	while (current != NULL)
 	{
-		if (current->content != NULL
-			&& ft_strchr((char *)current->content, '='))
+		if (current->content != NULL && ft_strchr((char *)current->content, '='))
 		{
-			i = 0;
 			content = (char *)current->content;
-			while (content[i])
+			i = 0;
+			while (content[i] != '\0')
 			{
 				if (content[i] == '\"')
+				{
 					i++;
+					continue;
+				}
 				write(1, &content[i], 1);
-				if (content[i] != '\0')
-					i++;
+				i++;
 			}
 			write(1, "\n", 1);
 		}
