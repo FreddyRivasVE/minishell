@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:29:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/26 17:15:12 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/27 20:50:30 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ static bool	ms_heredoc_expand_aux(char *str, int pos, int i)
 {
 	int		j;
 	int		k;
-	bool	dquote;
 
 	j = i + 1;
-	dquote = false;
 	while (str[j] && ft_isspace(str[j]))
 		j++;
 	if (j <= pos)
