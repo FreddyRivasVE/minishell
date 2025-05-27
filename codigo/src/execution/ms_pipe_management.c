@@ -34,7 +34,6 @@ static void	exec_child(t_command *cmds, int i, int total, t_mshell *data)
 	cmd = &cmds[i];
 	ms_redirect_child_input(cmds, i, data);
 	ms_redirect_child_output(cmds, i, total, data);
-	signal(SIGPIPE, SIG_IGN);
 	data->exits = ms_exec_builtin_or_other(cmds[i].command, data);
 	close_all_pipes(cmds, total);
 	ms_free_child(cmd->input_name, data, 1);

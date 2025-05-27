@@ -53,7 +53,6 @@ void	ms_get_prompt(t_mshell *data);
 void	ms_init_struct(t_mshell *data, char **env);
 void	ms_loop_minishell(t_mshell *data);
 void	ms_set_signal_handler(int mode);
-void	reset_terminal_settings(void);
 
 /*****************************************************************************/
 /*                             		parce                            		 */

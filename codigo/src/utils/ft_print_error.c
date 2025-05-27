@@ -14,9 +14,12 @@
 
 void	ft_print_error(char *arg, char	*var, char *msj)
 {
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd(var, 2);
-	ft_putendl_fd(msj, 2);
+	char	*str;
+
+	str = ft_strjoin(var, msj);
+	str = ft_strjoin_free(ft_strdup(arg), str);
+	ft_putendl_fd(str, 2);
+	ft_free_ptr((void **)&str);
 }
 
 void	ft_print_error_perror(char *arg, char *msj)

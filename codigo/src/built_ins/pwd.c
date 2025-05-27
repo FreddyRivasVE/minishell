@@ -29,7 +29,7 @@ int	ms_pwd(char **command, t_list **env)
 		ft_putendl_fd("pwd: error retrieving current directory", 2);
 		return (1);
 	}
-	printf("%s\n", pwd);
+	ft_putendl_fd(pwd, 1);
 	free(pwd);
 	return (0);
 }

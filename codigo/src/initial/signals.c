@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-void	reset_terminal_settings(void)
-{
-	struct termios	t;
-
-	tcgetattr(STDIN_FILENO, &t);
-	t.c_lflag |= (ECHO | ICANON);
-	tcsetattr(STDIN_FILENO, TCSANOW, &t);
-}
-
 void	ms_handle_prompt(int sig)
 {
 	if (sig == SIGINT)

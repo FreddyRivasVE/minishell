@@ -64,12 +64,20 @@ static int	ms_handle_exit_code(char **command, t_mshell *data)
 
 int	ms_exit(char **command, t_mshell *data)
 {
-	close(data->inistdin);
-	close(data->inistdout);
-	ms_exit_minishell(data);
-	data->exits = ms_handle_exit_code(command, data);
-	ft_free_redir_array(data->redir);
-	ft_free_command_array(data->commands, data->pipesnum + 1);
-	exit(data->exits);
+	if (data->pipesnum == 0)
+	{
+		close(data->inistdin);
+		close(data->inistdout);
+		ms_exit_minishell(data);
+		data->exits = ms_handle_exit_code(command, data);
+		ft_free_redir_array(data->redir);
+		ft_free_command_array(data->commands, data->pipesnum + 1);
+		exit(data->exits);
+	}
+	else
+	{
+		data->exits = ms_handle_exit_code(command, data);
+		return (data->exits);
+	}
 	return (0);
 }

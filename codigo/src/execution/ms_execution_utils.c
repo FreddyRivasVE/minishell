@@ -61,7 +61,6 @@ void	ms_execute_command(char *path, char **command, char **env, t_mshell *d)
 {
 	if (execve(path, command, env) == -1)
 	{
-		ft_putstr_fd(MINI, 2);
 		perror(command[0]);
 		ft_free_ptr((void **)&path);
 		free_array(env);
@@ -79,9 +78,7 @@ int	ms_execute_command_pipe(char *path, char **command, char **env)
 {
 	if (execve(path, command, env) == -1)
 	{
-		ft_putstr_fd(MINI, 2);
-		ft_putstr_fd(command[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		perror(command[0]);
 		ft_free_ptr((void **)&path);
 		free_array(env);
 		return (127);
