@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:40:04 by frivas            #+#    #+#             */
-/*   Updated: 2025/04/22 23:39:37 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/27 13:03:34 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int	ms_echo(char **command)
 	}
 	while (command[i])
 	{
-		printf("%s", command[i]);
+		ft_putstr_fd(command[i], 1);
 		if (command[i + 1])
-			printf (" ");
+			write(1, " ", 1);
 		i++;
 	}
 	if (newline)
-		printf("\n");
+		write(1, "\n", 1);
 	return (0);
 }

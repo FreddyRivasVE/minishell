@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 11:51:22 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/14 18:23:58 by frivas           ###   ########.fr       */
+/*   Updated: 2025/05/27 12:31:05 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	ms_execute_command_pipe(char *path, char **command, char **env)
 	if (execve(path, command, env) == -1)
 	{
 		ft_putstr_fd(MINI, 2);
-		perror(command[0]);
+		ft_putstr_fd(command[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 		ft_free_ptr((void **)&path);
 		free_array(env);
 		return (127);
