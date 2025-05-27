@@ -12,21 +12,6 @@
 
 #include "minishell.h"
 
-void	close_unused_pipes(t_command *cmds, int current, int total)
-{
-	int	i;
-
-	i = 0;
-	while (i < total)
-	{
-		if (i != current - 1 && cmds[i].pipefd[0] != -1)
-			close(cmds[i].pipefd[0]);
-		if (i != current && cmds[i].pipefd[1] != -1)
-			close(cmds[i].pipefd[1]);
-		i++;
-	}
-}
-
 void	close_all_pipes(t_command *cmds, int total)
 {
 	int	i;
@@ -49,9 +34,9 @@ static void	exec_child(t_command *cmds, int i, int total, t_mshell *data)
 	cmd = &cmds[i];
 	ms_redirect_child_input(cmds, i, data);
 	ms_redirect_child_output(cmds, i, total, data);
-	close_unused_pipes(cmds, i, total);
 	signal(SIGPIPE, SIG_IGN);
 	data->exits = ms_exec_builtin_or_other(cmds[i].command, data);
+	close_all_pipes(cmds, total);
 	ms_free_child(cmd->input_name, data, 1);
 	exit(data->exits);
 }
