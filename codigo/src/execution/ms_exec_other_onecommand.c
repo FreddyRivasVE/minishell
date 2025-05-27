@@ -51,9 +51,9 @@ static int	ms_exec_pipes(char **command, t_mshell *data)
 
 	path = NULL;
 	if (ft_strlen(command[0]) == 0)
-		ms_free_command_point(command, data, ERROCOMMANDSL, 127);
+		return (ms_free_command_point(command, data, ERROCOMMANDSL, 127));
 	if (!ft_strcmp(command[0], "."))
-		ms_free_command_point(command, data, ERRORP, 2);
+		return (ms_free_command_point(command, data, ERRORP, 2));
 	if (ft_strchr(command[0], '/'))
 	{
 		if (access(command[0], F_OK | X_OK) == 0)

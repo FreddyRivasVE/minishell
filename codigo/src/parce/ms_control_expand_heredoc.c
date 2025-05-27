@@ -12,21 +12,45 @@
 
 #include "minishell.h"
 
+static bool	ms_heredoc_expand_dquote(char *str, int pos, int k)
+{
+	bool	dquote;
+
+	dquote = true;
+	k++;
+	while (dquote)
+	{
+		if (str[k] == '\"')
+			dquote = !dquote;
+		k++;
+	}
+	if (k >= pos)
+		return (true);
+	return (false);
+}
+
 static bool	ms_heredoc_expand_aux(char *str, int pos, int i)
 {
-	int	j;
-	int	k;
+	int		j;
+	int		k;
+	bool	dquote;
 
 	j = i + 1;
+	dquote = false;
 	while (str[j] && ft_isspace(str[j]))
 		j++;
 	if (j <= pos)
 	{
 		k = j;
-		while (k < pos && !ft_isspace(str[k]))
-			k++;
-		if (k >= pos)
-			return (true);
+		if (str[k] == '\"')
+			return (ms_heredoc_expand_dquote(str, pos, k));
+		else
+		{
+			while (k < pos && !ft_isspace(str[k]))
+				k++;
+			if (k >= pos)
+				return (true);
+		}
 	}
 	return (false);
 }
