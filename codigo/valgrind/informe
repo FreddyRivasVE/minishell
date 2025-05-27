@@ -1,397 +1,192 @@
-==642284== Memcheck, a memory error detector
-==642284== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==642284== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==642284== Command: ./minishell
-==642284== Parent PID: 642282
-==642284== 
-==642544== 
-==642544== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642544== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642544==    <inherited from parent>
-==642544== 
-==642544== 
-==642544== HEAP SUMMARY:
-==642544==     in use at exit: 208,373 bytes in 223 blocks
-==642544==   total heap usage: 727 allocs, 504 frees, 240,728 bytes allocated
-==642544== 
-==642544== LEAK SUMMARY:
-==642544==    definitely lost: 0 bytes in 0 blocks
-==642544==    indirectly lost: 0 bytes in 0 blocks
-==642544==      possibly lost: 0 bytes in 0 blocks
-==642544==    still reachable: 0 bytes in 0 blocks
-==642544==         suppressed: 208,373 bytes in 223 blocks
-==642544== 
-==642544== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642544-- 
---642544-- used_suppression:     63 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,357 bytes in 222 blocks
---642544-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642544== 
-==642544== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642545== 
-==642545== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642545== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642545==    <inherited from parent>
-==642545== 
-==642545== 
-==642545== HEAP SUMMARY:
-==642545==     in use at exit: 208,373 bytes in 223 blocks
-==642545==   total heap usage: 820 allocs, 597 frees, 245,585 bytes allocated
-==642545== 
-==642546== 
-==642546== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642546== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642546==    <inherited from parent>
-==642546== 
-==642546== 
-==642546== HEAP SUMMARY:
-==642546==     in use at exit: 208,373 bytes in 223 blocks
-==642546==   total heap usage: 820 allocs, 597 frees, 245,585 bytes allocated
-==642546== 
-==642545== LEAK SUMMARY:
-==642545==    definitely lost: 0 bytes in 0 blocks
-==642545==    indirectly lost: 0 bytes in 0 blocks
-==642545==      possibly lost: 0 bytes in 0 blocks
-==642545==    still reachable: 0 bytes in 0 blocks
-==642545==         suppressed: 208,373 bytes in 223 blocks
-==642545== 
-==642545== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642545-- 
---642545-- used_suppression:     63 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,357 bytes in 222 blocks
---642545-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642545== 
-==642545== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642546== LEAK SUMMARY:
-==642546==    definitely lost: 0 bytes in 0 blocks
-==642546==    indirectly lost: 0 bytes in 0 blocks
-==642546==      possibly lost: 0 bytes in 0 blocks
-==642546==    still reachable: 0 bytes in 0 blocks
-==642546==         suppressed: 208,373 bytes in 223 blocks
-==642546== 
-==642546== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642546-- 
---642546-- used_suppression:     63 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,357 bytes in 222 blocks
---642546-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642546== 
-==642546== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642547== 
-==642547== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==642547== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642547==    <inherited from parent>
-==642547== 
-==642547== 
-==642547== HEAP SUMMARY:
-==642547==     in use at exit: 208,373 bytes in 223 blocks
-==642547==   total heap usage: 820 allocs, 597 frees, 245,585 bytes allocated
-==642547== 
-==642547== LEAK SUMMARY:
-==642547==    definitely lost: 0 bytes in 0 blocks
-==642547==    indirectly lost: 0 bytes in 0 blocks
-==642547==      possibly lost: 0 bytes in 0 blocks
-==642547==    still reachable: 0 bytes in 0 blocks
-==642547==         suppressed: 208,373 bytes in 223 blocks
-==642547== 
-==642547== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642547-- 
---642547-- used_suppression:     63 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,357 bytes in 222 blocks
---642547-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642547== 
-==642547== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642639== 
-==642639== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642639== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642639==    <inherited from parent>
-==642639== 
-==642639== 
-==642639== HEAP SUMMARY:
-==642639==     in use at exit: 208,398 bytes in 225 blocks
-==642639==   total heap usage: 817 allocs, 592 frees, 242,617 bytes allocated
-==642639== 
-==642639== LEAK SUMMARY:
-==642639==    definitely lost: 0 bytes in 0 blocks
-==642639==    indirectly lost: 0 bytes in 0 blocks
-==642639==      possibly lost: 0 bytes in 0 blocks
-==642639==    still reachable: 0 bytes in 0 blocks
-==642639==         suppressed: 208,398 bytes in 225 blocks
-==642639== 
-==642639== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642639-- 
---642639-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642639-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642639== 
-==642639== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642640== 
-==642640== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642640== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642640==    <inherited from parent>
-==642640== 
-==642640== 
-==642640== HEAP SUMMARY:
-==642640==     in use at exit: 208,398 bytes in 225 blocks
-==642640==   total heap usage: 910 allocs, 685 frees, 247,474 bytes allocated
-==642640== 
-==642640== LEAK SUMMARY:
-==642640==    definitely lost: 0 bytes in 0 blocks
-==642640==    indirectly lost: 0 bytes in 0 blocks
-==642640==      possibly lost: 0 bytes in 0 blocks
-==642640==    still reachable: 0 bytes in 0 blocks
-==642640==         suppressed: 208,398 bytes in 225 blocks
-==642640== 
-==642640== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642640-- 
---642640-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
-==642641== 
---642640-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642641== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642640== 
-==642641== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642640== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642641==    <inherited from parent>
-==642641== 
-==642641== 
-==642641== HEAP SUMMARY:
-==642641==     in use at exit: 208,398 bytes in 225 blocks
-==642641==   total heap usage: 910 allocs, 685 frees, 247,474 bytes allocated
-==642641== 
-==642641== LEAK SUMMARY:
-==642641==    definitely lost: 0 bytes in 0 blocks
-==642641==    indirectly lost: 0 bytes in 0 blocks
-==642641==      possibly lost: 0 bytes in 0 blocks
-==642641==    still reachable: 0 bytes in 0 blocks
-==642641==         suppressed: 208,398 bytes in 225 blocks
-==642641== 
-==642641== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642641-- 
---642641-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642641-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642641== 
-==642641== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642642== 
-==642642== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==642642== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642642==    <inherited from parent>
-==642642== 
-==642642== 
-==642642== HEAP SUMMARY:
-==642642==     in use at exit: 208,398 bytes in 225 blocks
-==642642==   total heap usage: 910 allocs, 685 frees, 247,474 bytes allocated
-==642642== 
-==642642== LEAK SUMMARY:
-==642642==    definitely lost: 0 bytes in 0 blocks
-==642642==    indirectly lost: 0 bytes in 0 blocks
-==642642==      possibly lost: 0 bytes in 0 blocks
-==642642==    still reachable: 0 bytes in 0 blocks
-==642642==         suppressed: 208,398 bytes in 225 blocks
-==642642== 
-==642642== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642642-- 
---642642-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642642-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642642== 
-==642642== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642666== 
-==642666== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642666== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642666==    <inherited from parent>
-==642666== 
-==642666== 
-==642666== HEAP SUMMARY:
-==642666==     in use at exit: 208,398 bytes in 225 blocks
-==642666==   total heap usage: 907 allocs, 682 frees, 244,506 bytes allocated
-==642666== 
-==642666== LEAK SUMMARY:
-==642666==    definitely lost: 0 bytes in 0 blocks
-==642666==    indirectly lost: 0 bytes in 0 blocks
-==642666==      possibly lost: 0 bytes in 0 blocks
-==642666==    still reachable: 0 bytes in 0 blocks
-==642666==         suppressed: 208,398 bytes in 225 blocks
-==642666== 
-==642666== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642666-- 
---642666-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642666-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642666== 
-==642666== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642667== 
-==642667== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642667== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642667==    <inherited from parent>
-==642667== 
-==642667== 
-==642667== HEAP SUMMARY:
-==642667==     in use at exit: 208,398 bytes in 225 blocks
-==642667==   total heap usage: 1,000 allocs, 775 frees, 249,363 bytes allocated
-==642667== 
-==642667== LEAK SUMMARY:
-==642667==    definitely lost: 0 bytes in 0 blocks
-==642667==    indirectly lost: 0 bytes in 0 blocks
-==642667==      possibly lost: 0 bytes in 0 blocks
-==642667==    still reachable: 0 bytes in 0 blocks
-==642667==         suppressed: 208,398 bytes in 225 blocks
-==642667== 
-==642667== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642667-- 
---642667-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642667-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642667== 
-==642667== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642668== 
-==642668== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642668== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642668==    <inherited from parent>
-==642668== 
-==642668== 
-==642668== HEAP SUMMARY:
-==642668==     in use at exit: 208,398 bytes in 225 blocks
-==642668==   total heap usage: 1,000 allocs, 775 frees, 249,363 bytes allocated
-==642668== 
-==642668== LEAK SUMMARY:
-==642668==    definitely lost: 0 bytes in 0 blocks
-==642668==    indirectly lost: 0 bytes in 0 blocks
-==642668==      possibly lost: 0 bytes in 0 blocks
-==642668==    still reachable: 0 bytes in 0 blocks
-==642668==         suppressed: 208,398 bytes in 225 blocks
-==642668== 
-==642668== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642668-- 
---642668-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642668-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642668== 
-==642668== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642669== 
-==642669== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==642669== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642669==    <inherited from parent>
-==642669== 
-==642669== 
-==642669== HEAP SUMMARY:
-==642669==     in use at exit: 208,398 bytes in 225 blocks
-==642669==   total heap usage: 1,000 allocs, 775 frees, 249,363 bytes allocated
-==642669== 
-==642669== LEAK SUMMARY:
-==642669==    definitely lost: 0 bytes in 0 blocks
-==642669==    indirectly lost: 0 bytes in 0 blocks
-==642669==      possibly lost: 0 bytes in 0 blocks
-==642669==    still reachable: 0 bytes in 0 blocks
-==642669==         suppressed: 208,398 bytes in 225 blocks
-==642669== 
-==642669== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642669-- 
---642669-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642669-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642669== 
-==642669== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642694== 
-==642694== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642694== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642694==    <inherited from parent>
-==642694== 
-==642694== 
-==642694== HEAP SUMMARY:
-==642694==     in use at exit: 208,398 bytes in 225 blocks
-==642694==   total heap usage: 997 allocs, 772 frees, 246,395 bytes allocated
-==642694== 
-==642694== LEAK SUMMARY:
-==642694==    definitely lost: 0 bytes in 0 blocks
-==642694==    indirectly lost: 0 bytes in 0 blocks
-==642694==      possibly lost: 0 bytes in 0 blocks
-==642694==    still reachable: 0 bytes in 0 blocks
-==642694==         suppressed: 208,398 bytes in 225 blocks
-==642694== 
-==642694== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642694-- 
---642694-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642694-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642694== 
-==642694== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642695== 
-==642695== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642695== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642695==    <inherited from parent>
-==642695== 
-==642695== 
-==642695== HEAP SUMMARY:
-==642695==     in use at exit: 208,398 bytes in 225 blocks
-==642695==   total heap usage: 1,090 allocs, 865 frees, 251,252 bytes allocated
-==642695== 
-==642696== 
-==642696== FILE DESCRIPTORS: 3 open (2 std) at exit.
-==642696== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642696==    <inherited from parent>
-==642696== 
-==642696== 
-==642696== HEAP SUMMARY:
-==642696==     in use at exit: 208,398 bytes in 225 blocks
-==642696==   total heap usage: 1,090 allocs, 865 frees, 251,252 bytes allocated
-==642696== 
-==642695== LEAK SUMMARY:
-==642695==    definitely lost: 0 bytes in 0 blocks
-==642695==    indirectly lost: 0 bytes in 0 blocks
-==642695==      possibly lost: 0 bytes in 0 blocks
-==642695==    still reachable: 0 bytes in 0 blocks
-==642695==         suppressed: 208,398 bytes in 225 blocks
-==642695== 
-==642695== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642695-- 
---642695-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642695-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642695== 
-==642695== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642696== LEAK SUMMARY:
-==642696==    definitely lost: 0 bytes in 0 blocks
-==642696==    indirectly lost: 0 bytes in 0 blocks
-==642696==      possibly lost: 0 bytes in 0 blocks
-==642696==    still reachable: 0 bytes in 0 blocks
-==642696==         suppressed: 208,398 bytes in 225 blocks
-==642696== 
-==642696== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642696-- 
---642696-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642696-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642696== 
-==642696== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642697== 
-==642697== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==642697== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642697==    <inherited from parent>
-==642697== 
-==642697== 
-==642697== HEAP SUMMARY:
-==642697==     in use at exit: 208,398 bytes in 225 blocks
-==642697==   total heap usage: 1,090 allocs, 865 frees, 251,252 bytes allocated
-==642697== 
-==642697== LEAK SUMMARY:
-==642697==    definitely lost: 0 bytes in 0 blocks
-==642697==    indirectly lost: 0 bytes in 0 blocks
-==642697==      possibly lost: 0 bytes in 0 blocks
-==642697==    still reachable: 0 bytes in 0 blocks
-==642697==         suppressed: 208,398 bytes in 225 blocks
-==642697== 
-==642697== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642697-- 
---642697-- used_suppression:     65 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,382 bytes in 224 blocks
---642697-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642697== 
-==642697== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==642284== 
-==642284== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==642284== Open file descriptor 3: /home/brivera/Documents/42/minishell/repo_mio/minishell/codigo/valgrind/informe
-==642284==    <inherited from parent>
-==642284== 
-==642284== 
-==642284== HEAP SUMMARY:
-==642284==     in use at exit: 208,326 bytes in 222 blocks
-==642284==   total heap usage: 1,000 allocs, 778 frees, 246,575 bytes allocated
-==642284== 
-==642284== LEAK SUMMARY:
-==642284==    definitely lost: 0 bytes in 0 blocks
-==642284==    indirectly lost: 0 bytes in 0 blocks
-==642284==      possibly lost: 0 bytes in 0 blocks
-==642284==    still reachable: 0 bytes in 0 blocks
-==642284==         suppressed: 208,326 bytes in 222 blocks
-==642284== 
-==642284== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---642284-- 
---642284-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,310 bytes in 221 blocks
---642284-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
-==642284== 
-==642284== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==2934115== Memcheck, a memory error detector
+==2934115== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2934115== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2934115== Command: /usr/bin/grep PWD
+==2934115== Parent PID: 2934094
+==29341==2934==2934115== 
+==2934115== FILE DESCRIPTORS: 3 open (1 std) at exit.
+==2934115== Open file descriptor 4: /home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe
+==2934115==    <inherited from parent>
+==2934115== 
+==2934115== Open file descriptor 3: /home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe
+==2934115==    <inherited from parent>
+==2934115== 
+==2934115== 
+==2934115== HEAP SUMMARY:
+==2934115==     in use at exit: 113,244 bytes in 32 blocks
+==2934115==   total heap usage: 125 allocs, 93 frees, 139,588 bytes allocated
+==2934115== 
+==2934115== 4 bytes in 1 blocks are indirectly lost in loss record 2 of 26
+==2934115==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49E5262: re_node_set_init_copy (regex_internal.c:1034)
+==2934115==    by 0x49E5262: create_cd_newstate (regex_internal.c:1690)
+==2934115==    by 0x49E5262: re_acquire_state_context (regex_internal.c:1562)
+==2934115==    by 0x49EF1B1: create_initial_state (regcomp.c:1050)
+==2934115==    by 0x49EF1B1: re_compile_internal (regcomp.c:806)
+==2934115==    by 0x4==2934094== 
+==2934094== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==2934094== Open file descriptor 3: /home/frivas/entregas/cursus42/viajera/minishell/codigo/valgrind/informe
+==2934094==    <inherited from parent>
+==2934094== 
+==2934094== 
+==2934094== HEAP SUMMARY:
+==2934094==     in use at exit: 208,311 bytes in 222 blocks
+==2934094==   total heap usage: 677 allocs, 455 frees, 239,523 bytes allocated
+==2934094== 
+==2934094== LEAK SUMMARY:
+==2934094==    definitely lost: 0 bytes in 0 blocks
+==2934094==    indirectly lost: 0 bytes in 0 blocks
+==2934094==      possibly lost: 0 bytes in 0 blocks
+==2934094==    still reachable: 0 bytes in 0 blocks
+==2934094==         suppressed: 208,311 bytes in 222 blocks
+==2934094== 
+==2934094== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--2934094-- 
+--2934094-- used_suppression:     62 readline_all_2 valgrind/valgrind.sup:30 suppressed: 204,295 bytes in 221 blocks
+--2934094-- used_suppression:      1 readline_history valgrind/valgrind.sup:38 suppressed: 4,016 bytes in 1 blocks
+==2934094== 
+==2934094== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+c_start_call_main.h:58)
+==2934115== 
+==2934115== 16 bytes in 1 blocks are indirectly lost in loss record 5 of 26
+==2934115==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49EE545: analyze (regcomp.c:1169)
+==2934115==    by 0x49EE545: re_compile_internal (regcomp.c:795)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 16 bytes in 1 blocks are indirectly lost in loss record 6 of 26
+==2934115==    at 0x48487A9: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49DE713: register_state (regex_internal.c:1598)
+==2934115==    by 0x49E5445: create_cd_newstate (regex_internal.c:1746)
+==2934115==    by 0x49E5445: re_acquire_state_context (regex_internal.c:1562)
+==2934115==    by 0x49EF1B1: create_initial_state (regcomp.c:1050)
+==2934115==    by 0x49EF1B1: re_compile_internal (regcomp.c:806)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 16 bytes in 4 blocks are indirectly lost in loss record 7 of 26
+==2934115==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49E36FF: re_node_set_alloc (regex_internal.c:973)
+==2934115==    by 0x49E36FF: calc_eclosure_iter (regcomp.c:1699)
+==2934115==    by 0x49EED13: calc_eclosure (regcomp.c:1677)
+==2934115==    by 0x49EED13: analyze (regcomp.c:1204)
+==2934115==    by 0x49EED13: re_compile_internal (regcomp.c:795)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 36 bytes in 1 blocks are still reachable in loss record 8 of 26
+==2934115==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x120F88: ??? (in /usr/bin/grep)
+==2934115==    by 0x1199E1: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 36 bytes in 1 blocks are still reachable in loss record 9 of 26
+==2934115==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x121718: ??? (in /usr/bin/grep)
+==2934115==    by 0x1199E1: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 64 bytes in 1 blocks are indirectly lost in loss record 10 of 26
+==2934115==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49EE26A: init_dfa (regcomp.c:859)
+==2934115==    by 0x49EE26A: re_compile_internal (regcomp.c:758)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 64 bytes in 1 blocks are indirectly lost in loss record 11 of 26
+==2934115==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49EE297: init_dfa (regcomp.c:866)
+==2934115==    by 0x49EE297: re_compile_internal (regcomp.c:758)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 64 bytes in 1 blocks are indirectly lost in loss record 12 of 26
+==2934115==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49EE566: analyze (regcomp.c:1171)
+==2934115==    by 0x49EE566: re_compile_internal (regcomp.c:795)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 64 bytes in 1 blocks are indirectly lost in loss record 13 of 26
+==2934115==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49EE575: analyze (regcomp.c:1172)
+==2934115==    by 0x49EE575: re_compile_internal (regcomp.c:795)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 72 bytes in 1 blocks are still reachable in loss record 14 of 26
+==2934115==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x119049: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 88 bytes in 1 blocks are indirectly lost in loss record 16 of 26
+==2934115==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49E522B: create_cd_newstate (regex_internal.c:1687)
+==2934115==    by 0x49E522B: re_acquire_state_context (regex_internal.c:1562)
+==2934115==    by 0x49EF1B1: create_initial_state (regcomp.c:1050)
+==2934115==    by 0x49EF1B1: re_compile_internal (regcomp.c:806)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 128 bytes in 1 blocks are possibly lost in loss record 19 of 26
+==2934115==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x11940F: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 216 bytes in 1 blocks are still reachable in loss record 20 of 26
+==2934115==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x12091D: ??? (in /usr/bin/grep)
+==2934115==    by 0x1199E1: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== 624 (224 direct, 400 indirect) bytes in 1 blocks are definitely lost in loss record 22 of 26
+==2934115==    at 0x48487A9: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2934115==    by 0x49EF529: re_compile_internal (regcomp.c:750)
+==2934115==    by 0x49EF82E: re_compile_pattern (regcomp.c:230)
+==2934115==    by 0x1111B1: ??? (in /usr/bin/grep)
+==2934115==    by 0x119469: ??? (in /usr/bin/grep)
+==2934115==    by 0x10E34A: ??? (in /usr/bin/grep)
+==2934115==    by 0x4913D8F: (below main) (libc_start_call_main.h:58)
+==2934115== 
+==2934115== LEAK SUMMARY:
+==2934115==    definitely lost: 224 bytes in 1 blocks
+==2934115==    indirectly lost: 400 bytes in 13 blocks
+==2934115==      possibly lost: 128 bytes in 1 blocks
+==2934115==    still reachable: 360 bytes in 4 blocks
+==2934115==         suppressed: 112,132 bytes in 13 blocks
+==2934115== 
+==2934115== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+--2934115-- 
+--2934115-- used_suppression:     10 grep_malloc_suppression valgrind/valgrind.sup:82 suppressed: 112,132 bytes in 13 blocks
+==2934115== 
+==2934115== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 19:52:54 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/05/11 12:34:23 by brivera          ###   ########.fr       */
+/*   Updated: 2025/05/27 11:41:34 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 static void	print_list_content_char(t_list **lst)
 {
-	t_list	*current;
+	t_list	*actual;
 	char	*content;
 	int		i;
 
-	current = *lst;
-	while (current != NULL)
+	actual = *lst;
+	while (actual != NULL)
 	{
-		if (current->content != NULL && ft_strchr((char *)current->content, '='))
+		if (actual->content != NULL && ft_strchr((char *)actual->content, '='))
 		{
-			content = (char *)current->content;
+			content = (char *)actual->content;
 			i = 0;
 			while (content[i] != '\0')
 			{
 				if (content[i] == '\"')
 				{
 					i++;
-					continue;
+					continue ;
 				}
 				write(1, &content[i], 1);
 				i++;
 			}
 			write(1, "\n", 1);
 		}
-		current = current->next;
+		actual = actual->next;
 	}
 }
 
