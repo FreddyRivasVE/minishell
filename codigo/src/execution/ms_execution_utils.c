@@ -59,6 +59,7 @@ char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data)
 
 void	ms_execute_command(char *path, char **command, char **env, t_mshell *d)
 {
+	ms_close(d);
 	if (execve(path, command, env) == -1)
 	{
 		perror(command[0]);

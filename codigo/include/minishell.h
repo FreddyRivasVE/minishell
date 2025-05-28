@@ -150,9 +150,10 @@ void	ft_print_error(char *arg, char *var, char *msj);
 void	ft_print_redir_array(t_redir **redir);
 void	ft_print_error_perror(char *arg, char *msj);
 void	ft_print_command_array(t_command *commands, int count);
+void	ms_close(t_mshell *data);
 void	ms_exit_minishell(t_mshell *data);
+void	ms_free_onecommand(char	**command, t_mshell *data, char *msm);
 void	ms_print_perror_malloc(t_mshell *data);
 void	ms_print_perror_exit(char *str, int num);
 void	ms_update_prompt(t_mshell *data);
-char	*get_next_line2(int fd);
 #endif

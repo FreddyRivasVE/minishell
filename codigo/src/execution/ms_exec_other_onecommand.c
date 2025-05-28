@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-static void	ms_free_onecommand(char	**command, t_mshell *data, char *msm)
-{
-	close(data->inistdin);
-	close(data->inistdout);
-	ms_free_command_child(command, data, msm);
-}
-
 static int	ms_free_child_pipe(char **command, t_mshell *data, char *msm)
 {
 	int		cod_error;

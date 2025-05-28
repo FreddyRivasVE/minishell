@@ -28,3 +28,15 @@ void	ms_free_child(char *msm, t_mshell *data, int flag)
 	if (flag == 0)
 		exit(1);
 }
+
+void	ms_close(t_mshell *data)
+{
+	close(data->inistdin);
+	close(data->inistdout);
+}
+
+void	ms_free_onecommand(char	**command, t_mshell *data, char *msm)
+{
+	ms_close(data);
+	ms_free_command_child(command, data, msm);
+}
