@@ -51,7 +51,7 @@ PARCE 		:=	$(PARCE_DIR)ms_input_row_validation.c \
 				$(PARCE_DIR)ms_token_input.c $(PARCE_DIR)ms_orquest.c \
 				$(PARCE_DIR)ms_orquest_command.c $(PARCE_DIR)ms_expand_variable_special.c \
 				$(PARCE_DIR)ms_orquest_redir.c $(PARCE_DIR)ms_control_expand_heredoc.c \
-				$(PARCE_DIR)ms_block_expand_var.c
+				$(PARCE_DIR)ms_block_expand_var.c $(PARCE_DIR)ms_check_redir_01.c
 
 UTILS		:=	$(UTILS_DIR)utils.c $(UTILS_DIR)ft_isspace.c $(UTILS_DIR)ft_print_array.c \
 				$(UTILS_DIR)ft_list_remove_if.c $(UTILS_DIR)ft_split_quotes.c \

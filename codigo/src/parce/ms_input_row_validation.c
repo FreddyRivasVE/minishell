@@ -19,33 +19,13 @@ static bool	is_heredoc_sequence(const char *str, int *i)
 		(*i) = (*i) + 2;
 		while (str[*i] && ft_isspace(str[*i]))
 			(*i)++;
-		if (str[*i] == '\0')
+		if (str[*i] == '\0' || ft_isredirection_char(str[*i]))
 			return (false);
 		else
 			return (true);
 	}
 	else
 		(*i) = (*i) + 1;
-	return (false);
-}
-
-static bool	ms_has_redir_at_start(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && ft_isspace(str[i]))
-		i++;
-	if (str[i] != '\0' && ft_isredirection_char(str[i]) && str[i + 1] == '\0')
-		return (true);
-	if (str[i] != '\0' && ft_isredirection_char(str[i])
-		&& !ft_isredirection_char(str[i + 1]))
-	{
-		while (str[i] && ft_isspace(str[i]))
-			i++;
-		if (str[i] == '\0' || ft_isredirection_char(str[i]))
-			return (true);
-	}
 	return (false);
 }
 

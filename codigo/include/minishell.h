@@ -75,6 +75,7 @@ bool	ms_special_expand(t_mshell *data);
 bool	ms_reserve_memory_redir(char *str, t_mshell *data);
 bool	ms_control_expand_hered(char *str, int pos, t_mshell *data);
 bool	ms_has_leading_pipe(char *str);
+bool	ms_has_redir_at_start(char *str);
 
 /*****************************************************************************/
 /*                             	execution                           		 */

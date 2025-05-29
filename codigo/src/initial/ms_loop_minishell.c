@@ -24,6 +24,7 @@ void	ms_exec(t_mshell *data)
 		ms_run_pipeline(data->commands, data->pipesnum + 1, data);
 	else
 		ms_simple_execution(data);
+	ft_close_heredoc_fds(data);
 	ft_free_redir_array(data->redir);
 	ft_free_command_array(data->commands, data->pipesnum + 1);
 	return ;
