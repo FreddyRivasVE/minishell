@@ -16,7 +16,7 @@ static int	ms_check_redir_access(char *tag, char *file_name)
 {
 	if (!file_name)
 		return (-1);
-	if (!ft_strcmp(tag, "INPUT") && access(file_name, F_OK) == -1)
+	if (!ft_strcmp(tag, "INPUT") && access(file_name, F_OK | R_OK) == -1)
 		return (-1);
 	if (!ft_strcmp(tag, "OUTPUT"))
 	{
