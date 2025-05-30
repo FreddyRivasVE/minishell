@@ -24,7 +24,7 @@ int	var_cmp(void *data, void *ref)
 		key++;
 		entry++;
 	}
-	if (*key == '\0' && *entry == '=')
+	if (*key == '\0' && (*entry == '=' || *entry == '\0'))
 		return (0);
 	return (1);
 }
