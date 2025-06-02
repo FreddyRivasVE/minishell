@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:41:56 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 23:19:03 by frivas           ###   ########.fr       */
+/*   Updated: 2025/06/02 17:17:41 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*ms_router_expand(char *str, int *i, char *res, t_mshell *data)
 			return (ft_strjoin_free(res, ft_substr(str, start, end - start)));
 		}
 		if (ft_isspace(str[*i + 1]) || str[*i + 1] == '\"'
-			|| (str[*i + 1] == '\'' && str[0] == '\"'))
+			|| str[*i + 1] == '\'')
 			return ((*i)++, ft_strjoin_free(res, ft_substr(str, start, 1)));
 		return (ms_found_word(str, data, i, res));
 	}

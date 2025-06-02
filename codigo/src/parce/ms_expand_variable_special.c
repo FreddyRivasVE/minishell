@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_variable_special.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:19:06 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 17:12:12 by frivas           ###   ########.fr       */
+/*   Updated: 2025/06/02 17:16:25 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,21 @@ static char	*ms_special_dollar_quote(char *input)
 
 	i = 0;
 	j = 0;
-	squote = false;
-	dquote = false;
 	res = ft_calloc(ms_new_len_mem(input) + 1, sizeof(char));
 	if (!res)
 		return (NULL);
+	squote = toggle_simples(input[i], false, false);
+	dquote = toggle_doubles(input[i], false, false);
 	while (input[i])
 	{
-		squote = toggle_simples(input[i], squote, dquote);
-		dquote = toggle_doubles(input[i], squote, dquote);
 		if (!((squote || dquote)) && input[i] == '$' && (input[i + 1] == '\''
 				|| input[i + 1] == '\"'))
 			i++;
 		res[j] = input[i];
-		j++;
+		squote = toggle_simples(input[i], squote, dquote);
+		dquote = toggle_doubles(input[i], squote, dquote);
 		i++;
+		j++;
 	}
 	return (res);
 }

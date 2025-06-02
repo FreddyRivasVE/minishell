@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redir_child.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 19:16:35 by frivas            #+#    #+#             */
-/*   Updated: 2025/06/02 12:28:37 by frivas           ###   ########.fr       */
+/*   Updated: 2025/06/02 15:41:59 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static void	open_input(t_command *cmd, t_mshell *data)
 		&& ft_strcmp(cmd->input_name, "HEREDOC")
 		&& ft_strcmp(cmd->input_name, "HEREDOCNE"))
 	{
-		cmd->fd_input = open(cmd->input_name, \
-		O_RDONLY);
+		cmd->fd_input = open(cmd->input_name, O_RDONLY);
 		if (cmd->fd_input == -1)
 			ms_free_child(cmd->input_name, data, 0);
 	}
@@ -80,6 +79,7 @@ void	ms_redirect_child_output(t_command *cmds, int i, int total, \
 		if (dup2(cmd->fd_output, STDOUT_FILENO) == -1)
 			ms_free_child(cmd->input_name, data, 0);
 		close(cmd->fd_output);
+		close(cmd->pipefd[1]);
 	}
 	else if (i < (total - 1))
 	{
