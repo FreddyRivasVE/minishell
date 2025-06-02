@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:40:59 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/22 08:35:44 by brivera          ###   ########.fr       */
+/*   Updated: 2025/06/02 08:35:48 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ static bool	check_after_redirection(char *str, int *i)
 	(*i)++;
 	if (*i > 0 && str[*i] == str[*i - 1])
 		(*i)++;
-	if (str[*i] == '\0')
-		return (false);
 	while (str[*i])
 	{
-		if (ft_isredirection_char(str[*i]) || (str[*i + 1] == '\0'))
+		if (ft_isredirection_char(str[*i]))
 			return (false);
 		if (!ft_isredirection_char(str[*i])
 			&& !ft_isspace(str[*i]) && ft_isprint(str[*i]))
 			break ;
 		(*i)++;
 	}
+	if (str[*i] == '\0')
+		return (false);
 	(*i)--;
 	return (true);
 }
