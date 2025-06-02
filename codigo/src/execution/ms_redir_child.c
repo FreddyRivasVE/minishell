@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 19:16:35 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/14 19:58:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/06/02 12:28:37 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data)
 			ms_free_child(cmd->input_name, data, 0);
 		close(cmds[i - 1].pipefd[0]);
 	}
+	close(cmd->pipefd[0]);
 }
 
 void	ms_redirect_child_output(t_command *cmds, int i, int total, \
