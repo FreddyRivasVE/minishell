@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 19:16:35 by frivas            #+#    #+#             */
-/*   Updated: 2025/06/02 23:54:31 by frivas           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:09:14 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data)
 		if (dup2(cmd->fd_input, STDIN_FILENO) == -1)
 			ms_free_child(cmd->input_name, data, 0);
 		close(cmd->fd_input);
+		if (i > 0)
+			close(cmds[i - 1].pipefd[0]);
 	}
 	else if (i > 0)
 	{
@@ -66,6 +68,7 @@ void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data)
 	}
 	if (cmd->pipefd[0] != -1)
 		close(cmd->pipefd[0]);
+	ft_close_heredoc_fds(data);
 }
 
 void	ms_redirect_child_output(t_command *cmds, int i, int total, \
@@ -80,7 +83,8 @@ void	ms_redirect_child_output(t_command *cmds, int i, int total, \
 		if (dup2(cmd->fd_output, STDOUT_FILENO) == -1)
 			ms_free_child(cmd->input_name, data, 0);
 		close(cmd->fd_output);
-		close(cmd->pipefd[1]);
+		if (cmd->pipefd[1] != -1)
+			close(cmd->pipefd[1]);
 	}
 	else if (i < (total - 1))
 	{

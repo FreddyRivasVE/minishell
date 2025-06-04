@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:10:40 by frivas            #+#    #+#             */
-/*   Updated: 2025/06/02 13:01:06 by frivas           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:39:13 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,16 @@ void	close_all_pipes(t_command *cmds, int total)
 	i = 0;
 	while (i < total)
 	{
-		//printf("valor pipe lectura antes[%d]: %d\n", i, cmds[i].pipefd[0]); //borrar completo
 		if (cmds[i].pipefd[0] != -1)
 		{
-			//close(cmds[i].pipefd[0]);
-			//printf("valor de cierre [%d] de lectura; %d\n", i, close(cmds[i].pipefd[0])); //borrar lo qu corresponde
 			if (!close(cmds[i].pipefd[0]))
 				cmds[i].pipefd[0] = -1;
 		}
-		//printf("valor pipe lectura despues[%d]: %d\n", i, cmds[i].pipefd[0]); //borrar completo
-		//printf("valor pipe escritura antes[%d]: %d\n", i, cmds[i].pipefd[1]); //borrar completo
 		if (cmds[i].pipefd[1] != -1)
 		{
-			//close(cmds[i].pipefd[1]);
-			//printf("valor de cierre [%d] de escritura; %d\n", i, close(cmds[i].pipefd[1])); //borrar lo que corresponde
 			if (!close(cmds[i].pipefd[1]))
 				cmds[i].pipefd[1] = -1;
 		}
-		//printf("valor pipe escritura despues[%d]: %d\n", i, cmds[i].pipefd[1]); //borrar completo
 		i++;
 	}
 }
@@ -119,7 +111,6 @@ void	ms_run_pipeline(t_command *commands, int cmd_len, t_mshell *data)
 		i++;
 	}
 	close_all_pipes(commands, cmd_len);
-	ft_close_heredoc_fds(data);
 	ms_wait_childs(data, cmd_len);
 	ms_set_signal_handler(MODE_PROMPT);
 }
