@@ -75,11 +75,12 @@ void	ms_execute_command(char *path, char **command, char **env, t_mshell *d)
 	exit(0);
 }
 
-int	ms_execute_command_pipe(char *path, char **command, char **env)
+int	ms_execute_command_pipe(char *path, char **cmd, char **env, t_mshell *d)
 {
-	if (execve(path, command, env) == -1)
+	ft_close_heredoc_fds(d);
+	if (execve(path, cmd, env) == -1)
 	{
-		perror(command[0]);
+		perror(cmd[0]);
 		ft_free_ptr((void **)&path);
 		free_array(env);
 		return (127);

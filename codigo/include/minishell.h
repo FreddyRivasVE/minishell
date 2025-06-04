@@ -83,7 +83,7 @@ bool	ms_has_redir_at_start(char *str);
 
 int		ms_exec_builtin_or_other(char **command, t_mshell *data);
 int		ms_exec_other(char **command, t_mshell *data);
-int		ms_execute_command_pipe(char *path, char **comm, char **env);
+int		ms_execute_command_pipe(char *path, char **cmd, char **e, t_mshell *d);
 bool	ms_redir_management(t_mshell *data);
 bool	ms_heredoc_management(t_mshell *data);
 char	*ms_recoverpath(char *commands, t_list **env, t_mshell *data);

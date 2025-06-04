@@ -68,7 +68,6 @@ void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data)
 	}
 	if (cmd->pipefd[0] != -1)
 		close(cmd->pipefd[0]);
-	ft_close_heredoc_fds(data);
 }
 
 void	ms_redirect_child_output(t_command *cmds, int i, int total, \

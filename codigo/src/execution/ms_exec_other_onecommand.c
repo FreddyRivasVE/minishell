@@ -62,7 +62,7 @@ static int	ms_exec_pipes(char **command, t_mshell *data)
 		else if (data->exits == ENOMEM)
 			return (ENOMEM);
 	}
-	return (ms_execute_command_pipe(path, command, data->envp));
+	return (ms_execute_command_pipe(path, command, data->envp, data));
 }
 
 static int	ms_exec_other_onecommand(char **command, t_mshell *data)
