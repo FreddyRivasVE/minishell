@@ -93,8 +93,8 @@ void	ms_init_struct(t_mshell *data, char **env)
 {
 	t_list	*mini_env;
 
-	data->is_interactive = 0;
 	rl_catch_signals = 0;
+	data->is_interactive = 0;
 	data->commands = 0;
 	data->exits = 0;
 	data->inputs = 0;
