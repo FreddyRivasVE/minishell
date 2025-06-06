@@ -44,7 +44,7 @@ char	*ms_add_dquotes(char *str)
 static bool	ms_invalid_char(char c)
 {
 	return (ft_special_char(c) || ft_isredirection_char(c)
-		|| c == '|' || c == '\'' || c == '\"');
+		|| c == '|' || c == '\'' || c == '\"' || c == '.');
 }
 
 static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
