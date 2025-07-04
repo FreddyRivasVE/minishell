@@ -1,4 +1,4 @@
-# Minishell
+# 🖥️ Minishell
 
 **Minishell** es un proyecto desarrollado como parte del plan de estudios de la escuela 42, cuyo objetivo es recrear una shell minimalista basada en Bash. El proyecto incluye la implementación de un intérprete de línea de comandos capaz de ejecutar programas, gestionar redirecciones, manejar pipes, interpretar comillas y variables de entorno, y ejecutar comandos internos (*built-ins*).
 
@@ -92,6 +92,7 @@ Dentro de la shell, podés usar comandos como:
 ls -la | grep minishell > resultado.txt
 echo "Hola $'$'USER''"
 cd -
+cat | cat | ls
 cat << EOF
 Texto de prueba
 EOF
@@ -115,7 +116,7 @@ EOF
 
 ## Pruebas y Debugging
 
-- Uso de `valgrind` con supresiones personalizadas para evitar falsos positivos.
+- Uso de `make valgrind` con supresiones personalizadas para evitar falsos positivos.
 - Se implementaron validaciones de input y manejo robusto de errores.
 
 ---
