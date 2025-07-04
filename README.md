@@ -24,8 +24,6 @@
 - ✅ Heredocs (`<<`)
 - ✅ Expansión de variables (`$`)
 - ✅ Comillas simples y dobles
-- ✅ Separación por punto y coma (`;`)
-- ✅ Soporte para `&&` y `||` en ejecución condicional (si se implementa)
 - ✅ Implementación completa de comandos internos (*built-ins*)
 
 ---
