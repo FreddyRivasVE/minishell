@@ -32,7 +32,7 @@
 
 ## Built-ins Implementados
 
-| Comando   | Descripción                           |
+| Comando   | Descripción resumida                          |
 |-----------|---------------------------------------|
 | `cd`      | Cambia el directorio actual           |
 | `echo`    | Imprime texto en la salida estándar   |
