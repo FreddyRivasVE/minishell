@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 18:33:31 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/05 18:55:48 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/09/04 11:44:52 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # endif
 //P1
 int			ft_atoi(const char *str);
+int			ft_atol(const char *str, long *result, int *overflow);
 void		ft_bzero(void *s, size_t n);
 void		*ft_calloc(size_t numele, size_t n);
 int			ft_isalnum(int c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_01.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:36:51 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/05/03 12:55:58 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/04 12:11:28 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,33 @@ int	ft_list_replace_cont(t_list **begin_list, void *ref, int (*cmp)())
 	else
 		return (free(cutref), ft_list_replace_cont(&cur->next, ref, cmp));
 	return (0);
+}
+
+char	*ms_add_dquotes(char *str)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		flag;
+
+	flag = 0;
+	result = ft_calloc(ft_strlen(str) + 3, sizeof(char));
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i] != 0)
+	{
+		result[j] = str[i];
+		if (str[i] == '=' && flag == 0)
+		{
+			result[++j] = '\"';
+			flag = 1;
+		}
+		i++;
+		j++;
+	}
+	if (flag == 1)
+		result[j] = '\"';
+	return (result);
 }

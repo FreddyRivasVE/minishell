@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:52:52 by brivera           #+#    #+#             */
-/*   Updated: 2025/05/23 14:28:53 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/04 12:12:51 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ms_run_pipeline(t_command *cmds, int total, t_mshell *data);
 void	ms_free_child(char *msm, t_mshell *data, int flag);
 void	ms_free_command_child(char **command, t_mshell *data, char *msm);
 void	ms_redirect_child_input(t_command *cmds, int i, t_mshell *data);
-void	ms_redirect_child_output(t_command *cmds, int i, int total, \
+void	ms_redirect_child_output(t_command *cmds, int i, int total,\
 		t_mshell *data);
 void	ms_move_env_to_pointer(t_mshell *data);
 int		ms_free_command_point(char **command, t_mshell *data, char *msm, int e);

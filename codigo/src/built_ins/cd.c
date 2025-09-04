@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:40:32 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/20 16:06:37 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/04 13:20:54 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*ms_obtain_target(char **command, t_list **env, char *pwd)
 	{
 		target = ms_qd_kill(ft_list_extract_if(env, "OLDPWD", var_cmp));
 		if (!target || !pwd)
-			return (ft_free_ptr((void **)&target), \
+			return (ft_free_ptr((void **)&target),
 				ft_putendl_fd("cd: OLDPWD not set", 2), NULL);
 		printf("%s\n", target);
 		return (target);
@@ -103,8 +103,8 @@ static void	ms_backup_pwd(char *oldpwd, t_list **env)
 			ms_update_env_cd(oldpwd, tempwd, env);
 			break ;
 		}
-		tempwd = ft_substr(tempwd, 0, (ft_strlen(tempwd) \
-		- ft_seek_lastc(tempwd, '/')));
+		tempwd = ft_substr(tempwd, 0,
+				(ft_strlen(tempwd) - ft_seek_lastc(tempwd, '/')));
 	}
 }
 
@@ -133,6 +133,6 @@ int	ms_cd(char	**command, t_list **env, t_mshell *data)
 	else
 		ms_update_env_cd(ft_strdup(oldpwd), ft_strdup(newpwd), env);
 	ms_update_prompt(data);
-	return (ft_free_ptr((void **)&oldpwd), ft_free_ptr((void **)&newpwd), \
-	ft_free_ptr((void **)&target), 0);
+	return (ft_free_ptr((void **)&oldpwd), ft_free_ptr((void **)&newpwd),
+		ft_free_ptr((void **)&target), 0);
 }

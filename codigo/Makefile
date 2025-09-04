@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
+#    By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 17:27:37 by brivera           #+#    #+#              #
-#    Updated: 2025/05/23 14:28:24 by frivas           ###   ########.fr        #
+#    Updated: 2025/09/04 12:03:10 by brivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,10 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror -g3
 
 LIBFT_DIR := libs/libft/
-LIBFT := $(LIBFT_DIR)/libft.a
+LIBFT := $(LIBFT_DIR)libft.a
 
 INCLUDE_DIR	:= include/
+HEADERS := $(INCLUDE_DIR)minishell.h $(LIBFT_DIR)libft.h
 SOURCES_DIR := src/
 BUILT_INS_DIR := src/built_ins/
 EXECUTION_DIR := src/execution/
@@ -66,7 +67,6 @@ SRC 		:=	$(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS)
 
 OBJ_DIR 	:=	obj/
 OBJ 		:=	$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
-OBJ_SUBDIRS :=	$(sort $(dir $(OBJ)))
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
@@ -91,14 +91,13 @@ $(LIBFT):
 	@make --no-print-directory -C $(LIBFT_DIR)
 	@echo "$(GREEN)✅ Compilado LIBFT\n$(CLEAR_COLOR)"
 
-$(OBJ_SUBDIRS):
-	@mkdir -p $@
-
-$(OBJ_DIR)%.o: %.c | $(OBJ_SUBDIRS)
+$(OBJ_DIR)%.o: %.c $(HEADERS)
+#@echo "Compiling $<"
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(OBJ) $(LIBRARY) $(INCLUDE) -o $(NAME)
+	@$(CC) $(OBJ) $(LIBRARY) -o $(NAME)
 	@echo "$(GREEN)🖥️  Compilado Minishell\n$(CLEAR_COLOR)"
 
 clean:
@@ -108,11 +107,15 @@ clean:
 	
 fclean: clean
 	@$(RM) $(NAME)
-	@make fclean clean --no-print-directory -C $(LIBFT_DIR)
+	@make fclean --no-print-directory -C $(LIBFT_DIR)
 	@echo "$(RED)⛔ Limpieza total (ejecutables y librerías)\n$(CLEAR_COLOR)"
 		
 re: fclean all
 	@echo "$(CYAN)🔃 Proyecto reconstruido\n$(CLEAR_COLOR)"
+
+debug: CFLAGS += -g3 -fsanitize=address
+debug: $(NAME)
+	@echo "$(CYAN)🐛 Compilado con debug flags\n$(CLEAR_COLOR)"
 
 valgrind:
 	valgrind -s \
@@ -130,6 +133,6 @@ valgrind:
 norminette:
 	@norminette $(SOURCES) $(BUILT) $(EXECUTION) $(INITIAL) $(PARCE) $(UTILS) $(INCLUDE_DIR)
 
-.PHONY: valgrind clean fclean re norminette
+.PHONY: valgrind clean fclean re norminette debug
 
 .DEFAULT_GOAL := all

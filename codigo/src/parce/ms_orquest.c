@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_orquest.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:57:44 by frivas            #+#    #+#             */
-/*   Updated: 2025/05/16 15:05:54 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/04 13:23:20 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static bool	ms_fill_redir(char *tag, char *split, t_mshell *data, int *idx)
 		tag = "HEREDOCNE";
 	data->redir[idx[0]][idx[1]].type = ft_strdup(tag);
 	if (!ft_strcmp(tag, "HEREDOCNE"))
-		data->redir[idx[0]][idx[1]].namefile = \
-		ft_substr(split, 1, (ft_strlen(split) - 2));
+		data->redir[idx[0]][idx[1]].namefile = ft_substr(split, 1,
+				(ft_strlen(split) - 2));
 	else
 		data->redir[idx[0]][idx[1]].namefile = ft_strdup(split);
 	if (!data->redir[idx[0]][idx[1]].type)

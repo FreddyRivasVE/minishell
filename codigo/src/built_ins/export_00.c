@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_00.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:41:48 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/05/19 18:04:55 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/04 12:11:07 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ms_add_dquotes(char *str)
-{
-	char	*result;
-	int		i;
-	int		j;
-	int		flag;
-
-	flag = 0;
-	result = ft_calloc(ft_strlen(str) + 3, sizeof(char));
-	if (!result)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i] != 0)
-	{
-		result[j] = str[i];
-		if (str[i] == '=' && flag == 0)
-		{
-			result[++j] = '\"';
-			flag = 1;
-		}
-		i++;
-		j++;
-	}
-	if (flag == 1)
-		result[j] = '\"';
-	return (result);
-}
 
 static bool	ms_invalid_char(char c)
 {
@@ -47,10 +18,53 @@ static bool	ms_invalid_char(char c)
 		|| c == '|' || c == '\'' || c == '\"' || c == '.');
 }
 
-static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
+static int	handle_export_assignment(char *command_arg, t_mshell *data)
 {
 	char	*arg;
 	t_list	*new_node;
+
+	arg = ms_add_dquotes(command_arg);
+	if (!arg)
+		return (perror("malloc"), ENOMEM);
+	if ((ft_list_replace_cont(&data->env, arg, var_cmp)) == 0)
+	{
+		new_node = ft_lstnew(arg);
+		if (!new_node)
+			return (perror("malloc"), ft_free_ptr((void **)&arg), ENOMEM);
+		ft_lstadd_back(&data->env, new_node);
+	}
+	return (0);
+}
+
+static int	handle_export_no_assignment(char *command_arg, t_mshell *data)
+{
+	char	*arg;
+	char	*var_name;
+	char	*existing_value;
+	t_list	*new_node;
+
+	var_name = ft_strjoin(command_arg, "=");
+	if (!var_name)
+		return (perror("malloc"), ENOMEM);
+	existing_value = ft_list_extract_if(&data->env, var_name, var_cmp);
+	if (!existing_value)
+	{
+		arg = ms_add_dquotes(command_arg);
+		if (!arg)
+			return (ft_free_ptr((void **)&var_name), perror("malloc"), ENOMEM);
+		new_node = ft_lstnew(arg);
+		if (!new_node)
+			return (perror("malloc"), ft_free_ptr((void **)&arg),
+				ft_free_ptr((void **)&var_name), ENOMEM);
+		ft_lstadd_back(&data->env, new_node);
+	}
+	ft_free_ptr((void **)&var_name);
+	return (0);
+}
+
+static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
+{
+	int	result;
 
 	while (command[*i])
 	{
@@ -61,16 +75,12 @@ static int	export_args(char **command, t_mshell *data, int *exit_code, int *i)
 			(*i)++;
 			continue ;
 		}
-		arg = ms_add_dquotes(command[*i]);
-		if (!arg)
-			return (perror("malloc"), ENOMEM);
-		if ((ft_list_replace_cont(&data->env, arg, var_cmp)) == 0)
-		{
-			new_node = ft_lstnew(arg);
-			if (!new_node)
-				return (perror("malloc"), ft_free_ptr((void **)&arg), ENOMEM);
-			ft_lstadd_back(&data->env, new_node);
-		}
+		if (ft_strchr(command[*i], '='))
+			result = handle_export_assignment(command[*i], data);
+		else
+			result = handle_export_no_assignment(command[*i], data);
+		if (result != 0)
+			return (result);
 		(*i)++;
 	}
 	return (0);

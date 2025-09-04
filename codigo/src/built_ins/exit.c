@@ -3,30 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 19:45:41 by brivera@stu       #+#    #+#             */
-/*   Updated: 2025/05/12 13:04:47 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/04 11:44:38 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	ft_is_numeric(const char *str)
+static bool	ft_is_valid_long(const char *str)
 {
+	long	result;
+	int		overflow;
+
 	if (!str || !*str)
 		return (false);
-	if (*str == '+' || *str == '-')
-		str++;
-	if (!*str)
-		return (false);
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (false);
-		str++;
-	}
-	return (true);
+	return (ft_atol(str, &result, &overflow) && !overflow);
 }
 
 void	ms_exit_minishell(t_mshell *data)
@@ -44,7 +37,7 @@ static int	ms_handle_exit_code(char **command, t_mshell *data)
 
 	if (!command[1])
 		return (data->exits);
-	if (!ft_is_numeric(command[1]))
+	if (!ft_is_valid_long(command[1]))
 	{
 		ft_print_error(MINI, command[0], ": numeric argument required");
 		return (2);
@@ -55,11 +48,7 @@ static int	ms_handle_exit_code(char **command, t_mshell *data)
 		return (1);
 	}
 	exit_code = ft_atoi(command[1]);
-	if (exit_code > 256)
-		exit_code %= 256;
-	else if (exit_code < 0)
-		exit_code = 256 + (exit_code % 256);
-	return (exit_code);
+	return (exit_code & 255);
 }
 
 int	ms_exit(char **command, t_mshell *data)
